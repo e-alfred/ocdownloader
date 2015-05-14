@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<info>
+	<id>ocdownloader</id>
+	<name>ocDownloader</name>
+	<description>Easy to use downloader client. ocDownloader now uses Aria2 to allow downloading via HTTP(S), FTP</description>
+	<version>0.1</version>
+	<licence>AGPL</licence>
+	<author>Xavier Beurois</author>
+	<website>http://www.owncloud.org</website>
+	<bugs>http://github.com/owncloud/theapp/issues</bugs>
+	<repository type="git">http://github.com/owncloud/theapp.git</repository>
+	<dependencies>
+		<owncloud min-version="8.0" max-version="8.0" />
+		<php min-version="5.4" max-version="5.6" />
+		<lib>curl</lib>
+		<os>Linux</os>
+	</dependencies>
+</info>

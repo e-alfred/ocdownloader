@@ -1,0 +1,159 @@
+.ocd .table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  max-width: 100%;
+  background-color: transparent;
+}
+.ocd .jumbotron {
+  padding-left: 60px;
+  padding-right: 60px;
+  text-align: center;
+  background-color: #eee;
+  color: inherit;
+  padding: 20px;
+}
+.ocd .jumbotron h1 {
+  margin-top: 0;
+  font-size: 24px;
+  line-height: 1;
+}
+.ocd .jumbotron p {
+  font-size: inherited;
+  font-weight: 200;
+  font-style: italic;
+}
+.ocd .jumbotron p a {
+  color: #428bca;
+}
+.ocd .content-page {
+  padding: 0 20px;
+  height: 300px;
+  border-bottom: 1px solid #ddd;
+}
+.ocd h3, .ocd .h3 {
+  font-size: 24px;
+}
+.ocd h1, .ocd .h1, .ocd h2, .ocd .h2, .ocd h3, .ocd .h3 {
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+.ocd h1, .ocd h2, .ocd h3, .ocd h4, .ocd h5, .ocd h6, .ocd .h1, .ocd .h2, .ocd .h3, .ocd .h4, .ocd .h5, .ocd .h6 {
+  color: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+}
+.ocd .muted {
+  font-size: 12px;
+  margin-left: 1em;
+}
+.ocd #controls {
+  position: static;
+  height: 46px;
+  background-color: rgba(250, 250, 250, 0.95);
+}
+.ocd .actions {
+  display: inline-block;
+  float: left;
+  padding: 5px;
+}
+.ocd .actions > div#new {
+  margin: 0;
+}
+.ocd .actions > div#loadtext {
+  font-style: italic;
+  padding: 5px;
+  display: inline;
+}
+.ocd .actions > div#new .icon-caret-dark {
+  display: inline-block;
+  height: 12px;
+  margin: 0 0 0 10px;
+  padding: 0;
+  vertical-align: middle;
+  width: 12px;
+}
+.ocd .actions > div#new > ul {
+  background: #f8f8f8 none repeat scroll 0 0;
+  border: 1px solid #ddd;
+  border-radius: 0 5px 5px;
+  box-shadow: 0 2px 7px rgba(170, 170, 170, 0.4);
+  display: none;
+  margin-left: -11px;
+  margin-top: 6px;
+  min-width: 112px;
+  position: fixed;
+  text-align: left;
+  z-index: 10;
+}
+.ocd .actions > div#new > ul > li {
+  cursor: pointer;
+  height: 20px;
+  margin: 5px 5px 15px 25px;
+  padding-bottom: 2px;
+}
+.ocd .actions > div#new > ul > li > p {
+  cursor: pointer;
+  padding-bottom: 7px;
+  padding-top: 5px;
+}
+.ocd .righttitle {
+  color: #ddd;
+  float: right !important;
+  font-size: 2em;
+  font-style: italic;
+  margin-right: 0.5em;
+  padding: 11px 10px 10px;
+}
+.ocd .content-page > h3 {
+  margin-bottom: 0;
+  margin-top: 15px;
+  padding-top: 5px;
+}
+.ocd .content-page > h3 > span.add-msg {
+  font-style: italic;
+}
+.ocd .content-page > h3 > span.alert {
+  color: #B40404;
+}
+.ocd .content-page > h3 > span.success {
+  color: #298A08;
+}
+.ocd .content-page > h3 > span.info {
+  color: #084B8A;
+}
+.ocd .content-page .launch {
+  float: right !important;
+  box-sizing: border-box;
+  height: 36px;
+  padding: 10px;
+  margin-top: -5px;
+}
+.ocd .content-page > input {
+  width: 100%;
+}
+.ocd .content-queue > table {
+  width: 100%;
+}
+.ocd .content-queue > table > thead > tr {
+  height: 30px;
+  background-color: #eee;
+}
+.ocd .content-queue > table > thead > tr > th {
+  font-style: italic;
+  font-weight: bold;
+  padding: 2px 0 2px 5px;
+  border-bottom: 1px solid #ddd;
+}
+.ocd .content-queue > table > thead > tr > th.border {
+  border-left: 1px solid #ddd;
+}
+.ocd .content-queue > table > tbody > tr > td {
+  padding: 2px 0 2px 5px;
+  border-bottom: 1px solid #eee;
+}
+.ocd .content-queue > table > tbody > tr > td.border {
+  border-left: 1px solid #eee;
+}
