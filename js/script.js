@@ -184,8 +184,6 @@ $(document).ready (function()
 				FTPPasv: $('#option-ftp-pasv').prop('checked')
 			};
 			
-			alert(OPTIONS['FTPPasswd']);
-			
 			$.ajax({
 		        url: OC.generateUrl ('/apps/ocdownloader/ftpdownloaderadd'),
 		        method: 'POST',
