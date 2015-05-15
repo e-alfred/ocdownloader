@@ -39,6 +39,12 @@
                     </div>
                 </h3>
                 <input type="text" placeholder="HTTP URL to download" class="form-control url" />
+                <div class="jumbotron">
+                    <h5>Options</h5>
+                    <div class="group-option">
+                        <label for="option-check-cert">Check certificate :</label><input type="checkbox" id="option-check-cert" checked /> 
+                    </div>
+                </div>
             </div>
             <div class="content-page" rel="OCDFTP" style="display:none;">
                 <h3>
@@ -48,6 +54,16 @@
                     </div>
                 </h3>
                 <input type="text" placeholder="FTP URL to download" class="form-control url" />
+                <div class="jumbotron">
+                    <h5>Options</h5>
+                    <div class="group-option">
+                        <label for="option-ftp-user">FTP User :</label><input type="text" id="option-ftp-user" placeholder="Username" />
+                        <label for="option-ftp-pwd">FTP Password :</label><input type="password" id="option-ftp-pwd" placeholder="Password" /> 
+                    </div>
+                    <div class="group-option">
+                        <label for="option-ftp-pasv">Passive Mode :</label><input type="checkbox" id="option-ftp-pasv" checked />
+                    </div>
+                </div>
             </div>
             <div class="content-queue">
                 <table border="0" cellspacing="0" cellpadding="0">

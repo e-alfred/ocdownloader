@@ -21,6 +21,9 @@ $Application->registerRoutes($this, array(
         // HttpDownloaderController
         ['name' => 'httpdownloader#add', 'url' => '/httpdownloaderadd', 'verb' => 'POST'],
         
+        // FtpDownloaderController
+        ['name' => 'ftpdownloader#add', 'url' => '/ftpdownloaderadd', 'verb' => 'POST'],
+        
         // DownloaderQueueController
         ['name' => 'downloaderqueue#get', 'url' => '/downloadergetqueue', 'verb' => 'POST'],
         ['name' => 'downloaderqueue#remove', 'url' => '/downloaderremovequeue', 'verb' => 'POST']

@@ -18,9 +18,9 @@ class IndexController extends Controller
        */
       public function add ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS != ? AND IS_DELETED = ?';
             $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array (0));
+            $Result = $Query->execute (Array (4, 0));
             
             return new TemplateResponse ('ocdownloader', 'add', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }

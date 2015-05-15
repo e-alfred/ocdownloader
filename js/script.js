@@ -1,21 +1,20 @@
 // Check URL
 function ValidURL (URLString)
 {
-	var Pattern = new RegExp ("^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?::\\d{2,5})?(?:/\\S*)?$", "i");
-	return Pattern.test (URLString);
+	return /^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(URLString);
 }
 
 // Print Error message
 function PrintError (Message)
 {
-	$('.ocd .content-page[rel=OCDHTTP] span.add-msg').attr ('class', 'muted add-msg alert');
-	$('.ocd .content-page[rel=OCDHTTP] span.add-msg').text (Message);
+	$('.ocd .content-page span.add-msg').attr ('class', 'muted add-msg alert');
+	$('.ocd .content-page span.add-msg').text (Message);
 }
 // Print Info message
 function PrintInfo (Message)
 {
-	$('.ocd .content-page[rel=OCDHTTP] span.add-msg').attr ('class', 'muted add-msg info');
-	$('.ocd .content-page[rel=OCDHTTP] span.add-msg').text (Message);
+	$('.ocd .content-page span.add-msg').attr ('class', 'muted add-msg info');
+	$('.ocd .content-page span.add-msg').text (Message);
 }
 
 function GetDownloaderQueue(){
@@ -36,7 +35,8 @@ function GetDownloaderQueue(){
 	        async: true,
 	        cache: false,
 	        timeout: 30000,
-	        success: function (Data){
+	        success: function (Data)
+			{
 	            if (Data.ERROR)
 				{
 					PrintError(Data.MESSAGE);
@@ -73,7 +73,8 @@ function SetupRemoverFromQueue ()
 		        async: true,
 		        cache: false,
 		        timeout: 30000,
-		        success: function (Data){
+		        success: function (Data)
+				{
 		            if (Data.ERROR)
 					{
 						PrintError(Data.MESSAGE);
@@ -127,15 +128,20 @@ $(document).ready (function()
 		
 		if (ValidURL (URL))
 		{
+			var OPTIONS = {
+				CheckCertificate: $('#option-check-cert').prop('checked')
+			};
+			
 			$.ajax({
 		        url: OC.generateUrl ('/apps/ocdownloader/httpdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
-				data: {'URL' : URL},
+				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
 		        async: true,
 		        cache: false,
 		        timeout: 30000,
-		        success: function (Data){
+		        success: function (Data)
+				{
 		            if (Data.ERROR)
 					{
 						PrintError(Data.MESSAGE);
@@ -149,7 +155,61 @@ $(document).ready (function()
 						'<td data-rel="NAME">' + Data.NAME + '</td>' +
 						'<td data-rel="PROTO" class="border">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border">' + Data.MESSAGE + '</td>' +
-						'<td data-rel="STATUS" class="border">' + Data.PROTO + '</td>' +
+						'<td data-rel="STATUS" class="border">Waiting</td>' +
+						'<td data-rel="ACTION"><div class="icon-delete svg"></div></td>' +
+						'</tr>'
+					);
+					
+					SetupRemoverFromQueue ();
+		        }
+		    });
+		}
+		else
+		{
+			PrintError('Unvalid URL. Please check the address of the file ...');
+		}
+	});
+	
+	// Launch FTP download
+	$('.ocd .content-page[rel=OCDFTP] div.launch').bind ('click', function ()
+	{
+		var URL = $('.ocd .content-page[rel=OCDFTP] input.url').val ();
+		$('.ocd .content-page[rel=OCDFTP] input.url').val ('');
+		
+		if (ValidURL (URL))
+		{
+			var OPTIONS = {
+				FTPUser: $('#option-ftp-user').val(),
+				FTPPasswd: $('#option-ftp-pwd').val(),
+				FTPPasv: $('#option-ftp-pasv').prop('checked')
+			};
+			
+			alert(OPTIONS['FTPPasswd']);
+			
+			$.ajax({
+		        url: OC.generateUrl ('/apps/ocdownloader/ftpdownloaderadd'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+		            if (Data.ERROR)
+					{
+						PrintError(Data.MESSAGE);
+					}
+					else
+					{
+						PrintInfo(Data.MESSAGE + ' (' + Data.GID + ')');
+					}
+					
+					$('.ocd .content-queue > table > tbody').prepend('<tr data-rel="' + Data.GID + '">' + 
+						'<td data-rel="NAME">' + Data.NAME + '</td>' +
+						'<td data-rel="PROTO" class="border">' + Data.PROTO + '</td>' +
+						'<td data-rel="MESSAGE" class="border">' + Data.MESSAGE + '</td>' +
+						'<td data-rel="STATUS" class="border">Waiting</td>' +
 						'<td data-rel="ACTION"><div class="icon-delete svg"></div></td>' +
 						'</tr>'
 					);

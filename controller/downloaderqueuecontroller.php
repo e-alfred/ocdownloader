@@ -37,7 +37,7 @@ class DownloaderQueueController extends Controller
                                     'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A'
                               );
                               
-                              $DbStatus = 5;
+                              $DbStatus = 5; // Error
                               switch (strtolower ($Status['result']['status']))
                               {
                                     case 'complete':
@@ -58,11 +58,12 @@ class DownloaderQueueController extends Controller
                               }
                               
                               
-                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
+                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ? AND (STATUS != ? OR STATUS IS NULL)';
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     $DbStatus,
-                                    $GID
+                                    $GID,
+                                    4
                               ));
                         }
                         die (json_encode (Array ('ERROR' => false, 'QUEUE' => $Queue)));

@@ -11,7 +11,7 @@ use \OC\Files\Filesystem;
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
 
-class HttpDownloaderController extends Controller
+class FtpDownloaderController extends Controller
 {
       private $UserStorage;
       
@@ -35,7 +35,9 @@ class HttpDownloaderController extends Controller
                         $Aria2 = new Aria2();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), Array (
                               'dir' => $this->UserStorage,
-                              'check-certificate' => strcmp ($_POST['OPTIONS']['CheckCertificate'], "true") == 0 ? true : false
+                              'ftp-user' => $_POST['OPTIONS']['FTPUser'],
+                              'ftp-passwd' => $_POST['OPTIONS']['FTPPasswd'],
+                              'ftp-pasv' => $_POST['OPTIONS']['FTPPasv']
                         ));
                         
                         $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS) VALUES (?, ?, ?, ?)';

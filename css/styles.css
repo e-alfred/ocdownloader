@@ -107,6 +107,20 @@
   margin-right: 0.5em;
   padding: 11px 10px 10px;
 }
+.ocd .content-page .jumbotron {
+  padding: 10px;
+  text-align: left;
+}
+.ocd .content-page .jumbotron > h5 {
+  font-size: 15pt;
+  margin-bottom: .7em;
+}
+.ocd .content-page .jumbotron .group-option {
+  margin-bottom: .7em;
+}
+.ocd .content-page .jumbotron .group-option > label {
+  margin-right: .7em;
+}
 .ocd .content-page > h3 {
   margin-bottom: 0;
   margin-top: 15px;
