@@ -33,20 +33,37 @@ class DownloaderQueueController extends Controller
                               $Status = $Aria2->tellStatus ($GID);
                               $Queue[] = Array (
                                     'GID' => $GID,
-                                    'PROGRESS' => $Tools->GetProgressString($Status['result']['completedLength'], $Status['result']['totalLength']),
-                                    'STATUS' => isset($Status['result']['status']) ? ucfirst($Status['result']['status']) : 'N/A'
+                                    'PROGRESS' => $Tools->GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
+                                    'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A'
                               );
                               
-                              if (strcmp (strtolower ($Status['result']['status']), 'complete') == 0)
+                              $Status = 5;
+                              switch (strtolower ($Status['result']['status']))
                               {
-                                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET IS_ACTIVE = ? WHERE GID = ? AND IS_ACTIVE = ?';
-                                    $Query = \OCP\DB::prepare ($SQL);
-                                    $Result = $Query->execute (Array (
-                                          0,
-                                          $AddURI["result"],
-                                          1
-                                    ));
+                                    case 'complete':
+                                          $Status = 0;
+                                          break;
+                                    case 'active':
+                                          $Status = 1;
+                                          break;
+                                    case 'waiting':
+                                          $Status = 2;
+                                          break;
+                                    case 'paused':
+                                          $Status = 3;
+                                          break;
+                                    case 'removed':
+                                          $Status = 4;
+                                          break;
                               }
+                              
+                              
+                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
+                              $Query = \OCP\DB::prepare ($SQL);
+                              $Result = $Query->execute (Array (
+                                    $Status,
+                                    $AddURI["result"]
+                              ));
                         }
                         die (json_encode (Array ('ERROR' => false, 'QUEUE' => $Queue)));
                   }
@@ -82,27 +99,14 @@ class DownloaderQueueController extends Controller
                         
                         if (strcmp ($Remove['result'], $_POST['GID']) == 0)
                         {
-                              $Reset = $Aria2->removeDownloadResult ($_POST['GID']);
-                              if (strcmp ($Reset['result'], 'OK') == 0)
-                              {
-                                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET IS_DELETED = ? WHERE GID = ?';
-                                    $Query = \OCP\DB::prepare ($SQL);
-                                    $Result = $Query->execute (Array (
-                                          1,
-                                          $_POST['GID']
-                                    ));
-                                    
-                                    die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'The download has been removed')));
-                              }
-                              
-                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET IS_DELETED = ? WHERE GID = ?';
+                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET IS_DELETED = ?, STATUS = ? WHERE GID = ?';
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
-                                    1,
+                                    1, 4,
                                     $_POST['GID']
                               ));
                               
-                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'The download has been removed but an error occured while removing results')));
+                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'The download has been removed')));
                         }
                         else
                         {

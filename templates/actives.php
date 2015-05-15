@@ -9,7 +9,7 @@
             <li data-id="actives" class="active"><a href="actives">Active Downloads</a></li>
             <li data-id="waiting"><a href="waitings">Waiting Downloads</a></li>
             <li data-id="stopped"><a href="stopped">Stopped Downloads</a></li>
-            <li data-id="history"><a href="history">History</a></li>
+            <li data-id="removed"><a href="removed">Removed Downloads</a></li>
         </ul>
     </div>
     <div id="app-content">

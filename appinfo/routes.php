@@ -16,7 +16,7 @@ $Application->registerRoutes($this, array(
         ['name' => 'index#actives', 'url' => '/actives', 'verb' => 'GET'],
         ['name' => 'index#waitings', 'url' => '/waitings', 'verb' => 'GET'],
         ['name' => 'index#stopped', 'url' => '/stopped', 'verb' => 'GET'],
-        ['name' => 'index#history', 'url' => '/history', 'verb' => 'GET'],
+        ['name' => 'index#removed', 'url' => '/removed', 'verb' => 'GET'],
         
         // HttpDownloaderController
         ['name' => 'httpdownloader#add', 'url' => '/httpdownloaderadd', 'verb' => 'POST'],

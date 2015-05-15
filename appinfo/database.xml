@@ -34,7 +34,7 @@
 				<length>10</length>
 			</field>
 			<field>
-				<name>IS_ACTIVE</name>
+				<name>STATUS</name>
 				<type>integer</type>
 				<default>1</default>
 				<notnull>true</notnull>

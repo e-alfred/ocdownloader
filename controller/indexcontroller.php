@@ -31,7 +31,7 @@ class IndexController extends Controller
        */
       public function actives ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE IS_ACTIVE = ? AND IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (1, 0));
             
@@ -44,7 +44,11 @@ class IndexController extends Controller
        */
       public function waitings ()
       {
-            return new TemplateResponse('ocdownloader', 'waitings');
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            $Query = \OCP\DB::prepare ($SQL);
+            $Result = $Query->execute (Array (2, 0));
+            
+            return new TemplateResponse('ocdownloader', 'waitings', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
       
       /**
@@ -53,7 +57,11 @@ class IndexController extends Controller
        */
       public function stopped ()
       {
-            return new TemplateResponse('ocdownloader', 'stopped');
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            $Query = \OCP\DB::prepare ($SQL);
+            $Result = $Query->execute (Array (3, 0));
+            
+            return new TemplateResponse('ocdownloader', 'stopped', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
       
       /**
@@ -62,6 +70,10 @@ class IndexController extends Controller
        */
       public function history ()
       {
-            return new TemplateResponse('ocdownloader', 'history');
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            $Query = \OCP\DB::prepare ($SQL);
+            $Result = $Query->execute (Array (4, 0));
+            
+            return new TemplateResponse('ocdownloader', 'removed');
       }
 }
