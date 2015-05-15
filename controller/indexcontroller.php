@@ -18,9 +18,9 @@ class IndexController extends Controller
        */
       public function add ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE IS_DELETED = ?';
             $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute ();
+            $Result = $Query->execute (Array (0));
             
             return new TemplateResponse ('ocdownloader', 'add', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
@@ -31,9 +31,9 @@ class IndexController extends Controller
        */
       public function actives ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE IS_ACTIVE = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE IS_ACTIVE = ? AND IS_DELETED = ?';
             $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array (1));
+            $Result = $Query->execute (Array (1, 0));
             
             return new TemplateResponse('ocdownloader', 'actives', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }

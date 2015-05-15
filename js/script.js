@@ -56,6 +56,43 @@ function GetDownloaderQueue(){
 	}
 }
 
+function SetupRemoverFromQueue ()
+{
+	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').unbind('click');
+	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').bind ('click', function ()
+	{
+		var TR = $(this).parent ().parent ();
+		var GID = TR.attr ('data-rel');
+		if (GID)
+		{
+			$.ajax({
+		        url: OC.generateUrl ('/apps/ocdownloader/downloaderremovequeue'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'GID' : GID},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data){
+		            if (Data.ERROR)
+					{
+						PrintError(Data.MESSAGE);
+					}
+					else
+					{
+						PrintInfo(Data.MESSAGE + ' (' + GID + ')');
+						TR.remove();
+					}
+		        }
+		    });
+		}
+		else
+		{
+			PrintError ('Unable to find the GID of this download ...')
+		}
+	});
+}
+
 $(document).ready (function()
 {
 	// Get current downloader queue every 5 seconds
@@ -113,9 +150,11 @@ $(document).ready (function()
 						'<td data-rel="PROTO" class="border">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border">' + Data.MESSAGE + '</td>' +
 						'<td data-rel="STATUS" class="border">' + Data.PROTO + '</td>' +
-						'<td data-rel="ACTION">SUPPR</td>' +
+						'<td data-rel="ACTION"><div class="icon-delete svg"></div></td>' +
 						'</tr>'
 					);
+					
+					SetupRemoverFromQueue ();
 		        }
 		    });
 		}
@@ -124,4 +163,6 @@ $(document).ready (function()
 			PrintError('Unvalid URL. Please check the address of the file ...');
 		}
 	});
+	
+	SetupRemoverFromQueue ();
 });

@@ -67,7 +67,7 @@
                             <td data-rel="PROTO" class="border"><?php print($Row['PROTOCOL']); ?></td>
                             <td data-rel="MESSAGE" class="border">N/A</td>
                             <td data-rel="STATUS" class="border">N/A</td>
-                            <td data-rel="ACTION"></td>
+                            <td data-rel="ACTION"><div class="icon-delete svg"></div></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

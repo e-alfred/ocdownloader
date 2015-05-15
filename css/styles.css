@@ -157,3 +157,8 @@
 .ocd .content-queue > table > tbody > tr > td.border {
   border-left: 1px solid #eee;
 }
+.ocd .content-queue > table > tbody > tr > td > div.svg {
+  width: 2em;
+  cursor: pointer;
+  float: right;
+}

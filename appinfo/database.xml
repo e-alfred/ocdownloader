@@ -40,6 +40,13 @@
 				<notnull>true</notnull>
 				<length>1</length>
 			</field>
+			<field>
+				<name>IS_DELETED</name>
+				<type>integer</type>
+				<default>1</default>
+				<notnull>true</notnull>
+				<length>1</length>
+			</field>
 		</declaration>
 	</table>
 </database>
