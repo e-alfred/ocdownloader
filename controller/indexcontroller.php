@@ -68,12 +68,12 @@ class IndexController extends Controller
        * @NoAdminRequired
        * @NoCSRFRequired
        */
-      public function history ()
+      public function removed ()
       {
             $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (4, 0));
             
-            return new TemplateResponse('ocdownloader', 'removed');
+            return new TemplateResponse('ocdownloader', 'removed', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
 }

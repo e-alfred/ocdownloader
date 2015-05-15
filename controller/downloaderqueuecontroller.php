@@ -37,23 +37,23 @@ class DownloaderQueueController extends Controller
                                     'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A'
                               );
                               
-                              $Status = 5;
+                              $DbStatus = 5;
                               switch (strtolower ($Status['result']['status']))
                               {
                                     case 'complete':
-                                          $Status = 0;
+                                          $DbStatus = 0;
                                           break;
                                     case 'active':
-                                          $Status = 1;
+                                          $DbStatus = 1;
                                           break;
                                     case 'waiting':
-                                          $Status = 2;
+                                          $DbStatus = 2;
                                           break;
                                     case 'paused':
-                                          $Status = 3;
+                                          $DbStatus = 3;
                                           break;
                                     case 'removed':
-                                          $Status = 4;
+                                          $DbStatus = 4;
                                           break;
                               }
                               
@@ -61,8 +61,8 @@ class DownloaderQueueController extends Controller
                               $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
-                                    $Status,
-                                    $AddURI["result"]
+                                    $DbStatus,
+                                    $GID
                               ));
                         }
                         die (json_encode (Array ('ERROR' => false, 'QUEUE' => $Queue)));
@@ -99,10 +99,10 @@ class DownloaderQueueController extends Controller
                         
                         if (strcmp ($Remove['result'], $_POST['GID']) == 0)
                         {
-                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET IS_DELETED = ?, STATUS = ? WHERE GID = ?';
+                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
-                                    1, 4,
+                                    4,
                                     $_POST['GID']
                               ));
                               
