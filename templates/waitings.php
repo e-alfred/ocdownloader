@@ -4,13 +4,7 @@
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">
-        <ul>
-            <li data-id="add"><a href="add">Add Download</a></li>
-            <li data-id="actives"><a href="actives">Active Downloads</a></li>
-            <li data-id="waiting" class="active"><a href="waitings">Waiting Downloads</a></li>
-            <li data-id="stopped"><a href="stopped">Stopped Downloads</a></li>
-            <li data-id="removed"><a href="removed">Removed Downloads</a></li>
-        </ul>
+        <?php print_unescaped($this->inc('part.navigation')); ?>
     </div>
     <div id="app-content">
         <div id="app-content-wrapper">

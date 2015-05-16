@@ -22,7 +22,7 @@ class IndexController extends Controller
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (4, 0));
             
-            return new TemplateResponse ('ocdownloader', 'add', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
+            return new TemplateResponse ('ocdownloader', 'add', [ 'PAGE' => 0, 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
       
       /**
@@ -35,7 +35,7 @@ class IndexController extends Controller
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (1, 0));
             
-            return new TemplateResponse('ocdownloader', 'actives', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
+            return new TemplateResponse('ocdownloader', 'actives', [ 'PAGE' => 1, 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
       
       /**
@@ -48,7 +48,7 @@ class IndexController extends Controller
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (2, 0));
             
-            return new TemplateResponse('ocdownloader', 'waitings', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
+            return new TemplateResponse('ocdownloader', 'waitings', [ 'PAGE' => 2, 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
       
       /**
@@ -61,7 +61,7 @@ class IndexController extends Controller
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (3, 0));
             
-            return new TemplateResponse('ocdownloader', 'stopped', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
+            return new TemplateResponse('ocdownloader', 'stopped', [ 'PAGE' => 3, 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
       
       /**
@@ -74,6 +74,6 @@ class IndexController extends Controller
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (4, 0));
             
-            return new TemplateResponse('ocdownloader', 'removed', [ 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
+            return new TemplateResponse('ocdownloader', 'removed', [ 'PAGE' => 4, 'NBELT' => $Query->rowCount(), 'QUEUE' => $Result ]);
       }
 }
