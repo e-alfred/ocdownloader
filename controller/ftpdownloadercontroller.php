@@ -38,6 +38,10 @@ class FtpDownloaderController extends Controller
                               $OPTIONS['ftp-user'] = $_POST['OPTIONS']['FTPUser'];
                               $OPTIONS['ftp-passwd'] = $_POST['OPTIONS']['FTPPasswd'];
                         }
+                        if (isset ($_POST['OPTIONS']['FTPPasv']) && strlen (trim ($_POST['OPTIONS']['FTPPasv'])) > 0)
+                        {
+                              $OPTIONS['ftp-pasv'] = strcmp ($_POST['OPTIONS']['FTPPasv'], "true") == 0 ? true : false;
+                        }
                         
                         $Aria2 = new Aria2();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);
