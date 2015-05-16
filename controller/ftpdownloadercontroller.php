@@ -32,13 +32,15 @@ class FtpDownloaderController extends Controller
             {
                   try
                   {
+                        $OPTIONS = Array ('dir' => $this->UserStorage);
+                        if (isset ($_POST['OPTIONS']['FTPUser']) && strlen (trim ($_POST['OPTIONS']['FTPUser'])) > 0 && isset ($_POST['OPTIONS']['FTPPasswd']) && strlen (trim ($_POST['OPTIONS']['FTPPasswd'])) > 0)
+                        {
+                              $OPTIONS['ftp-user'] = $_POST['OPTIONS']['FTPUser'];
+                              $OPTIONS['ftp-passwd'] = $_POST['OPTIONS']['FTPPasswd'];
+                        }
+                        
                         $Aria2 = new Aria2();
-                        $AddURI = $Aria2->addUri (Array ($_POST['URL']), Array (
-                              'dir' => $this->UserStorage,
-                              'ftp-user' => $_POST['OPTIONS']['FTPUser'],
-                              'ftp-passwd' => $_POST['OPTIONS']['FTPPasswd'],
-                              'ftp-pasv' => $_POST['OPTIONS']['FTPPasv']
-                        ));
+                        $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);
                         
                         $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS) VALUES (?, ?, ?, ?)';
                         $Query = \OCP\DB::prepare ($SQL);
