@@ -32,11 +32,14 @@ class HttpDownloaderController extends Controller
             {
                   try
                   {
+                        $OPTIONS = Array ('dir' => $this->UserStorage);
+                        if (isset ($_POST['OPTIONS']['CheckCertificate']) && strlen (trim ($_POST['OPTIONS']['CheckCertificate'])) > 0)
+                        {
+                              $OPTIONS['check-certificate'] = strcmp ($_POST['OPTIONS']['CheckCertificate'], "true") == 0 ? true : false;
+                        }
+                        
                         $Aria2 = new Aria2();
-                        $AddURI = $Aria2->addUri (Array ($_POST['URL']), Array (
-                              'dir' => $this->UserStorage,
-                              'check-certificate' => strcmp ($_POST['OPTIONS']['CheckCertificate'], "true") == 0 ? true : false
-                        ));
+                        $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);
                         
                         $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS) VALUES (?, ?, ?, ?)';
                         $Query = \OCP\DB::prepare ($SQL);
