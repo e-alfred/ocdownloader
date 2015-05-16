@@ -3,12 +3,12 @@
 	<id>ocdownloader</id>
 	<name>ocDownloader</name>
 	<description>Easy to use downloader client. ocDownloader now uses Aria2 to allow downloading via HTTP(S), FTP</description>
-	<version>0.1</version>
+	<version>0.2.1</version>
 	<licence>AGPL</licence>
 	<author>Xavier Beurois</author>
-	<website>http://www.owncloud.org</website>
-	<bugs>http://github.com/owncloud/theapp/issues</bugs>
-	<repository type="git">http://github.com/owncloud/theapp.git</repository>
+	<website>http://www.sgc-univ.net</website>
+	<bugs>https://github.com/DjazzLab/ocdownloader/issues</bugs>
+	<repository type="git">https://github.com/DjazzLab/ocdownloader.git</repository>
 	<dependencies>
 		<owncloud min-version="8.0" max-version="8.0" />
 		<php min-version="5.4" max-version="5.6" />
