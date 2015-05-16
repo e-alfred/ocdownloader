@@ -18,7 +18,7 @@ class IndexController extends Controller
        */
       public function add ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS != ? AND IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE (STATUS != ? OR STATUS IS NULL) AND IS_DELETED = ?';
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (4, 0));
             

@@ -20,7 +20,7 @@ class Aria2
         $this->Server = $Server;
         $this->CurlHandler = curl_init ($this->Server);
         
-        curl_setopt_array ($this->CurlHandler, array (
+        curl_setopt_array ($this->CurlHandler, Array (
             CURLOPT_POST            => true,
             CURLOPT_RETURNTRANSFER  => true,
             CURLOPT_HEADER          => false
@@ -34,9 +34,9 @@ class Aria2
     
     public function __call ($Name, $Arg)
     {
-        $Data = array (
+        $Data = Array (
             'jsonrpc'   => '2.0',
-            'id'        => '1',
+            'id'        => 'ocdownloader',
             'method'    => 'aria2.' . $Name,
             'params'    =>  $Arg
         );

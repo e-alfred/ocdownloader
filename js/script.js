@@ -124,19 +124,18 @@ $(document).ready (function()
 	$('.ocd .content-page[rel=OCDHTTP] div.launch').bind ('click', function ()
 	{
 		var URL = $('.ocd .content-page[rel=OCDHTTP] input.url').val ();
-		$('.ocd .content-page[rel=OCDHTTP] input.url').val ('');
 		
 		if (ValidURL (URL))
 		{
-			var OPTIONS = {
-				CheckCertificate: $('#option-check-cert').prop('checked')
-			};
+			/*var OPTIONS = {
+				
+			};*/
 			
 			$.ajax({
 		        url: OC.generateUrl ('/apps/ocdownloader/httpdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
-				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
+				data: {'URL' : URL/*, 'OPTIONS' : OPTIONS*/},
 		        async: true,
 		        cache: false,
 		        timeout: 30000,
@@ -149,18 +148,21 @@ $(document).ready (function()
 					else
 					{
 						PrintInfo(Data.MESSAGE + ' (' + Data.GID + ')');
+						
+						$('.ocd .content-queue > table > tbody').prepend('<tr data-rel="' + Data.GID + '">' + 
+							'<td data-rel="NAME">' + Data.NAME + '</td>' +
+							'<td data-rel="PROTO" class="border">' + Data.PROTO + '</td>' +
+							'<td data-rel="MESSAGE" class="border">' + Data.MESSAGE + '</td>' +
+							'<td data-rel="STATUS" class="border">Waiting</td>' +
+							'<td data-rel="ACTION"><div class="icon-delete svg"></div></td>' +
+							'</tr>'
+						);
+						
+						SetupRemoverFromQueue ();
+						
+						$('.ocd .content-page[rel=OCDHTTP] input[type="text"]').val ('');
+						$('.ocd .content-page[rel=OCDHTTP] input[type="password"]').val ('');
 					}
-					
-					$('.ocd .content-queue > table > tbody').prepend('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="NAME">' + Data.NAME + '</td>' +
-						'<td data-rel="PROTO" class="border">' + Data.PROTO + '</td>' +
-						'<td data-rel="MESSAGE" class="border">' + Data.MESSAGE + '</td>' +
-						'<td data-rel="STATUS" class="border">Waiting</td>' +
-						'<td data-rel="ACTION"><div class="icon-delete svg"></div></td>' +
-						'</tr>'
-					);
-					
-					SetupRemoverFromQueue ();
 		        }
 		    });
 		}
@@ -174,7 +176,6 @@ $(document).ready (function()
 	$('.ocd .content-page[rel=OCDFTP] div.launch').bind ('click', function ()
 	{
 		var URL = $('.ocd .content-page[rel=OCDFTP] input.url').val ();
-		$('.ocd .content-page[rel=OCDFTP] input.url').val ('');
 		
 		if (ValidURL (URL))
 		{
@@ -213,6 +214,11 @@ $(document).ready (function()
 					);
 					
 					SetupRemoverFromQueue ();
+					
+					// Reset form field
+					$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
+					$('.ocd .content-page[rel=OCDFTP] input[type="password"]').val ('');
+					$('#option-ftp-pasv').prop('checked', true);
 		        }
 		    });
 		}

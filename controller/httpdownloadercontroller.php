@@ -28,15 +28,15 @@ class HttpDownloaderController extends Controller
       public function add ()
       {
             $Tools = new Tools();
-            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && $Tools->CheckURL ($_POST['URL']) && isset ($_POST['OPTIONS']))
+            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && $Tools->CheckURL ($_POST['URL'])/* && isset ($_POST['OPTIONS'])*/)
             {
                   try
                   {
                         $OPTIONS = Array ('dir' => $this->UserStorage);
-                        if (isset ($_POST['OPTIONS']['CheckCertificate']) && strlen (trim ($_POST['OPTIONS']['CheckCertificate'])) > 0)
+                        /*if (isset ($_POST['OPTIONS']['CheckCertificate']) && strlen (trim ($_POST['OPTIONS']['CheckCertificate'])) > 0 && strcmp ($_POST['OPTIONS']['CheckCertificate'], 'false') == 0)
                         {
-                              $OPTIONS['check-certificate'] = strcmp ($_POST['OPTIONS']['CheckCertificate'], "true") == 0 ? true : false;
-                        }
+                              $OPTIONS['check-certificate'] = false;
+                        }*/
                         
                         $Aria2 = new Aria2();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);

@@ -93,7 +93,7 @@ class DownloaderQueueController extends Controller
                         $Status = $Aria2->tellStatus ($_POST['GID']);
                         
                         $Remove['result'] = $_POST['GID'];
-                        if (strcmp (strtolower ($Status['result']['status']), 'complete') != 0 && strcmp ($Status['result']['status'], 'error') != 0)
+                        if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
                         {
                               $Remove = $Aria2->remove ($_POST['GID']);
                         }

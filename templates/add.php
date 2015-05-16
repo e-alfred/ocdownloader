@@ -41,9 +41,6 @@
                 <input type="text" placeholder="HTTP URL to download" class="form-control url" />
                 <div class="jumbotron">
                     <h5>Options</h5>
-                    <div class="group-option">
-                        <label for="option-check-cert">Check certificate :</label><input type="checkbox" id="option-check-cert" checked /> 
-                    </div>
                 </div>
             </div>
             <div class="content-page" rel="OCDFTP" style="display:none;">
