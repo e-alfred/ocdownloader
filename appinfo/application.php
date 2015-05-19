@@ -45,6 +45,16 @@ class Application extends App
 	      	);
 	    });
 		
+		$container->registerService('FtpDownloaderController', function($c)
+		{
+	      	return new HttpDownloaderController
+			(
+		        $c->query('AppName'),
+		        $c->query('Request'),
+				$c->query('UserStorage')
+	      	);
+	    });
+		
 		$container->registerService('DownloaderQueueController', function($c)
 		{
 	      	return new DownloaderQueueController

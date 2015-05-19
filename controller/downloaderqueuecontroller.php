@@ -10,6 +10,8 @@ use \OCA\ocDownloader\Controller\Lib\Tools;
 
 class DownloaderQueueController extends Controller
 {
+      private $UserStorage = null;
+      
       public function __construct ($AppName, IRequest $Request)
       {
             parent::__construct($AppName, $Request);

@@ -4,21 +4,19 @@ namespace OCA\ocDownloader\Controller;
 use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
-use \OCP\IUser;
 use \OCP\Config;
-use \OC\Files\Filesystem;
 
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
 
 class HttpDownloaderController extends Controller
 {
-      private $UserStorage;
+      private $TargetFolder;
       
       public function __construct ($AppName, IRequest $Request, $UserStorage)
       {
             parent::__construct ($AppName, $Request);
-            $this->UserStorage = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
+            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
       }
       
       /**
@@ -32,11 +30,13 @@ class HttpDownloaderController extends Controller
             {
                   try
                   {
-                        $OPTIONS = Array ('dir' => $this->UserStorage);
-                        /*if (isset ($_POST['OPTIONS']['CheckCertificate']) && strlen (trim ($_POST['OPTIONS']['CheckCertificate'])) > 0 && strcmp ($_POST['OPTIONS']['CheckCertificate'], 'false') == 0)
-                        {
-                              $OPTIONS['check-certificate'] = false;
-                        }*/
+                        $Target = substr($_POST['URL'], strrpos($_POST['URL'], '/') + 1);
+                        
+                        // Create the target file
+                        \OC\Files\Filesystem::touch ($Target);
+                        
+                        // Download in the user root folder
+                        $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $Target);
                         
                         $Aria2 = new Aria2();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);

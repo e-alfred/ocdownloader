@@ -4,21 +4,18 @@ namespace OCA\ocDownloader\Controller;
 use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
-use \OCP\IUser;
-use \OCP\Config;
-use \OC\Files\Filesystem;
 
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
 
 class FtpDownloaderController extends Controller
 {
-      private $UserStorage;
+      private $TargetFolder;
       
       public function __construct ($AppName, IRequest $Request, $UserStorage)
       {
             parent::__construct ($AppName, $Request);
-            $this->UserStorage = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
+            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
       }
       
       /**
@@ -32,7 +29,13 @@ class FtpDownloaderController extends Controller
             {
                   try
                   {
-                        $OPTIONS = Array ('dir' => $this->UserStorage);
+                        $Target = substr($_POST['URL'], strrpos($_POST['URL'], '/') + 1);
+                        
+                        // Create the target file
+                        \OC\Files\Filesystem::touch ($Target);
+                        
+                        // Download in the /tmp folder
+                        $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $Target);
                         if (isset ($_POST['OPTIONS']['FTPUser']) && strlen (trim ($_POST['OPTIONS']['FTPUser'])) > 0 && isset ($_POST['OPTIONS']['FTPPasswd']) && strlen (trim ($_POST['OPTIONS']['FTPPasswd'])) > 0)
                         {
                               $OPTIONS['ftp-user'] = $_POST['OPTIONS']['FTPUser'];
