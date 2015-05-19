@@ -32,6 +32,12 @@ class HttpDownloaderController extends Controller
                   {
                         $Target = substr($_POST['URL'], strrpos($_POST['URL'], '/') + 1);
                         
+                        // If target file exists, create a new one
+                        if (\OC\Files\Filesystem::file_exists ($Target))
+                        {
+                              $Target = $Target . '.' . time ();
+                        }
+                        
                         // Create the target file
                         \OC\Files\Filesystem::touch ($Target);
                         
@@ -45,12 +51,12 @@ class HttpDownloaderController extends Controller
                         $Query = \OCP\DB::prepare ($SQL);
                         $Result = $Query->execute (Array (
                               $AddURI["result"],
-                              substr($_POST['URL'], strrpos($_POST['URL'], '/') + 1),
+                              $Target,
                               strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))),
                               1
                         ));
                         
-                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => substr($_POST['URL'], strrpos($_POST['URL'], '/') + 1), 'GID' => $AddURI["result"], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))))));
+                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => $Target, 'GID' => $AddURI["result"], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))))));
                   }
                   catch (Exception $E)
                   {
