@@ -26,6 +26,7 @@ $Application->registerRoutes($this, array(
         
         // DownloaderQueueController
         ['name' => 'downloaderqueue#get', 'url' => '/downloadergetqueue', 'verb' => 'POST'],
-        ['name' => 'downloaderqueue#remove', 'url' => '/downloaderremovequeue', 'verb' => 'POST']
+        ['name' => 'downloaderqueue#remove', 'url' => '/downloaderremovequeue', 'verb' => 'POST'],
+        ['name' => 'downloaderqueue#totalremove', 'url' => '/downloadertotalremove', 'verb' => 'POST']
     ]
 ));

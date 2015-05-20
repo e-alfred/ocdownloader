@@ -145,5 +145,48 @@ class DownloaderQueueController extends Controller
                   die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
             }
       }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function totalremove ()
+      {
+            try
+            {
+                  if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
+                  {
+                        $Aria2 = new Aria2();
+                        $Status = $Aria2->tellStatus ($_POST['GID']);
+                        
+                        if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'removed') == 0)
+                        {
+                              $Remove = $Aria2->removeDownloadResult ($_POST['GID']);
+                        }
+                        
+                        $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET IS_DELETED = ? WHERE GID = ?';
+                        if ($this->DbType == 1)
+                        {
+                              $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_DELETED" = ? WHERE "GID" = ?';
+                        }
+      
+                        $Query = \OCP\DB::prepare ($SQL);
+                        $Result = $Query->execute (Array (
+                              1,
+                              $_POST['GID']
+                        ));
+                        
+                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'The download has been totally removed')));
+                  }
+                  else
+                  {
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Bad GID')));
+                  }
+            }
+            catch (Exception $E)
+            {
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+            }
+      }
 }
 ?>

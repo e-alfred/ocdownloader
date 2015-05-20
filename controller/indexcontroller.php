@@ -45,10 +45,10 @@ class IndexController extends Controller
        */
       public function actives ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
             if ($this->DbType == 1)
             {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
             }
             
             $Query = \OCP\DB::prepare ($SQL);
@@ -63,10 +63,10 @@ class IndexController extends Controller
        */
       public function waitings ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
             if ($this->DbType == 1)
             {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
             }
             
             $Query = \OCP\DB::prepare ($SQL);
@@ -81,10 +81,10 @@ class IndexController extends Controller
        */
       public function stopped ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
             if ($this->DbType == 1)
             {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
             }
             
             $Query = \OCP\DB::prepare ($SQL);
@@ -99,10 +99,10 @@ class IndexController extends Controller
        */
       public function removed ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
             if ($this->DbType == 1)
             {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
             }
             
             $Query = \OCP\DB::prepare ($SQL);
