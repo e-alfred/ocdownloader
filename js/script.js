@@ -45,8 +45,9 @@ function GetDownloaderQueue(){
 				{
 					$.each(Data.QUEUE, function (Index, Value)
 					{
-						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"]').text('Progress: ' + Value.PROGRESS);
-						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text(Value.STATUS);
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text ('Progress: ' + Value.PROGRESS);
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text (Value.STATUS);
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL + '%');
 					});
 				}
 				
@@ -150,11 +151,11 @@ $(document).ready (function()
 						PrintInfo(Data.MESSAGE + ' (' + Data.GID + ')');
 						
 						$('.ocd .content-queue > table > tbody').prepend('<tr data-rel="' + Data.GID + '">' + 
-							'<td data-rel="NAME">' + Data.NAME + '</td>' +
-							'<td data-rel="PROTO" class="border">' + Data.PROTO + '</td>' +
-							'<td data-rel="MESSAGE" class="border">' + Data.MESSAGE + '</td>' +
-							'<td data-rel="STATUS" class="border">Waiting</td>' +
-							'<td data-rel="ACTION"><div class="icon-delete svg"></div></td>' +
+							'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+							'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 							'</tr>'
 						);
 						
@@ -205,11 +206,11 @@ $(document).ready (function()
 					}
 					
 					$('.ocd .content-queue > table > tbody').prepend('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="NAME">' + Data.NAME + '</td>' +
-						'<td data-rel="PROTO" class="border">' + Data.PROTO + '</td>' +
-						'<td data-rel="MESSAGE" class="border">' + Data.MESSAGE + '</td>' +
-						'<td data-rel="STATUS" class="border">Waiting</td>' +
-						'<td data-rel="ACTION"><div class="icon-delete svg"></div></td>' +
+						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 						'</tr>'
 					);
 					

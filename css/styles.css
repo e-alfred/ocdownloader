@@ -165,11 +165,32 @@
   border-left: 1px solid #ddd;
 }
 .ocd .content-queue > table > tbody > tr > td {
-  padding: 2px 0 2px 5px;
   border-bottom: 1px solid #eee;
 }
 .ocd .content-queue > table > tbody > tr > td.border {
   border-left: 1px solid #eee;
+}
+.ocd .content-queue > table > tbody > tr > td.padding {
+  padding: 2px 0 2px 5px;
+}
+.ocd .content-queue > table > tbody > tr > td .pb-wrap{
+  position: relative;
+}
+.ocd .content-queue > table > tbody > tr > td .pb-wrap,
+.ocd .content-queue > table > tbody > tr > td .pb-value,
+.ocd .content-queue > table > tbody > tr > td .pb-text {
+  width: 100%;
+  height: 25px;
+}
+.ocd .content-queue > table > tbody > tr > td .pb-value {
+    background: rgba(8, 75, 138, 0.3) top left no-repeat;
+}
+.ocd .content-queue > table > tbody > tr > td .pb-text {
+  position: absolute;
+  top:0; 
+  left:0;
+  padding: 2px 0 2px 5px;
+  width: 100%;
 }
 .ocd .content-queue > table > tbody > tr > td > div.svg {
   width: 2em;

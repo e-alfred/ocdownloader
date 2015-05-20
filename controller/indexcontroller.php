@@ -4,12 +4,21 @@ namespace OCA\ocDownloader\Controller;
 use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
+use \OCP\Config;
 
 class IndexController extends Controller
 {
+      private $DbType;
+      
       public function __construct ($AppName, IRequest $Request)
       {
             parent::__construct($AppName, $Request);
+            
+            $this->DbType = 0;
+            if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
+            {
+                  $this->DbType = 1;
+            }
       }
 
       /**
@@ -18,7 +27,12 @@ class IndexController extends Controller
        */
       public function add ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE (STATUS != ? OR STATUS IS NULL) AND IS_DELETED = ?';
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE (STATUS != ? OR STATUS IS NULL) AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
+            if ($this->DbType == 1)
+            {
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE ("STATUS" != ? OR "STATUS" IS NULL) AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
+            }
+            
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (4, 0));
             
@@ -32,6 +46,11 @@ class IndexController extends Controller
       public function actives ()
       {
             $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            if ($this->DbType == 1)
+            {
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+            }
+            
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (1, 0));
             
@@ -45,6 +64,11 @@ class IndexController extends Controller
       public function waitings ()
       {
             $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            if ($this->DbType == 1)
+            {
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+            }
+            
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (2, 0));
             
@@ -58,6 +82,11 @@ class IndexController extends Controller
       public function stopped ()
       {
             $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            if ($this->DbType == 1)
+            {
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+            }
+            
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (3, 0));
             
@@ -71,6 +100,11 @@ class IndexController extends Controller
       public function removed ()
       {
             $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ?';
+            if ($this->DbType == 1)
+            {
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ?';
+            }
+            
             $Query = \OCP\DB::prepare ($SQL);
             $Result = $Query->execute (Array (4, 0));
             

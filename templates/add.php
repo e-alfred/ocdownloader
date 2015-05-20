@@ -70,11 +70,17 @@
                     <tbody>
                     <?php while ($Row = $_['QUEUE']->fetchRow()): ?>
                         <tr data-rel="<?php print($Row['GID']); ?>">
-                            <td data-rel="NAME"><?php print($Row['FILENAME']); ?></td>
-                            <td data-rel="PROTO" class="border"><?php print($Row['PROTOCOL']); ?></td>
-                            <td data-rel="MESSAGE" class="border">N/A</td>
-                            <td data-rel="STATUS" class="border">N/A</td>
-                            <td data-rel="ACTION"><div class="icon-delete svg"></div></td>
+                            <td data-rel="NAME" class="padding"><?php print($Row['FILENAME']); ?></td>
+                            <td data-rel="PROTO" class="border padding"><?php print($Row['PROTOCOL']); ?></td>
+                            <td data-rel="MESSAGE" class="border">
+                                <div class="pb-wrap">
+                                    <div class="pb-value" style="width: 0%;">
+                                        <div class="pb-text">N/A</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-rel="STATUS" class="border padding">N/A</td>
+                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

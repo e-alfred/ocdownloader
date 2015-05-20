@@ -12,11 +12,18 @@ use \OCA\ocDownloader\Controller\Lib\Tools;
 class FtpDownloaderController extends Controller
 {
       private $TargetFolder;
+      private $DbType;
       
       public function __construct ($AppName, IRequest $Request, $UserStorage)
       {
             parent::__construct ($AppName, $Request);
             $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
+            
+            $this->DbType = 0;
+            if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
+            {
+                  $this->DbType = 1;
+            }
       }
       
       /**
@@ -56,13 +63,19 @@ class FtpDownloaderController extends Controller
                         $Aria2 = new Aria2();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);
                         
-                        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS) VALUES (?, ?, ?, ?)';
+                        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
+                        if ($this->DbType == 1)
+                        {
+                              $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?)';
+                        }
+                        
                         $Query = \OCP\DB::prepare ($SQL);
                         $Result = $Query->execute (Array (
                               $AddURI["result"],
                               $Target,
                               strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))),
-                              1
+                              1,
+                              time()
                         ));
                         
                         die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => $Target, 'GID' => $AddURI["result"], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))))));

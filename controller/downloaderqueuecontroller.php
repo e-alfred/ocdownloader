@@ -4,17 +4,25 @@ namespace OCA\ocDownloader\Controller;
 use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
+use \OCP\Config;
 
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
 
 class DownloaderQueueController extends Controller
 {
-      private $UserStorage = null;
+      private $UserStorage;
+      private $DbType;
       
       public function __construct ($AppName, IRequest $Request)
       {
             parent::__construct($AppName, $Request);
+            
+            $this->DbType = 0;
+            if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
+            {
+                  $this->DbType = 1;
+            }
       }
 
       /**
@@ -35,6 +43,7 @@ class DownloaderQueueController extends Controller
                               $Status = $Aria2->tellStatus ($GID);
                               $Queue[] = Array (
                                     'GID' => $GID,
+                                    'PROGRESSVAL' => round((($Status['result']['completedLength'] / $Status['result']['totalLength']) * 100), 2),
                                     'PROGRESS' => $Tools->GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
                                     'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A'
                               );
@@ -61,6 +70,11 @@ class DownloaderQueueController extends Controller
                               
                               
                               $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ? AND (STATUS != ? OR STATUS IS NULL)';
+                              if ($this->DbType == 1)
+                              {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ? AND ("STATUS" != ? OR "STATUS" IS NULL)';
+                              }
+                              
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     $DbStatus,
@@ -103,6 +117,11 @@ class DownloaderQueueController extends Controller
                         if (strcmp ($Remove['result'], $_POST['GID']) == 0)
                         {
                               $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
+                              if ($this->DbType == 1)
+                              {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ?';
+                              }
+            
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     4,
