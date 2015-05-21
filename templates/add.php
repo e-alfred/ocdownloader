@@ -35,6 +35,10 @@
                 <input type="text" placeholder="HTTP URL to download" class="form-control url" />
                 <div class="jumbotron">
                     <h5>Options</h5>
+                    <div class="group-option">
+                        <label for="option-http-user">Basic Auth User :</label><input type="text" id="option-http-user" placeholder="Username" />
+                        <label for="option-http-pwd">Basic Auth Password :</label><input type="password" id="option-http-pwd" placeholder="Password" /> 
+                    </div>
                 </div>
             </div>
             <div class="content-page" rel="OCDFTP" style="display:none;">

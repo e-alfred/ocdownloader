@@ -50,6 +50,11 @@ class HttpDownloaderController extends Controller
                         
                         // Download in the user root folder
                         $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $Target);
+                        if (isset ($_POST['OPTIONS']['HTTPUser']) && strlen (trim ($_POST['OPTIONS']['HTTPUser'])) > 0 && isset ($_POST['OPTIONS']['HTTPPasswd']) && strlen (trim ($_POST['OPTIONS']['HTTPPasswd'])) > 0)
+                        {
+                              $OPTIONS['http-user'] = $_POST['OPTIONS']['HTTPUser'];
+                              $OPTIONS['http-passwd'] = $_POST['OPTIONS']['HTTPPasswd'];
+                        }
                         
                         $Aria2 = new Aria2();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);

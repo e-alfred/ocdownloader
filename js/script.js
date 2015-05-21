@@ -128,15 +128,16 @@ $(document).ready (function()
 		
 		if (ValidURL (URL))
 		{
-			/*var OPTIONS = {
-				
-			};*/
+			var OPTIONS = {
+				HTTPUser: $('#option-http-user').val (),
+				HTTPPasswd: $('#option-http-pwd').val ()
+			};
 			
 			$.ajax({
 		        url: OC.generateUrl ('/apps/ocdownloader/httpdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
-				data: {'URL' : URL/*, 'OPTIONS' : OPTIONS*/},
+				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
 		        async: true,
 		        cache: false,
 		        timeout: 30000,
@@ -144,13 +145,13 @@ $(document).ready (function()
 				{
 		            if (Data.ERROR)
 					{
-						PrintError(Data.MESSAGE);
+						PrintError (Data.MESSAGE);
 					}
 					else
 					{
-						PrintInfo(Data.MESSAGE + ' (' + Data.GID + ')');
+						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
 						
-						$('.ocd .content-queue > table > tbody').prepend('<tr data-rel="' + Data.GID + '">' + 
+						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
 							'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
 							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
@@ -181,9 +182,9 @@ $(document).ready (function()
 		if (ValidURL (URL))
 		{
 			var OPTIONS = {
-				FTPUser: $('#option-ftp-user').val(),
-				FTPPasswd: $('#option-ftp-pwd').val(),
-				FTPPasv: $('#option-ftp-pasv').prop('checked')
+				FTPUser: $('#option-ftp-user').val (),
+				FTPPasswd: $('#option-ftp-pwd').val (),
+				FTPPasv: $('#option-ftp-pasv').prop ('checked')
 			};
 			
 			$.ajax({
@@ -198,14 +199,14 @@ $(document).ready (function()
 				{
 		            if (Data.ERROR)
 					{
-						PrintError(Data.MESSAGE);
+						PrintError (Data.MESSAGE);
 					}
 					else
 					{
-						PrintInfo(Data.MESSAGE + ' (' + Data.GID + ')');
+						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
 					}
 					
-					$('.ocd .content-queue > table > tbody').prepend('<tr data-rel="' + Data.GID + '">' + 
+					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
 						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
@@ -219,7 +220,7 @@ $(document).ready (function()
 					// Reset form field
 					$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
 					$('.ocd .content-page[rel=OCDFTP] input[type="password"]').val ('');
-					$('#option-ftp-pasv').prop('checked', true);
+					$('#option-ftp-pasv').prop ('checked', true);
 		        }
 		    });
 		}
