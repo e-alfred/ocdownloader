@@ -49,6 +49,9 @@
   font-size: 12px;
   margin-left: 1em;
 }
+.ocd .pull-right {
+  float: right;
+}
 .ocd #controls {
   position: static;
   height: 46px;
@@ -131,6 +134,11 @@
 }
 .ocd .content-page > h3 > span.alert {
   color: #B40404;
+}
+.ocd span.highalert {
+  background-color: #B40404;
+  color: #FFFFFF;
+  padding: 5px;
 }
 .ocd .content-page > h3 > span.success {
   color: #298A08;

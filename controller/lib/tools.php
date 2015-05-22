@@ -32,7 +32,7 @@ class Tools
 		return $CompletedStr . ' / ' . $TotalStr . ' (' . round((($Completed / $Total) * 100), 2) . '%)';
 	}
 	
-	public function FormatSizeUnits($Bytes)
+	public function FormatSizeUnits ($Bytes)
     {
         if ($Bytes >= 1073741824)
         {
@@ -52,6 +52,17 @@ class Tools
         }
 
         return $Bytes;
+	}
+	
+	public function IsAria2cDaemonRunning ()
+	{
+		exec ('pgrep aria2c', $Output, $Return);
+		
+		if ($Return == 0)
+		{
+		    return true;
+		}
+		return false;
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
     style('ocdownloader', 'styles');
-    script('ocdownloader', 'remove');
+    if ($_['ARIA2']) script('ocdownloader', 'remove');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">
@@ -14,7 +14,11 @@
             </div>
             <div id="controls">
                 <div class="actions">
-                    <div id="loadtext" style="<?php print($_['NBELT'] > 0 ? 'display: block;' : 'display: none;'); ?>">Loading ...</div>
+                    <?php if ($_['ARIA2']): ?>
+                    <div id="loadtext" style="<?php print ($_['NBELT'] > 0 ? 'display: block;' : 'display: none;'); ?>">Loading ...</div>
+                    <?php else: ?>
+                    <span class="muted pull-right highalert">ARIA2 is not running !</span>
+                    <?php endif; ?>
                 </div>
                 <div class="righttitle">Removed Downloads</div>
             </div>

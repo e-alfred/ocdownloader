@@ -1,10 +1,10 @@
 <?php
     style('ocdownloader', 'styles');
-    script('ocdownloader', 'script');
+    if ($_['ARIA2']) script('ocdownloader', 'script');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">
-        <?php print_unescaped($this->inc('part.navigation')); ?>
+        <?php print_unescaped($this->inc ('part.navigation')); ?>
     </div>
     <div id="app-content">
         <div id="app-content-wrapper">
@@ -21,16 +21,20 @@
         					<li><p data-rel="OCDFTP">FTP</p></li>
         				</ul>
         			</div>
-                    <div id="loadtext"<?php print($_['NBELT'] > 0 ? '' : ' style="display: none;"'); ?>>Loading ...</div>
+                    <div id="loadtext"<?php print ($_['NBELT'] > 0 ? '' : ' style="display: none;"'); ?>>Loading ...</div>
                 </div>
                 <div class="righttitle">Add Download</div>
             </div>
             <div class="content-page" rel="OCDHTTP">
                 <h3>
                     New HTTP download<span class="muted add-msg"></span>
+                    <?php if ($_['ARIA2']): ?>
                     <div class="button launch">
         				<a>Launch HTTP Download</a>
                     </div>
+                    <?php else: ?>
+                    <span class="muted pull-right highalert">ARIA2 is not running !</span>
+                    <?php endif; ?>
                 </h3>
                 <input type="text" placeholder="HTTP URL to download" class="form-control url" />
                 <div class="jumbotron">
