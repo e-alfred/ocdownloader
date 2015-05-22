@@ -3,7 +3,7 @@
 	<id>ocdownloader</id>
 	<name>ocDownloader</name>
 	<description>Easy to use downloader client. ocDownloader now uses Aria2 to allow downloading via HTTP(S), FTP</description>
-	<version>0.4.1</version>
+	<version>0.4.2</version>
 	<licence>AGPL</licence>
 	<author>Xavier Beurois</author>
 	<website>http://www.sgc-univ.net</website>

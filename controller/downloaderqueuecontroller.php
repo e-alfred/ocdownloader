@@ -51,11 +51,13 @@ class DownloaderQueueController extends Controller
                         foreach ($_POST['GIDS'] as $GID)
                         {
                               $Status = $Aria2->tellStatus ($GID);
+                              
                               $Queue[] = Array (
                                     'GID' => $GID,
                                     'PROGRESSVAL' => round((($Status['result']['completedLength'] / $Status['result']['totalLength']) * 100), 2),
                                     'PROGRESS' => $Tools->GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
-                                    'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A'
+                                    'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A',
+                                    'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? '--' : $Tools->FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
                               );
                               
                               $DbStatus = 5; // Error

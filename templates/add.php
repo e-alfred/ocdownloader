@@ -70,8 +70,9 @@
                         <tr>
                             <th width="20%">ID</th>
                             <th width="10%" class="border">PROTOCOL</th>
-                            <th width="40%" class="border">INFO</th>
-                            <th width="20%" class="border">STATUS</th>
+                            <th width="35%" class="border">INFO</th>
+                            <th width="10%" class="border">SPEED</th>
+                            <th width="15%" class="border">STATUS</th>
                             <th width="10%"></th>
                         </tr>
                     </thead>
@@ -87,6 +88,7 @@
                                     </div>
                                 </div>
                             </td>
+                            <td data-rel="SPEED" class="border padding">N/A</td>
                             <td data-rel="STATUS" class="border padding">N/A</td>
                             <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>
                         </tr>

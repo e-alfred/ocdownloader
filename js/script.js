@@ -46,8 +46,9 @@ function GetDownloaderQueue(){
 					$.each(Data.QUEUE, function (Index, Value)
 					{
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text ('Progress: ' + Value.PROGRESS);
-						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text (Value.STATUS);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL + '%');
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="SPEED"]').text (Value.SPEED);
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text (Value.STATUS);
 					});
 				}
 				
@@ -155,6 +156,7 @@ $(document).ready (function()
 							'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
 							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
 							'<td data-rel="STATUS" class="border padding">Waiting</td>' +
 							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 							'</tr>'
@@ -210,6 +212,7 @@ $(document).ready (function()
 						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
 						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
 						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 						'</tr>'
