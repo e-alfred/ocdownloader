@@ -1,4 +1,14 @@
 <?php
+/**
+ * ownCloud - ocDownloader
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the COPYING file.
+ *
+ * @author Xavier Beurois <www.sgc-univ.net>
+ * @copyright Xavier Beurois 2015
+ */
+
 namespace OCA\ocDownloader\Controller;
 
 use \OCP\IRequest;
@@ -47,6 +57,8 @@ class HttpDownloaderController extends Controller
                         
                         // Create the target file
                         \OC\Files\Filesystem::touch ($Target);
+                        // Create the aria2 file (file is automatically removed after download completion)
+                        \OC\Files\Filesystem::touch ($Target . '.aria2');
                         
                         // Download in the user root folder
                         $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $Target);

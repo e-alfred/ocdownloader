@@ -8,6 +8,7 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
+
 namespace OCA\ocDownloader\AppInfo;
 
 use \OCP\AppFramework\App;

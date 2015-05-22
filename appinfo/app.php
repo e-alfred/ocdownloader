@@ -15,6 +15,6 @@ namespace OCA\ocDownloader\AppInfo;
     'id' => 'ocdownloader',
     'order' => 10,
     'href' => \OCP\Util::linkToRoute('ocdownloader.index.add'),
-    'icon' => \OCP\Util::imagePath('ocdownloader', 'ocdownloader.png'),
+    'icon' => \OCP\Util::imagePath('ocdownloader', 'ocdownloader.svg'),
     'name' => 'ocDownloader'
 ]);
