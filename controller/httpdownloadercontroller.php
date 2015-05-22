@@ -57,8 +57,6 @@ class HttpDownloaderController extends Controller
                         
                         // Create the target file
                         \OC\Files\Filesystem::touch ($Target);
-                        // Create the aria2 file (file is automatically removed after download completion)
-                        \OC\Files\Filesystem::touch ($Target . '.aria2');
                         
                         // Download in the user root folder
                         $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $Target);
