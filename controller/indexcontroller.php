@@ -20,21 +20,21 @@ use \OCA\ocDownloader\Controller\Lib\Tools;
 
 class IndexController extends Controller
 {
-      private $DbType;
-      private $Aria2cDaemon;
+      private $DbType = 0;
+      private $Aria2cDaemon = null;
+      private $YouTubeDL = null;
       
       public function __construct ($AppName, IRequest $Request)
       {
             parent::__construct($AppName, $Request);
             
-            $this->DbType = 0;
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
                   $this->DbType = 1;
             }
             
-            $Tools = new Tools ();
-            $this->Aria2cDaemon = $Tools->IsAria2cDaemonRunning ();
+            $this->Aria2cDaemon = Tools::IsAria2cDaemonRunning ();
+            $this->YouTubeDL = Tools::YouTubeDLInstalled ();
       }
 
       /**
@@ -56,7 +56,8 @@ class IndexController extends Controller
                   'PAGE' => 0, 
                   'NBELT' => $Query->rowCount (), 
                   'QUEUE' => $Result,
-                  'ARIA2' => $this->Aria2cDaemon
+                  'ARIA2' => $this->Aria2cDaemon,
+                  'YTDL' => $this->YouTubeDL
             ]);
       }
       
@@ -79,7 +80,8 @@ class IndexController extends Controller
                   'PAGE' => 1,
                   'NBELT' => $Query->rowCount (),
                   'QUEUE' => $Result,
-                  'ARIA2' => $this->Aria2cDaemon
+                  'ARIA2' => $this->Aria2cDaemon,
+                  'YTDL' => $this->YouTubeDL
             ]);
       }
       

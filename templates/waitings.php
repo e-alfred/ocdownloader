@@ -1,10 +1,20 @@
 <?php
-    style('ocdownloader', 'styles');
-    if ($_['ARIA2']) script('ocdownloader', 'script');
+/**
+ * ownCloud - ocDownloader
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the COPYING file.
+ *
+ * @author Xavier Beurois <www.sgc-univ.net>
+ * @copyright Xavier Beurois 2015
+ */
+
+style ('ocdownloader', 'styles');
+if ($_['ARIA2']) script ('ocdownloader', 'script');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">
-        <?php print_unescaped($this->inc('part.navigation')); ?>
+        <?php print_unescaped ($this->inc ('part.navigation')); ?>
     </div>
     <div id="app-content">
         <div id="app-content-wrapper">
@@ -35,7 +45,7 @@
                     <tbody>
                     <?php while ($Row = $_['QUEUE']->fetchRow()): ?>
                         <tr data-rel="<?php print($Row['GID']); ?>">
-                            <td data-rel="NAME" class="padding"><?php print($Row['FILENAME']); ?></td>
+                            <td data-rel="NAME" class="padding"><?php print(strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']); ?></td>
                             <td data-rel="PROTO" class="border padding"><?php print($Row['PROTOCOL']); ?></td>
                             <td data-rel="MESSAGE" class="border">
                                 <div class="pb-wrap">

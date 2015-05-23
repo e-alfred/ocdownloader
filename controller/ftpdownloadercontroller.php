@@ -42,8 +42,7 @@ class FtpDownloaderController extends Controller
        */
       public function add ()
       {
-            $Tools = new Tools();
-            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && $Tools->CheckURL ($_POST['URL']) && isset ($_POST['OPTIONS']))
+            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && Tools::CheckURL ($_POST['URL']) && isset ($_POST['OPTIONS']))
             {
                   try
                   {

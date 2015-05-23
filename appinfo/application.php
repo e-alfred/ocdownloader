@@ -18,50 +18,69 @@ use \OCA\ocDownloader\Controller\DownloaderQueueController;
 
 class Application extends App
 {
-	public function __construct (array $URLParams = array())
+	public function __construct (array $URLParams = array ())
 	{
-		parent::__construct('ocdownloader', $URLParams);
+		parent::__construct ('ocdownloader', $URLParams);
 		
-		$container = $this->getContainer();
-		$container->registerService('IndexController', function($c)
+		$container = $this->getContainer ();
+		$container->registerService ('IndexController', function ($c)
 		{
 	      	return new IndexController
 			(
-		        $c->query('AppName'),
-		        $c->query('Request')
+		        $c->query ('AppName'),
+		        $c->query ('Request')
 	      	);
 	    });
 		
-		$container->registerService('UserStorage', function($c) {
-            return $c->query('ServerContainer')->getUserFolder();
+		$container->registerService ('UserStorage', function ($c) {
+            return $c->query ('ServerContainer')->getUserFolder ();
         });
 		
-		$container->registerService('HttpDownloaderController', function($c)
+		$container->registerService ('HttpDownloaderController', function ($c)
 		{
 	      	return new HttpDownloaderController
 			(
-		        $c->query('AppName'),
-		        $c->query('Request'),
-				$c->query('UserStorage')
+		        $c->query ('AppName'),
+		        $c->query ('Request'),
+				$c->query ('UserStorage')
 	      	);
 	    });
 		
-		$container->registerService('FtpDownloaderController', function($c)
+		$container->registerService ('FtpDownloaderController', function ($c)
 		{
-	      	return new HttpDownloaderController
+	      	return new FtpDownloaderController
 			(
-		        $c->query('AppName'),
-		        $c->query('Request'),
-				$c->query('UserStorage')
+		        $c->query ('AppName'),
+		        $c->query ('Request'),
+				$c->query ('UserStorage')
 	      	);
 	    });
 		
-		$container->registerService('DownloaderQueueController', function($c)
+		$container->registerService ('YTDownloaderController', function ($c)
+		{
+	      	return new YTDownloaderController
+			(
+		        $c->query ('AppName'),
+		        $c->query ('Request'),
+				$c->query ('UserStorage')
+	      	);
+	    });
+		
+		$container->registerService ('DownloaderQueueController', function ($c)
 		{
 	      	return new DownloaderQueueController
 			(
-		        $c->query('AppName'),
-		        $c->query('Request')
+		        $c->query ('AppName'),
+		        $c->query ('Request')
+	      	);
+	    });
+		
+		$container->registerService ('AdminSettingsController', function ($c)
+		{
+	      	return new AdminSettingsController
+			(
+		        $c->query ('AppName'),
+		        $c->query ('Request')
 	      	);
 	    });
 	}

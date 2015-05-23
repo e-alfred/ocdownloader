@@ -1,10 +1,20 @@
 <?php
-    style('ocdownloader', 'styles');
-    if ($_['ARIA2']) script('ocdownloader', 'script');
+/**
+ * ownCloud - ocDownloader
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the COPYING file.
+ *
+ * @author Xavier Beurois <www.sgc-univ.net>
+ * @copyright Xavier Beurois 2015
+ */
+
+style ('ocdownloader', 'styles');
+if ($_['ARIA2']) script ('ocdownloader', 'script');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">
-        <?php print_unescaped($this->inc ('part.navigation')); ?>
+        <?php print_unescaped ($this->inc ('part.navigation')); ?>
     </div>
     <div id="app-content">
         <div id="app-content-wrapper">
@@ -19,6 +29,7 @@
         				<ul>
         					<li><p data-rel="OCDHTTP">HTTP</p></li>
         					<li><p data-rel="OCDFTP">FTP</p></li>
+                            <li><p data-rel="OCDYT">YOUTUBE</p></li>
         				</ul>
         			</div>
                     <div id="loadtext"<?php print ($_['NBELT'] > 0 ? '' : ' style="display: none;"'); ?>>Loading ...</div>
@@ -48,9 +59,13 @@
             <div class="content-page" rel="OCDFTP" style="display:none;">
                 <h3>
                     New FTP download<span class="muted add-msg"></span>
+                    <?php if ($_['ARIA2']): ?>
                     <div class="button launch">
         				<a>Launch FTP Download</a>
                     </div>
+                    <?php else: ?>
+                    <span class="muted pull-right highalert">ARIA2 is not running !</span>
+                    <?php endif; ?>
                 </h3>
                 <input type="text" placeholder="FTP URL to download" class="form-control url" />
                 <div class="jumbotron">
@@ -62,6 +77,22 @@
                     <div class="group-option">
                         <label for="option-ftp-pasv">Passive Mode :</label><input type="checkbox" id="option-ftp-pasv" checked />
                     </div>
+                </div>
+            </div>
+            <div class="content-page" rel="OCDYT" style="display:none;">
+                <h3>
+                    New YouTube download<span class="muted add-msg"></span>
+                    <?php if ($_['YTDL']): ?>
+                    <div class="button launch">
+        				<a>Launch YouTube Download</a>
+                    </div>
+                    <?php else: ?>
+                    <span class="muted pull-right highalert">Unable to find YouTube-DL !</span>
+                    <?php endif; ?>
+                </h3>
+                <input type="text" placeholder="YouTube Video URL to download" class="form-control url" />
+                <div class="jumbotron">
+                    <h5>Options</h5>
                 </div>
             </div>
             <div class="content-queue">
@@ -79,7 +110,7 @@
                     <tbody>
                     <?php while ($Row = $_['QUEUE']->fetchRow()): ?>
                         <tr data-rel="<?php print($Row['GID']); ?>">
-                            <td data-rel="NAME" class="padding"><?php print($Row['FILENAME']); ?></td>
+                            <td data-rel="NAME" class="padding"><?php print(strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']); ?></td>
                             <td data-rel="PROTO" class="border padding"><?php print($Row['PROTOCOL']); ?></td>
                             <td data-rel="MESSAGE" class="border">
                                 <div class="pb-wrap">

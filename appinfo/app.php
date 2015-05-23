@@ -11,10 +11,13 @@
 
 namespace OCA\ocDownloader\AppInfo;
 
-\OCP\App::addNavigationEntry([
+\OCP\App::addNavigationEntry
+([
     'id' => 'ocdownloader',
     'order' => 10,
-    'href' => \OCP\Util::linkToRoute('ocdownloader.index.add'),
-    'icon' => \OCP\Util::imagePath('ocdownloader', 'ocdownloader.svg'),
+    'href' => \OCP\Util::linkToRoute ('ocdownloader.index.add'),
+    'icon' => \OCP\Template::image_path ('ocdownloader', 'ocdownloader.svg'),
     'name' => 'ocDownloader'
 ]);
+
+\OCP\App::registerAdmin('ocdownloader', 'settings-admin');

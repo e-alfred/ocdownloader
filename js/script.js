@@ -1,3 +1,13 @@
+/**
+ * ownCloud - ocDownloader
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the COPYING file.
+ *
+ * @author Xavier Beurois <www.sgc-univ.net>
+ * @copyright Xavier Beurois 2015
+ */
+ 
 // Check URL
 function ValidURL (URLString)
 {
@@ -46,9 +56,15 @@ function GetDownloaderQueue(){
 					$.each(Data.QUEUE, function (Index, Value)
 					{
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text ('Progress: ' + Value.PROGRESS);
-						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL + '%');
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="SPEED"]').text (Value.SPEED);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text (Value.STATUS);
+						
+						if (Value.GID.indexOf('YT_') === 0 && Value.STATUS == 'Complete')
+						{
+							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="ACTION"]').html ('<div class="icon-delete svg"></div>');
+							SetupRemoverFromQueue ();
+						}
 					});
 				}
 				
@@ -224,6 +240,67 @@ $(document).ready (function()
 					$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
 					$('.ocd .content-page[rel=OCDFTP] input[type="password"]').val ('');
 					$('#option-ftp-pasv').prop ('checked', true);
+		        }
+		    });
+		}
+		else
+		{
+			PrintError('Unvalid URL. Please check the address of the file ...');
+		}
+	});
+	
+	$('.ocd .content-page[rel=OCDYT] div.launch').bind ('click', function ()
+	{
+		var AddBtn = $(this);
+		AddBtn.prop('disabled', true);
+		AddBtn.empty();
+		AddBtn.addClass('icon-loading-small');
+		
+		var URL = $('.ocd .content-page[rel=OCDYT] input.url').val ();
+		
+		if (ValidURL (URL))
+		{
+			/*var OPTIONS = {
+			};*/
+			
+			$.ajax({
+		        url: OC.generateUrl ('/apps/ocdownloader/ytdownloaderadd'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'URL' : URL/*, 'OPTIONS' : OPTIONS*/},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+		            if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+					}
+					else
+					{
+						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+					}
+					
+					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+						'<td data-rel="ACTION" class="padding"></td>' +
+						'</tr>'
+					);
+					
+					SetupRemoverFromQueue ();
+					
+					// Reset form field
+					$('.ocd .content-page[rel=OCDYT] input[type="text"]').val ('');
+					
+					// Reset add button
+					AddBtn.prop('disabled', false);
+					AddBtn.html('<a>Launch YouTube Download</a>');
+					AddBtn.removeClass('icon-loading-small');
 		        }
 		    });
 		}

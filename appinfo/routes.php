@@ -28,9 +28,15 @@ $Application->registerRoutes($this, array(
         // FtpDownloaderController
         ['name' => 'ftpdownloader#add', 'url' => '/ftpdownloaderadd', 'verb' => 'POST'],
         
+        // YTDownloaderController
+        ['name' => 'ytdownloader#add', 'url' => '/ytdownloaderadd', 'verb' => 'POST'],
+        
         // DownloaderQueueController
         ['name' => 'downloaderqueue#get', 'url' => '/downloadergetqueue', 'verb' => 'POST'],
         ['name' => 'downloaderqueue#remove', 'url' => '/downloaderremovequeue', 'verb' => 'POST'],
-        ['name' => 'downloaderqueue#totalremove', 'url' => '/downloadertotalremove', 'verb' => 'POST']
+        ['name' => 'downloaderqueue#totalremove', 'url' => '/downloadertotalremove', 'verb' => 'POST'],
+        
+        // AdminSettingsController
+        ['name' => 'adminsettings#save', 'url' => '/adminsettings', 'verb' => 'POST']
     ]
 ));
