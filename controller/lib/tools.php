@@ -66,9 +66,9 @@ class Tools
 		return false;
 	}
 	
-	public static function YouTubeDLInstalled ()
+	public static function YouTubeDLInstalled ($YTBinary)
 	{
-		exec ('which youtube-dl', $Output, $Return);
+		exec ('which ' . $YTBinary, $Output, $Return);
 		
 		if ($Return == 0)
 		{

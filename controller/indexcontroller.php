@@ -23,6 +23,7 @@ class IndexController extends Controller
       private $DbType = 0;
       private $Aria2cDaemon = null;
       private $YouTubeDL = null;
+      private $Settings = null;
       
       public function __construct ($AppName, IRequest $Request)
       {
@@ -33,8 +34,20 @@ class IndexController extends Controller
                   $this->DbType = 1;
             }
             
+            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_adminsettings`';
+            if ($this->DbType == 1)
+            {
+                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_adminsettings';
+            }
+            $Query = \OCP\DB::prepare ($SQL);
+            $Result = $Query->execute ();
+            while ($Row = $Result->fetchRow())
+            {
+                  $this->Settings['OCDS_' . $Row['KEY']] = $Row['VAL'];
+            }
+            
             $this->Aria2cDaemon = Tools::IsAria2cDaemonRunning ();
-            $this->YouTubeDL = Tools::YouTubeDLInstalled ();
+            $this->YouTubeDL = Tools::YouTubeDLInstalled (isset ($this->Settings['OCDS_YTDLBinary']) ? $this->Settings['OCDS_YTDLBinary'] : '/usr/local/bin/youtube-dl');
       }
 
       /**
