@@ -138,6 +138,11 @@ $(document).ready (function()
 		$('.ocd .content-page[rel=' + $(this).attr ('data-rel') + ']').show ();
 	});
 	
+	// Reset YT options
+	$('#option-yt-extractaudio').prop ('checked', false);
+	$('#option-yt-ea-format option[value="best"]').prop ('selected', true);
+	$('#option-yt-ea-qual option[value="0"]').prop ('selected', true);
+	
 	// Launch HTTP download
 	$('.ocd .content-page[rel=OCDHTTP] div.launch').bind ('click', function ()
 	{
@@ -260,14 +265,17 @@ $(document).ready (function()
 		
 		if (ValidURL (URL))
 		{
-			/*var OPTIONS = {
-			};*/
+			var OPTIONS = {
+				YTExtractAudio: $('#option-yt-extractaudio').prop ('checked'),
+				YTEAFormat: $('#option-yt-ea-format').val (),
+				YTEAQuality: $('#option-yt-ea-qual').val ()
+			};
 			
 			$.ajax({
 		        url: OC.generateUrl ('/apps/ocdownloader/ytdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
-				data: {'URL' : URL/*, 'OPTIONS' : OPTIONS*/},
+				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
 		        async: true,
 		        cache: false,
 		        timeout: 30000,
@@ -296,6 +304,9 @@ $(document).ready (function()
 					
 					// Reset form field
 					$('.ocd .content-page[rel=OCDYT] input[type="text"]').val ('');
+					$('#option-yt-extractaudio').prop ('checked', false);
+					$('#option-yt-ea-format option[value="best"]').prop ('selected', true);
+					$('#option-yt-ea-qual option[value="0"]').prop ('selected', true);
 					
 					// Reset add button
 					AddBtn.prop('disabled', false);

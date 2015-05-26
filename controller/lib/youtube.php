@@ -33,11 +33,11 @@ class YouTube
 		return null;
 	}
 	
-	public function Download ($OutFileName, $GID)
+	public function Download ($OutFileName, $GID, $OPTIONSCmd)
 	{
 		$LogFile = '/tmp/' . $GID . '.log';
 		
-		exec ('$(which nohup) nice -n 10 ' . $this->YTDLBinary . ' -i \'' . $this->URL . '\' --newline --output "' . $OutFileName . '" >' . $LogFile . ' 2>&1 &', $Output, $Return);
+		exec ('$(which nohup) nice -n 10 ' . $this->YTDLBinary . ' -i \'' . $this->URL . '\'' . $OPTIONSCmd . '--newline --output "' . $OutFileName . '" >' . $LogFile . ' 2>&1 &', $Output, $Return);
 		
 		if ($Return == 0)
 		{

@@ -57,13 +57,29 @@ class YTDownloaderController extends Controller
        */
       public function add ()
       {
-            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && Tools::CheckURL ($_POST['URL'])/* && isset ($_POST['OPTIONS'])*/)
+            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && Tools::CheckURL ($_POST['URL']) && isset ($_POST['OPTIONS']))
             {
                   try
                   {
                         $YouTube = new YouTube ($this->YTDLBinary, $_POST['URL']);
                         
                         $Target = Tools::CleanString ($YouTube->GetFileName ());
+                        
+                        $OPTIONSCmd = ' ';
+                        if (isset ($_POST['OPTIONS']['YTExtractAudio']) && strlen (trim ($_POST['OPTIONS']['YTExtractAudio'])) > 0 && Tools::YouTubeDLExtractAudioRequiredBinary ())
+                        {
+                              $Formats = Array ('best', 'aac', 'vorbis', 'mp3', 'm4a', 'opus', 'wav');
+                              $Qualities = Array ('0', '5', '9');
+                              if (strcmp ($_POST['OPTIONS']['YTExtractAudio'], "true") == 0 && isset ($_POST['OPTIONS']['YTEAFormat']) && isset ($_POST['OPTIONS']['YTEAQuality']) && in_array ($_POST['OPTIONS']['YTEAFormat'], $Formats) && in_array ($_POST['OPTIONS']['YTEAQuality'], $Qualities))
+                              {
+                                    $OPTIONSCmd .= '-x';
+                                    $OPTIONSCmd .= ' --audio-format ' . $_POST['OPTIONS']['YTEAFormat'];
+                                    $OPTIONSCmd .= ' --audio-quality ' . $_POST['OPTIONS']['YTEAQuality'];
+                                    $OPTIONSCmd .= ' ';
+                                    
+                                    $Target = Tools::YouTubeDLExtractAudioReplaceExtension ($Target, $_POST['OPTIONS']['YTEAFormat']);
+                              }
+                        }
                         
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($Target))
@@ -72,7 +88,7 @@ class YTDownloaderController extends Controller
                         }
                         
                         $GID = 'YT_' . str_replace (' ', '', microtime ());
-                        if ($YouTube->Download ($this->TargetFolder . '/' . $Target, $GID) !== false)
+                        if ($YouTube->Download ($this->TargetFolder . '/' . $Target, $GID, $OPTIONSCmd) !== false)
                         {
                               $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
                               if ($this->DbType == 1)

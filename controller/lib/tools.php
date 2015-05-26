@@ -77,6 +77,26 @@ class Tools
 		return false;
 	}
 	
+	public static function YouTubeDLExtractAudioRequiredBinary ()
+	{
+		exec ('which ffmpeg', $Output, $Return);
+		
+		if ($Return == 0)
+		{
+		    return true;
+		}
+		return false;
+	}
+	
+	public static function YouTubeDLExtractAudioReplaceExtension ($Target, $NewExt)
+	{
+		if (strcmp ($NewExt, 'best') == 0)
+		{
+			return $Target;
+		}
+		return substr ($Target, 0, strrpos ($Target, '.') + 1) . $NewExt;
+	}
+	
 	public static function cleanString ($Text)
 	{
 	    $UTF8 = Array
@@ -107,23 +127,29 @@ class Tools
 	{
 		$Line = null;
 
-		$FP = @fopen ($File, 'r');
-		$Cursor = -1;
-		
-		@fseek ($FP, $Cursor, SEEK_END);
-		$Char = @fgetc ($FP);
-		
-		while ($Char === "\n" || $Char === "\r")
+		if (($Handle = @fopen ($File, 'r')) !== false)
 		{
-		    @fseek ($FP, $Cursor--, SEEK_END);
-		    $Char = @fgetc ($FP);
-		}
-		
-		while ($Char !== false && $Char !== "\n" && $Char !== "\r")
-		{
-		    $Line = $Char . $Line;
-		    @fseek ($FP, $Cursor--, SEEK_END);
-		    $Char = @fgetc ($FP);
+			$Downloading = false;
+			$LastDLLine = null;
+		    while (($Line = fgets ($Handle, 4096)) !== false)
+			{
+		        if (strpos ($Line, '[download]') === 0)
+				{
+					$Downloading = true;
+					$LastDLLine = $Line;
+				}
+				else
+				{
+					$Downloading = false;
+				}
+				
+				if (!$Downloading && !is_null ($LastDLLine))
+				{
+					$Line = $LastDLLine;
+					break;
+				}
+		    }
+		    fclose ($Handle);
 		}
 		
 		return $Line;

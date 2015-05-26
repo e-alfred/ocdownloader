@@ -93,6 +93,25 @@ if ($_['ARIA2']) script ('ocdownloader', 'script');
                 <input type="text" placeholder="YouTube Video URL to download" class="form-control url" />
                 <div class="jumbotron">
                     <h5>Options</h5>
+                    <div class="group-option">
+                        <label for="option-yt-extractaudio">Only Extract audio ?</label><input type="checkbox" id="option-yt-extractaudio" /><br />
+                        <label for="option-yt-ea-format">Format :</label>
+                        <select id="option-yt-ea-format">
+                            <option value="best">Best Format</option>
+                            <option value="aac">AAC</option>
+                            <option value="vorbis">Vorbis</option>
+                            <option value="mp3">MP3</option>
+                            <option value="m4a">M4A</option>
+                            <option value="opus">Opus</option>
+                            <option value="wav">WAV</option>
+                        </select>
+                        <label for="option-yt-ea-qual">Quality :</label>
+                        <select id="option-yt-ea-qual">
+                            <option value="0">Better Quality</option>
+                            <option value="5">Default Quality</option>
+                            <option value="9">Worse Quality</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="content-queue">
