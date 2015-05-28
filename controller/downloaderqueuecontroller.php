@@ -95,33 +95,59 @@ class DownloaderQueueController extends Controller
                               {
                                     $Aria2 = new Aria2();
                                     $Status = $Aria2->tellStatus ($GID);
-                                    
-                                    $Queue[] = Array (
-                                          'GID' => $GID,
-                                          'PROGRESSVAL' => round((($Status['result']['completedLength'] / $Status['result']['totalLength']) * 100), 2) . '%',
-                                          'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
-                                          'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A',
-                                          'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
-                                    );
-                                    
                                     $DbStatus = 5; // Error
-                                    switch (strtolower ($Status['result']['status']))
+                                    
+                                    if (!is_null ($Status))
                                     {
-                                          case 'complete':
-                                                $DbStatus = 0;
-                                                break;
-                                          case 'active':
-                                                $DbStatus = 1;
-                                                break;
-                                          case 'waiting':
-                                                $DbStatus = 2;
-                                                break;
-                                          case 'paused':
-                                                $DbStatus = 3;
-                                                break;
-                                          case 'removed':
-                                                $DbStatus = 4;
-                                                break;
+                                          if (!isset ($Status['error']))
+                                          {
+                                                $Queue[] = Array (
+                                                      'GID' => $GID,
+                                                      'PROGRESSVAL' => round((($Status['result']['completedLength'] / $Status['result']['totalLength']) * 100), 2) . '%',
+                                                      'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
+                                                      'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A',
+                                                      'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
+                                                );
+                                                
+                                                switch (strtolower ($Status['result']['status']))
+                                                {
+                                                      case 'complete':
+                                                            $DbStatus = 0;
+                                                            break;
+                                                      case 'active':
+                                                            $DbStatus = 1;
+                                                            break;
+                                                      case 'waiting':
+                                                            $DbStatus = 2;
+                                                            break;
+                                                      case 'paused':
+                                                            $DbStatus = 3;
+                                                            break;
+                                                      case 'removed':
+                                                            $DbStatus = 4;
+                                                            break;
+                                                }
+                                          }
+                                          else
+                                          {
+                                                $Queue[] = Array (
+                                                      'GID' => $GID,
+                                                      'PROGRESSVAL' => 0,
+                                                      'PROGRESS' => 'Error, GID not found !',
+                                                      'STATUS' => 'N/A',
+                                                      'SPEED' => 'N/A'
+                                                );
+                                          }
+                                    }
+                                    else
+                                    {
+                                          $Queue[] = Array (
+                                                'GID' => $GID,
+                                                'PROGRESSVAL' => 0,
+                                                'PROGRESS' => 'Returned status is null ! Is Aria2c running as a daemon ?',
+                                                'STATUS' => 'N/A',
+                                                'SPEED' => 'N/A'
+                                          );
                                     }
                               }
                               
