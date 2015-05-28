@@ -10,7 +10,7 @@
  */
 
 style ('ocdownloader', 'styles');
-if ($_['ARIA2']) script ('ocdownloader', 'script');
+script ('ocdownloader', 'script');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">
@@ -39,13 +39,9 @@ if ($_['ARIA2']) script ('ocdownloader', 'script');
             <div class="content-page" rel="OCDHTTP">
                 <h3>
                     New HTTP download<span class="muted add-msg"></span>
-                    <?php if ($_['ARIA2']): ?>
                     <div class="button launch">
         				<a>Launch HTTP Download</a>
                     </div>
-                    <?php else: ?>
-                    <span class="muted pull-right highalert">ARIA2 is not running !</span>
-                    <?php endif; ?>
                 </h3>
                 <input type="text" placeholder="HTTP URL to download" class="form-control url" />
                 <div class="jumbotron">
@@ -59,13 +55,9 @@ if ($_['ARIA2']) script ('ocdownloader', 'script');
             <div class="content-page" rel="OCDFTP" style="display:none;">
                 <h3>
                     New FTP download<span class="muted add-msg"></span>
-                    <?php if ($_['ARIA2']): ?>
                     <div class="button launch">
         				<a>Launch FTP Download</a>
                     </div>
-                    <?php else: ?>
-                    <span class="muted pull-right highalert">ARIA2 is not running !</span>
-                    <?php endif; ?>
                 </h3>
                 <input type="text" placeholder="FTP URL to download" class="form-control url" />
                 <div class="jumbotron">

@@ -55,17 +55,6 @@ class Tools
         return $Bytes;
 	}
 	
-	public static function IsAria2cDaemonRunning ()
-	{
-		exec ('pgrep aria2c', $Output, $Return);
-		
-		if ($Return == 0)
-		{
-		    return true;
-		}
-		return false;
-	}
-	
 	public static function YouTubeDLInstalled ($YTBinary)
 	{
 		exec ('which ' . $YTBinary, $Output, $Return);

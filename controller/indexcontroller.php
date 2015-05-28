@@ -21,7 +21,6 @@ use \OCA\ocDownloader\Controller\Lib\Tools;
 class IndexController extends Controller
 {
       private $DbType = 0;
-      private $Aria2cDaemon = null;
       private $YouTubeDL = null;
       private $Settings = null;
       
@@ -46,7 +45,6 @@ class IndexController extends Controller
                   $this->Settings['OCDS_' . $Row['KEY']] = $Row['VAL'];
             }
             
-            $this->Aria2cDaemon = Tools::IsAria2cDaemonRunning ();
             $this->YouTubeDL = Tools::YouTubeDLInstalled (isset ($this->Settings['OCDS_YTDLBinary']) ? $this->Settings['OCDS_YTDLBinary'] : '/usr/local/bin/youtube-dl');
       }
 
@@ -69,7 +67,6 @@ class IndexController extends Controller
                   'PAGE' => 0, 
                   'NBELT' => $Query->rowCount (), 
                   'QUEUE' => $Result,
-                  'ARIA2' => $this->Aria2cDaemon,
                   'YTDL' => $this->YouTubeDL
             ]);
       }
@@ -93,7 +90,6 @@ class IndexController extends Controller
                   'PAGE' => 1,
                   'NBELT' => $Query->rowCount (),
                   'QUEUE' => $Result,
-                  'ARIA2' => $this->Aria2cDaemon,
                   'YTDL' => $this->YouTubeDL
             ]);
       }
@@ -116,8 +112,7 @@ class IndexController extends Controller
             return new TemplateResponse('ocdownloader', 'waitings', [
                   'PAGE' => 2,
                   'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result,
-                  'ARIA2' => $this->Aria2cDaemon
+                  'QUEUE' => $Result
             ]);
       }
       
@@ -139,8 +134,7 @@ class IndexController extends Controller
             return new TemplateResponse('ocdownloader', 'stopped', [
                   'PAGE' => 3,
                   'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result,
-                  'ARIA2' => $this->Aria2cDaemon
+                  'QUEUE' => $Result
             ]);
       }
       
@@ -162,8 +156,7 @@ class IndexController extends Controller
             return new TemplateResponse('ocdownloader', 'removed', [
                   'PAGE' => 4,
                   'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result,
-                  'ARIA2' => $this->Aria2cDaemon
+                  'QUEUE' => $Result
             ]);
       }
 }

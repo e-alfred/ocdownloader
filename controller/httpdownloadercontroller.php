@@ -68,22 +68,29 @@ class HttpDownloaderController extends Controller
                         $Aria2 = new Aria2();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);
                         
-                        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
-                        if ($this->DbType == 1)
+                        if (isset ($AddURI["result"]) && !is_null ($AddURI["result"]))
                         {
-                              $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?)';
+                              $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
+                              if ($this->DbType == 1)
+                              {
+                                    $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?)';
+                              }
+                              
+                              $Query = \OCP\DB::prepare ($SQL);
+                              $Result = $Query->execute (Array (
+                                    $AddURI["result"],
+                                    $Target,
+                                    strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))),
+                                    1,
+                                    time()
+                              ));
+                              
+                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => $Target, 'GID' => $AddURI["result"], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 'SPEED' => '...')));
                         }
-                        
-                        $Query = \OCP\DB::prepare ($SQL);
-                        $Result = $Query->execute (Array (
-                              $AddURI["result"],
-                              $Target,
-                              strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))),
-                              1,
-                              time()
-                        ));
-                        
-                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => $Target, 'GID' => $AddURI["result"], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 'SPEED' => '...')));
+                        else
+                        {
+                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Returned GID is null ! Is Aria2c running as a daemon ?')));
+                        }
                   }
                   catch (Exception $E)
                   {
