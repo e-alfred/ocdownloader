@@ -10,7 +10,7 @@
  */
 
 style ('ocdownloader', 'styles');
-if ($_['ARIA2']) script ('ocdownloader', 'script');
+script ('ocdownloader', 'script');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">

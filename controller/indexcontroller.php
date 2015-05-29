@@ -22,6 +22,7 @@ class IndexController extends Controller
 {
       private $DbType = 0;
       private $YouTubeDL = null;
+      private $FFMpegFound = null;
       private $Settings = null;
       
       public function __construct ($AppName, IRequest $Request)
@@ -46,6 +47,7 @@ class IndexController extends Controller
             }
             
             $this->YouTubeDL = Tools::YouTubeDLInstalled (isset ($this->Settings['OCDS_YTDLBinary']) ? $this->Settings['OCDS_YTDLBinary'] : '/usr/local/bin/youtube-dl');
+            $this->FFMpegFound = Tools::FFMpegFound ();
       }
 
       /**
@@ -67,7 +69,8 @@ class IndexController extends Controller
                   'PAGE' => 0, 
                   'NBELT' => $Query->rowCount (), 
                   'QUEUE' => $Result,
-                  'YTDL' => $this->YouTubeDL
+                  'YTDL' => $this->YouTubeDL,
+                  'FFMPEG' => $this->FFMpegFound
             ]);
       }
       

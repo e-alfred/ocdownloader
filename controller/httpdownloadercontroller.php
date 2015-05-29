@@ -65,10 +65,10 @@ class HttpDownloaderController extends Controller
                               $OPTIONS['http-passwd'] = $_POST['OPTIONS']['HTTPPasswd'];
                         }
                         
-                        $Aria2 = new Aria2();
+                        $Aria2 = new Aria2 ();
                         $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);
                         
-                        if (isset ($AddURI["result"]) && !is_null ($AddURI["result"]))
+                        if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
                               $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
                               if ($this->DbType == 1)
@@ -78,14 +78,14 @@ class HttpDownloaderController extends Controller
                               
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
-                                    $AddURI["result"],
+                                    $AddURI['result'],
                                     $Target,
                                     strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))),
                                     1,
                                     time()
                               ));
                               
-                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => $Target, 'GID' => $AddURI["result"], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 'SPEED' => '...')));
+                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target), 'GID' => $AddURI['result'], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 'SPEED' => '...')));
                         }
                         else
                         {

@@ -22,27 +22,30 @@ class YouTube
 		$this->URL = $URL;
 	}
 	
-	public function GetFileName ()
+	public function GetVideoData ($ExtractAudio = false)
 	{
-		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-filename', $Output, $Return);
-		
-		if ($Return == 0 && count ($Output) == 1 && strlen (trim ($Output[0])) > 0)
-		{
-		    return $Output[0];
-		}
-		return null;
-	}
-	
-	public function Download ($OutFileName, $GID, $OPTIONSCmd)
-	{
-		$LogFile = '/tmp/' . $GID . '.log';
-		
-		exec ('$(which nohup) nice -n 10 ' . $this->YTDLBinary . ' -i \'' . $this->URL . '\'' . $OPTIONSCmd . '--newline --output "' . $OutFileName . '" >' . $LogFile . ' 2>&1 &', $Output, $Return);
+		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ''), $Output, $Return);
 		
 		if ($Return == 0)
 		{
-			return true;
+			$OutProcessed = Array ();
+			for ($I = 0; $I < count ($Output); $I++)
+			{
+				if (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=video/') !== false)
+				{
+					$OutProcessed['VIDEO'] = $Output[$I];
+				}
+				elseif (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=audio/') !== false)
+				{
+					$OutProcessed['AUDIO'] = $Output[$I];
+				}
+				else
+				{
+					$OutProcessed['FULLNAME'] = $Output[$I];
+				}
+			}
+			return $OutProcessed;
 		}
-		return false;
+		return null;
 	}
 }

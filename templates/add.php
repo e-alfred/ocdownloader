@@ -86,7 +86,9 @@ script ('ocdownloader', 'script');
                 <div class="jumbotron">
                     <h5>Options</h5>
                     <div class="group-option">
-                        <label for="option-yt-extractaudio">Only Extract audio ?</label><input type="checkbox" id="option-yt-extractaudio" /><br />
+                        <label for="option-yt-extractaudio">Only Extract audio ?</label><input type="checkbox" id="option-yt-extractaudio" /><?php print (!$_['FFMPEG'] ? '&nbsp;<i>(No post-processing because FFMpeg was not found)</i>' : ''); ?>
+                        <?php if ($_['FFMPEG']): ?>
+                        <br />
                         <label for="option-yt-ea-format">Format :</label>
                         <select id="option-yt-ea-format">
                             <option value="best">Best Format</option>
@@ -103,6 +105,7 @@ script ('ocdownloader', 'script');
                             <option value="5">Default Quality</option>
                             <option value="9">Worse Quality</option>
                         </select>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

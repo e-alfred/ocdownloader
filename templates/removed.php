@@ -10,7 +10,7 @@
  */
 
 style ('ocdownloader', 'styles');
-if ($_['ARIA2']) script ('ocdownloader', 'remove');
+script ('ocdownloader', 'remove');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">

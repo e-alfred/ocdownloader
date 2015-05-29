@@ -66,7 +66,7 @@ class Tools
 		return false;
 	}
 	
-	public static function YouTubeDLExtractAudioRequiredBinary ()
+	public static function FFMpegFound ()
 	{
 		exec ('which ffmpeg', $Output, $Return);
 		
@@ -86,7 +86,7 @@ class Tools
 		return substr ($Target, 0, strrpos ($Target, '.') + 1) . $NewExt;
 	}
 	
-	public static function cleanString ($Text)
+	public static function CleanString ($Text)
 	{
 	    $UTF8 = Array
 		(

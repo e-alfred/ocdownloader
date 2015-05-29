@@ -281,24 +281,27 @@ $(document).ready (function()
 		        timeout: 30000,
 		        success: function (Data)
 				{
-		            if (Data.ERROR)
+					for (var I = 0; I < Data.length; I++)
 					{
-						PrintError (Data.MESSAGE);
+						if (Data[I].ERROR)
+						{
+							PrintError (Data[I].MESSAGE);
+						}
+						else
+						{
+							PrintInfo (Data[I].MESSAGE + ' (' + Data[I].GID + ')');
+						}
+						
+						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data[I].GID + '">' + 
+							'<td data-rel="NAME" class="padding">' + Data[I].NAME + '</td>' +
+							'<td data-rel="PROTO" class="border padding">' + Data[I].PROTO + '</td>' +
+							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data[I].MESSAGE + '</div></div></div></td>' +
+							'<td data-rel="SPEED" class="border padding">' + Data[I].SPEED + '</td>' +
+							'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
+							'</tr>'
+						);
 					}
-					else
-					{
-						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
-					}
-					
-					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
-						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
-						'<td data-rel="ACTION" class="padding"></td>' +
-						'</tr>'
-					);
 					
 					SetupRemoverFromQueue ();
 					
