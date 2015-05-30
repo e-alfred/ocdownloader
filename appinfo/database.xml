@@ -54,6 +54,11 @@
 				<notnull>true</notnull>
 				<length>15</length>
 			</field>
+			<field>
+				<name>POSTPROCESSING</name>
+				<type>text</type>
+				<length>255</length>
+			</field>
 		</declaration>
 	</table>
 	<table>

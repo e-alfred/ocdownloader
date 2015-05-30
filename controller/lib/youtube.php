@@ -24,7 +24,7 @@ class YouTube
 	
 	public function GetVideoData ($ExtractAudio = false)
 	{
-		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ''), $Output, $Return);
+		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ' -f best'), $Output, $Return);
 		
 		if ($Return == 0)
 		{
