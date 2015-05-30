@@ -27,17 +27,18 @@ function PrintInfo (Message)
 	$('.ocd .content-page span.add-msg').text (Message);
 }
 
-function GetDownloaderQueue(){
+function GetDownloaderQueue ()
+{
 	var GIDS = [];
 	$('.ocd .content-queue > table > tbody > tr').each (function ()
 	{
-		GIDS.push($(this).attr ('data-rel'));
+		GIDS.push ($(this).attr ('data-rel'));
 	});
 	
 	if (GIDS.length > 0)
 	{
-		$('div#loadtext').show();
-	    $.ajax({
+		$('div#loadtext').show ();
+	    $.ajax ({
 	        url: OC.generateUrl ('/apps/ocdownloader/downloadergetqueue'),
 	        method: 'POST',
 			dataType: 'json',
@@ -49,26 +50,20 @@ function GetDownloaderQueue(){
 			{
 	            if (Data.ERROR)
 				{
-					PrintError(Data.MESSAGE);
+					PrintError (Data.MESSAGE);
 				}
 				else
 				{
-					$.each(Data.QUEUE, function (Index, Value)
+					$.each (Data.QUEUE, function (Index, Value)
 					{
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text ('Progress: ' + Value.PROGRESS);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="SPEED"]').text (Value.SPEED);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text (Value.STATUS);
-						
-						if (Value.GID.indexOf('YT_') === 0 && Value.STATUS == 'Complete')
-						{
-							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="ACTION"]').html ('<div class="icon-delete svg"></div>');
-							SetupRemoverFromQueue ();
-						}
 					});
 				}
 				
-				$('div#loadtext').hide();
+				$('div#loadtext').hide ();
 	        }
 	    });
 	}
@@ -76,14 +71,17 @@ function GetDownloaderQueue(){
 
 function SetupRemoverFromQueue ()
 {
-	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').unbind('click');
+	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').unbind ('click');
 	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').bind ('click', function ()
 	{
+		$(this).addClass ('icon-loading-small');
+		$(this).removeClass ('icon-delete');
+		
 		var TR = $(this).parent ().parent ();
 		var GID = TR.attr ('data-rel');
 		if (GID)
 		{
-			$.ajax({
+			$.ajax ({
 		        url: OC.generateUrl ('/apps/ocdownloader/downloaderremovequeue'),
 		        method: 'POST',
 				dataType: 'json',
@@ -95,12 +93,14 @@ function SetupRemoverFromQueue ()
 				{
 		            if (Data.ERROR)
 					{
-						PrintError(Data.MESSAGE);
+						PrintError (Data.MESSAGE);
+						$(this).addClass ('icon-delete');
+						$(this).removeClass ('icon-loading-small');
 					}
 					else
 					{
-						PrintInfo(Data.MESSAGE + ' (' + GID + ')');
-						TR.remove();
+						PrintInfo (Data.MESSAGE + ' (' + GID + ')');
+						TR.remove ();
 					}
 		        }
 		    });
@@ -112,10 +112,10 @@ function SetupRemoverFromQueue ()
 	});
 }
 
-$(document).ready (function()
+$(document).ready (function ()
 {
 	// Get current downloader queue every 5 seconds
-    setInterval(function(){ GetDownloaderQueue(); }, 5000);
+    setInterval (function (){ GetDownloaderQueue(); }, 5000);
     GetDownloaderQueue();
 	
 	// Display or hide the "New Download" menu
@@ -155,7 +155,7 @@ $(document).ready (function()
 				HTTPPasswd: $('#option-http-pwd').val ()
 			};
 			
-			$.ajax({
+			$.ajax ({
 		        url: OC.generateUrl ('/apps/ocdownloader/httpdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
@@ -193,7 +193,7 @@ $(document).ready (function()
 		}
 		else
 		{
-			PrintError('Unvalid URL. Please check the address of the file ...');
+			PrintError ('Unvalid URL. Please check the address of the file ...');
 		}
 	});
 	
@@ -210,7 +210,7 @@ $(document).ready (function()
 				FTPPasv: $('#option-ftp-pasv').prop ('checked')
 			};
 			
-			$.ajax({
+			$.ajax ({
 		        url: OC.generateUrl ('/apps/ocdownloader/ftpdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
@@ -250,16 +250,16 @@ $(document).ready (function()
 		}
 		else
 		{
-			PrintError('Unvalid URL. Please check the address of the file ...');
+			PrintError ('Unvalid URL. Please check the address of the file ...');
 		}
 	});
 	
 	$('.ocd .content-page[rel=OCDYT] div.launch').bind ('click', function ()
 	{
 		var AddBtn = $(this);
-		AddBtn.prop('disabled', true);
-		AddBtn.empty();
-		AddBtn.addClass('icon-loading-small');
+		AddBtn.prop ('disabled', true);
+		AddBtn.empty ();
+		AddBtn.addClass ('icon-loading-small');
 		
 		var URL = $('.ocd .content-page[rel=OCDYT] input.url').val ();
 		
@@ -269,7 +269,7 @@ $(document).ready (function()
 				YTExtractAudio: $('#option-yt-extractaudio').prop ('checked')
 			};
 			
-			$.ajax({
+			$.ajax ({
 		        url: OC.generateUrl ('/apps/ocdownloader/ytdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
@@ -313,7 +313,7 @@ $(document).ready (function()
 		}
 		else
 		{
-			PrintError('Unvalid URL. Please check the address of the file ...');
+			PrintError ('Unvalid URL. Please check the address of the file ...');
 		}
 	});
 	

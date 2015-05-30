@@ -11,32 +11,22 @@
 
 use \OCP\Config;
 
+use \OCA\ocDownloader\Controller\Lib\Settings;
+
 \OC_Util::checkAdminUser ();
-
-$DbType = 0;
-if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
-{
-      $DbType = 1;
-}
-
-// Load settings
-$SQL = 'SELECT * FROM `*PREFIX*ocdownloader_adminsettings`';
-if ($DbType == 1)
-{
-      $SQL = 'SELECT * FROM *PREFIX*ocdownloader_adminsettings';
-}
-$Query = \OCP\DB::prepare ($SQL);
-$Result = $Query->execute ();
 
 // Display template
 style ('ocdownloader', 'settings-admin');
 script ('ocdownloader', 'settings-admin');
 
 $Tmpl = new OCP\Template ('ocdownloader', 'settings-admin');
-while ($Row = $Result->fetchRow())
+
+$Settings = new Settings ();
+$Rows = $Settings->GetAllValues ();
+
+while ($Row = $Rows->fetchRow ())
 {
-      // Only one setting !! for now ;-)
-      $Tmpl->assign('OCDS_' . $Row['KEY'], $Row['VAL']);
+      $Tmpl->assign ('OCDS_' . $Row['KEY'], $Row['VAL']);
 }
 
 return $Tmpl->fetchPage ();

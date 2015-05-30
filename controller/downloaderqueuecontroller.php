@@ -49,94 +49,39 @@ class DownloaderQueueController extends Controller
                         
                         foreach ($_POST['GIDS'] as $GID)
                         {
-                              if (strpos ($GID, 'YT_') !== false)
+                              $Aria2 = new Aria2();
+                              $Status = $Aria2->tellStatus ($GID);
+                              $DbStatus = 5; // Error
+                              
+                              if (!is_null ($Status))
                               {
-                                    $LogFile = '/tmp/' . $GID . '.log';
-                                    
-                                    $Percent = 0;
-                                    $Progress = 0;
-                                    $Speed = 'N/A';
-                                    $Status = 'N/A';
-                                    $DbStatus = 5; // Error
-                                    if (file_exists ($LogFile) && !is_null ($Line = Tools::ReadLastLineOfFile ($LogFile)))
+                                    if (!isset ($Status['error']))
                                     {
-                                          preg_match ('/^\[download\][\s]*([0-9]*\.[0-9]{1}%)([\s]of[\s])([0-9]*\.[0-9]{2}[a-zA-Z]*).*[\s]([0-9]*\.[0-9]{2}[a-zA-Z]*).*$/', $Line, $Matches);
-                                          if (count ($Matches) == 5)
+                                          $Queue[] = Array (
+                                                'GID' => $GID,
+                                                'PROGRESSVAL' => round((($Status['result']['completedLength'] / $Status['result']['totalLength']) * 100), 2) . '%',
+                                                'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
+                                                'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A',
+                                                'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
+                                          );
+                                          
+                                          switch (strtolower ($Status['result']['status']))
                                           {
-                                                $Percent = $Matches[1];
-                                                $Progress = $Matches[1] . $Matches[2] . str_replace ('i', '', $Matches[3]);
-                                                $Speed = str_replace ('i', '', $Matches[4]) . '/s';
-                                                $Status = 'Active';
-                                                $DbStatus = 1;
-                                          }
-                                          else
-                                          {
-                                                preg_match ('/^\[download\][\s]*(100%[\s]of[\s][0-9]*\.[0-9]{2}[a-zA-Z]*).*[\s]([0-9]{2}:[0-9]{2})$/', $Line, $Matches);
-                                                if (count ($Matches) == 3)
-                                                {
-                                                      $Percent = '100%';
-                                                      $Progress = str_replace ('i', '', $Matches[1]);
-                                                      $Speed = '--';
-                                                      $Status = 'Complete';
+                                                case 'complete':
                                                       $DbStatus = 0;
-                                                }
-                                          }
-                                    }
-                                    
-                                    $Queue[] = Array (
-                                          'GID' => $GID,
-                                          'PROGRESSVAL' => $Percent,
-                                          'PROGRESS' => $Progress,
-                                          'STATUS' => $Status,
-                                          'SPEED' => $Speed
-                                    );
-                              }
-                              else
-                              {
-                                    $Aria2 = new Aria2();
-                                    $Status = $Aria2->tellStatus ($GID);
-                                    $DbStatus = 5; // Error
-                                    
-                                    if (!is_null ($Status))
-                                    {
-                                          if (!isset ($Status['error']))
-                                          {
-                                                $Queue[] = Array (
-                                                      'GID' => $GID,
-                                                      'PROGRESSVAL' => round((($Status['result']['completedLength'] / $Status['result']['totalLength']) * 100), 2) . '%',
-                                                      'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
-                                                      'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A',
-                                                      'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
-                                                );
-                                                
-                                                switch (strtolower ($Status['result']['status']))
-                                                {
-                                                      case 'complete':
-                                                            $DbStatus = 0;
-                                                            break;
-                                                      case 'active':
-                                                            $DbStatus = 1;
-                                                            break;
-                                                      case 'waiting':
-                                                            $DbStatus = 2;
-                                                            break;
-                                                      case 'paused':
-                                                            $DbStatus = 3;
-                                                            break;
-                                                      case 'removed':
-                                                            $DbStatus = 4;
-                                                            break;
-                                                }
-                                          }
-                                          else
-                                          {
-                                                $Queue[] = Array (
-                                                      'GID' => $GID,
-                                                      'PROGRESSVAL' => 0,
-                                                      'PROGRESS' => 'Error, GID not found !',
-                                                      'STATUS' => 'N/A',
-                                                      'SPEED' => 'N/A'
-                                                );
+                                                      break;
+                                                case 'active':
+                                                      $DbStatus = 1;
+                                                      break;
+                                                case 'waiting':
+                                                      $DbStatus = 2;
+                                                      break;
+                                                case 'paused':
+                                                      $DbStatus = 3;
+                                                      break;
+                                                case 'removed':
+                                                      $DbStatus = 4;
+                                                      break;
                                           }
                                     }
                                     else
@@ -144,11 +89,21 @@ class DownloaderQueueController extends Controller
                                           $Queue[] = Array (
                                                 'GID' => $GID,
                                                 'PROGRESSVAL' => 0,
-                                                'PROGRESS' => 'Returned status is null ! Is Aria2c running as a daemon ?',
+                                                'PROGRESS' => 'Error, GID not found !',
                                                 'STATUS' => 'N/A',
                                                 'SPEED' => 'N/A'
                                           );
                                     }
+                              }
+                              else
+                              {
+                                    $Queue[] = Array (
+                                          'GID' => $GID,
+                                          'PROGRESSVAL' => 0,
+                                          'PROGRESS' => 'Returned status is null ! Is Aria2c running as a daemon ?',
+                                          'STATUS' => 'N/A',
+                                          'SPEED' => 'N/A'
+                                    );
                               }
                               
                               $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ? AND (STATUS != ? OR STATUS IS NULL)';

@@ -21,9 +21,6 @@ use \OCA\ocDownloader\Controller\Lib\Tools;
 class IndexController extends Controller
 {
       private $DbType = 0;
-      private $YouTubeDL = null;
-      private $FFMpegFound = null;
-      private $Settings = null;
       
       public function __construct ($AppName, IRequest $Request)
       {
@@ -33,21 +30,6 @@ class IndexController extends Controller
             {
                   $this->DbType = 1;
             }
-            
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_adminsettings`';
-            if ($this->DbType == 1)
-            {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_adminsettings';
-            }
-            $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute ();
-            while ($Row = $Result->fetchRow())
-            {
-                  $this->Settings['OCDS_' . $Row['KEY']] = $Row['VAL'];
-            }
-            
-            $this->YouTubeDL = Tools::YouTubeDLInstalled (isset ($this->Settings['OCDS_YTDLBinary']) ? $this->Settings['OCDS_YTDLBinary'] : '/usr/local/bin/youtube-dl');
-            $this->FFMpegFound = Tools::FFMpegFound ();
       }
 
       /**
@@ -68,9 +50,7 @@ class IndexController extends Controller
             return new TemplateResponse ('ocdownloader', 'add', [ 
                   'PAGE' => 0, 
                   'NBELT' => $Query->rowCount (), 
-                  'QUEUE' => $Result,
-                  'YTDL' => $this->YouTubeDL,
-                  'FFMPEG' => $this->FFMpegFound
+                  'QUEUE' => $Result
             ]);
       }
       
@@ -92,8 +72,7 @@ class IndexController extends Controller
             return new TemplateResponse('ocdownloader', 'actives', [
                   'PAGE' => 1,
                   'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result,
-                  'YTDL' => $this->YouTubeDL
+                  'QUEUE' => $Result
             ]);
       }
       

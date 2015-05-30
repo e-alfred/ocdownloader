@@ -10,21 +10,47 @@
 
 $(document).ready (function ()
 {
-	$('#YTBinaryInput').bind ('change', function ()
+	$('form#ocdownloader > p > input[type="text"].ToUse, form#ocdownloader > p > input[type="password"].ToUse').bind ('change', function ()
 	{
-		$('#YTBinaryLoader').show ();
+		$('#OCDSLoader').show ();
+		$('#OCDSMsg').hide ();
+		$('#OCDSMsg').removeClass ('error');
+		$('#OCDSMsg').removeClass ('success');
 		
 		$.ajax({
 	        url: OC.generateUrl ('/apps/ocdownloader/adminsettings'),
 	        method: 'POST',
 			dataType: 'json',
-			data: {'YTBinary' : $('#YTBinaryInput').val()},
+			data: {
+				'YTDLBinary': $('#OCDYTDLBinary').val (),
+				'ProxyAddress': $('#OCDProxyAddress').val (),
+				'ProxyPort': $('#OCDProxyPort').val (),
+				'ProxyUser': $('#OCDProxyUser').val (),
+				'ProxyPasswd': $('#OCDProxyPasswd').val ()
+			},
 	        async: true,
 	        cache: false,
 	        timeout: 30000,
 	        success: function (Data)
 			{
-				$('#YTBinaryLoader').hide ();
+				$('#OCDSLoader').hide ();
+				
+				$('#OCDSMsg').text (Data.MESSAGE);
+				if (Data.ERROR)
+				{
+					$('#OCDSMsg').addClass ('error');
+				}
+				else
+				{
+					$('#OCDSMsg').addClass ('success');
+				}
+			
+				$('#OCDSMsg').show ();
+				$('#OCDYTDLBinary').val (Data.SETTINGS.OCDS_YTDLBinary);
+				$('#OCDProxyAddress').val (Data.SETTINGS.OCDS_ProxyAddress);
+				$('#OCDProxyPort').val (Data.SETTINGS.OCDS_ProxyPort);
+				$('#OCDProxyUser').val (Data.SETTINGS.OCDS_ProxyUser);
+				$('#OCDProxyPasswd').val (Data.SETTINGS.OCDS_ProxyPasswd);
 			}
 	    });
 	});

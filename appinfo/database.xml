@@ -81,7 +81,6 @@
 			<field>
 				<name>VAL</name>
 				<type>text</type>
-				<notnull>true</notnull>
 				<length>255</length>
 			</field>
 		</declaration>

@@ -19,12 +19,17 @@ use \OCP\Config;
 use \OCA\ocDownloader\Controller\Lib\YouTube;
 use \OCA\ocDownloader\Controller\Lib\Tools;
 use \OCA\ocDownloader\Controller\Lib\Aria2;
+use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class YTDownloaderController extends Controller
 {
       private $TargetFolder = null;
       private $DbType = 0;
       private $YTDLBinary = null;
+      private $ProxyAddress = null;
+      private $ProxyPort = 0;
+      private $ProxyUser = null;
+      private $ProxyPasswd = null;
       
       public function __construct ($AppName, IRequest $Request, $UserStorage)
       {
@@ -36,20 +41,24 @@ class YTDownloaderController extends Controller
                   $this->DbType = 1;
             }
             
-            // Get YouTube-DL binary custom path
-            $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_adminsettings` WHERE `KEY` = ? LIMIT 1';
-            if ($this->DbType == 1)
-            {
-                  $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_adminsettings WHERE "KEY" = ? LIMIT 1';
-            }
-            $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array ('YTDLBinary'));
+            $Settings = new Settings ();
+            $Settings->SetKey ('YTDLBinary');
+            $YTDLBinary = $Settings->GetValue ();
             
             $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
-            if ($Query->rowCount () == 1)
+            if (!is_null ($YTDLBinary))
             {
-                  $this->YTDLBinary = $Result->fetchOne (); // custom path
+                  $this->YTDLBinary = $YTDLBinary;
             }
+            
+            $Settings->SetKey ('ProxyAddress');
+            $this->ProxyAddress = $Settings->GetValue ();
+            $Settings->SetKey ('ProxyPort');
+            $this->ProxyPort = intval ($Settings->GetValue ());
+            $Settings->SetKey ('ProxyUser');
+            $this->ProxyUser = $Settings->GetValue ();
+            $Settings->SetKey ('ProxyPasswd');
+            $this->ProxyPasswd = $Settings->GetValue ();
       }
       
       /**
@@ -100,7 +109,18 @@ class YTDownloaderController extends Controller
                         // Create the target file
                         \OC\Files\Filesystem::touch ($DL['FILENAME']);
                         
-                        $AddURI = $Aria2->addUri (Array ($DL['URL']), Array ('dir' => $this->TargetFolder, 'out' => $DL['FILENAME']));
+                        $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $DL['FILENAME']);
+                        if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
+                        {
+                              $OPTIONS['all-proxy'] = $this->ProxyAddress . ':' . $this->ProxyPort;
+                              if (!is_null ($this->ProxyUser) && !is_null ($this->ProxyPasswd))
+                              {
+                                    $OPTIONS['all-proxy-user'] = $this->ProxyUser;
+                                    $OPTIONS['all-proxy-passwd'] = $this->ProxyPasswd;
+                              }
+                        }
+                        
+                        $AddURI = $Aria2->addUri (Array ($DL['URL']), $OPTIONS);
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {

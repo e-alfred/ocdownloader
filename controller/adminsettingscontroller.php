@@ -13,20 +13,15 @@ namespace OCA\ocDownloader\Controller;
 
 use \OCP\IRequest;
 use \OCP\AppFramework\Controller;
-use \OCP\Config;
+
+use \OCA\ocDownloader\Controller\Lib\Settings;
+use \OCA\ocDownloader\Controller\Lib\Tools;
 
 class AdminSettingsController extends Controller
 {
-      private $DbType = 0;
-      
       public function __construct ($AppName, IRequest $Request)
       {
             parent::__construct($AppName, $Request);
-            
-            if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
-            {
-                  $this->DbType = 1;
-            }
       }
       
       /**
@@ -35,45 +30,82 @@ class AdminSettingsController extends Controller
        */
       public function save ()
       {
-            // Save YTBinary path
-            if (isset ($_POST['YTBinary']) && strlen (trim ($_POST['YTBinary'])) > 0)
+            $OCDSettingKeys = Array ('YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd');
+            $Settings = new Settings ();
+            $Error = false;
+            $Message = '';
+            
+            foreach ($_POST as $PostKey => $PostValue)
             {
-                  $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_adminsettings` WHERE `KEY` = ? LIMIT 1';
-                  if ($this->DbType == 1)
+                  if (in_array ($PostKey, $OCDSettingKeys))
                   {
-                        $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_adminsettings WHERE "KEY" = ? LIMIT 1';
-                  }
-                  $Query = \OCP\DB::prepare ($SQL);
-                  $Result = $Query->execute (Array ('YTDLBinary'));
-                  
-                  if ($Query->rowCount () == 1)
-                  {
-                        $SQL = 'UPDATE `*PREFIX*ocdownloader_adminsettings` SET `VAL` = ? WHERE `KEY` = ?';
-                        if ($this->DbType == 1)
+                        $Settings->SetKey ($PostKey);
+                        
+                        // Pre-Save process
+                        if (strcmp ($PostKey, 'YTDLBinary') == 0)
                         {
-                              $SQL = 'UPDATE *PREFIX*ocdownloader_adminsettings SET "VAL" = ? WHERE "KEY" = ?';
+                              $PostValue = trim (str_replace (' ', '\ ', $PostValue));
+                              // check file exists
+                        }
+                        if (strcmp ($PostKey, 'ProxyAddress') == 0)
+                        {
+                              if (!Tools::CheckURL ($PostValue) && strlen (trim ($PostValue)) > 0)
+                              {
+                                    $PostValue = null;
+                                    $Error = true;
+                                    if (strlen (trim ($Message)) > 0)
+                                    {
+                                          $Message .= ', ';
+                                    }
+                                    $Message .= 'Invalid URL for proxy address field';
+                              }
+                        }
+                        if (strcmp ($PostKey, 'ProxyPort') == 0)
+                        {
+                              if (!is_numeric ($PostValue) && strlen (trim ($PostValue)) > 0)
+                              {
+                                    $PostValue = null;
+                                    $Error = true;
+                                    if (strlen (trim ($Message)) > 0)
+                                    {
+                                          $Message .= ', ';
+                                    }
+                                    $Message .= 'Proxy port should be a numeric value';
+                              }
+                              if (is_numeric ($PostValue) && ($PostValue == 0 || $PostValue > 65536))
+                              {
+                                    $PostValue = null;
+                                    $Error = true;
+                                    if (strlen (trim ($Message)) > 0)
+                                    {
+                                          $Message .= ', ';
+                                    }
+                                    $Message .= 'Proxy port should be a value from 1 to 65536';
+                              }
                         }
                         
-                        $Query = \OCP\DB::prepare ($SQL);
-                        $Result = $Query->execute (Array (
-                              trim (str_replace (' ', '\ ', $_POST['YTBinary'])),
-                              'YTDLBinary'
-                        ));
-                  }
-                  else
-                  {
-                        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_adminsettings` (`KEY`, `VAL`) VALUES (?, ?)';
-                        if ($this->DbType == 1)
+                        if (strlen (trim ($PostValue)) <= 0)
                         {
-                              $SQL = 'INSERT INTO *PREFIX*ocdownloader_adminsettings ("KEY", "VAL") VALUES (?, ?)';
+                              $PostValue = null;
                         }
                         
-                        $Query = \OCP\DB::prepare ($SQL);
-                        $Result = $Query->execute (Array (
-                              'YTDLBinary',
-                              trim (str_replace (' ', '\ ', $_POST['YTBinary']))
-                        ));
+                        if ($Settings->CheckIfKeyExists ())
+                        {
+                              $Settings->UpdateValue ($PostValue);
+                        }
+                        else
+                        {
+                              $Settings->InsertValue ($PostValue);
+                        }
                   }
             }
+            
+            $Rows = $Settings->GetAllValues ();
+            $Settings = Array ();
+            while ($Row = $Rows->fetchRow ())
+            {
+                  $Settings['OCDS_' . $Row['KEY']] = $Row['VAL'];
+            }
+            die (json_encode (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? 'Saved' : $Message), 'SETTINGS' => $Settings)));
       }
 }

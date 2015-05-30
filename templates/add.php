@@ -74,19 +74,15 @@ script ('ocdownloader', 'script');
             <div class="content-page" rel="OCDYT" style="display:none;">
                 <h3>
                     New YouTube download<span class="muted add-msg"></span>
-                    <?php if ($_['YTDL']): ?>
                     <div class="button launch">
         				<a>Launch YouTube Download</a>
                     </div>
-                    <?php else: ?>
-                    <span class="muted pull-right highalert">Unable to find YouTube-DL !</span>
-                    <?php endif; ?>
                 </h3>
                 <input type="text" placeholder="YouTube Video URL to download" class="form-control url" />
                 <div class="jumbotron">
                     <h5>Options</h5>
                     <div class="group-option">
-                        <label for="option-yt-extractaudio">Only Extract audio ?</label><input type="checkbox" id="option-yt-extractaudio" /><?php print (!$_['FFMPEG'] ? '&nbsp;<i>(No post-processing because FFMpeg was not found)</i>' : ''); ?>
+                        <label for="option-yt-extractaudio">Only Extract audio ?</label><input type="checkbox" id="option-yt-extractaudio" />&nbsp;<i>(No post-processing just extract audio)</i>
                     </div>
                 </div>
             </div>

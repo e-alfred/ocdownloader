@@ -1,4 +1,31 @@
-span.OCDSLoader {
+form#ocdownloader > p {
+	margin-bottom: 5px;
+}
+form#ocdownloader > p > span.OCDSLoader {
 	padding: 10px;
 	display: none;
+	margin-left: 0.5em;
+}
+form#ocdownloader > p > span.msg {
+	display: none;
+	padding: 3px;
+	font-size: 10pt;
+	margin-left: 0.5em;
+	border-radius: 3px;
+}
+form#ocdownloader > p > input.OCDYTDLBinary {
+	width: 400px;
+}
+form#ocdownloader > p > input.OCDProxyAddress {
+	width: 270px;
+}
+form#ocdownloader > p > input.OCDProxyPort {
+	width: 102px;
+}
+form#ocdownloader > p > input.OCDProxyUserFake, form#ocdownloader > p > input.OCDProxyPasswdFake {
+	display: none;
+}
+form#ocdownloader > p > span.info {
+	font-style: italic;
+	color: #003366;
 }

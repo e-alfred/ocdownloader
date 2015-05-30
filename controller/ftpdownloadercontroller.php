@@ -23,6 +23,10 @@ class FtpDownloaderController extends Controller
 {
       private $TargetFolder;
       private $DbType;
+      private $ProxyAddress = null;
+      private $ProxyPort = 0;
+      private $ProxyUser = null;
+      private $ProxyPasswd = null;
       
       public function __construct ($AppName, IRequest $Request, $UserStorage)
       {
@@ -34,6 +38,17 @@ class FtpDownloaderController extends Controller
             {
                   $this->DbType = 1;
             }
+            
+            $Settings = new Settings ();
+            
+            $Settings->SetKey ('ProxyAddress');
+            $this->ProxyAddress = $Settings->GetValue ();
+            $Settings->SetKey ('ProxyPort');
+            $this->ProxyPort = intval ($Settings->GetValue ());
+            $Settings->SetKey ('ProxyUser');
+            $this->ProxyUser = $Settings->GetValue ();
+            $Settings->SetKey ('ProxyPasswd');
+            $this->ProxyPasswd = $Settings->GetValue ();
       }
       
       /**
@@ -67,6 +82,15 @@ class FtpDownloaderController extends Controller
                         if (isset ($_POST['OPTIONS']['FTPPasv']) && strlen (trim ($_POST['OPTIONS']['FTPPasv'])) > 0)
                         {
                               $OPTIONS['ftp-pasv'] = strcmp ($_POST['OPTIONS']['FTPPasv'], "true") == 0 ? true : false;
+                        }
+                        if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
+                        {
+                              $OPTIONS['all-proxy'] = $this->ProxyAddress . ':' . $this->ProxyPort;
+                              if (!is_null ($this->ProxyUser) && !is_null ($this->ProxyPasswd))
+                              {
+                                    $OPTIONS['all-proxy-user'] = $this->ProxyUser;
+                                    $OPTIONS['all-proxy-passwd'] = $this->ProxyPasswd;
+                              }
                         }
                         
                         $Aria2 = new Aria2 ();

@@ -77,15 +77,6 @@ class Tools
 		return false;
 	}
 	
-	public static function YouTubeDLExtractAudioReplaceExtension ($Target, $NewExt)
-	{
-		if (strcmp ($NewExt, 'best') == 0)
-		{
-			return $Target;
-		}
-		return substr ($Target, 0, strrpos ($Target, '.') + 1) . $NewExt;
-	}
-	
 	public static function CleanString ($Text)
 	{
 	    $UTF8 = Array
@@ -110,38 +101,6 @@ class Tools
 	        '/ /'           =>   '_', // nonbreaking space (equiv. to 0x160)
 	    );
     	return preg_replace (array_keys ($UTF8), array_values ($UTF8), $Text);
-	}
-	
-	public static function ReadLastLineOfFile ($File)
-	{
-		$Line = null;
-
-		if (($Handle = @fopen ($File, 'r')) !== false)
-		{
-			$Downloading = false;
-			$LastDLLine = null;
-		    while (($Line = fgets ($Handle, 4096)) !== false)
-			{
-		        if (strpos ($Line, '[download]') === 0)
-				{
-					$Downloading = true;
-					$LastDLLine = $Line;
-				}
-				else
-				{
-					$Downloading = false;
-				}
-				
-				if (!$Downloading && !is_null ($LastDLLine))
-				{
-					$Line = $LastDLLine;
-					break;
-				}
-		    }
-		    fclose ($Handle);
-		}
-		
-		return $Line;
 	}
 }
 ?>
