@@ -51,7 +51,8 @@ class Application extends App
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
 				$c->query ('UserStorage'),
-				$c->query ('CurrentUID')
+				$c->query ('CurrentUID'),
+				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -62,7 +63,8 @@ class Application extends App
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
 				$c->query ('UserStorage'),
-				$c->query ('CurrentUID')
+				$c->query ('CurrentUID'),
+				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -73,7 +75,8 @@ class Application extends App
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
 				$c->query ('UserStorage'),
-				$c->query ('CurrentUID')
+				$c->query ('CurrentUID'),
+				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -84,7 +87,8 @@ class Application extends App
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
 				$c->query ('UserStorage'),
-				$c->query ('CurrentUID')
+				$c->query ('CurrentUID'),
+				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -93,7 +97,8 @@ class Application extends App
 	      	return new DownloaderQueueController
 			(
 		        $c->query ('AppName'),
-		        $c->query ('Request')
+		        $c->query ('Request'),
+				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -102,7 +107,8 @@ class Application extends App
 	      	return new AdminSettingsController
 			(
 		        $c->query ('AppName'),
-		        $c->query ('Request')
+		        $c->query ('Request'),
+				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -112,7 +118,8 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('CurrentUID')
+				$c->query ('CurrentUID'),
+				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 	}

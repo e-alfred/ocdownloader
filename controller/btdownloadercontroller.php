@@ -15,6 +15,7 @@ use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
 use \OCP\Config;
+use \OCP\IL10N;
 
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
@@ -34,7 +35,7 @@ class BTDownloaderController extends Controller
       private $ProxyPasswd = null;
       private $Settings = null;
 	  
-      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID)
+      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
             $this->CurrentUID = $CurrentUID;
@@ -67,6 +68,8 @@ class BTDownloaderController extends Controller
             
             $this->AbsoluteTargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->DownloadsFolder;
             $this->AbsoluteTorrentsFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->TorrentsFolder;
+            
+            $this->L10N = $L10N;
       }
       
       /**
@@ -114,7 +117,7 @@ class BTDownloaderController extends Controller
                               
                               die (json_encode (Array (
                                     'ERROR' => false, 
-                                    'MESSAGE' => 'Download has been launched', 
+                                    'MESSAGE' => (string)$this->L10N->t ('Download started'), 
                                     'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target), 
                                     'GID' => $AddTorrent['result'], 
                                     'PROTO' => 'BitTorrent', 
@@ -123,7 +126,7 @@ class BTDownloaderController extends Controller
                         }
                         else
                         {
-                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Returned GID is null ! Is Aria2c running as a daemon ?')));
+                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?'))));
                         }
                   }
                   catch (Exception $E)
@@ -133,7 +136,7 @@ class BTDownloaderController extends Controller
             }
             else
             {
-                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Please check the URL or filepath you\'ve just provided')));
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL or filepath you\'ve just provided'))));
             }
       }
       

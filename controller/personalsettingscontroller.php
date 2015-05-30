@@ -13,6 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use \OCP\IRequest;
 use \OCP\AppFramework\Controller;
+use \OCP\IL10N;
 
 use \OCA\ocDownloader\Controller\Lib\Settings;
 use \OCA\ocDownloader\Controller\Lib\Tools;
@@ -22,14 +23,17 @@ class PersonalSettingsController extends Controller
       private $CurrentUID = null;
       private $OCDSettingKeys = Array ('DownloadsFolder', 'TorrentsFolder');
       private $Settings = null;
+      private $L10N = null;
       
-      public function __construct ($AppName, IRequest $Request, $CurrentUID)
+      public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct($AppName, $Request);
             $this->CurrentUID = $CurrentUID;
             
             $this->Settings = new Settings ('personal');
             $this->Settings->SetUID ($this->CurrentUID);
+            
+            $this->L10N = $L10N;
       }
       
       /**
@@ -59,7 +63,7 @@ class PersonalSettingsController extends Controller
                                     // Create the target file
                                     \OC\Files\Filesystem::mkdir ($PostValue);
                                     
-                                    $Message .= 'The folder did not exist. The folder has been created.';
+                                    $Message .= $this->L10N->t ('The folder doesn\'t exist. It has been created.');
                               }
                         }
                         
@@ -80,16 +84,16 @@ class PersonalSettingsController extends Controller
                   else
                   {
                         $Error = true;
-                        $Message = 'Unknown KEY';
+                        $Message = $this->L10N->t ('Unknown field');
                   }
             }
             else
             {
                   $Error = true;
-                  $Message = 'Undefined POST value';
+                  $Message = $this->L10N->t ('Undefined field');
             }
             
-            die (json_encode (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? 'Saved' : $Message))));
+            die (json_encode (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? (string)$this->L10N->t ('Saved') : $Message))));
       }
       
       /**

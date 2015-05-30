@@ -19,22 +19,22 @@ script ('ocdownloader', 'script');
     <div id="app-content">
         <div id="app-content-wrapper">
             <div class="jumbotron">
-                <h1>Manage Your Downloads Anywhere!</h1>
-                <p class="lead">Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <a href="http://aria2.sourceforge.net/manual/en/html/aria2c.html" target="_blank">ARIA2</a>.</p>
+                <h1><?php print ($l->t ('Manage Your Downloads Anywhere!')); ?></h1>
+                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with')); ?> <a href="http://aria2.sourceforge.net/manual/en/html/aria2c.html" target="_blank">ARIA2</a>.</p>
             </div>
             <div id="controls">
                 <div class="actions">
-                    <div id="loadtext" style="<?php print ($_['NBELT'] > 0 ? 'display: block;' : 'display: none;'); ?>">Loading ...</div>
+                    <div id="loadtext" style="<?php print ($_['NBELT'] > 0 ? 'display: block;' : 'display: none;'); ?>"><?php print ($l->t ('Loading')); ?> ...</div>
                 </div>
-                <div class="righttitle">Waiting Downloads</div>
+                <div class="righttitle"><?php print ($l->t ('Waiting Downloads')); ?></div>
             </div>
             <div class="content-queue">
                 <table border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
-                            <th width="20%">ID</th>
-                            <th width="10%" class="border">PROTOCOL</th>
-                            <th width="60%" class="border">INFO</th>
+                            <th width="20%"><?php print ($l->t ('FILENAME')); ?></th>
+                            <th width="10%" class="border"><?php print ($l->t ('PROTOCOL')); ?></th>
+                            <th width="60%" class="border"><?php print ($l->t ('INFORMATION')); ?></th>
                             <th width="10%"></th>
                         </tr>
                     </thead>
@@ -46,7 +46,7 @@ script ('ocdownloader', 'script');
                             <td data-rel="MESSAGE" class="border">
                                 <div class="pb-wrap">
                                     <div class="pb-value" style="width: 0%;">
-                                        <div class="pb-text">N/A</div>
+                                        <div class="pb-text"><?php print ($l->t ('N/A')); ?></div>
                                     </div>
                                 </div>
                             </td>

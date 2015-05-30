@@ -13,15 +13,20 @@ namespace OCA\ocDownloader\Controller;
 
 use \OCP\IRequest;
 use \OCP\AppFramework\Controller;
+use \OCP\IL10N;
 
 use \OCA\ocDownloader\Controller\Lib\Settings;
 use \OCA\ocDownloader\Controller\Lib\Tools;
 
 class AdminSettingsController extends Controller
 {
-      public function __construct ($AppName, IRequest $Request)
+      private $L10N;
+      
+      public function __construct ($AppName, IRequest $Request, IL10N $L10N)
       {
             parent::__construct($AppName, $Request);
+            
+            $this->L10N = $L10N;
       }
       
       /**
@@ -57,7 +62,7 @@ class AdminSettingsController extends Controller
                                     {
                                           $Message .= ', ';
                                     }
-                                    $Message .= 'Invalid URL for proxy address field';
+                                    $Message .= $this->L10N->t ('Invalid proxy address URL');
                               }
                         }
                         if (strcmp ($PostKey, 'ProxyPort') == 0)
@@ -70,7 +75,7 @@ class AdminSettingsController extends Controller
                                     {
                                           $Message .= ', ';
                                     }
-                                    $Message .= 'Proxy port should be a numeric value';
+                                    $Message .= $this->L10N->t ('Proxy port should be a numeric value');
                               }
                               if (is_numeric ($PostValue) && ($PostValue == 0 || $PostValue > 65536))
                               {
@@ -80,7 +85,7 @@ class AdminSettingsController extends Controller
                                     {
                                           $Message .= ', ';
                                     }
-                                    $Message .= 'Proxy port should be a value from 1 to 65536';
+                                    $Message .= $this->L10N->t ('Proxy port should be a value from 1 to 65536');
                               }
                         }
                         
@@ -106,6 +111,6 @@ class AdminSettingsController extends Controller
             {
                   $Settings['OCDS_' . $Row['KEY']] = $Row['VAL'];
             }
-            die (json_encode (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? 'Saved' : $Message), 'SETTINGS' => $Settings)));
+            die (json_encode (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? (string)$this->L10N->t ('Saved') : $Message), 'SETTINGS' => $Settings)));
       }
 }

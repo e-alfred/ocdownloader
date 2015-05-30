@@ -7,7 +7,7 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-
+ 
 // Print Error message
 function PrintError (Message)
 {
@@ -50,7 +50,7 @@ $(document).ready (function()
 				{
 					$.each (Data.QUEUE, function (Index, Value)
 					{
-						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text ('Progress: ' + Value.PROGRESS);
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text (Value.PROGRESS);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text (Value.STATUS);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
 					});
@@ -96,7 +96,7 @@ $(document).ready (function()
 		}
 		else
 		{
-			PrintError ('Unable to find the GID of this download ...')
+			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'))
 		}
 	});
 });

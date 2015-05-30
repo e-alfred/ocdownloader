@@ -56,7 +56,7 @@ function GetDownloaderQueue ()
 				{
 					$.each (Data.QUEUE, function (Index, Value)
 					{
-						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text ('Progress: ' + Value.PROGRESS);
+						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text (Value.PROGRESS);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="SPEED"]').text (Value.SPEED);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="STATUS"]').text (Value.STATUS);
@@ -107,7 +107,7 @@ function SetupRemoverFromQueue ()
 		}
 		else
 		{
-			PrintError ('Unable to find the GID of this download ...')
+			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
 		}
 	});
 }
@@ -187,7 +187,7 @@ $(document).ready (function ()
 						
 						if (Data.FILES.length == 0)
 						{
-							$('div#torrentlist > ul').append ('<li><p>No Torrent Files, <a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (GetPersonalSetting ('TorrentsFolder')).replace(/%2F/g, '/') + '">Upload</a></p></li>');
+							$('div#torrentlist > ul').append ('<li><p>' + t ('ocdownloader', 'No Torrent Files') + ', <a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (GetPersonalSetting ('TorrentsFolder')).replace(/%2F/g, '/') + '">' + t ('ocdownloader', 'Upload') + '</a></p></li>');
 						}
 						
 						for (var I = 0; I < Data.FILES.length; I++)
@@ -257,7 +257,7 @@ $(document).ready (function ()
 							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-							'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
 							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 							'</tr>'
 						);
@@ -272,7 +272,7 @@ $(document).ready (function ()
 		}
 		else
 		{
-			PrintError ('Unvalid URL. Please check the address of the file ...');
+			PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
 		}
 	});
 	
@@ -313,7 +313,7 @@ $(document).ready (function ()
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
 						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 						'</tr>'
 					);
@@ -329,7 +329,7 @@ $(document).ready (function ()
 		}
 		else
 		{
-			PrintError ('Unvalid URL. Please check the address of the file ...');
+			PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
 		}
 	});
 	
@@ -373,7 +373,7 @@ $(document).ready (function ()
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
 						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 						'</tr>'
 					);
@@ -386,14 +386,14 @@ $(document).ready (function ()
 					
 					// Reset add button
 					AddBtn.prop('disabled', false);
-					AddBtn.html('<a>Launch YouTube Download</a>');
+					AddBtn.html('<a>' + t ('ocdownloader', 'Launch YouTube Download') + '</a>');
 					AddBtn.removeClass('icon-loading-small');
 		        }
 		    });
 		}
 		else
 		{
-			PrintError ('Unvalid URL. Please check the address of the file ...');
+			PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
 		}
 	});
 	
@@ -433,15 +433,12 @@ $(document).ready (function ()
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
 						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
 						'</tr>'
 					);
 					
 					SetupRemoverFromQueue ();
-					
-					// Reset form field
-					//$('.ocd .content-page[rel=OCDBT] input[type="text"]').val ('');
 		        }
 		    });
 		}

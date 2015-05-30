@@ -15,6 +15,7 @@ use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
 use \OCP\Config;
+use \OCP\IL10N;
 
 use \OCA\ocDownloader\Controller\Lib\YouTube;
 use \OCA\ocDownloader\Controller\Lib\Tools;
@@ -31,7 +32,7 @@ class YTDownloaderController extends Controller
       private $ProxyUser = null;
       private $ProxyPasswd = null;
       
-      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID)
+      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
             $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
@@ -66,6 +67,8 @@ class YTDownloaderController extends Controller
             $DownloadsFolder = $Settings->GetValue ();
             
             $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . '/' . (is_null ($DownloadsFolder) ? 'Downloads' : $DownloadsFolder);
+            
+            $this->L10N = $L10N;
       }
       
       /**
@@ -88,10 +91,10 @@ class YTDownloaderController extends Controller
                               {
                                     die (json_encode (Array (
                                           'ERROR' => true, 
-                                          'MESSAGE' => 'Unable to retrieve true YouTube video URL'
+                                          'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube audio URL')
                                     )));
                               }
-                              $DL = Array ('URL' => $VideoData['AUDIO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => 'Audio');
+                              $DL = Array ('URL' => $VideoData['AUDIO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => (string)$this->L10N->t ('Audio'));
                         }
                         else // No audio extract
                         {
@@ -100,10 +103,10 @@ class YTDownloaderController extends Controller
                               {
                                     die (json_encode (Array (
                                           'ERROR' => true, 
-                                          'MESSAGE' => 'Unable to retrieve true YouTube video URL'
+                                          'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube video URL')
                                     )));
                               }
-                              $DL = Array ('URL' => $VideoData['VIDEO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => 'Video');
+                              $DL = Array ('URL' => $VideoData['VIDEO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => (string)$this->L10N->t ('Video'));
                         }
                         
                         $Aria2 = new Aria2 ();
@@ -148,11 +151,11 @@ class YTDownloaderController extends Controller
                               
                               die (json_encode (Array (
                                     'ERROR' => false, 
-                                    'MESSAGE' => 'Download has been launched',
+                                    'MESSAGE' => (string)$this->L10N->t ('Download started'),
                                     'GID' => $AddURI['result'],
                                     'PROTO' => 'YT ' . $DL['TYPE'],
                                     'NAME' => (strlen ($DL['FILENAME']) > 40 ? substr ($DL['FILENAME'], 0, 40) . '...' : $DL['FILENAME']),
-                                    'STATUS' => 'Active',
+                                    'STATUS' => (string)$this->L10N->t ('Active'),
                                     'SPEED' => '...'
                               )));
                         }
@@ -160,7 +163,7 @@ class YTDownloaderController extends Controller
                         {
                               die (json_encode (Array (
                                     'ERROR' => true, 
-                                    'MESSAGE' => 'Returned GID is null ! Is Aria2c running as a daemon ?'
+                                    'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?')
                               )));
                         }
                   }
@@ -171,7 +174,7 @@ class YTDownloaderController extends Controller
             }
             else
             {
-                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Please check the URL you\'ve just provided')));
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL you\'ve just provided'))));
             }
       }
 }

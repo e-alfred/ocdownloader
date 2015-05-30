@@ -19,13 +19,13 @@ script ('ocdownloader', 'script');
     <div id="app-content">
         <div id="app-content-wrapper">
             <div class="jumbotron">
-                <h1>Manage Your Downloads Anywhere!</h1>
-                <p class="lead">Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <a href="http://aria2.sourceforge.net/manual/en/html/aria2c.html" target="_blank">ARIA2</a>.</p>
+                <h1><?php print ($l->t ('Manage Your Downloads Anywhere!')); ?></h1>
+                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with')); ?> <a href="http://aria2.sourceforge.net/manual/en/html/aria2c.html" target="_blank">ARIA2</a>.</p>
             </div>
             <div id="controls">
                 <div class="actions">
                     <div class="button" id="new">
-        				<a>New Download<div class="icon-caret-dark svg"></div></a>
+        				<a><?php print ($l->t ('New Download')); ?><div class="icon-caret-dark svg"></div></a>
         				<ul>
         					<li><p data-rel="OCDHTTP">HTTP</p></li>
         					<li><p data-rel="OCDFTP">FTP</p></li>
@@ -33,77 +33,77 @@ script ('ocdownloader', 'script');
                             <li><p data-rel="OCDBT">BITTORRENT</p></li>
         				</ul>
         			</div>
-                    <div id="loadtext"<?php print ($_['NBELT'] > 0 ? '' : ' style="display: none;"'); ?>>Loading ...</div>
+                    <div id="loadtext"<?php print ($_['NBELT'] > 0 ? '' : ' style="display: none;"'); ?>><?php print ($l->t ('Loading')); ?> ...</div>
                 </div>
-                <div class="righttitle">Add Download</div>
+                <div class="righttitle"><?php print ($l->t ('Add Download')); ?></div>
             </div>
             <div class="content-page" rel="OCDHTTP">
                 <h3>
-                    New HTTP download<span class="muted add-msg"></span>
+                    <?php print ($l->t ('New HTTP download')); ?><span class="muted add-msg"></span>
                     <div class="button launch">
-        				<a>Launch HTTP Download</a>
+        				<a><?php print ($l->t ('Launch HTTP Download')); ?></a>
                     </div>
                 </h3>
-                <input type="text" placeholder="HTTP URL to download" class="form-control url" />
+                <input type="text" placeholder="<?php print ($l->t ('HTTP URL to download')); ?>" class="form-control url" />
                 <div class="jumbotron">
-                    <h5>Options</h5>
+                    <h5><?php print ($l->t ('Options')); ?></h5>
                     <div class="group-option">
-                        <label for="option-http-user">Basic Auth User :</label><input type="text" id="option-http-user" placeholder="Username" />
-                        <label for="option-http-pwd">Basic Auth Password :</label><input type="password" id="option-http-pwd" placeholder="Password" /> 
+                        <label for="option-http-user"><?php print ($l->t ('Basic Auth User')); ?> :</label><input type="text" id="option-http-user" placeholder="<?php print ($l->t ('Username')); ?>" />
+                        <label for="option-http-pwd"><?php print ($l->t ('Basic Auth Password')); ?> :</label><input type="password" id="option-http-pwd" placeholder="<?php print ($l->t ('Password')); ?>" /> 
                     </div>
                 </div>
             </div>
             <div class="content-page" rel="OCDFTP" style="display:none;">
                 <h3>
-                    New FTP download<span class="muted add-msg"></span>
+                    <?php print ($l->t ('New FTP download')); ?><span class="muted add-msg"></span>
                     <div class="button launch">
-        				<a>Launch FTP Download</a>
+        				<a><?php print ($l->t ('Launch FTP Download')); ?></a>
                     </div>
                 </h3>
-                <input type="text" placeholder="FTP URL to download" class="form-control url" />
+                <input type="text" placeholder="<?php print ($l->t ('FTP URL to download')); ?>" class="form-control url" />
                 <div class="jumbotron">
-                    <h5>Options</h5>
+                    <h5><?php print ($l->t ('Options')); ?></h5>
                     <div class="group-option">
-                        <label for="option-ftp-user">FTP User :</label><input type="text" id="option-ftp-user" placeholder="Username" />
-                        <label for="option-ftp-pwd">FTP Password :</label><input type="password" id="option-ftp-pwd" placeholder="Password" /> 
+                        <label for="option-ftp-user"><?php print ($l->t ('FTP User')); ?> :</label><input type="text" id="option-ftp-user" placeholder="<?php print ($l->t ('Username')); ?>" />
+                        <label for="option-ftp-pwd"><?php print ($l->t ('FTP Password')); ?> :</label><input type="password" id="option-ftp-pwd" placeholder="<?php print ($l->t ('Password')); ?>" /> 
                     </div>
                     <div class="group-option">
-                        <label for="option-ftp-pasv">Passive Mode :</label><input type="checkbox" id="option-ftp-pasv" checked />
+                        <label for="option-ftp-pasv"><?php print ($l->t ('Passive Mode')); ?> :</label><input type="checkbox" id="option-ftp-pasv" checked />
                     </div>
                 </div>
             </div>
             <div class="content-page" rel="OCDYT" style="display:none;">
                 <h3>
-                    New YouTube download<span class="muted add-msg"></span>
+                    <?php print ($l->t ('New YouTube download')); ?><span class="muted add-msg"></span>
                     <div class="button launch">
-        				<a>Launch YouTube Download</a>
+        				<a><?php print ($l->t ('Launch YouTube Download')); ?></a>
                     </div>
                 </h3>
-                <input type="text" placeholder="YouTube Video URL to download" class="form-control url" />
+                <input type="text" placeholder="<?php print ($l->t ('YouTube Video URL to download')); ?>" class="form-control url" />
                 <div class="jumbotron">
-                    <h5>Options</h5>
+                    <h5><?php print ($l->t ('Options')); ?></h5>
                     <div class="group-option">
-                        <label for="option-yt-extractaudio">Only Extract audio ?</label><input type="checkbox" id="option-yt-extractaudio" />&nbsp;<i>(No post-processing just extract audio)</i>
+                        <label for="option-yt-extractaudio"><?php print ($l->t ('Only Extract audio ?')); ?></label><input type="checkbox" id="option-yt-extractaudio" />&nbsp;<i><?php print ($l->t ('(No post-processing, just extract the best audio quality)')); ?></i>
                     </div>
                 </div>
             </div>
             <div class="content-page" rel="OCDBT" style="display:none;">
                 <h3>
-                    New BitTorrent download<span class="muted add-msg"></span>
+                    <?php print ($l->t ('New BitTorrent download')); ?><span class="muted add-msg"></span>
                     <div class="button launch">
-        				<a>Launch BitTorrent Download</a>
+        				<a><?php print ($l->t ('Launch BitTorrent Download')); ?></a>
                     </div>
                 </h3>
                 <div class="actions">
                     <div class="button" id="torrentlist">
-        				<a>Select a file.torrent<?php print(strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>(Default : list torrent files in the folder /Downloads/Files/Torrents, check the Personnal Settings panel)</i>'); ?><div class="icon-caret-dark svg"></div></a>
+        				<a><?php print ($l->t ('Select a file.torrent')); ?> <?php print (strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>' . $l->t ('(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personnal Settings panel)') . '</i>'); ?><div class="icon-caret-dark svg"></div></a>
         				<ul>
                             <li><p class="loader"><span class="icon-loading-small"></span></p></li>
                         </ul>
         			</div>
                 </div>
                 <div class="jumbotron">
-                    <h5>Options</h5>
+                    <h5><?php print ($l->t ('Options')); ?></h5>
                     <i>No options, for now ;-)</i>
                 </div>
             </div>
@@ -111,11 +111,11 @@ script ('ocdownloader', 'script');
                 <table border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
-                            <th width="20%">ID</th>
-                            <th width="10%" class="border">PROTOCOL</th>
-                            <th width="35%" class="border">INFO</th>
-                            <th width="10%" class="border">SPEED</th>
-                            <th width="15%" class="border">STATUS</th>
+                            <th width="20%"><?php print ($l->t ('FILENAME')); ?></th>
+                            <th width="10%" class="border"><?php print ($l->t ('PROTOCOL')); ?></th>
+                            <th width="35%" class="border"><?php print ($l->t ('INFORMATION')); ?></th>
+                            <th width="10%" class="border"><?php print ($l->t ('SPEED')); ?></th>
+                            <th width="15%" class="border"><?php print ($l->t ('STATUS')); ?></th>
                             <th width="10%"></th>
                         </tr>
                     </thead>
@@ -127,12 +127,12 @@ script ('ocdownloader', 'script');
                             <td data-rel="MESSAGE" class="border">
                                 <div class="pb-wrap">
                                     <div class="pb-value" style="width: 0%;">
-                                        <div class="pb-text">N/A</div>
+                                        <div class="pb-text"><?php print ($l->t ('N/A')); ?></div>
                                     </div>
                                 </div>
                             </td>
-                            <td data-rel="SPEED" class="border padding">N/A</td>
-                            <td data-rel="STATUS" class="border padding">N/A</td>
+                            <td data-rel="SPEED" class="border padding"><?php print ($l->t ('N/A')); ?></td>
+                            <td data-rel="STATUS" class="border padding"><?php print ($l->t ('N/A')); ?></td>
                             <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>
                         </tr>
                     <?php endwhile; ?>

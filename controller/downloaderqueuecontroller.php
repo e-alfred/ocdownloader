@@ -15,6 +15,7 @@ use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
 use \OCP\Config;
+use \OCP\IL10N;
 
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
@@ -24,7 +25,7 @@ class DownloaderQueueController extends Controller
       private $UserStorage;
       private $DbType;
       
-      public function __construct ($AppName, IRequest $Request)
+      public function __construct ($AppName, IRequest $Request, IL10N $L10N)
       {
             parent::__construct($AppName, $Request);
             
@@ -33,6 +34,8 @@ class DownloaderQueueController extends Controller
             {
                   $this->DbType = 1;
             }
+            
+            $this->L10N = $L10N;
       }
 
       /**
@@ -62,9 +65,9 @@ class DownloaderQueueController extends Controller
                                           $Queue[] = Array (
                                                 'GID' => $GID,
                                                 'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
-                                                'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']) . (isset ($Status['result']['numSeeders']) && $Progress < 1 ? ' - Seeders: ' . $Status['result']['numSeeders'] : ''),
-                                                'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) . (isset ($Status['result']['numSeeders']) && $Progress == 1 ? ' - Seeding' : '') : 'N/A',
-                                                'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? (isset ($Status['result']['numSeeders']) && $Progress == 1 ? Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s' : '--') : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
+                                                'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']) . (isset ($Status['result']['numSeeders']) && $Progress < 1 ? ' - ' . $this->L10N->t ('Seeders') . ': ' . $Status['result']['numSeeders'] : ''),
+                                                'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t (ucfirst ($Status['result']['status'])) . (isset ($Status['result']['numSeeders']) && $Progress == 1 ? ' - ' . $this->L10N->t ('Seeding') : '') : (string)$this->L10N->t ('N/A'),
+                                                'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? (isset ($Status['result']['numSeeders']) && $Progress == 1 ? Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s' : '--') : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : (string)$this->L10N->t ('N/A')
                                           );
                                           
                                           switch (strtolower ($Status['result']['status']))
@@ -91,9 +94,9 @@ class DownloaderQueueController extends Controller
                                           $Queue[] = Array (
                                                 'GID' => $GID,
                                                 'PROGRESSVAL' => 0,
-                                                'PROGRESS' => 'Error, GID not found !',
-                                                'STATUS' => 'N/A',
-                                                'SPEED' => 'N/A'
+                                                'PROGRESS' => (string)$this->L10N->t ('Error, GID not found !'),
+                                                'STATUS' => (string)$this->L10N->t ('N/A'),
+                                                'SPEED' => (string)$this->L10N->t ('N/A')
                                           );
                                     }
                               }
@@ -102,9 +105,9 @@ class DownloaderQueueController extends Controller
                                     $Queue[] = Array (
                                           'GID' => $GID,
                                           'PROGRESSVAL' => 0,
-                                          'PROGRESS' => 'Returned status is null ! Is Aria2c running as a daemon ?',
-                                          'STATUS' => 'N/A',
-                                          'SPEED' => 'N/A'
+                                          'PROGRESS' => (string)$this->L10N->t ('Returned status is null ! Is Aria2c running as a daemon ?'),
+                                          'STATUS' => (string)$this->L10N->t ('N/A'),
+                                          'SPEED' => (string)$this->L10N->t ('N/A')
                                     );
                               }
                               
@@ -125,7 +128,7 @@ class DownloaderQueueController extends Controller
                   }
                   else
                   {
-                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'No GIDS in the queue')));
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('No GIDS in the download queue'))));
                   }
             }
             catch (Exception $E)
@@ -158,7 +161,7 @@ class DownloaderQueueController extends Controller
                                     $_POST['GID']
                               ));
                               
-                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'The download has been removed')));
+                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been removed'))));
                         }
                         else
                         {
@@ -185,17 +188,17 @@ class DownloaderQueueController extends Controller
                                           $_POST['GID']
                                     ));
                                     
-                                    die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'The download has been removed')));
+                                    die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been removed'))));
                               }
                               else
                               {
-                                    die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'An error occured while removing the download')));
+                                    die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('An error occured while removing the download'))));
                               }
                         }
                   }
                   else
                   {
-                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Bad GID')));
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Bad GID'))));
                   }
             }
             catch (Exception $E)
@@ -214,24 +217,12 @@ class DownloaderQueueController extends Controller
             {
                   if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
                   {
-                        if (strpos ($_POST['GID'], 'YT_') === 0)
+                        $Aria2 = new Aria2();
+                        $Status = $Aria2->tellStatus ($_POST['GID']);
+                        
+                        if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'removed') == 0)
                         {
-                              $LogFile = '/tmp/' . $_POST['GID'] . '.log';
-                              
-                              if (file_exists ($LogFile) && unlink ($LogFile) === false)
-                              {
-                                    die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Error while removing the download log file')));
-                              }
-                        }
-                        else
-                        {
-                              $Aria2 = new Aria2();
-                              $Status = $Aria2->tellStatus ($_POST['GID']);
-                              
-                              if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'removed') == 0)
-                              {
-                                    $Remove = $Aria2->removeDownloadResult ($_POST['GID']);
-                              }
+                              $Remove = $Aria2->removeDownloadResult ($_POST['GID']);
                         }
                         
                         $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET IS_DELETED = ? WHERE GID = ?';
@@ -246,11 +237,11 @@ class DownloaderQueueController extends Controller
                               $_POST['GID']
                         ));
                         
-                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'The download has been totally removed')));
+                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been totally removed'))));
                   }
                   else
                   {
-                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Bad GID')));
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Bad GID'))));
                   }
             }
             catch (Exception $E)

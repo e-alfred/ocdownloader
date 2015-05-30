@@ -15,6 +15,7 @@ use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Controller;
 use \OCP\Config;
+use \OCP\IL10N;
 
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
@@ -29,7 +30,7 @@ class FtpDownloaderController extends Controller
       private $ProxyUser = null;
       private $ProxyPasswd = null;
       
-      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID)
+      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
             
@@ -56,6 +57,8 @@ class FtpDownloaderController extends Controller
             $DownloadsFolder = $Settings->GetValue ();
             
             $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . '/' . (is_null ($DownloadsFolder) ? 'Downloads' : $DownloadsFolder);
+            
+            $this->L10N = $L10N;
       }
       
       /**
@@ -122,7 +125,7 @@ class FtpDownloaderController extends Controller
                               
                               die (json_encode (Array (
                                     'ERROR' => false, 
-                                    'MESSAGE' => 'Download has been launched', 
+                                    'MESSAGE' => (string)$this->L10N->t ('Download started'), 
                                     'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target), 
                                     'GID' => $AddURI['result'], 
                                     'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 
@@ -131,7 +134,7 @@ class FtpDownloaderController extends Controller
                         }
                         else
                         {
-                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Returned GID is null ! Is Aria2c running as a daemon ?')));
+                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?'))));
                         }
                   }
                   catch (Exception $E)
@@ -141,7 +144,7 @@ class FtpDownloaderController extends Controller
             }
             else
             {
-                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => 'Please check the URL you\'ve just provided')));
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL you\'ve just provided'))));
             }
       }
 }
