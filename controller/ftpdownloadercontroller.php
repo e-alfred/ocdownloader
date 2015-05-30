@@ -29,10 +29,9 @@ class FtpDownloaderController extends Controller
       private $ProxyUser = null;
       private $ProxyPasswd = null;
       
-      public function __construct ($AppName, IRequest $Request, $UserStorage)
+      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID)
       {
             parent::__construct ($AppName, $Request);
-            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
             
             $this->DbType = 0;
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
@@ -50,6 +49,13 @@ class FtpDownloaderController extends Controller
             $this->ProxyUser = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPasswd');
             $this->ProxyPasswd = $Settings->GetValue ();
+            
+            $Settings->SetTable ('personal');
+            $Settings->SetUID ($CurrentUID);
+            $Settings->SetKey ('DownloadsFolder');
+            $DownloadsFolder = $Settings->GetValue ();
+            
+            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . '/' . (is_null ($DownloadsFolder) ? 'Downloads' : $DownloadsFolder);
       }
       
       /**
@@ -114,7 +120,14 @@ class FtpDownloaderController extends Controller
                                     time()
                               ));
                               
-                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => 'Download has been launched', 'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target), 'GID' => $AddURI['result'], 'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 'SPEED' => '...')));
+                              die (json_encode (Array (
+                                    'ERROR' => false, 
+                                    'MESSAGE' => 'Download has been launched', 
+                                    'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target), 
+                                    'GID' => $AddURI['result'], 
+                                    'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 
+                                    'SPEED' => '...'
+                              )));
                         }
                         else
                         {

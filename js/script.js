@@ -118,8 +118,8 @@ $(document).ready (function ()
     setInterval (function (){ GetDownloaderQueue(); }, 5000);
     GetDownloaderQueue();
 	
-	// Display or hide the "New Download" menu (works also for the BT files list)
-	$('div#new, div#torrentlist').bind ('click', function ()
+	// Display or hide the "New Download" menu
+	$('div#new').bind ('click', function ()
 	{
 		if ($(this).children ('ul').is (':visible'))
 		{
@@ -131,17 +131,66 @@ $(document).ready (function ()
 		}
 	});
 	
+	// Load torrent files when opening the available torrents list
+	$('div#torrentlist').bind ('click', function ()
+	{
+		if ($(this).children ('ul').is (':visible'))
+		{
+			$(this).children ('ul').hide ();
+		}
+		else
+		{
+			$(this).children ('ul').show ();
+			$('div#torrentlist > ul').empty ();
+			$('div#torrentlist > ul').append ('<li><p class="loader"><span class="icon-loading-small"></span></p></li>');
+			
+			$.ajax ({
+		        url: OC.generateUrl ('/apps/ocdownloader/listtorrentfiles'),
+		        method: 'POST',
+				dataType: 'json',
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+		            if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+					}
+					else
+					{
+						$('div#torrentlist > ul').empty ();
+						
+						if (Data.FILES.length == 0)
+						{
+							$('div#torrentlist > ul').append ('<li><p>No Torrent Files</p></li>');
+						}
+						
+						for (var I = 0; I < Data.FILES.length; I++)
+						{
+							if (Data.FILES[I].name.match(/\.torrent$/))
+							{
+								$('div#torrentlist > ul').append ('<li><p class="clickable">' + Data.FILES[I].name + '</p></li>');
+							}
+						}
+						
+						// Select a torrent in the proposed list 
+						$('div#torrentlist > ul > li > p.clickable').bind ('click', function ()
+						{
+							$(this).parent ().parent ().parent ().children ('a').prop ('data-rel', 'File');
+							$(this).parent ().parent ().parent ().children ('a').html ($(this).text () + '<div class="icon-caret-dark svg"></div>');
+						});
+					}
+		        }
+		    });
+		}
+	});
+	
 	// Display or hide content pages depending on the "New Download" menu
 	$('div#new > ul > li > p').bind ('click', function ()
 	{
 		$('.ocd .content-page').hide ();
 		$('.ocd .content-page[rel=' + $(this).attr ('data-rel') + ']').show ();
-	});
-	
-	// Select a torrent in the proposed list 
-	$('div#torrentlist > ul > li > p').bind ('click', function ()
-	{
-		$(this).parent ().parent ().parent ().children ('a').html ($(this).text () + '<div class="icon-caret-dark svg"></div>');
 	});
 	
 	// Reset YT options
@@ -260,10 +309,11 @@ $(document).ready (function ()
 		}
 	});
 	
+	// Launch YT download
 	$('.ocd .content-page[rel=OCDYT] div.launch').bind ('click', function ()
 	{
 		var AddBtn = $(this);
-		AddBtn.prop ('disabled', true);
+		AddBtn.prop ('disabled', 'disabled');
 		AddBtn.empty ();
 		AddBtn.addClass ('icon-loading-small');
 		
@@ -320,6 +370,56 @@ $(document).ready (function ()
 		else
 		{
 			PrintError ('Unvalid URL. Please check the address of the file ...');
+		}
+	});
+	
+	// Launch BT download
+	$('.ocd .content-page[rel=OCDBT] div.launch').bind ('click', function ()
+	{
+		var PATH = $('.ocd .content-page[rel=OCDBT] .actions > div#torrentlist a').text ();
+		var DATAREL = $('.ocd .content-page[rel=OCDBT] .actions > div#torrentlist a').prop ('data-rel');
+		
+		if (DATAREL == 'File')
+		{
+			/*var OPTIONS = {
+				YTExtractAudio: $('#option-yt-extractaudio').prop ('checked')
+			};*/
+			
+			$.ajax ({
+		        url: OC.generateUrl ('/apps/ocdownloader/btdownloaderadd'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'PATH' : PATH/*, 'OPTIONS' : OPTIONS*/},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+					if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+					}
+					else
+					{
+						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+					}
+					
+					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+						'<td data-rel="STATUS" class="border padding">Waiting</td>' +
+						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
+						'</tr>'
+					);
+					
+					SetupRemoverFromQueue ();
+					
+					// Reset form field
+					//$('.ocd .content-page[rel=OCDBT] input[type="text"]').val ('');
+		        }
+		    });
 		}
 	});
 	

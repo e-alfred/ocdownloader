@@ -33,6 +33,7 @@ $Application->registerRoutes($this, array(
         
         // BTDownloaderController
         ['name' => 'btdownloader#add', 'url' => '/btdownloaderadd', 'verb' => 'POST'],
+        ['name' => 'btdownloader#listtorrentfiles', 'url' => '/listtorrentfiles', 'verb' => 'POST'],
         
         // DownloaderQueueController
         ['name' => 'downloaderqueue#get', 'url' => '/downloadergetqueue', 'verb' => 'POST'],
@@ -40,6 +41,9 @@ $Application->registerRoutes($this, array(
         ['name' => 'downloaderqueue#totalremove', 'url' => '/downloadertotalremove', 'verb' => 'POST'],
         
         // AdminSettingsController
-        ['name' => 'adminsettings#save', 'url' => '/adminsettings', 'verb' => 'POST']
+        ['name' => 'adminsettings#save', 'url' => '/adminsettings', 'verb' => 'POST'],
+        
+        // PersonalSettingsController
+        ['name' => 'personalsettings#save', 'url' => '/personalsettings', 'verb' => 'POST']
     ]
 ));

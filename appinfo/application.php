@@ -21,20 +21,28 @@ class Application extends App
 	public function __construct (array $URLParams = array ())
 	{
 		parent::__construct ('ocdownloader', $URLParams);
-		
 		$container = $this->getContainer ();
+		
+		$container->registerService ('UserStorage', function ($c)
+		{
+            return $c->query ('ServerContainer')->getUserFolder ();
+        });
+		
+		$container->registerService ('CurrentUID', function ($c)
+		{
+			$User = $c->query ('ServerContainer')->getUserSession ()->getUser ();
+			return ($User) ? $User->getUID () : '';
+		});
+		
 		$container->registerService ('IndexController', function ($c)
 		{
 	      	return new IndexController
 			(
 		        $c->query ('AppName'),
-		        $c->query ('Request')
+		        $c->query ('Request'),
+				$c->query ('CurrentUID')
 	      	);
 	    });
-		
-		$container->registerService ('UserStorage', function ($c) {
-            return $c->query ('ServerContainer')->getUserFolder ();
-        });
 		
 		$container->registerService ('HttpDownloaderController', function ($c)
 		{
@@ -42,7 +50,8 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage')
+				$c->query ('UserStorage'),
+				$c->query ('CurrentUID')
 	      	);
 	    });
 		
@@ -52,7 +61,8 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage')
+				$c->query ('UserStorage'),
+				$c->query ('CurrentUID')
 	      	);
 	    });
 		
@@ -62,7 +72,8 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage')
+				$c->query ('UserStorage'),
+				$c->query ('CurrentUID')
 	      	);
 	    });
 		
@@ -72,7 +83,8 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage')
+				$c->query ('UserStorage'),
+				$c->query ('CurrentUID')
 	      	);
 	    });
 		
@@ -91,6 +103,16 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request')
+	      	);
+	    });
+		
+		$container->registerService ('PersonalSettingsController', function ($c)
+		{
+	      	return new PersonalSettingsController
+			(
+		        $c->query ('AppName'),
+		        $c->query ('Request'),
+				$c->query ('CurrentUID')
 	      	);
 	    });
 	}

@@ -96,13 +96,10 @@ script ('ocdownloader', 'script');
                 </h3>
                 <div class="actions">
                     <div class="button" id="torrentlist">
-        				<a>Select a file.torrent <i>(Default : list torrent files in the user root folder, check the Personnal Settings panel)</i><div class="icon-caret-dark svg"></div></a>
+        				<a>Select a file.torrent<?php print(strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>(Default : list torrent files in the folder /Downloads/Files/Torrents, check the Personnal Settings panel)</i>'); ?><div class="icon-caret-dark svg"></div></a>
         				<ul>
-        					<li><p data-rel="OCDHTTP">HTTP</p></li>
-        					<li><p data-rel="OCDFTP">FTP</p></li>
-                            <li><p data-rel="OCDYT">YOUTUBE</p></li>
-                            <li><p data-rel="OCDBT">BITTORRENT</p></li>
-        				</ul>
+                            <li><p class="loader"><span class="icon-loading-small"></span></p></li>
+                        </ul>
         			</div>
                 </div>
                 <div class="jumbotron">

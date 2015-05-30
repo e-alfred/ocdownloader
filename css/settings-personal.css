@@ -1,0 +1,28 @@
+form#ocdownloader > p {
+	margin-bottom: 5px;
+}
+form#ocdownloader > p > span.OCDSLoader {
+	padding: 10px;
+	display: none;
+	margin-left: 0.5em;
+}
+form#ocdownloader > p > span.msg {
+	display: none;
+	padding: 3px;
+	font-size: 10pt;
+	margin-left: 0.5em;
+	border-radius: 3px;
+}
+form#ocdownloader > p > input.OCDDownloadsFolder, form#ocdownloader > p > input.OCDTorrentsFolder {
+	width: 400px;
+}
+form#ocdownloader > p > span.info {
+	font-style: italic;
+	color: #003366;
+}
+form#ocdownloader > hr {
+	width: 800px;
+	color: #99CCFF;
+	background-color: #66CCFF;
+	float: left;
+}

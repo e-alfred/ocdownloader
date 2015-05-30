@@ -11,7 +11,7 @@
 ?>
 <form id="ocdownloader" class="section">
 	<h2>ocDownloader</h2>
-	<p>Leave fields blank to erase a setting value<span id="OCDSLoader" class="OCDSLoader icon-loading-small"></span><span class="msg" id="OCDSMsg"></span></p>
+	<p><span class="info">Leave fields blank to erase a setting value</span><span id="OCDSLoader" class="OCDSLoader icon-loading-small"></span><span class="msg" id="OCDSMsg"></span></p>
 	<p id="YTBinary">
 		<label for="OCDYTDLBinary">YouTube DL Binary Path</label>
 		<input type="text" class="OCDYTDLBinary ToUse" id="OCDYTDLBinary" value="<?php print (isset ($_['OCDS_YTDLBinary']) ? $_['OCDS_YTDLBinary'] : '/usr/local/bin/youtube-dl'); ?>" />

@@ -90,11 +90,34 @@
   min-width: 112px;
   position: fixed;
   text-align: left;
-  z-index: 10;
+}
+.ocd .actions > div#new > ul {
+  z-index: 11;
 }
 .ocd .actions > div#torrentlist > ul {
   margin-left: 0;
-  width: 800px;  
+  width: 800px;
+  z-index: 10;
+  padding-bottom: 0px;  
+}
+.ocd .actions > div#torrentlist > ul > li {
+  background: transparent url('../img/torrent.png') no-repeat scroll 10px 8px;
+  cursor: pointer;
+  height: 30px;
+  margin: 0 5px 5px 15px;
+  padding: 5px;
+}
+.ocd .actions > div#torrentlist > ul > li > p {
+  cursor: pointer;
+  padding-bottom: 0;
+  padding-left: 35px;
+  padding-top: 0;
+}
+.ocd .actions > div#torrentlist > ul > li > p.loader > span {
+  padding: 10px;
+}
+.ocd .actions > div#torrentlist > ul > li > p.clickable {
+  
 }
 .ocd .actions > div.button > ul > li {
   cursor: pointer;

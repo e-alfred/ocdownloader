@@ -63,6 +63,9 @@ $(document).ready (function()
 	
 	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').bind ('click', function ()
 	{
+		$(this).addClass ('icon-loading-small');
+		$(this).removeClass ('icon-delete');
+		
 		var TR = $(this).parent ().parent ();
 		var GID = TR.attr ('data-rel');
 		if (GID)
@@ -80,6 +83,8 @@ $(document).ready (function()
 		            if (Data.ERROR)
 					{
 						PrintError (Data.MESSAGE);
+						$(this).addClass ('icon-delete');
+						$(this).removeClass ('icon-loading-small');
 					}
 					else
 					{

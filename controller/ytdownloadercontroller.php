@@ -31,7 +31,7 @@ class YTDownloaderController extends Controller
       private $ProxyUser = null;
       private $ProxyPasswd = null;
       
-      public function __construct ($AppName, IRequest $Request, $UserStorage)
+      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID)
       {
             parent::__construct ($AppName, $Request);
             $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
@@ -59,6 +59,13 @@ class YTDownloaderController extends Controller
             $this->ProxyUser = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPasswd');
             $this->ProxyPasswd = $Settings->GetValue ();
+            
+            $Settings->SetTable ('personal');
+            $Settings->SetUID ($CurrentUID);
+            $Settings->SetKey ('DownloadsFolder');
+            $DownloadsFolder = $Settings->GetValue ();
+            
+            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . '/' . (is_null ($DownloadsFolder) ? 'Downloads' : $DownloadsFolder);
       }
       
       /**

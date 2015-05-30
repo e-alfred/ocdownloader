@@ -57,12 +57,14 @@ class DownloaderQueueController extends Controller
                               {
                                     if (!isset ($Status['error']))
                                     {
+                                          $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
+                                          
                                           $Queue[] = Array (
                                                 'GID' => $GID,
-                                                'PROGRESSVAL' => round((($Status['result']['completedLength'] / $Status['result']['totalLength']) * 100), 2) . '%',
-                                                'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']),
-                                                'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) : 'N/A',
-                                                'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
+                                                'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
+                                                'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']) . (isset ($Status['result']['numSeeders']) && $Progress < 1 ? ' - Seeders: ' . $Status['result']['numSeeders'] : ''),
+                                                'STATUS' => isset ($Status['result']['status']) ? ucfirst ($Status['result']['status']) . (isset ($Status['result']['numSeeders']) && $Progress == 1 ? ' - Seeding' : '') : 'N/A',
+                                                'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? (isset ($Status['result']['numSeeders']) && $Progress == 1 ? Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s' : '--') : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : 'N/A'
                                           );
                                           
                                           switch (strtolower ($Status['result']['status']))

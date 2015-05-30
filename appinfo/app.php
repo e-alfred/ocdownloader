@@ -21,3 +21,4 @@ namespace OCA\ocDownloader\AppInfo;
 ]);
 
 \OCP\App::registerAdmin('ocdownloader', 'settings-admin');
+\OCP\App::registerPersonal('ocdownloader', 'settings-personal');

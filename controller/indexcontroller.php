@@ -17,14 +17,17 @@ use \OCP\AppFramework\Controller;
 use \OCP\Config;
 
 use \OCA\ocDownloader\Controller\Lib\Tools;
+use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class IndexController extends Controller
 {
       private $DbType = 0;
+      private $CurrentUID = null;
       
-      public function __construct ($AppName, IRequest $Request)
+      public function __construct ($AppName, IRequest $Request, $CurrentUID)
       {
             parent::__construct($AppName, $Request);
+            $this->CurrentUID = $CurrentUID;
             
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
@@ -38,6 +41,12 @@ class IndexController extends Controller
        */
       public function add ()
       {
+            $Settings = new Settings ('personal');
+            $Settings->SetUID ($this->CurrentUID);
+            
+            $Settings->SetKey ('TorrentsFolder');
+            $TorrentsFolder = $Settings->GetValue ();
+            
             $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE (STATUS != ? OR STATUS IS NULL) AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
             if ($this->DbType == 1)
             {
@@ -50,7 +59,8 @@ class IndexController extends Controller
             return new TemplateResponse ('ocdownloader', 'add', [ 
                   'PAGE' => 0, 
                   'NBELT' => $Query->rowCount (), 
-                  'QUEUE' => $Result
+                  'QUEUE' => $Result,
+                  'TTSFOLD' => $TorrentsFolder
             ]);
       }
       
