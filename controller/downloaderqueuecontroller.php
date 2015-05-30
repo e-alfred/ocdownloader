@@ -147,7 +147,16 @@ class DownloaderQueueController extends Controller
             {
                   if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
                   {
-                        if (strpos ($_POST['GID'], 'YT_') !== false)
+                        $Aria2 = new Aria2();
+                        $Status = $Aria2->tellStatus ($_POST['GID']);
+                        
+                        $Remove['result'] = $_POST['GID'];
+                        if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
+                        {
+                              $Remove = $Aria2->remove ($_POST['GID']);
+                        }
+                        
+                        if (strcmp ($Remove['result'], $_POST['GID']) == 0)
                         {
                               $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
                               if ($this->DbType == 1)
@@ -165,35 +174,7 @@ class DownloaderQueueController extends Controller
                         }
                         else
                         {
-                              $Aria2 = new Aria2();
-                              $Status = $Aria2->tellStatus ($_POST['GID']);
-                              
-                              $Remove['result'] = $_POST['GID'];
-                              if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
-                              {
-                                    $Remove = $Aria2->remove ($_POST['GID']);
-                              }
-                              
-                              if (strcmp ($Remove['result'], $_POST['GID']) == 0)
-                              {
-                                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
-                                    if ($this->DbType == 1)
-                                    {
-                                          $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ?';
-                                    }
-                  
-                                    $Query = \OCP\DB::prepare ($SQL);
-                                    $Result = $Query->execute (Array (
-                                          4,
-                                          $_POST['GID']
-                                    ));
-                                    
-                                    die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been removed'))));
-                              }
-                              else
-                              {
-                                    die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('An error occured while removing the download'))));
-                              }
+                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('An error occured while removing the download'))));
                         }
                   }
                   else
@@ -238,6 +219,108 @@ class DownloaderQueueController extends Controller
                         ));
                         
                         die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been totally removed'))));
+                  }
+                  else
+                  {
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Bad GID'))));
+                  }
+            }
+            catch (Exception $E)
+            {
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+            }
+      }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function pause ()
+      {
+            try
+            {
+                  if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
+                  {
+                        $Aria2 = new Aria2();
+                        $Status = $Aria2->tellStatus ($_POST['GID']);
+                        
+                        $Pause['result'] = $_POST['GID'];
+                        if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0  && strcmp ($Status['result']['status'], 'active') == 0)
+                        {
+                              $Pause = $Aria2->pause ($_POST['GID']);
+                        }
+                        
+                        if (strcmp ($Pause['result'], $_POST['GID']) == 0)
+                        {
+                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
+                              if ($this->DbType == 1)
+                              {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ?';
+                              }
+            
+                              $Query = \OCP\DB::prepare ($SQL);
+                              $Result = $Query->execute (Array (
+                                    3,
+                                    $_POST['GID']
+                              ));
+                              
+                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been paused'))));
+                        }
+                        else
+                        {
+                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('An error occured while pausing the download'))));
+                        }
+                  }
+                  else
+                  {
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Bad GID'))));
+                  }
+            }
+            catch (Exception $E)
+            {
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+            }
+      }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function unpause ()
+      {
+            try
+            {
+                  if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
+                  {
+                        $Aria2 = new Aria2();
+                        $Status = $Aria2->tellStatus ($_POST['GID']);
+                        
+                        $UnPause['result'] = $_POST['GID'];
+                        if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0  && strcmp ($Status['result']['status'], 'paused') == 0)
+                        {
+                              $UnPause = $Aria2->unpause ($_POST['GID']);
+                        }
+                        
+                        if (strcmp ($UnPause['result'], $_POST['GID']) == 0)
+                        {
+                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
+                              if ($this->DbType == 1)
+                              {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ?';
+                              }
+            
+                              $Query = \OCP\DB::prepare ($SQL);
+                              $Result = $Query->execute (Array (
+                                    1,
+                                    $_POST['GID']
+                              ));
+                              
+                              die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been unpaused'))));
+                        }
+                        else
+                        {
+                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('An error occured while unpausing the download'))));
+                        }
                   }
                   else
                   {

@@ -50,7 +50,7 @@ script ('ocdownloader', 'script');
                                     </div>
                                 </div>
                             </td>
-                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>
+                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

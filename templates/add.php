@@ -133,7 +133,7 @@ script ('ocdownloader', 'script');
                             </td>
                             <td data-rel="SPEED" class="border padding"><?php print ($l->t ('N/A')); ?></td>
                             <td data-rel="STATUS" class="border padding"><?php print ($l->t ('N/A')); ?></td>
-                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>
+                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-<?php print($Row['STATUS'] == 3 ? 'play' : 'pause'); ?> svg"></div></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

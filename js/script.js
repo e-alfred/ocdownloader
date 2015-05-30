@@ -69,15 +69,17 @@ function GetDownloaderQueue ()
 	}
 }
 
-function SetupRemoverFromQueue ()
+function SetupActionButtons ()
 {
-	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').unbind ('click');
+	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.svg').unbind ('click');
+	
 	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').bind ('click', function ()
 	{
-		$(this).addClass ('icon-loading-small');
-		$(this).removeClass ('icon-delete');
+		var BTN = $(this);
+		BTN.addClass ('icon-loading-small');
+		BTN.removeClass ('icon-delete');
 		
-		var TR = $(this).parent ().parent ();
+		var TR = BTN.parent ().parent ();
 		var GID = TR.attr ('data-rel');
 		if (GID)
 		{
@@ -94,14 +96,96 @@ function SetupRemoverFromQueue ()
 		            if (Data.ERROR)
 					{
 						PrintError (Data.MESSAGE);
-						$(this).addClass ('icon-delete');
-						$(this).removeClass ('icon-loading-small');
+						BTN.addClass ('icon-delete');
+						BTN.removeClass ('icon-loading-small');
 					}
 					else
 					{
 						PrintInfo (Data.MESSAGE + ' (' + GID + ')');
 						TR.remove ();
 					}
+		        }
+		    });
+		}
+		else
+		{
+			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+		}
+	});
+	
+	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-pause').bind ('click', function ()
+	{
+		var BTN = $(this);
+		BTN.addClass ('icon-loading-small');
+		BTN.removeClass ('icon-pause');
+		
+		var TR = BTN.parent ().parent ();
+		var GID = TR.attr ('data-rel');
+		if (GID)
+		{
+			$.ajax ({
+		        url: OC.generateUrl ('/apps/ocdownloader/downloadersetpause'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'GID' : GID},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+		            if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+						BTN.addClass ('icon-pause');
+					}
+					else
+					{
+						PrintInfo (Data.MESSAGE + ' (' + GID + ')');
+						BTN.addClass ('icon-play');
+						SetupActionButtons ();
+					}
+					BTN.removeClass ('icon-loading-small');
+		        }
+		    });
+		}
+		else
+		{
+			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+		}
+	});
+	
+	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-play').bind ('click', function ()
+	{
+		var BTN = $(this);
+		BTN.addClass ('icon-loading-small');
+		BTN.removeClass ('icon-play');
+		
+		var TR = BTN.parent ().parent ();
+		var GID = TR.attr ('data-rel');
+		if (GID)
+		{
+			$.ajax ({
+		        url: OC.generateUrl ('/apps/ocdownloader/downloadersetunpause'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'GID' : GID},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+		            if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+						BTN.addClass ('icon-play');
+					}
+					else
+					{
+						PrintInfo (Data.MESSAGE + ' (' + GID + ')');
+						BTN.addClass ('icon-pause');
+						SetupActionButtons ();
+					}
+					BTN.removeClass ('icon-loading-small');
 		        }
 		    });
 		}
@@ -258,11 +342,11 @@ $(document).ready (function ()
 							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
 							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
+							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
 							'</tr>'
 						);
 						
-						SetupRemoverFromQueue ();
+						SetupActionButtons ();
 						
 						$('.ocd .content-page[rel=OCDHTTP] input[type="text"]').val ('');
 						$('.ocd .content-page[rel=OCDHTTP] input[type="password"]').val ('');
@@ -314,11 +398,11 @@ $(document).ready (function ()
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
 						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
+						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
 						'</tr>'
 					);
 					
-					SetupRemoverFromQueue ();
+					SetupActionButtons ();
 					
 					// Reset form field
 					$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
@@ -374,11 +458,11 @@ $(document).ready (function ()
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
 						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
+						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
 						'</tr>'
 					);
 					
-					SetupRemoverFromQueue ();
+					SetupActionButtons ();
 					
 					// Reset form field
 					$('.ocd .content-page[rel=OCDYT] input[type="text"]').val ('');
@@ -434,15 +518,15 @@ $(document).ready (function ()
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
 						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>' +
+						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
 						'</tr>'
 					);
 					
-					SetupRemoverFromQueue ();
+					SetupActionButtons ();
 		        }
 		    });
 		}
 	});
 	
-	SetupRemoverFromQueue ();
+	SetupActionButtons ();
 });

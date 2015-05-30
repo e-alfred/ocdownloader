@@ -10,7 +10,7 @@
  */
 
 style ('ocdownloader', 'styles');
-script ('ocdownloader', 'script');
+script ('ocdownloader', 'stopped');
 ?>
 <div id="app" class="ocd">
     <div id="app-navigation">
@@ -50,7 +50,7 @@ script ('ocdownloader', 'script');
                                     </div>
                                 </div>
                             </td>
-                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div></td>
+                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-play svg"></div></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

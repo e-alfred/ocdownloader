@@ -67,12 +67,12 @@ $(document).ready (function()
 		BTN.addClass ('icon-loading-small');
 		BTN.removeClass ('icon-delete');
 		
-		var TR = BTN.parent ().parent ();
+		var TR = $(this).parent ().parent ();
 		var GID = TR.attr ('data-rel');
 		if (GID)
 		{
 			$.ajax ({
-		        url: OC.generateUrl ('/apps/ocdownloader/downloadertotalremove'),
+		        url: OC.generateUrl ('/apps/ocdownloader/downloaderremovequeue'),
 		        method: 'POST',
 				dataType: 'json',
 				data: {'GID' : GID},
@@ -98,6 +98,46 @@ $(document).ready (function()
 		else
 		{
 			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'))
+		}
+	});
+	
+	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-play').bind ('click', function ()
+	{
+		var BTN = $(this);
+		BTN.addClass ('icon-loading-small');
+		BTN.removeClass ('icon-play');
+		
+		var TR = BTN.parent ().parent ();
+		var GID = TR.attr ('data-rel');
+		if (GID)
+		{
+			$.ajax ({
+		        url: OC.generateUrl ('/apps/ocdownloader/downloadersetunpause'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'GID' : GID},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+		            if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+						BTN.addClass ('icon-play');
+						BTN.removeClass ('icon-loading-small');
+					}
+					else
+					{
+						PrintInfo (Data.MESSAGE + ' (' + GID + ')');
+						TR.remove ();
+					}
+		        }
+		    });
+		}
+		else
+		{
+			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
 		}
 	});
 });
