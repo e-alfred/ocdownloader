@@ -112,6 +112,30 @@ function SetupRemoverFromQueue ()
 	});
 }
 
+function GetPersonalSetting (KEY)
+{
+	var VAL = 'Downloads/Files/Torrents';
+	
+	$.ajax ({
+        url: OC.generateUrl ('/apps/ocdownloader/getpersonalsetting'),
+        method: 'POST',
+		dataType: 'json',
+		data: {'KEY' : KEY},
+        async: false,
+        cache: false,
+        timeout: 30000,
+        success: function (Data)
+		{
+            if (!Data.ERROR)
+			{
+				VAL = Data.VAL;
+			}
+        }
+    });
+	
+	return VAL;
+}
+
 $(document).ready (function ()
 {
 	// Get current downloader queue every 5 seconds
@@ -163,7 +187,7 @@ $(document).ready (function ()
 						
 						if (Data.FILES.length == 0)
 						{
-							$('div#torrentlist > ul').append ('<li><p>No Torrent Files</p></li>');
+							$('div#torrentlist > ul').append ('<li><p>No Torrent Files, <a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (GetPersonalSetting ('TorrentsFolder')).replace(/%2F/g, '/') + '">Upload</a></p></li>');
 						}
 						
 						for (var I = 0; I < Data.FILES.length; I++)

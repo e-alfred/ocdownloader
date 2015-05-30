@@ -20,11 +20,16 @@ use \OCA\ocDownloader\Controller\Lib\Tools;
 class PersonalSettingsController extends Controller
 {
       private $CurrentUID = null;
+      private $OCDSettingKeys = Array ('DownloadsFolder', 'TorrentsFolder');
+      private $Settings = null;
       
       public function __construct ($AppName, IRequest $Request, $CurrentUID)
       {
             parent::__construct($AppName, $Request);
             $this->CurrentUID = $CurrentUID;
+            
+            $this->Settings = new Settings ('personal');
+            $this->Settings->SetUID ($this->CurrentUID);
       }
       
       /**
@@ -33,11 +38,6 @@ class PersonalSettingsController extends Controller
        */
       public function save ()
       {
-            $OCDSettingKeys = Array ('DownloadsFolder', 'TorrentsFolder');
-            
-            $Settings = new Settings ('personal');
-            $Settings->SetUID ($this->CurrentUID);
-            
             $Error = false;
             $Message = '';
             
@@ -46,9 +46,9 @@ class PersonalSettingsController extends Controller
                   $PostKey = str_replace ('OCD', '', $_POST['KEY']);
                   $PostValue = ltrim (trim (str_replace (' ', '\ ', $_POST['VAL'])), '/');
                   
-                  if (in_array ($PostKey, $OCDSettingKeys))
+                  if (in_array ($PostKey, $this->OCDSettingKeys))
                   {
-                        $Settings->SetKey ($PostKey);
+                        $this->Settings->SetKey ($PostKey);
                         
                         // Pre-Save process
                         if (strcmp ($PostKey, 'DownloadsFolder') == 0 || strcmp ($PostKey, 'TorrentsFolder') == 0)
@@ -68,13 +68,13 @@ class PersonalSettingsController extends Controller
                               $PostValue = null;
                         }
                         
-                        if ($Settings->CheckIfKeyExists ())
+                        if ($this->Settings->CheckIfKeyExists ())
                         {
-                              $Settings->UpdateValue ($PostValue);
+                              $this->Settings->UpdateValue ($PostValue);
                         }
                         else
                         {
-                              $Settings->InsertValue ($PostValue);
+                              $this->Settings->InsertValue ($PostValue);
                         }
                   }
                   else
@@ -90,5 +90,27 @@ class PersonalSettingsController extends Controller
             }
             
             die (json_encode (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? 'Saved' : $Message))));
+      }
+      
+      /**
+       * @AdminRequired
+       * @NoCSRFRequired
+       */
+      public function get ()
+      {
+            if (isset ($_POST['KEY']) && strlen (trim ($_POST['KEY'])) > 0)
+            {
+                  if (in_array ($_POST['KEY'], $this->OCDSettingKeys))
+                  {
+                        $this->Settings->SetKey ($_POST['KEY']);
+                        $Val = $this->Settings->GetValue ();
+                        
+                        die (json_encode (Array ('ERROR' => (is_null ($Val) ? true : false), 'VAL' => $Val)));
+                  }
+                  
+                  die (json_encode (Array ('ERROR' => true, 'VAL' => null)));
+            }
+            
+            die (json_encode (Array ('ERROR' => true, 'VAL' => null)));
       }
 }

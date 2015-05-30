@@ -116,8 +116,9 @@
 .ocd .actions > div#torrentlist > ul > li > p.loader > span {
   padding: 10px;
 }
-.ocd .actions > div#torrentlist > ul > li > p.clickable {
-  
+.ocd .actions > div#torrentlist > ul > li > p > a {
+  color: #003366;
+  text-decoration: underline;
 }
 .ocd .actions > div.button > ul > li {
   cursor: pointer;

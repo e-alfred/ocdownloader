@@ -44,6 +44,7 @@ $Application->registerRoutes($this, array(
         ['name' => 'adminsettings#save', 'url' => '/adminsettings', 'verb' => 'POST'],
         
         // PersonalSettingsController
-        ['name' => 'personalsettings#save', 'url' => '/personalsettings', 'verb' => 'POST']
+        ['name' => 'personalsettings#save', 'url' => '/personalsettings', 'verb' => 'POST'],
+        ['name' => 'personalsettings#get', 'url' => '/getpersonalsetting', 'verb' => 'POST']
     ]
 ));
