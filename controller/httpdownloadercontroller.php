@@ -23,7 +23,8 @@ use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class HttpDownloaderController extends Controller
 {
-      private $TargetFolder;
+      private $AbsoluteTargetFolder = null;
+      private $DownloadsFolder = null;
       private $DbType;
       private $ProxyAddress = null;
       private $ProxyPort = 0;
@@ -54,9 +55,10 @@ class HttpDownloaderController extends Controller
             $Settings->SetTable ('personal');
             $Settings->SetUID ($CurrentUID);
             $Settings->SetKey ('DownloadsFolder');
-            $DownloadsFolder = $Settings->GetValue ();
+            $this->DownloadsFolder = $Settings->GetValue ();
             
-            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . '/' . (is_null ($DownloadsFolder) ? 'Downloads' : $DownloadsFolder);
+            $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
+            $this->AbsoluteTargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->DownloadsFolder;
             
             $this->L10N = $L10N;
       }
@@ -74,16 +76,16 @@ class HttpDownloaderController extends Controller
                         $Target = substr($_POST['URL'], strrpos($_POST['URL'], '/') + 1);
                         
                         // If target file exists, create a new one
-                        if (\OC\Files\Filesystem::file_exists ($Target))
+                        if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $Target))
                         {
                               $Target = time () . '_' . $Target;
                         }
                         
                         // Create the target file
-                        \OC\Files\Filesystem::touch ($Target);
+                        \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $Target);
                         
                         // Download in the user root folder
-                        $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $Target);
+                        $OPTIONS = Array ('dir' => $this->AbsoluteTargetFolder, 'out' => $Target);
                         if (isset ($_POST['OPTIONS']['HTTPUser']) && strlen (trim ($_POST['OPTIONS']['HTTPUser'])) > 0 && isset ($_POST['OPTIONS']['HTTPPasswd']) && strlen (trim ($_POST['OPTIONS']['HTTPPasswd'])) > 0)
                         {
                               $OPTIONS['http-user'] = $_POST['OPTIONS']['HTTPUser'];

@@ -24,7 +24,8 @@ use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class YTDownloaderController extends Controller
 {
-      private $TargetFolder = null;
+      private $AbsoluteTargetFolder = null;
+      private $DownloadsFolder = null;
       private $DbType = 0;
       private $YTDLBinary = null;
       private $ProxyAddress = null;
@@ -64,9 +65,10 @@ class YTDownloaderController extends Controller
             $Settings->SetTable ('personal');
             $Settings->SetUID ($CurrentUID);
             $Settings->SetKey ('DownloadsFolder');
-            $DownloadsFolder = $Settings->GetValue ();
+            $this->DownloadsFolder = $Settings->GetValue ();
             
-            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . '/' . (is_null ($DownloadsFolder) ? 'Downloads' : $DownloadsFolder);
+            $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
+            $this->AbsoluteTargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->DownloadsFolder;
             
             $this->L10N = $L10N;
       }
@@ -112,14 +114,14 @@ class YTDownloaderController extends Controller
                         $Aria2 = new Aria2 ();
                         
                         // If target file exists, create a new one
-                        if (\OC\Files\Filesystem::file_exists ($DL['FILENAME']))
+                        if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $DL['FILENAME']))
                         {
                               $DL['FILENAME'] = time () . '_' . $DL['FILENAME'];
                         }
                         // Create the target file
-                        \OC\Files\Filesystem::touch ($DL['FILENAME']);
+                        \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $DL['FILENAME']);
                         
-                        $OPTIONS = Array ('dir' => $this->TargetFolder, 'out' => $DL['FILENAME']);
+                        $OPTIONS = Array ('dir' => $this->AbsoluteTargetFolder, 'out' => $DL['FILENAME']);
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = $this->ProxyAddress . ':' . $this->ProxyPort;
