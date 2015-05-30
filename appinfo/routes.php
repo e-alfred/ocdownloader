@@ -31,6 +31,9 @@ $Application->registerRoutes($this, array(
         // YTDownloaderController
         ['name' => 'ytdownloader#add', 'url' => '/ytdownloaderadd', 'verb' => 'POST'],
         
+        // BTDownloaderController
+        ['name' => 'btdownloader#add', 'url' => '/btdownloaderadd', 'verb' => 'POST'],
+        
         // DownloaderQueueController
         ['name' => 'downloaderqueue#get', 'url' => '/downloadergetqueue', 'verb' => 'POST'],
         ['name' => 'downloaderqueue#remove', 'url' => '/downloaderremovequeue', 'verb' => 'POST'],

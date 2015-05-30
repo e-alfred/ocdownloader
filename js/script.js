@@ -118,16 +118,16 @@ $(document).ready (function ()
     setInterval (function (){ GetDownloaderQueue(); }, 5000);
     GetDownloaderQueue();
 	
-	// Display or hide the "New Download" menu
-	$('div#new').bind ('click', function ()
+	// Display or hide the "New Download" menu (works also for the BT files list)
+	$('div#new, div#torrentlist').bind ('click', function ()
 	{
-		if ($('div#new > ul').is (':visible'))
+		if ($(this).children ('ul').is (':visible'))
 		{
-			$('div#new > ul').hide ();
+			$(this).children ('ul').hide ();
 		}
 		else
 		{
-			$('div#new > ul').show ();
+			$(this).children ('ul').show ();
 		}
 	});
 	
@@ -136,6 +136,12 @@ $(document).ready (function ()
 	{
 		$('.ocd .content-page').hide ();
 		$('.ocd .content-page[rel=' + $(this).attr ('data-rel') + ']').show ();
+	});
+	
+	// Select a torrent in the proposed list 
+	$('div#torrentlist > ul > li > p').bind ('click', function ()
+	{
+		$(this).parent ().parent ().parent ().children ('a').html ($(this).text () + '<div class="icon-caret-dark svg"></div>');
 	});
 	
 	// Reset YT options

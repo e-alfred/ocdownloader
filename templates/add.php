@@ -30,6 +30,7 @@ script ('ocdownloader', 'script');
         					<li><p data-rel="OCDHTTP">HTTP</p></li>
         					<li><p data-rel="OCDFTP">FTP</p></li>
                             <li><p data-rel="OCDYT">YOUTUBE</p></li>
+                            <li><p data-rel="OCDBT">BITTORRENT</p></li>
         				</ul>
         			</div>
                     <div id="loadtext"<?php print ($_['NBELT'] > 0 ? '' : ' style="display: none;"'); ?>>Loading ...</div>
@@ -84,6 +85,29 @@ script ('ocdownloader', 'script');
                     <div class="group-option">
                         <label for="option-yt-extractaudio">Only Extract audio ?</label><input type="checkbox" id="option-yt-extractaudio" />&nbsp;<i>(No post-processing just extract audio)</i>
                     </div>
+                </div>
+            </div>
+            <div class="content-page" rel="OCDBT" style="display:none;">
+                <h3>
+                    New BitTorrent download<span class="muted add-msg"></span>
+                    <div class="button launch">
+        				<a>Launch BitTorrent Download</a>
+                    </div>
+                </h3>
+                <div class="actions">
+                    <div class="button" id="torrentlist">
+        				<a>Select a file.torrent <i>(Default : list torrent files in the user root folder, check the Personnal Settings panel)</i><div class="icon-caret-dark svg"></div></a>
+        				<ul>
+        					<li><p data-rel="OCDHTTP">HTTP</p></li>
+        					<li><p data-rel="OCDFTP">FTP</p></li>
+                            <li><p data-rel="OCDYT">YOUTUBE</p></li>
+                            <li><p data-rel="OCDBT">BITTORRENT</p></li>
+        				</ul>
+        			</div>
+                </div>
+                <div class="jumbotron">
+                    <h5>Options</h5>
+                    <i>No options, for now ;-)</i>
                 </div>
             </div>
             <div class="content-queue">

@@ -25,6 +25,15 @@ class Tools
 		return false;
 	}
 	
+	public static function CheckFilepath ($FP)
+	{
+		if (\OC\Files\Filesystem::file_exists ($FP))
+        {
+              return true;
+        }
+		return false;
+	}
+	
 	public static function GetProgressString ($Completed, $Total)
 	{
 		$CompletedStr = self::FormatSizeUnits($Completed);
@@ -58,17 +67,6 @@ class Tools
 	public static function YouTubeDLInstalled ($YTBinary)
 	{
 		exec ('which ' . $YTBinary, $Output, $Return);
-		
-		if ($Return == 0)
-		{
-		    return true;
-		}
-		return false;
-	}
-	
-	public static function FFMpegFound ()
-	{
-		exec ('which ffmpeg', $Output, $Return);
 		
 		if ($Return == 0)
 		{

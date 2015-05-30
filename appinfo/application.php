@@ -66,6 +66,16 @@ class Application extends App
 	      	);
 	    });
 		
+		$container->registerService ('BTDownloaderController', function ($c)
+		{
+	      	return new BTDownloaderController
+			(
+		        $c->query ('AppName'),
+		        $c->query ('Request'),
+				$c->query ('UserStorage')
+	      	);
+	    });
+		
 		$container->registerService ('DownloaderQueueController', function ($c)
 		{
 	      	return new DownloaderQueueController
