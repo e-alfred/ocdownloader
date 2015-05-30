@@ -18,6 +18,7 @@ use \OCP\Config;
 
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
+use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class FtpDownloaderController extends Controller
 {
@@ -66,7 +67,7 @@ class FtpDownloaderController extends Controller
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($Target))
                         {
-                              $Target = $Target . '.' . time ();
+                              $Target = time () . '_' . $Target;
                         }
                         
                         // Create the target file
