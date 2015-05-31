@@ -32,10 +32,10 @@ script ('ocdownloader', 'script');
                 <table border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
-                            <th width="20%"><?php print ($l->t ('FILENAME')); ?></th>
-                            <th width="10%" class="border"><?php print ($l->t ('PROTOCOL')); ?></th>
-                            <th width="60%" class="border"><?php print ($l->t ('INFORMATION')); ?></th>
-                            <th width="10%"></th>
+                            <th width="20%" data-rel="FILENAME"><?php print ($l->t ('FILENAME')); ?></th>
+                            <th width="10%" data-rel="PROTO" class="border"><?php print ($l->t ('PROTOCOL')); ?></th>
+                            <th width="60%" data-rel="MESSAGE" class="border"><?php print ($l->t ('INFORMATION')); ?></th>
+                            <th width="10%" data-rel="ACTION"><?php print ($_['NBELT'] > 0 ? '<div class="icon-delete svg"></div>' : ''); ?></th>
                         </tr>
                     </thead>
                     <tbody>

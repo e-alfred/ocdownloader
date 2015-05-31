@@ -23,19 +23,18 @@ use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class FtpDownloaderController extends Controller
 {
-      private $AbsoluteTargetFolder = null;
+      private $AbsoluteDownloadsFolder = null;
       private $DownloadsFolder = null;
-      private $DbType;
+      private $DbType = 0;
       private $ProxyAddress = null;
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
       
-      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID, IL10N $L10N)
+      public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
             
-            $this->DbType = 0;
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
                   $this->DbType = 1;
@@ -58,7 +57,7 @@ class FtpDownloaderController extends Controller
             $this->DownloadsFolder = $Settings->GetValue ();
             
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
-            $this->AbsoluteTargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->DownloadsFolder;
+            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
             
             $this->L10N = $L10N;
       }
@@ -85,7 +84,7 @@ class FtpDownloaderController extends Controller
                         \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $Target);
                         
                         // Download in the /tmp folder
-                        $OPTIONS = Array ('dir' => $this->AbsoluteTargetFolder, 'out' => $Target);
+                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target);
                         if (isset ($_POST['OPTIONS']['FTPUser']) && strlen (trim ($_POST['OPTIONS']['FTPUser'])) > 0 && isset ($_POST['OPTIONS']['FTPPasswd']) && strlen (trim ($_POST['OPTIONS']['FTPPasswd'])) > 0)
                         {
                               $OPTIONS['ftp-user'] = $_POST['OPTIONS']['FTPUser'];

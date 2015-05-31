@@ -345,5 +345,113 @@ class DownloaderQueueController extends Controller
                   die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
             }
       }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function clean ()
+      {
+            try
+            {
+                  if (isset ($_POST['GIDS']) && count ($_POST['GIDS']) > 0)
+                  {
+                        $Queue = Array ();
+                        
+                        foreach ($_POST['GIDS'] as $GID)
+                        {
+                              $Aria2 = new Aria2();
+                              $Status = $Aria2->tellStatus ($GID);
+                              
+                              $Remove['result'] = $GID;
+                              if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
+                              {
+                                    $Remove = $Aria2->remove ($GID);
+                              }
+                              
+                              if (strcmp ($Remove['result'], $GID) == 0)
+                              {
+                                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ?';
+                                    if ($this->DbType == 1)
+                                    {
+                                          $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ?';
+                                    }
+                  
+                                    $Query = \OCP\DB::prepare ($SQL);
+                                    $Result = $Query->execute (Array (
+                                          4,
+                                          $GID
+                                    ));
+                              }
+                              
+                              $Queue[] = Array (
+                                    'GID' => $GID
+                              );
+                        }
+                        
+                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('All downloads have been removed'), 'QUEUE' => $Queue)));
+                  }
+                  else
+                  {
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('No GIDS in the download queue'))));
+                  }
+            }
+            catch (Exception $E)
+            {
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+            }
+      }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function totalclean ()
+      {
+            try
+            {
+                  if (isset ($_POST['GIDS']) && count ($_POST['GIDS']) > 0)
+                  {
+                        $Queue = Array ();
+                        
+                        foreach ($_POST['GIDS'] as $GID)
+                        {
+                              $Aria2 = new Aria2();
+                              $Status = $Aria2->tellStatus ($GID);
+                              
+                              if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'removed') == 0)
+                              {
+                                    $Remove = $Aria2->removeDownloadResult ($GID);
+                              }
+                              
+                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_DELETED` = ? WHERE GID = ?';
+                              if ($this->DbType == 1)
+                              {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_DELETED" = ? WHERE "GID" = ?';
+                              }
+            
+                              $Query = \OCP\DB::prepare ($SQL);
+                              $Result = $Query->execute (Array (
+                                    1,
+                                    $GID
+                              ));
+                              
+                              $Queue[] = Array (
+                                    'GID' => $GID
+                              );
+                        }
+                        
+                        die (json_encode (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been totally removed'), 'QUEUE' => $Queue)));
+                  }
+                  else
+                  {
+                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Bad GID'))));
+                  }
+            }
+            catch (Exception $E)
+            {
+                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+            }
+      }
 }
 ?>

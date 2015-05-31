@@ -77,11 +77,13 @@
 		"Waiting":"En attente",
 		"Paused":"En pause",
 		"Removed":"Supprimé",
-		
 		"The download has been paused":"Le téléchargement est maintenant en pause",
 		"An error occured while pausing the download":"Une erreur est survenue lors de la mise en pause du téléchargement",
 		"The download has been unpaused":"Le téléchargement est de nouveau en cours",
-		"An error occured while unpausing the download":"Une erreur est survenue lors de la remise en téléchargement"
+		"An error occured while unpausing the download":"Une erreur est survenue lors de la remise en téléchargement",
+		
+		"Remove torrent file ?":"Supprimer le fichier torrent ?",
+		"All downloads have been removed":"Tous les téléchargements ont été supprimés"
 	},
 	"pluralForm":"nplurals=2; plural=(n > 1);"
 }

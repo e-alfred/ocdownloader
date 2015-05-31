@@ -24,7 +24,7 @@ use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class YTDownloaderController extends Controller
 {
-      private $AbsoluteTargetFolder = null;
+      private $AbsoluteDownloadsFolder = null;
       private $DownloadsFolder = null;
       private $DbType = 0;
       private $YTDLBinary = null;
@@ -33,10 +33,9 @@ class YTDownloaderController extends Controller
       private $ProxyUser = null;
       private $ProxyPasswd = null;
       
-      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID, IL10N $L10N)
+      public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
-            $this->TargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath ();
             
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
@@ -68,7 +67,7 @@ class YTDownloaderController extends Controller
             $this->DownloadsFolder = $Settings->GetValue ();
             
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
-            $this->AbsoluteTargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->DownloadsFolder;
+            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
             
             $this->L10N = $L10N;
       }
@@ -121,7 +120,7 @@ class YTDownloaderController extends Controller
                         // Create the target file
                         \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $DL['FILENAME']);
                         
-                        $OPTIONS = Array ('dir' => $this->AbsoluteTargetFolder, 'out' => $DL['FILENAME']);
+                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = $this->ProxyAddress . ':' . $this->ProxyPort;

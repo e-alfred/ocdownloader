@@ -24,9 +24,9 @@ use \OCA\ocDownloader\Controller\Lib\Settings;
 class BTDownloaderController extends Controller
 {
       private $CurrentUID = null;
-      private $TargetFolder = null;
+      private $DownloadsFolder = null;
       private $TorrentsFolder = null;
-      private $AbsoluteTargetFolder = null;
+      private $AbsoluteDownloadsFolder = null;
       private $AbsoluteTorrentsFolder = null;
       private $DbType = 0;
       private $ProxyAddress = null;
@@ -35,7 +35,7 @@ class BTDownloaderController extends Controller
       private $ProxyPasswd = null;
       private $Settings = null;
 	  
-      public function __construct ($AppName, IRequest $Request, $UserStorage, $CurrentUID, IL10N $L10N)
+      public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
             $this->CurrentUID = $CurrentUID;
@@ -66,8 +66,8 @@ class BTDownloaderController extends Controller
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
             $this->TorrentsFolder = '/' . (is_null ($this->TorrentsFolder) ? 'Downloads/Files/Torrents' : $this->TorrentsFolder);
             
-            $this->AbsoluteTargetFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->DownloadsFolder;
-            $this->AbsoluteTorrentsFolder = Config::getSystemValue ('datadirectory') . $UserStorage->getPath () . $this->TorrentsFolder;
+            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
+            $this->AbsoluteTorrentsFolder = \OC\Files\Filesystem::getLocalFolder($this->TorrentsFolder);
             
             $this->L10N = $L10N;
       }
@@ -78,7 +78,7 @@ class BTDownloaderController extends Controller
        */
       public function add ()
       {
-            if (isset ($_POST['PATH']) && strlen (trim ($_POST['PATH'])) > 0 && (Tools::CheckURL ($_POST['PATH']) || Tools::CheckFilepath ($this->TorrentsFolder . '/' . $_POST['PATH']))/* && isset ($_POST['OPTIONS'])*/)
+            if (isset ($_POST['PATH']) && strlen (trim ($_POST['PATH'])) > 0 && (Tools::CheckURL ($_POST['PATH']) || Tools::CheckFilepath ($this->TorrentsFolder . '/' . $_POST['PATH'])) && isset ($_POST['OPTIONS']))
             {
                   try
                   {
@@ -93,10 +93,10 @@ class BTDownloaderController extends Controller
                         // Create the target file
                         \OC\Files\Filesystem::mkdir ($this->DownloadsFolder . '/' . $Target);
                         
-                        $OPTIONS = Array ('dir' => $this->AbsoluteTargetFolder . '/' . $Target);
+                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder . '/' . $Target);
                         
                         $Aria2 = new Aria2 ();
-                        $AddTorrent = $Aria2->addTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['PATH'])), Array (), $OPTIONS);
+                        $AddTorrent = $Aria2->addTorrent (base64_encode (\OC\Files\Filesystem::file_get_contents ($this->TorrentsFolder . '/' . $_POST['PATH'])), Array (), $OPTIONS);
                         
                         if (isset ($AddTorrent['result']) && !is_null ($AddTorrent['result']))
                         {
@@ -114,6 +114,11 @@ class BTDownloaderController extends Controller
                                     1,
                                     time()
                               ));
+                              
+                              if (isset ($_POST['OPTIONS']['BTRMTorrent']) && strcmp ($_POST['OPTIONS']['BTRMTorrent'], "true") == 0)
+                              {
+                                    \OC\Files\Filesystem::unlink ($this->TorrentsFolder . '/' . $_POST['PATH']);
+                              }
                               
                               die (json_encode (Array (
                                     'ERROR' => false, 

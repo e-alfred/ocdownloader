@@ -91,6 +91,11 @@ $(document).ready (function()
 					{
 						PrintInfo (Data.MESSAGE + ' (' + GID + ')');
 						TR.remove ();
+						
+						if ($('.ocd .content-queue > table > tbody > tr').children ().length == 0)
+						{
+							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').remove ();
+						}
 					}
 		        }
 		    });
@@ -98,6 +103,55 @@ $(document).ready (function()
 		else
 		{
 			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'))
+		}
+	});
+	
+	$('.ocd .content-queue > table > thead > tr > th > div.icon-delete').bind ('click', function ()
+	{
+		var BTN = $(this);
+		BTN.addClass ('icon-loading-small');
+		BTN.removeClass ('icon-delete');
+		
+		var GIDS = [];
+		$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').each (function ()
+		{
+			$(this).addClass ('icon-loading-small');
+			$(this).removeClass ('icon-delete');
+			
+			GIDS.push ($(this).parent ().parent ().attr ('data-rel'));
+		});
+		
+		if (GIDS.length > 0)
+		{
+			$.ajax ({
+		        url: OC.generateUrl ('/apps/ocdownloader/downloadertotalcleanqueue'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'GIDS' : GIDS},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+					if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+					}
+					else
+					{
+						PrintInfo (Data.MESSAGE);
+						$.each (Data.QUEUE, function (Index, Value)
+						{
+							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"]').remove ();
+						});
+						$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-loading-small').remove ();
+					}
+		        }
+		    });
+		}
+		else
+		{
+			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
 		}
 	});
 });

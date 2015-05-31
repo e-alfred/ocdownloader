@@ -239,6 +239,7 @@
   padding: 2px 0 2px 5px;
   width: 100%;
 }
+.ocd .content-queue > table > thead > tr > th > div.svg,
 .ocd .content-queue > table > tbody > tr > td > div.svg {
   width: 2em;
   cursor: pointer;

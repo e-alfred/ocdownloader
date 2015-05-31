@@ -41,6 +41,8 @@ $Application->registerRoutes($this, array(
         ['name' => 'downloaderqueue#totalremove', 'url' => '/downloadertotalremove', 'verb' => 'POST'],
         ['name' => 'downloaderqueue#pause', 'url' => '/downloadersetpause', 'verb' => 'POST'],
         ['name' => 'downloaderqueue#unpause', 'url' => '/downloadersetunpause', 'verb' => 'POST'],
+        ['name' => 'downloaderqueue#clean', 'url' => '/downloadercleanqueue', 'verb' => 'POST'],
+        ['name' => 'downloaderqueue#totalclean', 'url' => '/downloadertotalcleanqueue', 'verb' => 'POST'],
         
         // AdminSettingsController
         ['name' => 'adminsettings#save', 'url' => '/adminsettings', 'verb' => 'POST'],

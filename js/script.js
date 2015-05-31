@@ -54,11 +54,15 @@ function GetDownloaderQueue ()
 				}
 				else
 				{
+					var DownloadsFolder = GetPersonalSetting ('DownloadsFolder');
+					
 					$.each (Data.QUEUE, function (Index, Value)
 					{
 						if (Value.STATUS == 'Complete')
 						{
-							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="FILENAME"]').html ('<a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (GetPersonalSetting ('DownloadsFolder')).replace(/%2F/g, '/') + '">' + Value.FILENAME + '</a>');
+							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="FILENAME"]').html ('<a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME + '</a>');
+							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="ACTION"] > div.icon-pause').remove ();
+							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="ACTION"] > div.icon-play').remove ();
 						}
 						
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text (Value.PROGRESS);
@@ -77,6 +81,7 @@ function GetDownloaderQueue ()
 function SetupActionButtons ()
 {
 	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.svg').unbind ('click');
+	$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').unbind ('click');
 	
 	$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').bind ('click', function ()
 	{
@@ -108,6 +113,11 @@ function SetupActionButtons ()
 					{
 						PrintInfo (Data.MESSAGE + ' (' + GID + ')');
 						TR.remove ();
+						
+						if ($('.ocd .content-queue > table > tbody > tr').children ().length == 0)
+						{
+							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').remove ();
+						}
 					}
 		        }
 		    });
@@ -191,6 +201,55 @@ function SetupActionButtons ()
 						SetupActionButtons ();
 					}
 					BTN.removeClass ('icon-loading-small');
+		        }
+		    });
+		}
+		else
+		{
+			PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+		}
+	});
+	
+	$('.ocd .content-queue > table > thead > tr > th > div.icon-delete').bind ('click', function ()
+	{
+		var BTN = $(this);
+		BTN.addClass ('icon-loading-small');
+		BTN.removeClass ('icon-delete');
+		
+		var GIDS = [];
+		$('.ocd .content-queue > table > tbody > tr > td[data-rel="ACTION"] > div.icon-delete').each (function ()
+		{
+			$(this).addClass ('icon-loading-small');
+			$(this).removeClass ('icon-delete');
+			
+			GIDS.push ($(this).parent ().parent ().attr ('data-rel'));
+		});
+		
+		if (GIDS.length > 0)
+		{
+			$.ajax ({
+		        url: OC.generateUrl ('/apps/ocdownloader/downloadercleanqueue'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'GIDS' : GIDS},
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+					if (Data.ERROR)
+					{
+						PrintError (Data.MESSAGE);
+					}
+					else
+					{
+						PrintInfo (Data.MESSAGE);
+						$.each (Data.QUEUE, function (Index, Value)
+						{
+							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"]').remove ();
+						});
+						$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-loading-small').remove ();
+					}
 		        }
 		    });
 		}
@@ -342,7 +401,7 @@ $(document).ready (function ()
 						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
 						
 						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-							'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
 							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
@@ -350,6 +409,11 @@ $(document).ready (function ()
 							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
 							'</tr>'
 						);
+						
+						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+						{
+							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+						}
 						
 						SetupActionButtons ();
 						
@@ -395,24 +459,29 @@ $(document).ready (function ()
 					else
 					{
 						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+						
+						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
+							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
+							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
+							'</tr>'
+						);
+						
+						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+						{
+							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+						}
+						
+						SetupActionButtons ();
+						
+						// Reset form field
+						$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
+						$('.ocd .content-page[rel=OCDFTP] input[type="password"]').val ('');
+						$('#option-ftp-pasv').prop ('checked', true);
 					}
-					
-					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
-						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
-						'</tr>'
-					);
-					
-					SetupActionButtons ();
-					
-					// Reset form field
-					$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
-					$('.ocd .content-page[rel=OCDFTP] input[type="password"]').val ('');
-					$('#option-ftp-pasv').prop ('checked', true);
 		        }
 		    });
 		}
@@ -455,28 +524,33 @@ $(document).ready (function ()
 					else
 					{
 						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+						
+						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
+							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
+							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
+							'</tr>'
+						);
+						
+						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+						{
+							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+						}
+						
+						SetupActionButtons ();
+						
+						// Reset form field
+						$('.ocd .content-page[rel=OCDYT] input[type="text"]').val ('');
+						$('#option-yt-extractaudio').prop ('checked', false);
+						
+						// Reset add button
+						AddBtn.prop('disabled', false);
+						AddBtn.html('<a>' + t ('ocdownloader', 'Launch YouTube Download') + '</a>');
+						AddBtn.removeClass('icon-loading-small');
 					}
-					
-					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
-						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
-						'</tr>'
-					);
-					
-					SetupActionButtons ();
-					
-					// Reset form field
-					$('.ocd .content-page[rel=OCDYT] input[type="text"]').val ('');
-					$('#option-yt-extractaudio').prop ('checked', false);
-					
-					// Reset add button
-					AddBtn.prop('disabled', false);
-					AddBtn.html('<a>' + t ('ocdownloader', 'Launch YouTube Download') + '</a>');
-					AddBtn.removeClass('icon-loading-small');
 		        }
 		    });
 		}
@@ -494,15 +568,15 @@ $(document).ready (function ()
 		
 		if (DATAREL == 'File')
 		{
-			/*var OPTIONS = {
-				YTExtractAudio: $('#option-yt-extractaudio').prop ('checked')
-			};*/
+			var OPTIONS = {
+				BTRMTorrent: $('#option-bt-rmtorrent').prop ('checked')
+			};
 			
 			$.ajax ({
 		        url: OC.generateUrl ('/apps/ocdownloader/btdownloaderadd'),
 		        method: 'POST',
 				dataType: 'json',
-				data: {'PATH' : PATH/*, 'OPTIONS' : OPTIONS*/},
+				data: {'PATH' : PATH, 'OPTIONS' : OPTIONS},
 		        async: true,
 		        cache: false,
 		        timeout: 30000,
@@ -515,19 +589,24 @@ $(document).ready (function ()
 					else
 					{
 						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+						
+						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
+							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
+							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
+							'</tr>'
+						);
+						
+						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+						{
+							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+						}
+						
+						SetupActionButtons ();
 					}
-					
-					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
-						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-						'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-						'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
-						'</tr>'
-					);
-					
-					SetupActionButtons ();
 		        }
 		    });
 		}

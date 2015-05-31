@@ -23,11 +23,6 @@ class Application extends App
 		parent::__construct ('ocdownloader', $URLParams);
 		$container = $this->getContainer ();
 		
-		$container->registerService ('UserStorage', function ($c)
-		{
-            return $c->query ('ServerContainer')->getUserFolder ();
-        });
-		
 		$container->registerService ('CurrentUID', function ($c)
 		{
 			$User = $c->query ('ServerContainer')->getUserSession ()->getUser ();
@@ -50,7 +45,6 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage'),
 				$c->query ('CurrentUID'),
 				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
@@ -62,7 +56,6 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage'),
 				$c->query ('CurrentUID'),
 				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
@@ -74,7 +67,6 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage'),
 				$c->query ('CurrentUID'),
 				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
@@ -86,7 +78,6 @@ class Application extends App
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
-				$c->query ('UserStorage'),
 				$c->query ('CurrentUID'),
 				$c->getServer ()->getL10N ('ocdownloader')
 	      	);

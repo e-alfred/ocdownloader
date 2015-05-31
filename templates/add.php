@@ -104,19 +104,21 @@ script ('ocdownloader', 'script');
                 </div>
                 <div class="jumbotron">
                     <h5><?php print ($l->t ('Options')); ?></h5>
-                    <i>No options, for now ;-)</i>
+                    <div class="group-option">
+                        <label for="option-bt-rmtorrent"><?php print ($l->t ('Remove torrent file ?')); ?></label><input type="checkbox" id="option-bt-rmtorrent" />
+                    </div>
                 </div>
             </div>
             <div class="content-queue">
                 <table border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
-                            <th width="20%"><?php print ($l->t ('FILENAME')); ?></th>
-                            <th width="10%" class="border"><?php print ($l->t ('PROTOCOL')); ?></th>
-                            <th width="35%" class="border"><?php print ($l->t ('INFORMATION')); ?></th>
-                            <th width="10%" class="border"><?php print ($l->t ('SPEED')); ?></th>
-                            <th width="15%" class="border"><?php print ($l->t ('STATUS')); ?></th>
-                            <th width="10%"></th>
+                            <th width="20%" data-rel="FILENAME"><?php print ($l->t ('FILENAME')); ?></th>
+                            <th width="10%" data-rel="PROTO" class="border"><?php print ($l->t ('PROTOCOL')); ?></th>
+                            <th width="35%" data-rel="MESSAGE" class="border"><?php print ($l->t ('INFORMATION')); ?></th>
+                            <th width="10%" data-rel="SPEED" class="border"><?php print ($l->t ('SPEED')); ?></th>
+                            <th width="15%" data-rel="STATUS" class="border"><?php print ($l->t ('STATUS')); ?></th>
+                            <th width="10%" data-rel="ACTION"><?php print ($_['NBELT'] > 0 ? '<div class="icon-delete svg"></div>' : ''); ?></th>
                         </tr>
                     </thead>
                     <tbody>
