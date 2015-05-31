@@ -10,7 +10,7 @@
 	<bugs>https://github.com/DjazzLab/ocdownloader/issues</bugs>
 	<repository type="git">https://github.com/DjazzLab/ocdownloader.git</repository>
 	<dependencies>
-		<owncloud min-version="8.0" max-version="8.0" />
+		<owncloud min-version="8.0" />
 		<php min-version="5.4" max-version="5.6" />
 		<lib>curl</lib>
 		<os>Linux</os>
