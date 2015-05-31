@@ -56,7 +56,7 @@ function GetDownloaderQueue ()
 				{
 					$.each (Data.QUEUE, function (Index, Value)
 					{
-						if (Value.PROGRESSVAL == '100%')
+						if (Value.STATUS == 'Complete')
 						{
 							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="FILENAME"]').html ('<a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (GetPersonalSetting ('DownloadsFolder')).replace(/%2F/g, '/') + '">' + Value.FILENAME + '</a>');
 						}
@@ -398,7 +398,7 @@ $(document).ready (function ()
 					}
 					
 					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+						'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
@@ -458,7 +458,7 @@ $(document).ready (function ()
 					}
 					
 					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+						'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
@@ -518,7 +518,7 @@ $(document).ready (function ()
 					}
 					
 					$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-						'<td data-rel="NAME" class="padding">' + Data.NAME + '</td>' +
+						'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
 						'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
 						'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
 						'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
