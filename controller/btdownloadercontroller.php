@@ -96,7 +96,7 @@ class BTDownloaderController extends Controller
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder . '/' . $Target);
                         
                         $Aria2 = new Aria2 ();
-                        $AddTorrent = $Aria2->addTorrent (base64_encode (\OC\Files\Filesystem::file_get_contents ($this->TorrentsFolder . '/' . $_POST['PATH'])), Array (), $OPTIONS);
+                        $AddTorrent = $Aria2->addTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['PATH'])), Array (), $OPTIONS);
                         
                         if (isset ($AddTorrent['result']) && !is_null ($AddTorrent['result']))
                         {
