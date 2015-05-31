@@ -124,7 +124,7 @@ class HttpDownloaderController extends Controller
                               die (json_encode (Array (
                                     'ERROR' => false, 
                                     'MESSAGE' => (string)$this->L10N->t ('Download started'), 
-                                    'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target), 
+                                    'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
                                     'GID' => $AddURI['result'], 
                                     'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 
                                     'SPEED' => '...'

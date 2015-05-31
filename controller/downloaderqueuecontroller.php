@@ -60,6 +60,15 @@ class DownloaderQueueController extends Controller
                               {
                                     if (!isset ($Status['error']))
                                     {
+                                          $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `GID` = ? LIMIT 1';
+                                          if ($this->DbType == 1)
+                                          {
+                                                $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "GID" = ? LIMIT 1';
+                                          }
+                                          $Query = \OCP\DB::prepare ($SQL);
+                                          $Result = $Query->execute (Array ($GID));
+                                          $Row = $Result->fetchRow ();
+                                          
                                           $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                                           
                                           $Queue[] = Array (
@@ -67,7 +76,8 @@ class DownloaderQueueController extends Controller
                                                 'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
                                                 'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength']) . (isset ($Status['result']['numSeeders']) && $Progress < 1 ? ' - ' . $this->L10N->t ('Seeders') . ': ' . $Status['result']['numSeeders'] : ''),
                                                 'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t (ucfirst ($Status['result']['status'])) . (isset ($Status['result']['numSeeders']) && $Progress == 1 ? ' - ' . $this->L10N->t ('Seeding') : '') : (string)$this->L10N->t ('N/A'),
-                                                'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? (isset ($Status['result']['numSeeders']) && $Progress == 1 ? Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s' : '--') : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : (string)$this->L10N->t ('N/A')
+                                                'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Status['result']['downloadSpeed'] == 0 ? (isset ($Status['result']['numSeeders']) && $Progress == 1 ? Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s' : '--') : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s') : (string)$this->L10N->t ('N/A'),
+                                                'FILENAME' => (strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME'])
                                           );
                                           
                                           switch (strtolower ($Status['result']['status']))
@@ -87,6 +97,22 @@ class DownloaderQueueController extends Controller
                                                 case 'removed':
                                                       $DbStatus = 4;
                                                       break;
+                                          }
+                                          
+                                          if ($Row['STATUS'] != $DbStatus)
+                                          {
+                                                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `GID` = ? AND (`STATUS` != ? OR `STATUS` IS NULL)';
+                                                if ($this->DbType == 1)
+                                                {
+                                                      $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ? AND ("STATUS" != ? OR "STATUS" IS NULL)';
+                                                }
+                                                
+                                                $Query = \OCP\DB::prepare ($SQL);
+                                                $Result = $Query->execute (Array (
+                                                      $DbStatus,
+                                                      $GID,
+                                                      4
+                                                ));
                                           }
                                     }
                                     else
@@ -110,19 +136,6 @@ class DownloaderQueueController extends Controller
                                           'SPEED' => (string)$this->L10N->t ('N/A')
                                     );
                               }
-                              
-                              $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET STATUS = ? WHERE GID = ? AND (STATUS != ? OR STATUS IS NULL)';
-                              if ($this->DbType == 1)
-                              {
-                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "GID" = ? AND ("STATUS" != ? OR "STATUS" IS NULL)';
-                              }
-                              
-                              $Query = \OCP\DB::prepare ($SQL);
-                              $Result = $Query->execute (Array (
-                                    $DbStatus,
-                                    $GID,
-                                    4
-                              ));
                         }
                         die (json_encode (Array ('ERROR' => false, 'QUEUE' => $Queue)));
                   }

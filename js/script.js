@@ -56,6 +56,11 @@ function GetDownloaderQueue ()
 				{
 					$.each (Data.QUEUE, function (Index, Value)
 					{
+						if (Value.PROGRESSVAL == '100%')
+						{
+							$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="FILENAME"]').html ('<a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (GetPersonalSetting ('DownloadsFolder')).replace(/%2F/g, '/') + '">' + Value.FILENAME + '</a>');
+						}
+						
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text (Value.PROGRESS);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
 						$('.ocd .content-queue > table > tbody > tr[data-rel="' + Value.GID + '"] > td[data-rel="SPEED"]').text (Value.SPEED);

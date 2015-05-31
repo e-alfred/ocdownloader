@@ -122,7 +122,7 @@ script ('ocdownloader', 'script');
                     <tbody>
                     <?php while ($Row = $_['QUEUE']->fetchRow()): ?>
                         <tr data-rel="<?php print($Row['GID']); ?>">
-                            <td data-rel="NAME" class="padding"><?php print(strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']); ?></td>
+                            <td data-rel="FILENAME" class="padding"><?php print(strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']); ?></td>
                             <td data-rel="PROTO" class="border padding"><?php print($Row['PROTOCOL']); ?></td>
                             <td data-rel="MESSAGE" class="border">
                                 <div class="pb-wrap">

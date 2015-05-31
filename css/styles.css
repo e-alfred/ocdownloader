@@ -59,7 +59,6 @@
 }
 .ocd .actions {
   display: inline-block;
-  float: left;
   padding: 5px;
 }
 .ocd .actions > div.button {
@@ -244,4 +243,8 @@
   width: 2em;
   cursor: pointer;
   float: right;
+}
+.ocd .content-queue > table > tbody > tr > td > a {
+  color: #084b8a;
+  text-decoration: underline;
 }
