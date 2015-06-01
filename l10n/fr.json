@@ -83,7 +83,8 @@
 		"An error occured while unpausing the download":"Une erreur est survenue lors de la remise en téléchargement",
 		"Remove torrent file ?":"Supprimer le fichier torrent ?",
 		"All downloads have been removed":"Tous les téléchargements ont été supprimés",
-		"Force IPv4 ?":"Forcer IPv4 ?"
+		"Force IPv4 ?":"Forcer IPv4 ?",
+		"Uploaded":"Uploadé"
 	},
 	"pluralForm":"nplurals=2; plural=(n > 1);"
 }

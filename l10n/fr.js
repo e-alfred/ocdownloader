@@ -14,7 +14,7 @@ OC.L10N.register
     {
 		'Unable to find the GID for this download ...':'Impossible retrouver le GID de ce téléchargement ...',
 		'No Torrent Files':'Pas de fichiers Torrent',
-		'Upload':'Envoyer',
+		'Upload':'Upload',
 		'Waiting':'En attente',
 		'Invalid URL. Please check the address of the file ...':'URL invalide. Veuillez vérifier l\'adresse du fichier ...',
 		'Launch YouTube Download':'Lancer le téléchargement YouTube'
