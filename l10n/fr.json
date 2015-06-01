@@ -81,9 +81,9 @@
 		"An error occured while pausing the download":"Une erreur est survenue lors de la mise en pause du téléchargement",
 		"The download has been unpaused":"Le téléchargement est de nouveau en cours",
 		"An error occured while unpausing the download":"Une erreur est survenue lors de la remise en téléchargement",
-		
 		"Remove torrent file ?":"Supprimer le fichier torrent ?",
-		"All downloads have been removed":"Tous les téléchargements ont été supprimés"
+		"All downloads have been removed":"Tous les téléchargements ont été supprimés",
+		"Force IPv4 ?":"Forcer IPv4 ?"
 	},
 	"pluralForm":"nplurals=2; plural=(n > 1);"
 }

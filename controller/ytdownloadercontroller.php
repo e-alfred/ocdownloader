@@ -84,6 +84,11 @@ class YTDownloaderController extends Controller
                   {
                         $YouTube = new YouTube ($this->YTDLBinary, $_POST['URL']);
                         
+                        if (isset ($_POST['OPTIONS']['YTForceIPv4']) && strcmp ($_POST['OPTIONS']['YTForceIPv4'], 'false') == 0)
+                        {
+                              $YouTube->SetForceIPv4 (false);
+                        }
+                        
                         // Extract Audio YES
                         if (isset ($_POST['OPTIONS']['YTExtractAudio']) && strcmp ($_POST['OPTIONS']['YTExtractAudio'], 'true') == 0)
                         {

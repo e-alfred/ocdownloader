@@ -367,8 +367,7 @@ $(document).ready (function ()
 	
 	// Reset YT options
 	$('#option-yt-extractaudio').prop ('checked', false);
-	$('#option-yt-ea-format option[value="best"]').prop ('selected', true);
-	$('#option-yt-ea-qual option[value="0"]').prop ('selected', true);
+	$('#option-yt-forceipv4').prop ('checked', true);
 	
 	// Launch HTTP download
 	$('.ocd .content-page[rel=OCDHTTP] div.launch').bind ('click', function ()
@@ -504,7 +503,8 @@ $(document).ready (function ()
 		if (ValidURL (URL))
 		{
 			var OPTIONS = {
-				YTExtractAudio: $('#option-yt-extractaudio').prop ('checked')
+				YTExtractAudio: $('#option-yt-extractaudio').prop ('checked'),
+				YTForceIPv4: $('#option-yt-forceipv4').prop ('checked')
 			};
 			
 			$.ajax ({

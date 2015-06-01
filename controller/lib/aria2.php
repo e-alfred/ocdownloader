@@ -47,7 +47,7 @@ class Aria2
     
     private function Request ($Data)
     {
-        curl_setopt ($this->CurlHandler, CURLOPT_POSTFIELDS, $Data);        
+        curl_setopt ($this->CurlHandler, CURLOPT_POSTFIELDS, $Data);
         return curl_exec ($this->CurlHandler);
     }
 }

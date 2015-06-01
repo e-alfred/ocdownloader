@@ -85,6 +85,9 @@ script ('ocdownloader', 'script');
                     <div class="group-option">
                         <label for="option-yt-extractaudio"><?php print ($l->t ('Only Extract audio ?')); ?></label><input type="checkbox" id="option-yt-extractaudio" />&nbsp;<i><?php print ($l->t ('(No post-processing, just extract the best audio quality)')); ?></i>
                     </div>
+                    <div class="group-option">
+                        <label for="option-yt-forceipv4"><?php print ($l->t ('Force IPv4 ?')); ?></label><input type="checkbox" id="option-yt-forceipv4" />
+                    </div>
                 </div>
             </div>
             <div class="content-page" rel="OCDBT" style="display:none;">

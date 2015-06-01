@@ -5,6 +5,7 @@
  * later. See the COPYING file.
  *
  * @author Xavier Beurois <www.sgc-univ.net>
+ * @Translation author : Andrzej Kaczmarczyk
  * @copyright Xavier Beurois 2015
  */
 

@@ -15,6 +15,7 @@ class YouTube
 {
 	private $YTDLBinary = null;
 	private $URL = null;
+	private $ForceIPv4 = true;
 	
 	public function __construct ($YTDLBinary, $URL)
 	{
@@ -22,9 +23,14 @@ class YouTube
 		$this->URL = $URL;
 	}
 	
+	public function SetForceIPv4 ($ForceIPv4)
+	{
+		$this->ForceIPv4 = $ForceIPv4;
+	}
+	
 	public function GetVideoData ($ExtractAudio = false)
 	{
-		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ' -f best'), $Output, $Return);
+		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ' -f best') . ($this->ForceIPv4 ? ' -4' : ''), $Output, $Return);
 		
 		if ($Return == 0)
 		{
