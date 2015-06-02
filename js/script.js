@@ -372,121 +372,145 @@ $(document).ready (function ()
 	// Launch HTTP download
 	$('.ocd .content-page[rel=OCDHTTP] div.launch').bind ('click', function ()
 	{
-		var URL = $('.ocd .content-page[rel=OCDHTTP] input.url').val ();
+		var AddBtn = $(this);
 		
-		if (ValidURL (URL))
+		if (!$(this).hasClass ('icon-loading-small'))
 		{
-			var OPTIONS = {
-				HTTPUser: $('#option-http-user').val (),
-				HTTPPasswd: $('#option-http-pwd').val ()
-			};
+			AddBtn.children ('a').css ('display', 'none');
+			AddBtn.addClass ('icon-loading-small');
 			
-			$.ajax ({
-		        url: OC.generateUrl ('/apps/ocdownloader/httpdownloaderadd'),
-		        method: 'POST',
-				dataType: 'json',
-				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
-		        async: true,
-		        cache: false,
-		        timeout: 30000,
-		        success: function (Data)
-				{
-		            if (Data.ERROR)
+			var URL = $('.ocd .content-page[rel=OCDHTTP] input.url').val ();
+			
+			if (ValidURL (URL))
+			{
+				var OPTIONS = {
+					HTTPUser: $('#option-http-user').val (),
+					HTTPPasswd: $('#option-http-pwd').val ()
+				};
+				
+				$.ajax ({
+			        url: OC.generateUrl ('/apps/ocdownloader/httpdownloaderadd'),
+			        method: 'POST',
+					dataType: 'json',
+					data: {'URL' : URL, 'OPTIONS' : OPTIONS},
+			        async: true,
+			        cache: false,
+			        timeout: 30000,
+			        success: function (Data)
 					{
-						PrintError (Data.MESSAGE);
-					}
-					else
-					{
-						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
-						
-						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
-							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
-							'</tr>'
-						);
-						
-						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+			            if (Data.ERROR)
 						{
-							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							PrintError (Data.MESSAGE);
+						}
+						else
+						{
+							PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+							
+							$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+								'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
+								'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+								'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+								'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+								'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
+								'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
+								'</tr>'
+							);
+							
+							if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+							{
+								$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							}
+							
+							SetupActionButtons ();
+							
+							$('.ocd .content-page[rel=OCDHTTP] input[type="text"]').val ('');
+							$('.ocd .content-page[rel=OCDHTTP] input[type="password"]').val ('');
 						}
 						
-						SetupActionButtons ();
-						
-						$('.ocd .content-page[rel=OCDHTTP] input[type="text"]').val ('');
-						$('.ocd .content-page[rel=OCDHTTP] input[type="password"]').val ('');
-					}
-		        }
-		    });
-		}
-		else
-		{
-			PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+						// Reset add button
+						AddBtn.children ('a').css ('display', 'block');
+						AddBtn.removeClass ('icon-loading-small');
+			        }
+			    });
+			}
+			else
+			{
+				PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+			}
 		}
 	});
 	
 	// Launch FTP download
 	$('.ocd .content-page[rel=OCDFTP] div.launch').bind ('click', function ()
 	{
-		var URL = $('.ocd .content-page[rel=OCDFTP] input.url').val ();
+		var AddBtn = $(this);
 		
-		if (ValidURL (URL))
+		if (!$(this).hasClass ('icon-loading-small'))
 		{
-			var OPTIONS = {
-				FTPUser: $('#option-ftp-user').val (),
-				FTPPasswd: $('#option-ftp-pwd').val (),
-				FTPPasv: $('#option-ftp-pasv').prop ('checked')
-			};
+			AddBtn.children ('a').css ('display', 'none');
+			AddBtn.addClass ('icon-loading-small');
 			
-			$.ajax ({
-		        url: OC.generateUrl ('/apps/ocdownloader/ftpdownloaderadd'),
-		        method: 'POST',
-				dataType: 'json',
-				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
-		        async: true,
-		        cache: false,
-		        timeout: 30000,
-		        success: function (Data)
-				{
-		            if (Data.ERROR)
+			var URL = $('.ocd .content-page[rel=OCDFTP] input.url').val ();
+		
+			if (ValidURL (URL))
+			{
+				var OPTIONS = {
+					FTPUser: $('#option-ftp-user').val (),
+					FTPPasswd: $('#option-ftp-pwd').val (),
+					FTPPasv: $('#option-ftp-pasv').prop ('checked')
+				};
+				
+				$.ajax ({
+			        url: OC.generateUrl ('/apps/ocdownloader/ftpdownloaderadd'),
+			        method: 'POST',
+					dataType: 'json',
+					data: {'URL' : URL, 'OPTIONS' : OPTIONS},
+			        async: true,
+			        cache: false,
+			        timeout: 30000,
+			        success: function (Data)
 					{
-						PrintError (Data.MESSAGE);
-					}
-					else
-					{
-						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
-						
-						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
-							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
-							'</tr>'
-						);
-						
-						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+			            if (Data.ERROR)
 						{
-							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							PrintError (Data.MESSAGE);
+						}
+						else
+						{
+							PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+							
+							$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+								'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
+								'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+								'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+								'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+								'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
+								'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
+								'</tr>'
+							);
+							
+							if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+							{
+								$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							}
+							
+							SetupActionButtons ();
+							
+							// Reset form field
+							$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
+							$('.ocd .content-page[rel=OCDFTP] input[type="password"]').val ('');
+							$('#option-ftp-pasv').prop ('checked', true);
 						}
 						
-						SetupActionButtons ();
-						
-						// Reset form field
-						$('.ocd .content-page[rel=OCDFTP] input[type="text"]').val ('');
-						$('.ocd .content-page[rel=OCDFTP] input[type="password"]').val ('');
-						$('#option-ftp-pasv').prop ('checked', true);
-					}
-		        }
-		    });
-		}
-		else
-		{
-			PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+						// Reset add button
+						AddBtn.children ('a').css ('display', 'block');
+						AddBtn.removeClass ('icon-loading-small');
+			        }
+			    });
+			}
+			else
+			{
+				PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+			}
 		}
 	});
 	
@@ -494,121 +518,135 @@ $(document).ready (function ()
 	$('.ocd .content-page[rel=OCDYT] div.launch').bind ('click', function ()
 	{
 		var AddBtn = $(this);
-		AddBtn.prop ('disabled', 'disabled');
-		AddBtn.empty ();
-		AddBtn.addClass ('icon-loading-small');
 		
-		var URL = $('.ocd .content-page[rel=OCDYT] input.url').val ();
-		
-		if (ValidURL (URL))
+		if (!$(this).hasClass ('icon-loading-small'))
 		{
-			var OPTIONS = {
-				YTExtractAudio: $('#option-yt-extractaudio').prop ('checked'),
-				YTForceIPv4: $('#option-yt-forceipv4').prop ('checked')
-			};
+			AddBtn.children ('a').css ('display', 'none');
+			AddBtn.addClass ('icon-loading-small');
+		
+			var URL = $('.ocd .content-page[rel=OCDYT] input.url').val ();
 			
-			$.ajax ({
-		        url: OC.generateUrl ('/apps/ocdownloader/ytdownloaderadd'),
-		        method: 'POST',
-				dataType: 'json',
-				data: {'URL' : URL, 'OPTIONS' : OPTIONS},
-		        async: true,
-		        cache: false,
-		        timeout: 30000,
-		        success: function (Data)
-				{
-					if (Data.ERROR)
+			if (ValidURL (URL))
+			{
+				var OPTIONS = {
+					YTExtractAudio: $('#option-yt-extractaudio').prop ('checked'),
+					YTForceIPv4: $('#option-yt-forceipv4').prop ('checked')
+				};
+				
+				$.ajax ({
+			        url: OC.generateUrl ('/apps/ocdownloader/ytdownloaderadd'),
+			        method: 'POST',
+					dataType: 'json',
+					data: {'URL' : URL, 'OPTIONS' : OPTIONS},
+			        async: true,
+			        cache: false,
+			        timeout: 30000,
+			        success: function (Data)
 					{
-						PrintError (Data.MESSAGE);
-					}
-					else
-					{
-						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
-						
-						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
-							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
-							'</tr>'
-						);
-						
-						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+						if (Data.ERROR)
 						{
-							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							PrintError (Data.MESSAGE);
+						}
+						else
+						{
+							PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+							
+							$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+								'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
+								'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+								'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+								'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+								'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
+								'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
+								'</tr>'
+							);
+							
+							if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+							{
+								$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							}
+							
+							SetupActionButtons ();
+							
+							// Reset form field
+							$('.ocd .content-page[rel=OCDYT] input[type="text"]').val ('');
+							$('#option-yt-extractaudio').prop ('checked', false);
 						}
 						
-						SetupActionButtons ();
-						
-						// Reset form field
-						$('.ocd .content-page[rel=OCDYT] input[type="text"]').val ('');
-						$('#option-yt-extractaudio').prop ('checked', false);
-						
 						// Reset add button
-						AddBtn.prop('disabled', false);
-						AddBtn.html('<a>' + t ('ocdownloader', 'Launch YouTube Download') + '</a>');
-						AddBtn.removeClass('icon-loading-small');
-					}
-		        }
-		    });
-		}
-		else
-		{
-			PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+						AddBtn.children ('a').css ('display', 'block');
+						AddBtn.removeClass ('icon-loading-small');
+			        }
+			    });
+			}
+			else
+			{
+				PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+			}
 		}
 	});
 	
 	// Launch BT download
 	$('.ocd .content-page[rel=OCDBT] div.launch').bind ('click', function ()
 	{
-		var PATH = $('.ocd .content-page[rel=OCDBT] .actions > div#torrentlist a').text ();
-		var DATAREL = $('.ocd .content-page[rel=OCDBT] .actions > div#torrentlist a').prop ('data-rel');
+		var AddBtn = $(this);
 		
-		if (DATAREL == 'File')
+		if (!$(this).hasClass ('icon-loading-small'))
 		{
-			var OPTIONS = {
-				BTRMTorrent: $('#option-bt-rmtorrent').prop ('checked')
-			};
+			AddBtn.children ('a').css ('display', 'none');
+			AddBtn.addClass ('icon-loading-small');
+		
+			var PATH = $('.ocd .content-page[rel=OCDBT] .actions > div#torrentlist a').text ();
+			var DATAREL = $('.ocd .content-page[rel=OCDBT] .actions > div#torrentlist a').prop ('data-rel');
 			
-			$.ajax ({
-		        url: OC.generateUrl ('/apps/ocdownloader/btdownloaderadd'),
-		        method: 'POST',
-				dataType: 'json',
-				data: {'PATH' : PATH, 'OPTIONS' : OPTIONS},
-		        async: true,
-		        cache: false,
-		        timeout: 30000,
-		        success: function (Data)
-				{
-					if (Data.ERROR)
+			if (DATAREL == 'File')
+			{
+				var OPTIONS = {
+					BTRMTorrent: $('#option-bt-rmtorrent').prop ('checked')
+				};
+				
+				$.ajax ({
+			        url: OC.generateUrl ('/apps/ocdownloader/btdownloaderadd'),
+			        method: 'POST',
+					dataType: 'json',
+					data: {'PATH' : PATH, 'OPTIONS' : OPTIONS},
+			        async: true,
+			        cache: false,
+			        timeout: 30000,
+			        success: function (Data)
 					{
-						PrintError (Data.MESSAGE);
-					}
-					else
-					{
-						PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
-						
-						$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-							'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
-							'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
-							'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
-							'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
-							'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
-							'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
-							'</tr>'
-						);
-						
-						if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+						if (Data.ERROR)
 						{
-							$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							PrintError (Data.MESSAGE);
+						}
+						else
+						{
+							PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+							
+							$('.ocd .content-queue > table > tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+								'<td data-rel="FILENAME" class="padding">' + Data.NAME + '</td>' +
+								'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+								'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: 0%;"><div class="pb-text">' + Data.MESSAGE + '</div></div></div></td>' +
+								'<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' +
+								'<td data-rel="STATUS" class="border padding">' + t ('ocdownloader', 'Waiting') + '</td>' +
+								'<td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-pause svg"></div></td>' +
+								'</tr>'
+							);
+							
+							if ($('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"] > div.icon-delete').length == 0)
+							{
+								$('.ocd .content-queue > table > thead > tr > th[data-rel="ACTION"]').append ('<div class="icon-delete svg"></div>');
+							}
+							
+							SetupActionButtons ();
 						}
 						
-						SetupActionButtons ();
-					}
-		        }
-		    });
+						// Reset add button
+						AddBtn.children ('a').css ('display', 'block');
+						AddBtn.removeClass ('icon-loading-small');
+			        }
+			    });
+			}
 		}
 	});
 	

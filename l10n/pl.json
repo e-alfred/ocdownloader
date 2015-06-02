@@ -82,7 +82,9 @@
 		"The download has been unpaused":"Pobieranie zostało uruchomione ponownie",
 		"An error occured while unpausing the download":"Błąd podczas ponownego uruchamiania",
 		"Remove torrent file ?":"Usunąć plik torrent?",
-		"All downloads have been removed":"Wszystkie pobierania zostały usunięte"
+		"All downloads have been removed":"Wszystkie pobierania zostały usunięte",
+		"Force IPv4 ?": "Wymusić IPv4?",
+        "Uploaded": "Wysłane"
 	},
 	"pluralForm":"nplurals=2; plural=(n > 1);"
 }

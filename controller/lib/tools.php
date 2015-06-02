@@ -34,12 +34,19 @@ class Tools
 		return false;
 	}
 	
-	public static function GetProgressString ($Completed, $Total)
+	public static function GetProgressString ($Completed, $Total, $Progress)
 	{
 		$CompletedStr = self::FormatSizeUnits($Completed);
 		$TotalStr = self::FormatSizeUnits($Total);
 		
-		return $CompletedStr . ' / ' . $TotalStr . ' (' . round((($Completed / $Total) * 100), 2) . '%)';
+		if ($Progress < 1)
+		{
+			return $CompletedStr . ' / ' . $TotalStr . ' (' . round ((($Completed / $Total) * 100), 2) . '%)';
+		}
+		else
+		{
+			return $TotalStr . ' (' . round ((($Completed / $Total) * 100), 2) . '%)';
+		}
 	}
 	
 	public static function FormatSizeUnits ($Bytes)
