@@ -4,6 +4,7 @@ OwnCloud Apps - ocDownloader allows to retrieve files with multi-protocols using
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/DjazzLab/ocdownloader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ***I'm looking for translators, every languages are needed***
+
 ***If you are interested, go to [ocDownloader Transifex Project](https://www.transifex.com/projects/p/ocdownloader)***
 
 ## ARIA2 installation
