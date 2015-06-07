@@ -16,9 +16,9 @@ Download YouTube video : [OCDownloader:Install The YouTube-DL Provider](https://
 
 ## Translators
 - Polish : Andrzej Kaczmarczyk
-- Spanish : Julián Sackmann 
-- German : sinus23
-- Russian : AlucoST
+- Spanish : Julián Sackmann, Erik Fargas
+- German : sinus23, Moritz
+- Russian : AlucoST, novikoz
 
 ## Author
 Xavier Beurois
