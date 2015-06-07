@@ -47,20 +47,31 @@ class IndexController extends Controller
             $Settings->SetKey ('TorrentsFolder');
             $TorrentsFolder = $Settings->GetValue ();
             
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE (STATUS != ? OR STATUS IS NULL) AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
-            if ($this->DbType == 1)
-            {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE ("STATUS" != ? OR "STATUS" IS NULL) AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
-            }
-            
-            $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array (4, 0));
-            
             return new TemplateResponse ('ocdownloader', 'add', [ 
-                  'PAGE' => 0, 
-                  'NBELT' => $Query->rowCount (), 
-                  'QUEUE' => $Result,
+                  'PAGE' => 0,
                   'TTSFOLD' => $TorrentsFolder
+            ]);
+      }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function all ()
+      {
+            return new TemplateResponse ('ocdownloader', 'all', [ 
+                  'PAGE' => 1
+            ]);
+      }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function completes ()
+      {
+            return new TemplateResponse ('ocdownloader', 'completes', [ 
+                  'PAGE' => 2
             ]);
       }
       
@@ -70,19 +81,8 @@ class IndexController extends Controller
        */
       public function actives ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
-            if ($this->DbType == 1)
-            {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
-            }
-            
-            $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array (1, 0));
-            
             return new TemplateResponse('ocdownloader', 'actives', [
-                  'PAGE' => 1,
-                  'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result
+                  'PAGE' => 3
             ]);
       }
       
@@ -92,19 +92,8 @@ class IndexController extends Controller
        */
       public function waitings ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
-            if ($this->DbType == 1)
-            {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
-            }
-            
-            $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array (2, 0));
-            
             return new TemplateResponse('ocdownloader', 'waitings', [
-                  'PAGE' => 2,
-                  'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result
+                  'PAGE' => 4
             ]);
       }
       
@@ -114,19 +103,8 @@ class IndexController extends Controller
        */
       public function stopped ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
-            if ($this->DbType == 1)
-            {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
-            }
-            
-            $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array (3, 0));
-            
             return new TemplateResponse('ocdownloader', 'stopped', [
-                  'PAGE' => 3,
-                  'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result
+                  'PAGE' => 5
             ]);
       }
       
@@ -136,19 +114,8 @@ class IndexController extends Controller
        */
       public function removed ()
       {
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE STATUS = ? AND IS_DELETED = ? ORDER BY TIMESTAMP DESC';
-            if ($this->DbType == 1)
-            {
-                  $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "IS_DELETED" = ? ORDER BY "TIMESTAMP" DESC';
-            }
-            
-            $Query = \OCP\DB::prepare ($SQL);
-            $Result = $Query->execute (Array (4, 0));
-            
             return new TemplateResponse('ocdownloader', 'removed', [
-                  'PAGE' => 4,
-                  'NBELT' => $Query->rowCount (),
-                  'QUEUE' => $Result
+                  'PAGE' => 6
             ]);
       }
 }

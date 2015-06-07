@@ -1,4 +1,60 @@
-.ocd .table {
+/**
+ * ownCloud - ocDownloader
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the COPYING file.
+ *
+ * @author Xavier Beurois <www.sgc-univ.net>
+ * @copyright Xavier Beurois 2015
+ */
+#app-navigation li[data-id="all"] {
+  border-bottom: 1px solid #ddd;
+}
+#app-navigation li > div > a {
+    box-sizing: border-box;
+    color: #333;
+    display: block;
+    line-height: 44px;
+    min-height: 44px;
+    overflow: hidden;
+    padding: 0 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+#app-navigation li:hover > div > a, #app-navigation li:focus > div > a, #app-navigation a:focus,
+#app-navigation .selected, #app-navigation .selected a {
+    background-color: #ddd;
+}
+#app-navigation li div.badge {
+  position: relative;
+}
+#app-navigation .badger-outter {
+	float: left;
+  height: 25px;
+  min-width: 36px;
+  position: absolute;
+  right: 10px;
+  top: 9px;
+}
+#app-navigation .badger-inner {
+	height: 20px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	background: #1d2d44 none repeat scroll 0 0;
+  margin: 3px;
+	width: 2.5em;
+}
+#app-navigation .badger-badge {
+	color: #fff;
+	margin: 0;
+	text-align: center;
+}
+#app-navigation .badger-number {
+	font-size: 12px;
+}
+#app-content-wrapper .table {
   width: 100%;
   margin-bottom: 20px;
   border-collapse: collapse;
@@ -6,71 +62,78 @@
   max-width: 100%;
   background-color: transparent;
 }
-.ocd .jumbotron {
-  padding-left: 60px;
-  padding-right: 60px;
-  text-align: center;
+#app-content-wrapper .jumbotron {
   background-color: #eee;
+  border-bottom: 1px solid #ddd;
   color: inherit;
-  padding: 20px;
+  padding: 17px;
+  text-align: center;
 }
-.ocd .jumbotron h1 {
+#app-content-wrapper .jumbotron h1 {
   margin-top: 0;
   font-size: 24px;
   line-height: 1;
 }
-.ocd .jumbotron p {
+#app-content-wrapper .jumbotron p {
   font-size: inherited;
   font-weight: 200;
   font-style: italic;
 }
-.ocd .jumbotron p a {
+#app-content-wrapper .jumbotron p a {
   color: #428bca;
 }
-.ocd .content-page {
+#app-content-wrapper .content-page {
   padding: 0 20px;
   height: 300px;
   border-bottom: 1px solid #ddd;
 }
-.ocd h3, .ocd .h3 {
+#app-content-wrapper h3, #app-content-wrapper .h3 {
   font-size: 24px;
 }
-.ocd h1, .ocd .h1, .ocd h2, .ocd .h2, .ocd h3, .ocd .h3 {
+#app-content-wrapper h1, #app-content-wrapper .h1, #app-content-wrapper h2,
+#app-content-wrapper .h2, #app-content-wrapper h3, #app-content-wrapper .h3 {
   margin-bottom: 10px;
   margin-top: 20px;
 }
-.ocd h1, .ocd h2, .ocd h3, .ocd h4, .ocd h5, .ocd h6, .ocd .h1, .ocd .h2, .ocd .h3, .ocd .h4, .ocd .h5, .ocd .h6 {
+#app-content-wrapper h1, #app-content-wrapper h2, #app-content-wrapper h3,
+#app-content-wrapper h4, #app-content-wrapper h5, #app-content-wrapper h6,
+#app-content-wrapper .h1, #app-content-wrapper .h2, #app-content-wrapper .h3,
+#app-content-wrapper .h4, #app-content-wrapper .h5, #app-content-wrapper .h6 {
   color: inherit;
   font-family: inherit;
   font-weight: 500;
   line-height: 1.1;
 }
-.ocd .muted {
+#app-content-wrapper .muted {
   font-size: 12px;
   margin-left: 1em;
 }
-.ocd .pull-right {
+#app-content-wrapper .pull-right {
   float: right;
 }
-.ocd #controls {
+#app-content-wrapper #controls {
   position: static;
   height: 46px;
   background-color: rgba(250, 250, 250, 0.95);
 }
-.ocd .actions {
+#app-content-wrapper .actions {
   display: inline-block;
   padding: 5px;
 }
-.ocd .actions > div.button {
+#app-content-wrapper .actions > div.button {
   margin: 0;
 }
-.ocd .actions > div#loadtext {
+#app-content-wrapper .loadingtext {
   font-style: italic;
   padding: 5px;
+}
+#app-content-wrapper .loadingblock {
+  display: block;
+}
+#app-content-wrapper .loadinginline {
   display: inline;
 }
-.ocd .actions > div.button .icon-caret-dark {
-  display: inline-block;
+#app-content-wrapper .actions > div.button .icon-caret-dark {
   height: 12px;
   margin: 3px 0 0 10px;
   padding: 0;
@@ -78,7 +141,7 @@
   width: 12px;
   float: right;
 }
-.ocd .actions > div.button > ul {
+#app-content-wrapper .actions > div.button > ul {
   background: #f8f8f8 none repeat scroll 0 0;
   border: 1px solid #ddd;
   border-radius: 0 5px 5px;
@@ -90,47 +153,47 @@
   position: fixed;
   text-align: left;
 }
-.ocd .actions > div#new > ul {
+#app-content-wrapper #NewDL {
   z-index: 11;
 }
-.ocd .actions > div#torrentlist > ul {
+#app-content-wrapper #TorrentsList > ul {
   margin-left: 0;
   width: 800px;
   z-index: 10;
   padding-bottom: 0px;  
 }
-.ocd .actions > div#torrentlist > ul > li {
+#app-content-wrapper #TorrentsList > ul > li {
   background: transparent url('../img/torrent.png') no-repeat scroll 10px 8px;
   cursor: pointer;
   height: 30px;
   margin: 0 5px 5px 15px;
   padding: 5px;
 }
-.ocd .actions > div#torrentlist > ul > li > p {
+#app-content-wrapper #TorrentsList > ul > li > p {
   cursor: pointer;
   padding-bottom: 0;
   padding-left: 35px;
   padding-top: 0;
 }
-.ocd .actions > div#torrentlist > ul > li > p.loader > span {
+#app-content-wrapper #TorrentsList > ul > li > p.loader > span {
   padding: 10px;
 }
-.ocd .actions > div#torrentlist > ul > li > p > a {
+#app-content-wrapper #TorrentsList > ul > li > p > a {
   color: #003366;
   text-decoration: underline;
 }
-.ocd .actions > div.button > ul > li {
+#app-content-wrapper .actions > div.button > ul > li {
   cursor: pointer;
   height: 20px;
   margin: 5px 5px 15px 15px;
   padding-bottom: 2px;
 }
-.ocd .actions > div.button > ul > li > p {
+#app-content-wrapper .actions > div.button > ul > li > p {
   cursor: pointer;
   padding-bottom: 7px;
   padding-top: 5px;
 }
-.ocd .righttitle {
+#app-content-wrapper .righttitle {
   color: #ddd;
   float: right !important;
   font-size: 2em;
@@ -138,114 +201,134 @@
   margin-right: 0.5em;
   padding: 11px 10px 10px;
 }
-.ocd .content-page .jumbotron {
+#app-content-wrapper .content-page .jumbotron {
   padding: 10px;
   text-align: left;
 }
-.ocd .content-page .jumbotron > h5 {
+#app-content-wrapper .content-page .jumbotron > h5 {
   font-size: 15pt;
   margin-bottom: .7em;
 }
-.ocd .content-page .jumbotron .group-option {
+#app-content-wrapper .content-page .jumbotron .group-option {
   margin-bottom: .7em;
 }
-.ocd .content-page .jumbotron .group-option > label {
+#app-content-wrapper .content-page .jumbotron .group-option > label {
   margin-right: .7em;
 }
-.ocd .content-page .jumbotron .group-option > select {
+#app-content-wrapper .content-page .jumbotron .group-option > select {
   font-weight: normal;
   padding: 0;
   height: 20px;
 }
-.ocd .content-page > h3 {
+#app-content-wrapper .content-page > h3 {
   margin-bottom: 0;
   margin-top: 15px;
   padding-top: 5px;
 }
-.ocd .content-page > h3 > span.add-msg {
+#app-content-wrapperLRMsg {
   font-style: italic;
 }
-.ocd .content-page > h3 > span.alert {
+#app-content-wrapper .content-page > h3 > span.alert {
   color: #B40404;
 }
-.ocd span.highalert {
+#app-content-wrapper span.highalert {
   background-color: #B40404;
   color: #FFFFFF;
   padding: 5px;
 }
-.ocd .content-page > h3 > span.success {
+#app-content-wrapper .content-page > h3 > span.success {
   color: #298A08;
 }
-.ocd .content-page > h3 > span.info {
+#app-content-wrapper .content-page > h3 > span.info {
   color: #084B8A;
 }
-.ocd .content-page .launch {
+#app-content-wrapper .content-page .launch {
   float: right !important;
   box-sizing: border-box;
   height: 36px;
   padding: 10px;
   margin-top: -5px;
 }
-.ocd .content-page > input {
+#app-content-wrapper .content-page > input {
   width: 100%;
 }
-.ocd .content-page > div.actions {
+#app-content-wrapper .content-page > div.actions {
   display: block;
   float: none;
   margin: 10px 0 5px;
   padding: 0;
 }
-.ocd .content-queue > table {
+#app-content-wrapper .content-queue > table {
   width: 100%;
 }
-.ocd .content-queue > table > thead > tr {
+#app-content-wrapper .content-queue > table > thead > tr {
   height: 30px;
   background-color: #eee;
 }
-.ocd .content-queue > table > thead > tr > th {
+#app-content-wrapper .content-queue > table > thead > tr > th {
   font-style: italic;
   font-weight: bold;
   padding: 2px 0 2px 5px;
   border-bottom: 1px solid #ddd;
 }
-.ocd .content-queue > table > thead > tr > th.border {
+#app-content-wrapper .content-queue > table > thead > tr > th.border {
   border-left: 1px solid #ddd;
 }
-.ocd .content-queue > table > tbody > tr > td {
+#app-content-wrapper .content-queue > table > tbody > tr > td {
   border-bottom: 1px solid #eee;
 }
-.ocd .content-queue > table > tbody > tr > td.border {
+#app-content-wrapper .content-queue > table > tbody > tr > td.border {
   border-left: 1px solid #eee;
 }
-.ocd .content-queue > table > tbody > tr > td.padding {
+#app-content-wrapper .content-queue > table > tbody > tr > td.padding {
   padding: 2px 0 2px 5px;
 }
-.ocd .content-queue > table > tbody > tr > td .pb-wrap{
+#app-content-wrapper .content-queue > table > tbody > tr > td .pb-wrap{
   position: relative;
 }
-.ocd .content-queue > table > tbody > tr > td .pb-wrap,
-.ocd .content-queue > table > tbody > tr > td .pb-value,
-.ocd .content-queue > table > tbody > tr > td .pb-text {
+#app-content-wrapper .content-queue > table > tbody > tr > td .pb-wrap,
+#app-content-wrapper .content-queue > table > tbody > tr > td .pb-value,
+#app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
   width: 100%;
   height: 25px;
 }
-.ocd .content-queue > table > tbody > tr > td .pb-value {
+#app-content-wrapper .content-queue > table > tbody > tr > td .pb-value {
     background: rgba(8, 75, 138, 0.3) top left no-repeat;
 }
-.ocd .content-queue > table > tbody > tr > td .pb-text {
+#app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
   position: absolute;
   top:0; 
   left:0;
   padding: 2px 0 2px 5px;
   width: 100%;
 }
-.ocd .content-queue > table > thead > tr > th > div.svg,
-.ocd .content-queue > table > tbody > tr > td > div.svg {
+#app-content-wrapper .content-queue > table > thead > tr > th > div.svg,
+#app-content-wrapper .content-queue > table > tbody > tr > td > div.svg {
   width: 2em;
   cursor: pointer;
   float: right;
 }
-.ocd .content-queue > table > tbody > tr > td > a {
+#app-content-wrapper .content-queue > table > tbody > tr > td > a {
   color: #084b8a;
   text-decoration: underline;
+}
+#app-content-wrapper .content-queue > table > tbody > tr > td > div.icon-download {
+  background-image: url('../img/icon_download.svg');
+  margin-top: 2px;
+  float: left;
+  margin-right: 5px;
+  cursor: auto;
+  width: 1em;
+}
+#app-content-wrapper .content-queue > table > tbody > tr > td > div.icon-upload {
+  background-image: url('../img/icon_upload.svg');
+  margin-top: 2px;
+  float: left;
+  margin-right: 5px;
+  cursor: auto;
+  width: 1em;
+}
+#app-content-wrapper .content-queue > table > tbody > tr[data-rel="LOADER"] > td > div.icon-loading-small {
+  float: left;
+  margin: .2em .5em 0 .2em;
 }

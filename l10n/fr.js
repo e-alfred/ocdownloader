@@ -11,13 +11,19 @@
 
 OC.L10N.register
 (
-    'ocdownloader',
+    "ocdownloader",
     {
-		'Unable to find the GID for this download ...':'Impossible retrouver le GID de ce téléchargement ...',
-		'No Torrent Files':'Pas de fichiers Torrent',
-		'Upload':'Upload',
-		'Waiting':'En attente',
-		'Invalid URL. Please check the address of the file ...':'URL invalide. Veuillez vérifier l\'adresse du fichier ...',
-		'Launch YouTube Download':'Lancer le téléchargement YouTube'
+		"Unable to find the GID for this download ...": "Impossible retrouver le GID de ce téléchargement ...",
+		"No Torrent Files": "Pas de fichiers Torrent",
+		"Upload": "Upload",
+		"Waiting": "En attente",
+		"Invalid URL. Please check the address of the file ...": "URL invalide. Veuillez vérifier l'adresse du fichier ...",
+		"Launch YouTube Download": "Lancer le téléchargement YouTube",
+		"Select a file.torrent": "Choisissez un fichier.torrent",
+		"Please select a file.torrent": "Veuillez sélectionner un fichier.torrent",
+		"No downloads in the queue ...": "Aucun téléchargements dans la queue ...",
+		"Removed": "Supprimé",
+		"Active": "En cours",
+		"Paused": "En pause"
 	}
 )

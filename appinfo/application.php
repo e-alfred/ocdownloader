@@ -14,7 +14,10 @@ namespace OCA\ocDownloader\AppInfo;
 use \OCP\AppFramework\App;
 use \OCA\ocDownloader\Controller\IndexController;
 use \OCA\ocDownloader\Controller\HttpDownloaderController;
-use \OCA\ocDownloader\Controller\DownloaderQueueController;
+use \OCA\ocDownloader\Controller\FtpDownloaderController;
+use \OCA\ocDownloader\Controller\YTDownloaderController;
+use \OCA\ocDownloader\Controller\BTDownloaderController;
+use \OCA\ocDownloader\Controller\QueueController;
 
 class Application extends App
 {
@@ -83,12 +86,13 @@ class Application extends App
 	      	);
 	    });
 		
-		$container->registerService ('DownloaderQueueController', function ($c)
+		$container->registerService ('QueueController', function ($c)
 		{
-	      	return new DownloaderQueueController
+	      	return new QueueController
 			(
 		        $c->query ('AppName'),
 		        $c->query ('Request'),
+				$c->query ('CurrentUID'),
 				$c->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });

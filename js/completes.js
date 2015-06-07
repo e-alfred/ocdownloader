@@ -22,11 +22,11 @@ $(document).ready (function ()
 	{
 		if ($(OCDLR.Utils.QueueElt + '[data-rel="LOADER"]').length == 0)
 		{
-			OCDLR.Utils.UpdateQueue (true, 'stopped');
+			OCDLR.Utils.UpdateQueue (true, 'completes');
 		}
 	}, 5000);
 	
-	OCDLR.Utils.UpdateQueue (true, 'stopped');
+	OCDLR.Utils.UpdateQueue (true, 'completes');
 	
 	OCDLR.Utils.GetCounters ();
 });

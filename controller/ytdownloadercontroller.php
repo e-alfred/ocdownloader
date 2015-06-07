@@ -32,6 +32,7 @@ class YTDownloaderController extends Controller
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
+      private $CurrentUID = null;
       
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
@@ -41,6 +42,8 @@ class YTDownloaderController extends Controller
             {
                   $this->DbType = 1;
             }
+            
+            $this->CurrentUID = $CurrentUID;
             
             $Settings = new Settings ();
             $Settings->SetKey ('YTDLBinary');
@@ -62,12 +65,12 @@ class YTDownloaderController extends Controller
             $this->ProxyPasswd = $Settings->GetValue ();
             
             $Settings->SetTable ('personal');
-            $Settings->SetUID ($CurrentUID);
+            $Settings->SetUID ($this->CurrentUID);
             $Settings->SetKey ('DownloadsFolder');
             $this->DownloadsFolder = $Settings->GetValue ();
             
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
-            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
+            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder ($this->DownloadsFolder);
             
             $this->L10N = $L10N;
       }
@@ -78,11 +81,11 @@ class YTDownloaderController extends Controller
        */
       public function add ()
       {
-            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && Tools::CheckURL ($_POST['URL']) && isset ($_POST['OPTIONS']))
+            if (isset ($_POST['FILE']) && strlen ($_POST['FILE']) > 0 && Tools::CheckURL ($_POST['FILE']) && isset ($_POST['OPTIONS']))
             {
                   try
                   {
-                        $YouTube = new YouTube ($this->YTDLBinary, $_POST['URL']);
+                        $YouTube = new YouTube ($this->YTDLBinary, $_POST['FILE']);
                         
                         if (isset ($_POST['OPTIONS']['YTForceIPv4']) && strcmp ($_POST['OPTIONS']['YTForceIPv4'], 'false') == 0)
                         {
@@ -140,14 +143,15 @@ class YTDownloaderController extends Controller
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
-                              $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
+                              $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES (?, ?, ?, ?, ?, ?)';
                               if ($this->DbType == 1)
                               {
-                                    $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?)';
+                                    $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?, ?)';
                               }
                               
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
+                                    $this->CurrentUID,
                                     $AddURI['result'],
                                     $DL['FILENAME'],
                                     'YT ' . $DL['TYPE'],
@@ -155,14 +159,21 @@ class YTDownloaderController extends Controller
                                     time()
                               ));
                               
+                              sleep (1);
+                              $Status = $Aria2->tellStatus ($AddURI['result']);
+                              $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                               die (json_encode (Array (
                                     'ERROR' => false, 
-                                    'MESSAGE' => (string)$this->L10N->t ('Download started'),
+                                    'MESSAGE' => (string)$this->L10N->t ('Download started'), 
                                     'GID' => $AddURI['result'],
+                                    'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
+                                    'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress),
+                                    'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
+                                    'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
+                                    'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
+                                    'FILENAME' => (strlen ($DL['FILENAME']) > 40 ? substr ($DL['FILENAME'], 0, 40) . '...' : $DL['FILENAME']),
                                     'PROTO' => 'YT ' . $DL['TYPE'],
-                                    'NAME' => (strlen ($DL['FILENAME']) > 40 ? substr ($DL['FILENAME'], 0, 40) . '...' : $DL['FILENAME']),
-                                    'STATUS' => (string)$this->L10N->t ('Active'),
-                                    'SPEED' => '...'
+                                    'ISTORRENT' => false
                               )));
                         }
                         else

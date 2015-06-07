@@ -16,6 +16,8 @@ class YouTube
 	private $YTDLBinary = null;
 	private $URL = null;
 	private $ForceIPv4 = true;
+	private $ProxyAddress = null;
+	private $ProxyPort = 0;
 	
 	public function __construct ($YTDLBinary, $URL)
 	{
@@ -28,9 +30,21 @@ class YouTube
 		$this->ForceIPv4 = $ForceIPv4;
 	}
 	
+	public function SetProxy ($ProxyAddress, $ProxyPort)
+	{
+		$this->ProxyAddress = $ProxyAddress;
+		$this->ProxyPort = $ProxyPort;
+	}
+	
 	public function GetVideoData ($ExtractAudio = false)
 	{
-		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ' -f best') . ($this->ForceIPv4 ? ' -4' : ''), $Output, $Return);
+		$Proxy = null;
+		if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
+		{
+			$Proxy = ' --proxy ' . $this->ProxyAddress . ':' . $this->ProxyPort;
+		}
+		
+		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ' -f bestvideo') . ($this->ForceIPv4 ? ' -4' : '') . (is_null ($Proxy) ? '' : $Proxy), $Output, $Return);
 		
 		if ($Return == 0)
 		{

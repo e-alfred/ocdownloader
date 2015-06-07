@@ -84,7 +84,13 @@
 		"Remove torrent file ?":"Usunąć plik torrent?",
 		"All downloads have been removed":"Wszystkie pobierania zostały usunięte",
 		"Force IPv4 ?": "Wymusić IPv4?",
-        "Uploaded": "Wysłane"
+        "Uploaded": "Wysłane",
+		"Loading": "Ładowanie",
+		"Ratio": "Stan",
+        "All downloads have been cleaned": "Wszystkie pobierania zostały wyczyszczone",
+        "The download has been cleaned": "Pobieranie zostało wyczyszczone",
+        "Complete Downloads": "Zakończ pobierania",
+        "All Downloads": "Wszystkie pobierania"
 	},
 	"pluralForm":"nplurals=2; plural=(n > 1);"
 }

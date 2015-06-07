@@ -85,7 +85,12 @@
 		"All downloads have been removed":"Tous les téléchargements ont été supprimés",
 		"Force IPv4 ?":"Forcer IPv4 ?",
 		"Uploaded":"Uploadé",
-		"Loading":"Chargement"
+		"Loading":"Chargement",
+		"Ratio":"Ratio",
+		"All downloads have been cleaned":"Tous les téléchargements ont été enlevés",
+		"The download has been cleaned":"Le téléchargement a été enlevé",
+		"Complete Downloads":"Téléchargements Terminés",
+		"All Downloads":"Tous les téléchargements"
 	},
 	"pluralForm":"nplurals=2; plural=(n > 1);"
 }

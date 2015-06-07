@@ -18,7 +18,7 @@ $(document).ready (function ()
 		$('#OCDSMsg').removeClass ('success');
 		
 		$.ajax({
-	        url: OC.generateUrl ('/apps/ocdownloader/personalsettings'),
+	        url: OC.generateUrl ('/apps/ocdownloader/personalsettings/save'),
 	        method: 'POST',
 			dataType: 'json',
 			data: {

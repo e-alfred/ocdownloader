@@ -71,9 +71,9 @@ class Tools
         return $Bytes;
 	}
 	
-	public static function YouTubeDLInstalled ($YTBinary)
+	public static function CheckBinary ($Binary)
 	{
-		exec ('which ' . $YTBinary, $Output, $Return);
+		exec ('which ' . $Binary, $Output, $Return);
 		
 		if ($Return == 0)
 		{
@@ -106,6 +106,55 @@ class Tools
 	        '/ /'           =>   '_', // nonbreaking space (equiv. to 0x160)
 	    );
     	return preg_replace (array_keys ($UTF8), array_values ($UTF8), $Text);
+	}
+	
+	public static function GetDownloadStatusID ($Status)
+	{
+		switch (strtolower ($Status))
+		{
+			case 'complete':
+				$DLStatus = 0;
+			break;
+			case 'active':
+				$DLStatus = 1;
+			break;
+			case 'waiting':
+				$DLStatus = 2;
+			break;
+			case 'paused':
+				$DLStatus = 3;
+			break;
+			case 'removed':
+				$DLStatus = 4;
+			break;
+			default:
+				$DLStatus = 5;
+			break;
+		}
+		return $DLStatus;
+	}
+	
+	public static function GetCounters ($DbType)
+	{
+		$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue`) as `ALL`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `COMPLETES`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `ACTIVES`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `WAITINGS`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `STOPPED`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `REMOVED`';
+		if ($DbType == 1)
+		{
+			$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue`) as `ALL`,' .
+						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `COMPLETES`,' .
+						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `ACTIVES`,' .
+						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `WAITINGS`,' .
+						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `STOPPED`,' .
+						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `REMOVED`';
+		}
+		$Query = \OCP\DB::prepare ($SQL);
+		$Request = $Query->execute (Array (0, 1, 2, 3, 4));
+		
+		return $Request->fetchRow ();
 	}
 }
 ?>

@@ -30,6 +30,7 @@ class HttpDownloaderController extends Controller
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
+      private $CurrentUID = null;
       
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
@@ -39,6 +40,8 @@ class HttpDownloaderController extends Controller
             {
                   $this->DbType = 1;
             }
+            
+            $this->CurrentUID = $CurrentUID;
             
             $Settings = new Settings ();
             
@@ -52,12 +55,12 @@ class HttpDownloaderController extends Controller
             $this->ProxyPasswd = $Settings->GetValue ();
             
             $Settings->SetTable ('personal');
-            $Settings->SetUID ($CurrentUID);
+            $Settings->SetUID ($this->CurrentUID);
             $Settings->SetKey ('DownloadsFolder');
             $this->DownloadsFolder = $Settings->GetValue ();
             
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
-            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
+            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder ($this->DownloadsFolder);
             
             $this->L10N = $L10N;
       }
@@ -68,11 +71,11 @@ class HttpDownloaderController extends Controller
        */
       public function add ()
       {
-            if (isset ($_POST['URL']) && strlen ($_POST['URL']) > 0 && Tools::CheckURL ($_POST['URL']) && isset ($_POST['OPTIONS']))
+            if (isset ($_POST['FILE']) && strlen ($_POST['FILE']) > 0 && Tools::CheckURL ($_POST['FILE']) && isset ($_POST['OPTIONS']))
             {
                   try
                   {
-                        $Target = substr($_POST['URL'], strrpos($_POST['URL'], '/') + 1);
+                        $Target = substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1);
                         
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $Target))
@@ -101,32 +104,41 @@ class HttpDownloaderController extends Controller
                         }
                         
                         $Aria2 = new Aria2 ();
-                        $AddURI = $Aria2->addUri (Array ($_POST['URL']), $OPTIONS);
+                        $AddURI = $Aria2->addUri (Array ($_POST['FILE']), $OPTIONS);
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
-                              $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
+                              $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES (?, ?, ?, ?, ?, ?)';
                               if ($this->DbType == 1)
                               {
-                                    $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?)';
+                                    $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?, ?)';
                               }
                               
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
+                                    $this->CurrentUID,
                                     $AddURI['result'],
                                     $Target,
-                                    strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))),
+                                    strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
                                     1,
                                     time()
                               ));
                               
+                              sleep (1);
+                              $Status = $Aria2->tellStatus ($AddURI['result']);
+                              $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                               die (json_encode (Array (
                                     'ERROR' => false, 
                                     'MESSAGE' => (string)$this->L10N->t ('Download started'), 
-                                    'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
-                                    'GID' => $AddURI['result'], 
-                                    'PROTO' => strtoupper(substr($_POST['URL'], 0, strpos($_POST['URL'], ':'))), 
-                                    'SPEED' => '...'
+                                    'GID' => $AddURI['result'],
+                                    'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
+                                    'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress),
+                                    'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
+                                    'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
+                                    'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
+                                    'FILENAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
+                                    'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
+                                    'ISTORRENT' => false
                               )));
                         }
                         else

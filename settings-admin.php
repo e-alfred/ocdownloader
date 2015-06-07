@@ -9,8 +9,6 @@
  * @copyright Xavier Beurois 2015
  */	
 
-use \OCP\Config;
-
 use \OCA\ocDownloader\Controller\Lib\Settings;
 
 \OC_Util::checkAdminUser ();

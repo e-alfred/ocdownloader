@@ -8,11 +8,12 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-
-style ('ocdownloader', 'styles');
-script ('ocdownloader', 'script');
+style ('ocdownloader', 'styles.min');
+script ('ocdownloader', 'badger.min');
+script ('ocdownloader', 'ocdownloader.min');
+script ('ocdownloader', 'add.min');
 ?>
-<div id="app" class="ocd">
+<div id="app">
     <div id="app-navigation">
         <?php print_unescaped ($this->inc ('part.navigation')); ?>
     </div>
@@ -24,7 +25,7 @@ script ('ocdownloader', 'script');
             </div>
             <div id="controls">
                 <div class="actions">
-                    <div class="button" id="new">
+                    <div class="button" id="NewDL">
         				<a><?php print ($l->t ('New Download')); ?><div class="icon-caret-dark svg"></div></a>
         				<ul>
         					<li><p data-rel="OCDHTTP">HTTP</p></li>
@@ -33,13 +34,13 @@ script ('ocdownloader', 'script');
                             <li><p data-rel="OCDBT">BITTORRENT</p></li>
         				</ul>
         			</div>
-                    <div id="loadtext"<?php print ($_['NBELT'] > 0 ? '' : ' style="display: none;"'); ?>><?php print ($l->t ('Loading')); ?> ...</div>
+                    <div class="loadingtext loadinginline" style="display:none;"><?php print ($l->t ('Loading')); ?> ...</div>
                 </div>
                 <div class="righttitle"><?php print ($l->t ('Add Download')); ?></div>
             </div>
             <div class="content-page" rel="OCDHTTP">
                 <h3>
-                    <?php print ($l->t ('New HTTP download')); ?><span class="muted add-msg"></span>
+                    <?php print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
         				<a><?php print ($l->t ('Launch HTTP Download')); ?></a>
                     </div>
@@ -55,7 +56,7 @@ script ('ocdownloader', 'script');
             </div>
             <div class="content-page" rel="OCDFTP" style="display:none;">
                 <h3>
-                    <?php print ($l->t ('New FTP download')); ?><span class="muted add-msg"></span>
+                    <?php print ($l->t ('New FTP download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
         				<a><?php print ($l->t ('Launch FTP Download')); ?></a>
                     </div>
@@ -74,7 +75,7 @@ script ('ocdownloader', 'script');
             </div>
             <div class="content-page" rel="OCDYT" style="display:none;">
                 <h3>
-                    <?php print ($l->t ('New YouTube download')); ?><span class="muted add-msg"></span>
+                    <?php print ($l->t ('New YouTube download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
         				<a><?php print ($l->t ('Launch YouTube Download')); ?></a>
                     </div>
@@ -92,13 +93,13 @@ script ('ocdownloader', 'script');
             </div>
             <div class="content-page" rel="OCDBT" style="display:none;">
                 <h3>
-                    <?php print ($l->t ('New BitTorrent download')); ?><span class="muted add-msg"></span>
+                    <?php print ($l->t ('New BitTorrent download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
         				<a><?php print ($l->t ('Launch BitTorrent Download')); ?></a>
                     </div>
                 </h3>
                 <div class="actions">
-                    <div class="button" id="torrentlist">
+                    <div class="button" id="TorrentsList">
         				<a><?php print ($l->t ('Select a file.torrent')); ?> <?php print (strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>' . $l->t ('(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personnal Settings panel)') . '</i>'); ?><div class="icon-caret-dark svg"></div></a>
         				<ul>
                             <li><p class="loader"><span class="icon-loading-small"></span></p></li>
@@ -113,7 +114,7 @@ script ('ocdownloader', 'script');
                 </div>
             </div>
             <div class="content-queue">
-                <table border="0" cellspacing="0" cellpadding="0">
+                <table id="Queue" border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
                             <th width="20%" data-rel="FILENAME"><?php print ($l->t ('FILENAME')); ?></th>
@@ -121,26 +122,13 @@ script ('ocdownloader', 'script');
                             <th width="35%" data-rel="MESSAGE" class="border"><?php print ($l->t ('INFORMATION')); ?></th>
                             <th width="10%" data-rel="SPEED" class="border"><?php print ($l->t ('SPEED')); ?></th>
                             <th width="15%" data-rel="STATUS" class="border"><?php print ($l->t ('STATUS')); ?></th>
-                            <th width="10%" data-rel="ACTION"><?php print ($_['NBELT'] > 0 ? '<div class="icon-delete svg"></div>' : ''); ?></th>
+                            <th width="10%" data-rel="ACTION"></th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php while ($Row = $_['QUEUE']->fetchRow()): ?>
-                        <tr data-rel="<?php print($Row['GID']); ?>">
-                            <td data-rel="FILENAME" class="padding"><?php print(strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']); ?></td>
-                            <td data-rel="PROTO" class="border padding"><?php print($Row['PROTOCOL']); ?></td>
-                            <td data-rel="MESSAGE" class="border">
-                                <div class="pb-wrap">
-                                    <div class="pb-value" style="width: 0%;">
-                                        <div class="pb-text"><?php print ($l->t ('N/A')); ?></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-rel="SPEED" class="border padding"><?php print ($l->t ('N/A')); ?></td>
-                            <td data-rel="STATUS" class="border padding"><?php print ($l->t ('N/A')); ?></td>
-                            <td data-rel="ACTION" class="padding"><div class="icon-delete svg"></div><div class="icon-<?php print($Row['STATUS'] == 3 ? 'play' : 'pause'); ?> svg"></div></td>
+                        <tr data-rel="LOADER">
+                            <td colspan="6"><div class="icon-loading-small"></div><?php print ($l->t ('Loading')); ?> ...</td>
                         </tr>
-                    <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>

@@ -11,13 +11,15 @@
 
 OC.L10N.register
 (
-    'ocdownloader',
+    "ocdownloader",
 	{
 		"Unable to find the GID for this download ...": "Не найден GID этой загрузки...",
 		"No Torrent Files": "Нет торрент-файлов",
 		"Upload": "Загрузить",
 		"Waiting": "Ожидание",
 		"Invalid URL. Please check the address of the file ...": "Неверный URL. Пожалуйста, проверьте ссылку на файл...",
-		"Launch YouTube Download": "Запустить загрузку с YouTube"
+		"Launch YouTube Download": "Запустить загрузку с YouTube",
+		"Select a file.torrent": "Выбрать торрент-файл",
+		"Please select a file.torrent": "Пожалуйста, выберите торрент-файл"
 	}
 )

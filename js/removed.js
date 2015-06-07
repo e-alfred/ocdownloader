@@ -8,7 +8,7 @@
  * @copyright Xavier Beurois 2015
  */
  
-$(document).ready (function ()
+$(document).ready (function()
 {
 	$('#ball').Badger ('...');
 	$('#bcompletes').Badger ('...');
@@ -22,11 +22,11 @@ $(document).ready (function ()
 	{
 		if ($(OCDLR.Utils.QueueElt + '[data-rel="LOADER"]').length == 0)
 		{
-			OCDLR.Utils.UpdateQueue (true, 'stopped');
+			OCDLR.Utils.UpdateQueue (true, 'removed');
 		}
 	}, 5000);
 	
-	OCDLR.Utils.UpdateQueue (true, 'stopped');
+	OCDLR.Utils.UpdateQueue (true, 'removed');
 	
 	OCDLR.Utils.GetCounters ();
 });

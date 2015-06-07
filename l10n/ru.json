@@ -84,7 +84,13 @@
         "Remove torrent file ?": "Удалить торрент-файл?",
         "All downloads have been removed": "Все загрузки удалены",
         "Force IPv4 ?": "Принудительно IPv4?",
-        "Uploaded": "Отдано"
+        "Uploaded": "Отдано",
+        "Loading": "Загрузка...",
+        "Ratio": "Ратио",
+        "All downloads have been cleaned": "Все загруженные файлы удалены",
+        "The download has been cleaned": "Загруженный файл удален",
+        "Complete Downloads": "Завершенные загрузки",
+        "All Downloads": "Все загрузки"
     },
     "pluralForm": "nplurals=2; plural=(n > 1);"
 }

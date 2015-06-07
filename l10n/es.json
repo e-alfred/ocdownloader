@@ -30,7 +30,7 @@
         "(No post-processing, just extract the best audio quality)":"(No realizar post-procesamiento. Solamente extraer la mejor calidad de audio)",
         "New BitTorrent download":"Nueva descarga BitTorrent",
         "Launch BitTorrent Download":"Comenzar la descarga BitTorrent",
-        "Select a file.torrent":"Seleccione un archivo .torrent",
+        "Select a file.torrent":"Seleccione un archivo.torrent",
         "(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personnal Settings panel)":"(Por defecto : Liste los archivos torrent en la carpeta /Downloads/Files/Torrents, acceda a su panel de configuración personal)",
         "FILENAME":"ARCHIVO",
         "PROTOCOL":"PROTOCOLO",
@@ -82,7 +82,15 @@
         "The download has been unpaused":"La descarga continúa",
         "An error occured while unpausing the download":"Ocurrió un error al continuar la descarga",
         "Remove torrent file ?":"Eliminar el archivo torrent ?",
-        "All downloads have been removed":"Todas las descargas fueron eliminadas"
+        "All downloads have been removed":"Todas las descargas fueron eliminadas",
+        "Force IPv4 ?": "Forzar IPv4 ?",
+        "Uploaded": "Subida",
+        "Loading": "Cargando",
+        "Ratio": "Ratio",
+        "All downloads have been cleaned": "Se han limpiado todas las descargas",
+        "The download has been cleaned": "Se ha limpiado la descarga",
+        "Complete Downloads": "Descargas completas",
+        "All Downloads": "Todas las descargas"
     },
     "pluralForm":"nplurals=2; plural=(n > 1);"
 }

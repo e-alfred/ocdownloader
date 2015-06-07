@@ -38,12 +38,13 @@ class BTDownloaderController extends Controller
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
-            $this->CurrentUID = $CurrentUID;
             
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
                   $this->DbType = 1;
             }
+            
+            $this->CurrentUID = $CurrentUID;
             
             $this->Settings = new Settings ();
             
@@ -57,7 +58,7 @@ class BTDownloaderController extends Controller
             $this->ProxyPasswd = $this->Settings->GetValue ();
             
             $this->Settings->SetTable ('personal');
-            $this->Settings->SetUID ($CurrentUID);
+            $this->Settings->SetUID ($this->CurrentUID);
             $this->Settings->SetKey ('DownloadsFolder');
             $this->DownloadsFolder = $this->Settings->GetValue ();
             $this->Settings->SetKey ('TorrentsFolder');
@@ -66,8 +67,8 @@ class BTDownloaderController extends Controller
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
             $this->TorrentsFolder = '/' . (is_null ($this->TorrentsFolder) ? 'Downloads/Files/Torrents' : $this->TorrentsFolder);
             
-            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
-            $this->AbsoluteTorrentsFolder = \OC\Files\Filesystem::getLocalFolder($this->TorrentsFolder);
+            $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder ($this->DownloadsFolder);
+            $this->AbsoluteTorrentsFolder = \OC\Files\Filesystem::getLocalFolder ($this->TorrentsFolder);
             
             $this->L10N = $L10N;
       }
@@ -78,11 +79,11 @@ class BTDownloaderController extends Controller
        */
       public function add ()
       {
-            if (isset ($_POST['PATH']) && strlen (trim ($_POST['PATH'])) > 0 && (Tools::CheckURL ($_POST['PATH']) || Tools::CheckFilepath ($this->TorrentsFolder . '/' . $_POST['PATH'])) && isset ($_POST['OPTIONS']))
+            if (isset ($_POST['FILE']) && strlen (trim ($_POST['FILE'])) > 0 && (Tools::CheckURL ($_POST['FILE']) || Tools::CheckFilepath ($this->TorrentsFolder . '/' . $_POST['FILE'])) && isset ($_POST['OPTIONS']))
             {
                   try
                   {
-                        $Target = str_replace ('.torrent', '', Tools::CleanString ($_POST['PATH']));
+                        $Target = str_replace ('.torrent', '', Tools::CleanString ($_POST['FILE']));
                         
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::is_dir ($this->DownloadsFolder . '/' . $Target))
@@ -93,21 +94,22 @@ class BTDownloaderController extends Controller
                         // Create the target file
                         \OC\Files\Filesystem::mkdir ($this->DownloadsFolder . '/' . $Target);
                         
-                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder . '/' . $Target);
+                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder . $Target);
                         
                         $Aria2 = new Aria2 ();
-                        $AddTorrent = $Aria2->addTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['PATH'])), Array (), $OPTIONS);
+                        $AddTorrent = $Aria2->addTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['FILE'])), Array (), $OPTIONS);
                         
                         if (isset ($AddTorrent['result']) && !is_null ($AddTorrent['result']))
                         {
-                              $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?, ?)';
+                              $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES (?, ?, ?, ?, ?, ?)';
                               if ($this->DbType == 1)
                               {
-                                    $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?)';
+                                    $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?, ?)';
                               }
                               
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
+                                    $this->CurrentUID,
                                     $AddTorrent['result'],
                                     $Target,
                                     'BitTorrent',
@@ -117,16 +119,24 @@ class BTDownloaderController extends Controller
                               
                               if (isset ($_POST['OPTIONS']['BTRMTorrent']) && strcmp ($_POST['OPTIONS']['BTRMTorrent'], "true") == 0)
                               {
-                                    \OC\Files\Filesystem::unlink ($this->TorrentsFolder . '/' . $_POST['PATH']);
+                                    \OC\Files\Filesystem::unlink ($this->TorrentsFolder . '/' . $_POST['FILE']);
                               }
                               
+                              sleep (1);
+                              $Status = $Aria2->tellStatus ($AddTorrent['result']);
+                              $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                               die (json_encode (Array (
-                                    'ERROR' => false, 
-                                    'MESSAGE' => (string)$this->L10N->t ('Download started'), 
-                                    'NAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target), 
-                                    'GID' => $AddTorrent['result'], 
-                                    'PROTO' => 'BitTorrent', 
-                                    'SPEED' => '...'
+                                    'ERROR' => false,
+                                    'MESSAGE' => (string)$this->L10N->t ('Download started'),
+                                    'GID' => $AddTorrent['result'],
+                                    'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
+                                    'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress) . ' - ' . $this->L10N->t ('Seeders') . ': ' . $Status['result']['numSeeders'],
+                                    'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
+                                    'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
+                                    'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
+                                    'FILENAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
+                                    'PROTO' => 'BitTorrent',
+                                    'ISTORRENT' => true
                               )));
                         }
                         else

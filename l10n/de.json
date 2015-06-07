@@ -84,7 +84,13 @@
         "Remove torrent file ?": "Entferne die *.torrent Datei ?",
         "All downloads have been removed": "Alle Downloads wurden entfernt",
         "Force IPv4 ?": "IPv4 erzwingen?",
-        "Uploaded": "Hochgeladen"
+        "Uploaded": "Hochgeladen",
+        "Loading": "Laden",
+        "Ratio": "Verhältnis",
+        "All downloads have been cleaned": "Alle Downloads wurden bereinigt",
+        "The download has been cleaned": "Der Download wurde gereinigt",
+        "Complete Downloads": "Komplette Downloads",
+        "All Downloads": "Alle Downloads"
     },
     "pluralForm": "nplurals=2; plural=(n > 1);"
 }
