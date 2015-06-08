@@ -12,7 +12,7 @@
 namespace OCA\ocDownloader\AppInfo;
 
 $Application = new Application ();
-$Application->registerRoutes ($this, array(
+$Application->registerRoutes ($this, Array (
     'routes' => [
         // IndexController
         ['name' => 'index#add', 'url' => '/', 'verb' => 'GET'],

@@ -115,7 +115,7 @@ OCDLR = {};
 									}
 								}
 														
-								$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').text (Value.PROGRESS);
+								$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').html (Value.PROGRESS);
 								$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
 								$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS);
 							});
