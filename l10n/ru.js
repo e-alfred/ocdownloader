@@ -20,6 +20,10 @@ OC.L10N.register
 		"Invalid URL. Please check the address of the file ...": "Неверный URL. Пожалуйста, проверьте ссылку на файл...",
 		"Launch YouTube Download": "Запустить загрузку с YouTube",
 		"Select a file.torrent": "Выбрать торрент-файл",
-		"Please select a file.torrent": "Пожалуйста, выберите торрент-файл"
+		"Please select a file.torrent": "Пожалуйста, выберите торрент-файл",
+		"No downloads in the queue ...": "Нет загрузок в очереди...",
+	    "Removed": "Удалено",
+	    "Active": "Активно",
+	    "Paused": "Приостановлено"
 	}
 )
