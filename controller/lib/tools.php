@@ -136,7 +136,7 @@ class Tools
 	
 	public static function GetCounters ($DbType)
 	{
-		$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue`) as `ALL`,' .
+		$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` < ?) as `ALL`,' .
 					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `COMPLETES`,' .
 					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `ACTIVES`,' .
 					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `WAITINGS`,' .
@@ -144,15 +144,15 @@ class Tools
 					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `REMOVED`';
 		if ($DbType == 1)
 		{
-			$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue`) as `ALL`,' .
-						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `COMPLETES`,' .
-						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `ACTIVES`,' .
-						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `WAITINGS`,' .
-						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `STOPPED`,' .
-						  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `REMOVED`';
+			$SQL = 'SELECT (SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" < ?) as "ALL",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "COMPLETES",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "ACTIVES",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "WAITINGS",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "STOPPED",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "REMOVED"';
 		}
 		$Query = \OCP\DB::prepare ($SQL);
-		$Request = $Query->execute (Array (0, 1, 2, 3, 4));
+		$Request = $Query->execute (Array (5, 0, 1, 2, 3, 4));
 		
 		return $Request->fetchRow ();
 	}

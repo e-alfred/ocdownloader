@@ -87,6 +87,11 @@ class YTDownloaderController extends Controller
                   {
                         $YouTube = new YouTube ($this->YTDLBinary, $_POST['FILE']);
                         
+                        if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
+                        {
+                              $YouTube->SetProxy ($this->ProxyAddress, $this->ProxyPort);
+                        }
+                        
                         if (isset ($_POST['OPTIONS']['YTForceIPv4']) && strcmp ($_POST['OPTIONS']['YTForceIPv4'], 'false') == 0)
                         {
                               $YouTube->SetForceIPv4 (false);
