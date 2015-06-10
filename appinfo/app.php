@@ -23,5 +23,5 @@ $g =  \OC::$server->getURLGenerator ();
     'name' => 'ocDownloader'
 ]);
 
-\OCP\App::registerAdmin('ocdownloader', 'settings-admin');
-\OCP\App::registerPersonal('ocdownloader', 'settings-personal');
+\OCP\App::registerAdmin ('ocdownloader', 'settings-admin');
+\OCP\App::registerPersonal ('ocdownloader', 'settings-personal');

@@ -57,3 +57,6 @@ $Application->registerRoutes ($this, Array (
         ['name' => 'personalsettings#get', 'url' => '/personalsettings/get', 'verb' => 'POST']
     ]
 ));
+
+//$APIBasePath = '/apps/ocdownloader/api/';
+//\OCP\API::register ('GET', $APIBasePath . 'version', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::GetVersion ()); }, 'ocdownloader', \OC_API::USER_AUTH);

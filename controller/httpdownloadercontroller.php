@@ -31,6 +31,7 @@ class HttpDownloaderController extends Controller
       private $ProxyUser = null;
       private $ProxyPasswd = null;
       private $CurrentUID = null;
+      private $L10N = null;
       
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
