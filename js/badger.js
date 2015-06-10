@@ -12,7 +12,8 @@
 	$.fn.Badger = function (Badge, Callback)
 	{
   		var BadgerExists = this.find ('.badger-outter').html ();
-  		
+  		Badge = Badge.toString();
+		
   		// Clear the badge
   		if (!Badge)
   		{
