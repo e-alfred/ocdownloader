@@ -52,7 +52,7 @@ class API
                               $VideoData = $YouTube->GetVideoData ();
                               if (!isset ($VideoData['VIDEO']) || !isset ($VideoData['FULLNAME']))
                               {
-                                    return Array ('ERROR' => true, 'MESSAGE' => 'Unable to retrieve true YouTube video URL');
+                                    return Array ('ERROR' => true, 'MESSAGE' => 'UnabletoretrievetrueYouTubevideoURL');
                               }
                               $DL = Array (
                                     'URL' => $VideoData['VIDEO'],
@@ -106,17 +106,17 @@ class API
                         }
                         else
                         {
-                              return Array ('ERROR' => true, 'MESSAGE' => 'Returned GID is null ! Is Aria2c running as a daemon ?');
+                              return Array ('ERROR' => true, 'MESSAGE' => 'ReturnedGIDisnullIsAria2crunningasadaemon');
                         }
                   }
                   else
                   {
-                        return Array ('ERROR' => true, 'MESSAGE' => 'Invalid URL');
+                        return Array ('ERROR' => true, 'MESSAGE' => 'InvalidURL');
                   }
             }
             catch (Exception $E)
             {
-                  return Array ('ERROR' => true, 'MESSAGE' => 'Unable to launch the download');
+                  return Array ('ERROR' => true, 'MESSAGE' => 'Unabletolaunchthedownload');
             }
 	}
 	
