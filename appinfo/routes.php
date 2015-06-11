@@ -58,5 +58,5 @@ $Application->registerRoutes ($this, Array (
     ]
 ));
 
-//$APIBasePath = '/apps/ocdownloader/api/';
-//\OCP\API::register ('GET', $APIBasePath . 'version', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::GetVersion ()); }, 'ocdownloader', \OC_API::USER_AUTH);
+$APIBasePath = '/apps/ocdownloader/api/';
+\OCP\API::register ('POST', $APIBasePath . 'download', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Download ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);

@@ -36,8 +36,8 @@ class Tools
 	
 	public static function GetProgressString ($Completed, $Total, $Progress)
 	{
-		$CompletedStr = self::FormatSizeUnits($Completed);
-		$TotalStr = self::FormatSizeUnits($Total);
+		$CompletedStr = self::FormatSizeUnits ($Completed);
+		$TotalStr = self::FormatSizeUnits ($Total);
 		
 		if ($Progress < 1)
 		{

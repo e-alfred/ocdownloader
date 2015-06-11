@@ -76,7 +76,7 @@ class FtpDownloaderController extends Controller
             {
                   try
                   {
-                        $Target = substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1);
+                        $Target = Tools::CleanString (substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1));
                         
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $Target))
@@ -100,7 +100,7 @@ class FtpDownloaderController extends Controller
                         }
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
-                              $OPTIONS['all-proxy'] = $this->ProxyAddress . ':' . $this->ProxyPort;
+                              $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
                               if (!is_null ($this->ProxyUser) && !is_null ($this->ProxyPasswd))
                               {
                                     $OPTIONS['all-proxy-user'] = $this->ProxyUser;

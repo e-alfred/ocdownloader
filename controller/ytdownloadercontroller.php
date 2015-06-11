@@ -124,8 +124,6 @@ class YTDownloaderController extends Controller
                               $DL = Array ('URL' => $VideoData['VIDEO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => (string)$this->L10N->t ('Video'));
                         }
                         
-                        $Aria2 = new Aria2 ();
-                        
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $DL['FILENAME']))
                         {
@@ -137,7 +135,7 @@ class YTDownloaderController extends Controller
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
-                              $OPTIONS['all-proxy'] = $this->ProxyAddress . ':' . $this->ProxyPort;
+                              $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
                               if (!is_null ($this->ProxyUser) && !is_null ($this->ProxyPasswd))
                               {
                                     $OPTIONS['all-proxy-user'] = $this->ProxyUser;
@@ -145,6 +143,7 @@ class YTDownloaderController extends Controller
                               }
                         }
                         
+                        $Aria2 = new Aria2 ();
                         $AddURI = $Aria2->addUri (Array ($DL['URL']), $OPTIONS);
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))

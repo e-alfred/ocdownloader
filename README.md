@@ -1,5 +1,5 @@
 # ocDownloader
-OwnCloud Apps - ocDownloader allows to retrieve files with multi-protocols using ARIA2
+ocDownloader is an application for [ownCloud](https://owncloud.org). ocDownloader allows you to download files with multi-protocols using ARIA2 (HTTP(S)/FTP(S)/Youtube/BitTorrent)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/DjazzLab/ocdownloader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -13,6 +13,7 @@ Everything you need to install ARIA2 and to run aria2c as a daemon !
 
 ## Other articles
 Download YouTube video : [OCDownloader:Install The YouTube-DL Provider](https://wiki.sgc-univ.net/index.php/OCDownloader:Install_The_YouTube-DL_Provider)
+Note : You have to install Python on your server. This a requierement for youtube-dl.
 
 ## Translators
 - Polish : Andrzej Kaczmarczyk
