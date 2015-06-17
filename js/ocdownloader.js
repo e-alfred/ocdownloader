@@ -16,11 +16,13 @@ OCDLR = {};
 	{
 		BaseURL: '/apps/ocdownloader/',
 		BaseID: '#app-content-wrapper ',
+		MenuID: '#app-navigation ',
 		Queue: '',
 		QueueHeader: '',
 		QueueElt: '',
 		DownloadsFolder: '',
 		TorrentsFolder: '',
+		WhichDownloader: '',
 		BadgerStatus: [],
 		
 		ValidURL: function (URLString)
@@ -40,93 +42,134 @@ OCDLR = {};
 			$(OCDLRSelf.BaseID + 'span.muted').addClass ('info').text (Msg);
 		},
 		
+		CheckVersion: function ()
+		{
+			$.ajax ({
+		        url: OC.generateUrl (OCDLRSelf.BaseURL + 'updater/check'),
+		        method: 'GET',
+				dataType: 'json',
+		        async: true,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+					if (!Data.ERROR && Data.RESULT)
+					{
+						$(OCDLRSelf.MenuID + '.nav-updater').show ();
+						$(OCDLRSelf.MenuID + '.nav-updater .button').bind ('click', function ()
+						{
+							OCDLRSelf.AddDownload ($(this), 'http', 'https://github.com/DjazzLab/ocdownloader/archive/master.zip',
+							{
+								HTTPUser: '', HTTPPasswd: ''
+							});
+						});
+					}
+				}
+			});
+		},
+		
 		UpdateQueue: function (DynMode, View)
 		{
-			if ($(OCDLRSelf.QueueElt).length > 0)
+			var IntervalHandle = setInterval (function ()
 			{
-				$(OCDLRSelf.BaseID + '.loadingtext').show ();
-			    $.ajax ({
-			        url: OC.generateUrl (OCDLRSelf.BaseURL + 'queue/get'),
-			        method: 'POST',
-					data: {'VIEW' : View},
-					dataType: 'json',
-			        async: true,
-			        cache: false,
-			        timeout: 30000,
-			        success: function (Data)
-					{
-			            if (Data.ERROR)
+				clearInterval (IntervalHandle);
+				
+				if ($(OCDLRSelf.QueueElt).length > 0)
+				{
+					$(OCDLRSelf.BaseID + '.loadingtext').show ();
+				    $.ajax ({
+				        url: OC.generateUrl (OCDLRSelf.BaseURL + 'queue/get'),
+				        method: 'POST',
+						data: {'VIEW' : View},
+						dataType: 'json',
+				        async: true,
+				        cache: false,
+				        timeout: 30000,
+				        success: function (Data)
 						{
-							OCDLRSelf.PrintError (Data.MESSAGE);
-						}
-						else
-						{
-							if ($(OCDLRSelf.QueueElt + '[data-rel="LOADER"]').length != 0)
+				            if (Data.ERROR)
 							{
-								$(OCDLRSelf.QueueElt + '[data-rel="LOADER"]').remove ();
+								OCDLRSelf.PrintError (Data.MESSAGE);
 							}
-							
-							$('#ball').Badger (Data.COUNTER.ALL);
-							$('#bcompletes').Badger (Data.COUNTER.COMPLETES);
-							$('#bactives').Badger (Data.COUNTER.ACTIVES);
-							$('#bwaitings').Badger (Data.COUNTER.WAITINGS);
-							$('#bstopped').Badger (Data.COUNTER.STOPPED);
-							$('#bremoved').Badger (Data.COUNTER.REMOVED);
-							
-							var DBGIDS = [];
-							$.each (Data.QUEUE, function (Index, Value)
+							else
 							{
-								var QueueElt = OCDLRSelf.QueueElt + '[data-rel="' + Value.GID + '"]';
-								DBGIDS.push (Value.GID);
-								
-								if (DynMode && $(QueueElt).length == 0)
+								if ($(OCDLRSelf.QueueElt + '[data-rel="LOADER"]').length != 0)
 								{
-									OCDLRSelf.PrependToQueue (Value, View);
+									$(OCDLRSelf.QueueElt + '[data-rel="LOADER"]').remove ();
 								}
 								
-								if (Value.PROGRESSVAL == '100%')
+								$('#ball').Badger (Data.COUNTER.ALL);
+								$('#bcompletes').Badger (Data.COUNTER.COMPLETES);
+								$('#bactives').Badger (Data.COUNTER.ACTIVES);
+								$('#bwaitings').Badger (Data.COUNTER.WAITINGS);
+								$('#bstopped').Badger (Data.COUNTER.STOPPED);
+								$('#bremoved').Badger (Data.COUNTER.REMOVED);
+								
+								var DBGIDS = [];
+								$.each (Data.QUEUE, function (Index, Value)
 								{
-									$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME + '</a>');
+									var QueueElt = OCDLRSelf.QueueElt + '[data-rel="' + Value.GID + '"]';
+									DBGIDS.push (Value.GID);
 									
-									if (Value.ISTORRENT && Value.SPEED != '--')
+									if (DynMode && $(QueueElt).length == 0)
 									{
-										$(QueueElt + ' > td[data-rel="SPEED"]').html ('<div class="icon-upload svg"></div>' + Value.SPEED);
+										OCDLRSelf.PrependToQueue (Value, View);
 									}
-									else
+									
+									if ($(QueueElt + ' > td[data-rel="ACTION"] > div.icon-pause').length == 0 && Value.STATUSID == 1)
 									{
-										$(QueueElt + ' > td[data-rel="SPEED"]').html (Value.SPEED);
+										OCDLRSelf.ActionPause ($(QueueElt + ' > td[data-rel="ACTION"]'), View);
+									}
+									if ($(QueueElt + ' > td[data-rel="ACTION"] > div.icon-play').length == 0 && Value.STATUSID == 3)
+									{
+										OCDLRSelf.ActionUnPause ($(QueueElt + ' > td[data-rel="ACTION"]'), View);
+									}
+									
+									if (Value.PROGRESSVAL == '100%')
+									{
+										$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME + '</a>');
 										
-										if (!Value.ISTORRENT)
+										if (Value.ISTORRENT && Value.SPEED != '--')
 										{
-											$(QueueElt + ' > td[data-rel="ACTION"] > div.icon-pause').remove ();
-											$(QueueElt + ' > td[data-rel="ACTION"] > div.icon-play').remove ();
+											$(QueueElt + ' > td[data-rel="SPEED"]').html ('<div class="icon-upload svg"></div>' + Value.SPEED);
+										}
+										else
+										{
+											$(QueueElt + ' > td[data-rel="SPEED"]').html (Value.SPEED);
+											
+											if (!Value.ISTORRENT)
+											{
+												$(QueueElt + ' > td[data-rel="ACTION"] > div.icon-pause').remove ();
+												$(QueueElt + ' > td[data-rel="ACTION"] > div.icon-play').remove ();
+											}
 										}
 									}
-								}
-								else
-								{
-									if (Value.SPEED != '--')
-									{
-										$(QueueElt + ' > td[data-rel="SPEED"]').html ('<div class="icon-download svg"></div>' + Value.SPEED);
-									}
 									else
 									{
-										$(QueueElt + ' > td[data-rel="SPEED"]').html (Value.SPEED);
+										if (Value.SPEED != '--')
+										{
+											$(QueueElt + ' > td[data-rel="SPEED"]').html ('<div class="icon-download svg"></div>' + Value.SPEED);
+										}
+										else
+										{
+											$(QueueElt + ' > td[data-rel="SPEED"]').html (Value.SPEED);
+										}
 									}
-								}
-														
-								$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').html (Value.PROGRESS);
-								$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
-								$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS);
-							});
+															
+									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').html (Value.PROGRESS);
+									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
+									$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS);
+								});
+								
+								OCDLRSelf.RemoveQueueItems (DBGIDS);
+							}
 							
-							OCDLRSelf.RemoveQueueItems (DBGIDS);
-						}
-						
-						$(OCDLRSelf.BaseID + '.loadingtext').hide ();
-			        }
-			    });
-			}
+							$(OCDLRSelf.BaseID + '.loadingtext').hide ();
+				        }
+				    });
+				}
+				OCDLRSelf.UpdateQueue ((View == 'add' ? false : true), View);
+			}, 3000);
 		},
 		
 		RemoveQueueItem: function (Item)
@@ -468,15 +511,12 @@ OCDLR = {};
 			}
 		},
 		
-		GetPersonalSetting: function (KEY)
+		GetPersonalSettings: function ()
 		{
-			var VAL = 'Downloads/Files/Torrents';
-			
 			$.ajax ({
 		        url: OC.generateUrl (OCDLRSelf.BaseURL + 'personalsettings/get'),
-		        method: 'POST',
+		        method: 'GET',
 				dataType: 'json',
-				data: {'KEY' : KEY},
 		        async: false,
 		        cache: false,
 		        timeout: 30000,
@@ -484,12 +524,36 @@ OCDLR = {};
 				{
 		            if (!Data.ERROR)
 					{
-						VAL = Data.VAL;
+						$.each (Data.VALS, function (Key, Value)
+						{
+							eval ('OCDLRSelf.' + Key + '="' + Value + '"');
+						});
 					}
 		        }
 		    });
-			
-			return VAL;
+		},
+		
+		GetAdminSettings: function (KEYS)
+		{
+			$.ajax ({
+		        url: OC.generateUrl (OCDLRSelf.BaseURL + 'adminsettings/get'),
+		        method: 'POST',
+				dataType: 'json',
+				data: {'KEYS' : KEYS},
+		        async: false,
+		        cache: false,
+		        timeout: 30000,
+		        success: function (Data)
+				{
+		            if (!Data.ERROR)
+					{
+						$.each (Data.VALS, function (Key, Value)
+						{
+							eval ('OCDLRSelf.' + Key + '="' + Value + '"');
+						});
+					}
+		        }
+		    });
 		},
 		
 		GetTorrentsList: function (LIST)
@@ -732,20 +796,26 @@ OCDLR = {};
 		
 		ActionPause: function (TD, View)
 		{
-			TD.append ('<div class="icon-pause svg"></div>');
-			TD.children ('div.icon-pause').bind ('click', function ()
+			if (OCDLRSelf.WhichDownloader == 'ARIA2')
 			{
-				OCDLRSelf.PauseDownload ($(this), View);
-			});
+				TD.append ('<div class="icon-pause svg"></div>');
+				TD.children ('div.icon-pause').bind ('click', function ()
+				{
+					OCDLRSelf.PauseDownload ($(this), View);
+				});
+			}
 		},
 		
 		ActionPlay: function (TD, View)
 		{
-			TD.append ('<div class="icon-play svg"></div>');
-			TD.children ('div.icon-play').bind ('click', function ()
+			if (OCDLRSelf.WhichDownloader == 'ARIA2')
 			{
-				OCDLRSelf.UnPauseDownload ($(this), View);
-			});
+				TD.append ('<div class="icon-play svg"></div>');
+				TD.children ('div.icon-play').bind ('click', function ()
+				{
+					OCDLRSelf.UnPauseDownload ($(this), View);
+				});
+			}
 		},
 		
 		ActionDelete: function (TD, Status, View)
@@ -773,8 +843,8 @@ OCDLR = {};
 	
 	var OCDLRSelf = OCDLR.Utils;
 	
-	OCDLRSelf.DownloadsFolder = OCDLRSelf.GetPersonalSetting ('DownloadsFolder');
-	OCDLRSelf.TorrentsFolder = OCDLRSelf.GetPersonalSetting ('TorrentsFolder');
+	OCDLRSelf.GetPersonalSettings ();
+	OCDLRSelf.GetAdminSettings (['WhichDownloader']);
 	OCDLRSelf.Queue = OCDLRSelf.BaseID + '#Queue ';
 	OCDLRSelf.QueueHeader = OCDLRSelf.Queue + 'thead tr';
 	OCDLRSelf.QueueElt = OCDLRSelf.Queue + 'tbody tr';

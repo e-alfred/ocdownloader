@@ -11,14 +11,15 @@
       
 namespace OCA\ocDownloader\Controller;
 
-use \OCP\IRequest;
-use \OCP\AppFramework\Controller;
-use \OCP\IL10N;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
+use OCP\IRequest;
 
-use \OCA\ocDownloader\Controller\Lib\Settings;
-use \OCA\ocDownloader\Controller\Lib\Tools;
+use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Tools;
 
-class PersonalSettingsController extends Controller
+class PersonalSettings extends Controller
 {
       private $CurrentUID = null;
       private $OCDSettingKeys = Array ('DownloadsFolder', 'TorrentsFolder');
@@ -37,11 +38,13 @@ class PersonalSettingsController extends Controller
       }
       
       /**
-       * @AdminRequired
+       * @NoAdminRequired
        * @NoCSRFRequired
        */
-      public function save ()
+      public function Save ()
       {
+            \OCP\JSON::setContentTypeHeader ('application/json');
+            
             $Error = false;
             $Message = '';
             
@@ -93,28 +96,38 @@ class PersonalSettingsController extends Controller
                   $Message = $this->L10N->t ('Undefined field');
             }
             
-            die (json_encode (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? (string)$this->L10N->t ('Saved') : $Message))));
+            return new JSONResponse (Array ('ERROR' => $Error, 'MESSAGE' => (strlen (trim ($Message)) == 0 ? (string)$this->L10N->t ('Saved') : $Message)));
       }
       
       /**
-       * @AdminRequired
+       * @NoAdminRequired
        * @NoCSRFRequired
        */
-      public function get ()
+      public function Get ()
       {
-            if (isset ($_POST['KEY']) && strlen (trim ($_POST['KEY'])) > 0)
+            \OCP\JSON::setContentTypeHeader ('application/json');
+            
+            $PersonalSettings = Array ();
+            foreach ($this->OCDSettingKeys as $SettingKey)
             {
-                  if (in_array ($_POST['KEY'], $this->OCDSettingKeys))
-                  {
-                        $this->Settings->SetKey ($_POST['KEY']);
-                        $Val = $this->Settings->GetValue ();
-                        
-                        die (json_encode (Array ('ERROR' => (is_null ($Val) ? true : false), 'VAL' => $Val)));
-                  }
+                  $this->Settings->SetKey ($SettingKey);
+                  $PersonalSettings[$SettingKey] = $this->Settings->GetValue ();
                   
-                  die (json_encode (Array ('ERROR' => true, 'VAL' => null)));
+                  // Set default if not set in the database
+                  if (is_null ($PersonalSettings[$SettingKey]))
+                  {
+                        switch ($SettingKey)
+                        {
+                              case 'DownloadsFolder':
+                                    $PersonalSettings[$SettingKey] = 'Downloads';
+                                    break;
+                              case 'TorrentsFolder':
+                                    $PersonalSettings[$SettingKey] = 'Downloads/Files/Torrents';
+                                    break;
+                        }
+                  }
             }
             
-            die (json_encode (Array ('ERROR' => true, 'VAL' => null)));
+            return new JSONResponse (Array ('ERROR' => false, 'VALS' => $PersonalSettings));
       }
 }

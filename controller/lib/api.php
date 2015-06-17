@@ -31,7 +31,7 @@ class API
 	private static $CurrentUID = null;
       private static $L10N = null;
 	
-	public static function Download ($URL)
+	public static function Add ($URL)
 	{
             try
             {
@@ -81,8 +81,7 @@ class API
                               }
                         }
                         
-                        $Aria2 = new Aria2 ();
-                        $AddURI = $Aria2->addUri (Array ($DL['URL']), $OPTIONS);
+                        $AddURI = Aria2::AddUri (Array ($DL['URL']), $OPTIONS);
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {

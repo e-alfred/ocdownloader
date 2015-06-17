@@ -9,15 +9,15 @@
  * @copyright Xavier Beurois 2015
  */	
 
-use \OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Settings;
 
 \OC_Util::checkAdminUser ();
 
 // Display template
-style ('ocdownloader', 'settings-admin');
-script ('ocdownloader', 'settings-admin');
+style ('ocdownloader', 'settings/admin');
+script ('ocdownloader', 'settings/admin');
 
-$Tmpl = new OCP\Template ('ocdownloader', 'settings-admin');
+$Tmpl = new OCP\Template ('ocdownloader', 'settings/admin');
 
 $Settings = new Settings ();
 $Rows = $Settings->GetAllValues ();

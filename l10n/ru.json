@@ -1,13 +1,13 @@
 {
     "translations":
-    {
+	{
         "Add Download": "Добавить загрузку",
         "Active Downloads": "Активные загрузки",
         "Waiting Downloads": "Ожидающие загрузки",
         "Stopped Downloads": "Остановленные загрузки",
         "Removed Downloads": "Удалённые загрузки",
         "Manage Your Downloads Anywhere!": "Управляйте своими загрузками где угодно!",
-        "Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with": "Хватит возиться со сложным синтаксисом загрузок. Управляйте вашими загрузками через веб просто, с ",
+        "Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <strong>%s</strong>": "Хватит возиться со сложным синтаксисом загрузок. Управляйте вашими загрузками через веб просто, с <strong>%s</strong>",
         "New Download": "Новая загрузка",
         "New HTTP download": "Новая загрузка по HTTP",
         "Launch HTTP Download": "Запустить загрузку по HTTP",
@@ -31,7 +31,7 @@
         "New BitTorrent download": "Новая загрузка по BitTorrent ",
         "Launch BitTorrent Download": "Запустить загрузку по BitTorrent",
         "Select a file.torrent": "Выбрать торрент-файл",
-        "(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personnal Settings panel)": "(По умолчанию: Показать торрент-файлы в папке /Downloads/Files/Torrents, изменить - в персональной панели настроек)",
+        "(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personal Settings panel)": "(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personnal Settings panel)",
         "FILENAME": "ИМЯ ФАЙЛА",
         "PROTOCOL": "ПРОТОКОЛ",
         "INFORMATION": "ИНФОРМАЦИЯ",
@@ -90,7 +90,18 @@
         "All downloads have been cleaned": "Все загруженные файлы удалены",
         "The download has been cleaned": "Загруженный файл удален",
         "Complete Downloads": "Завершенные загрузки",
-        "All Downloads": "Все загрузки"
-    },
-    "pluralForm": "nplurals=2; plural=(n > 1);"
+        "All Downloads": "Все загрузки",
+        "Error while checking application version on GitHub": "Ошибка при проверке версии приложения на GitHub",
+        "You are not allowed to check for application updates": "Вам не разрешено проверять приложение на обновления",
+        "Update available !": "Обновление доступно!",
+        "Download": "Загрузить",
+        "Check for updates ?": "Проверить на обновления?",
+        "Yes": "Да",
+        "No": "Нет",
+        "Unable to find YouTube-DL binary": "Невозможно найти YouTube-DL binary",
+        "Available protocols": "Доступные протоколы",
+        "You are using %s ! This page is only available with the following engines :": "Вы используете %s ! Эта страница доступна только со следующими движками:",
+        "Unable to find download status file %s": "Unable to find download status file %s",
+        "An error occurred while running the CURL download": "Произошла ошибка при запуске загрузки с CURL"
+    }
 }

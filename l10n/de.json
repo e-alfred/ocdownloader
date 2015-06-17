@@ -1,13 +1,13 @@
 {
     "translations":
-    {
+	{
         "Add Download": "Download hinzufügen",
         "Active Downloads": "Aktive Downloads",
         "Waiting Downloads": "Wartende Downloads",
         "Stopped Downloads": "Gestoppte Downloads",
         "Removed Downloads": "Gelöschte Downloads",
         "Manage Your Downloads Anywhere!": "Manage deine Downloads von Überall!",
-        "Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with": "Genug mit verschiedenen Downloadformaten handtiert. Manage deine Downloads jetzt einfaach Online",
+        "Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <strong>%s</strong>": "Genug mit den unterschiedlichen kniffligen Download Protokollen hantiert. Mangae deine Downloads einfach im Web mit <strong>%s</strong>",
         "New Download": "Neuer Download",
         "New HTTP download": "Neuer HTTP Download",
         "Launch HTTP Download": "Starte HTTP Download",
@@ -31,7 +31,7 @@
         "New BitTorrent download": "Neuer BitTorrent Download",
         "Launch BitTorrent Download": "Starte BitTorrent Download",
         "Select a file.torrent": "Wähle eine *.torrent Datei",
-        "(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personnal Settings panel)": "(Standarteinstellung : Liste der *.torrent Dateien aus dem Ordner /Downloads/Files/Torrents. Zum ändern gehe zu dem persönlichen Einstellungsmenü)",
+        "(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personal Settings panel)": "(Standardeinstellung : Liste der *.torrent Dateien aus dem Ordner /Downloads/Files/Torrents. Zum ändern gehe zu dem persönlichen Einstellungsmenü)",
         "FILENAME": "DATEINAME",
         "PROTOCOL": "PROTOKOLL",
         "INFORMATION": "INFORMATIONEN",
@@ -85,12 +85,23 @@
         "All downloads have been removed": "Alle Downloads wurden entfernt",
         "Force IPv4 ?": "IPv4 erzwingen?",
         "Uploaded": "Hochgeladen",
-        "Loading": "Laden",
+        "Loading": "laden",
         "Ratio": "Verhältnis",
         "All downloads have been cleaned": "Alle Downloads wurden bereinigt",
         "The download has been cleaned": "Der Download wurde gereinigt",
         "Complete Downloads": "Komplette Downloads",
-        "All Downloads": "Alle Downloads"
-    },
-    "pluralForm": "nplurals=2; plural=(n > 1);"
+        "All Downloads": "Alle Downloads",
+        "Error while checking application version on GitHub": "Fehler beim Versionscheck über GitHub",
+        "You are not allowed to check for application updates": "Du bist nicht berechtigt OCDownloader zu updaten",
+        "Update available !": "Ein Update liegt vor.",
+        "Download": "Download",
+        "Check for updates ?": "Nach Updates checken",
+        "Yes": "Ja",
+        "No": "Nein",
+        "Unable to find YouTube-DL binary": "Nicht möglich die YouTube-DL binarys zu finden",
+        "Available protocols": "verfügbare Protokolle",
+        "You are using %s ! This page is only available with the following engines :": "Du benutzt %s! Diese Seite ist nur mit den folgenden Engines nutzbar: ",
+        "Unable to find download status file %s": "Unmöglich den Downloadstatus von Datei %s festzustellen.",
+        "An error occurred while running the CURL download": "Ein Fehler im CURL Download wurde festgestellt"
+    }
 }

@@ -8,7 +8,7 @@
  * @copyright Xavier Beurois 2015
  */
  
-$(document).ready (function()
+$(document).ready (function ()
 {
 	$('#ball').Badger ('...');
 	$('#bcompletes').Badger ('...');
@@ -16,15 +16,6 @@ $(document).ready (function()
 	$('#bwaitings').Badger ('...');
 	$('#bstopped').Badger ('...');
 	$('#bremoved').Badger ('...');
-	
-	// Get completes downloads every 5 seconds
-    setInterval (function ()
-	{
-		if ($(OCDLR.Utils.QueueElt + '[data-rel="LOADER"]').length == 0)
-		{
-			OCDLR.Utils.UpdateQueue (true, 'removed');
-		}
-	}, 5000);
 	
 	OCDLR.Utils.UpdateQueue (true, 'removed');
 	

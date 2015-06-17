@@ -9,15 +9,15 @@
  * @copyright Xavier Beurois 2015
  */	
 
-use \OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Settings;
 
 \OCP\User::checkLoggedIn ();
 
 // Display template
-style ('ocdownloader', 'settings-personal');
-script ('ocdownloader', 'settings-personal');
+style ('ocdownloader', 'settings/personal');
+script ('ocdownloader', 'settings/personal');
 
-$Tmpl = new OCP\Template ('ocdownloader', 'settings-personal');
+$Tmpl = new OCP\Template ('ocdownloader', 'settings/personal');
 
 $Settings = new Settings ('personal');
 $Settings->SetUID (OC_User::getUser ());

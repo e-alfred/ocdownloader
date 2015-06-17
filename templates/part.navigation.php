@@ -28,19 +28,30 @@
             <a href="actives"><?php print ($l->t ('Active Downloads')); ?></a>
         </div>
     </li>
+    <?php if (strcmp ($_['WD'], 'ARIA2') == 0): ?>
     <li data-id="waiting"<?php print ($_['PAGE'] === 4 ? 'class="active"' : ''); ?>>
         <div class="badge" id="bwaitings">
             <a href="waitings"><?php print ($l->t ('Waiting Downloads')); ?></a>
         </div>
     </li>
+    <?php endif; if (strcmp ($_['WD'], 'ARIA2') == 0): ?>
     <li data-id="stopped"<?php print ($_['PAGE'] === 5 ? 'class="active"' : ''); ?>>
         <div class="badge" id="bstopped">
             <a href="stopped"><?php print ($l->t ('Stopped Downloads')); ?></a>
         </div>
     </li>
+    <?php endif; ?>
     <li data-id="removed"<?php print ($_['PAGE'] === 6 ? 'class="active"' : ''); ?>>
         <div class="badge" id="bremoved">
             <a href="removed"><?php print ($l->t ('Removed Downloads')); ?></a>
         </div>
+    </li>
+    <li class="nav-updater">
+        <h3>
+            <?php print ($l->t ('Update available !')); ?>
+            <div class="button">
+                <a><?php print ($l->t ('Download')); ?></a>
+            </div>
+        </h3>
     </li>
 </ul>

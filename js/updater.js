@@ -10,14 +10,5 @@
  
 $(document).ready (function ()
 {
-	$('#ball').Badger ('...');
-	$('#bcompletes').Badger ('...');
-	$('#bactives').Badger ('...');
-	$('#bwaitings').Badger ('...');
-	$('#bstopped').Badger ('...');
-	$('#bremoved').Badger ('...');
-	
-	OCDLR.Utils.UpdateQueue (true, 'stopped');
-	
-	OCDLR.Utils.GetCounters ();
+	OCDLR.Utils.CheckVersion ();
 });

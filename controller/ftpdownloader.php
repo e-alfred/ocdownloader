@@ -11,17 +11,18 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use \OCP\IRequest;
-use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\AppFramework\Controller;
-use \OCP\Config;
-use \OCP\IL10N;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\Config;
+use OCP\IL10N;
+use OCP\IRequest;
 
-use \OCA\ocDownloader\Controller\Lib\Aria2;
-use \OCA\ocDownloader\Controller\Lib\Tools;
-use \OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Aria2;
+use OCA\ocDownloader\Controller\Lib\CURL;
+use OCA\ocDownloader\Controller\Lib\Tools;
+use OCA\ocDownloader\Controller\Lib\Settings;
 
-class FtpDownloaderController extends Controller
+class FtpDownloader extends Controller
 {
       private $AbsoluteDownloadsFolder = null;
       private $DownloadsFolder = null;
@@ -30,6 +31,7 @@ class FtpDownloaderController extends Controller
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
+      private $WhichDownloader = 0;
       private $CurrentUID = null;
       private $L10N = null;
       
@@ -54,6 +56,9 @@ class FtpDownloaderController extends Controller
             $this->ProxyUser = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPasswd');
             $this->ProxyPasswd = $Settings->GetValue ();
+            $Settings->SetKey ('WhichDownloader');
+            $this->WhichDownloader = $Settings->GetValue ();
+            $this->WhichDownloader = is_null ($this->WhichDownloader) ? 0 : (strcmp ($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
             
             $Settings->SetTable ('personal');
             $Settings->SetUID ($this->CurrentUID);
@@ -70,8 +75,10 @@ class FtpDownloaderController extends Controller
        * @NoAdminRequired
        * @NoCSRFRequired
        */
-      public function add ()
+      public function Add ()
       {
+            \OCP\JSON::setContentTypeHeader ('application/json');
+            
             if (isset ($_POST['FILE']) && strlen ($_POST['FILE']) > 0 && Tools::CheckURL ($_POST['FILE']) && isset ($_POST['OPTIONS']))
             {
                   try
@@ -84,11 +91,14 @@ class FtpDownloaderController extends Controller
                               $Target = time () . '_' . $Target;
                         }
                         
-                        // Create the target file
-                        \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $Target);
+                        // Create the target file if the downloader is Aria2
+                        if ($this->WhichDownloader == 0)
+                        {
+                              \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $Target);
+                        }
                         
-                        // Download in the /tmp folder
-                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target);
+                        // Build OPTIONS array
+                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target, 'follow-torrent' => false);
                         if (isset ($_POST['OPTIONS']['FTPUser']) && strlen (trim ($_POST['OPTIONS']['FTPUser'])) > 0 && isset ($_POST['OPTIONS']['FTPPasswd']) && strlen (trim ($_POST['OPTIONS']['FTPPasswd'])) > 0)
                         {
                               $OPTIONS['ftp-user'] = $_POST['OPTIONS']['FTPUser'];
@@ -108,8 +118,7 @@ class FtpDownloaderController extends Controller
                               }
                         }
                         
-                        $Aria2 = new Aria2 ();
-                        $AddURI = $Aria2->addUri (Array ($_POST['FILE']), $OPTIONS);
+                        $AddURI = ($this->WhichDownloader == 0 ? Aria2::AddUri (Array ($_POST['FILE']), Array ('Params' => $OPTIONS)) : CURL::AddUri ($_POST['FILE'], $OPTIONS));
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
@@ -130,35 +139,43 @@ class FtpDownloaderController extends Controller
                               ));
                               
                               sleep (1);
-                              $Status = $Aria2->tellStatus ($AddURI['result']);
-                              $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
-                              die (json_encode (Array (
+                              $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($AddURI['result']) : CURL::TellStatus ($AddURI['result']));
+                              
+                              $Progress = 0;
+                              if ($Status['result']['totalLength'] > 0)
+                              {
+                                    $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
+                              }
+                              
+                              $ProgressString = Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress);
+                              
+                              return new JSONResponse (Array (
                                     'ERROR' => false,
                                     'MESSAGE' => (string)$this->L10N->t ('Download started'),
                                     'GID' => $AddURI['result'],
                                     'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
-                                    'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress),
-                                    'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
+                                    'PROGRESS' => is_null ($ProgressString) ? (string)$this->L10N->t ('N/A') : $ProgressString,
+                                    'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
                                     'FILENAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
                                     'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
                                     'ISTORRENT' => false
-                              )));
+                              ));
                         }
                         else
                         {
-                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?'))));
+                              return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ($this->WhichDownloader == 0 ? 'Returned GID is null ! Is Aria2c running as a daemon ?' : 'An error occurred while running the CURL download')));
                         }
                   }
                   catch (Exception $E)
                   {
-                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+                        return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
                   }
             }
             else
             {
-                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL you\'ve just provided'))));
+                  return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL you\'ve just provided')));
             }
       }
 }

@@ -8,10 +8,12 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-style ('ocdownloader', 'styles.min');
+style ('ocdownloader', 'styles');
 script ('ocdownloader', 'badger.min');
-script ('ocdownloader', 'ocdownloader.min');
+script ('ocdownloader', 'ocdownloader');
 script ('ocdownloader', 'removed');
+
+if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
 ?>
 <div id="app">
     <div id="app-navigation">
@@ -21,7 +23,7 @@ script ('ocdownloader', 'removed');
         <div id="app-content-wrapper">
             <div class="jumbotron">
                 <h1><?php print ($l->t ('Manage Your Downloads Anywhere!')); ?></h1>
-                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with')); ?> <a href="http://aria2.sourceforge.net/manual/en/html/aria2c.html" target="_blank">ARIA2</a>.</p>
+                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <strong>%s</strong>', $_['WD'])); ?></p>
             </div>
             <div id="controls">
                 <div class="actions">

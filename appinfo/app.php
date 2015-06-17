@@ -12,16 +12,16 @@
 namespace OCA\ocDownloader\AppInfo;
 
 $l = \OC::$server->getL10N ('ocdownloader');
-$g =  \OC::$server->getURLGenerator ();
+$g = \OC::$server->getURLGenerator ();
 
 \OCP\App::addNavigationEntry
 ([
     'id' => 'ocdownloader',
     'order' => 10,
-    'href' => $g->linkToRoute ('ocdownloader.index.add'),
+    'href' => $g->linkToRoute ('ocdownloader.Index.Add'),
     'icon' => $g->imagePath ('ocdownloader', 'ocdownloader.svg'),
     'name' => 'ocDownloader'
 ]);
 
-\OCP\App::registerAdmin ('ocdownloader', 'settings-admin');
-\OCP\App::registerPersonal ('ocdownloader', 'settings-personal');
+\OCP\App::registerAdmin ('ocdownloader', 'settings/admin');
+\OCP\App::registerPersonal ('ocdownloader', 'settings/personal');

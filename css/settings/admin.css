@@ -29,3 +29,12 @@ form#ocdownloader > p > span.info {
 	font-style: italic;
 	color: #003366;
 }
+form#ocdownloader > hr {
+	width: 800px;
+	color: #99CCFF;
+	background-color: #66CCFF;
+	float: left;
+}
+form#ocdownloader > p > span.details {
+	
+}

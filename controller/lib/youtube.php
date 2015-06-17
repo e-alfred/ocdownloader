@@ -44,27 +44,34 @@ class YouTube
 			$Proxy = ' --proxy ' . rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
 		}
 		
-		exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -x' : ' -f bestvideo') . ($this->ForceIPv4 ? ' -4' : '') . (is_null ($Proxy) ? '' : $Proxy), $Output, $Return);
+		$Output = shell_exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -f bestaudio -x' : ' -f best') . ($this->ForceIPv4 ? ' -4' : '') . (is_null ($Proxy) ? '' : $Proxy));
 		
-		if ($Return == 0)
+		if (!is_null ($Output))
 		{
-			$OutProcessed = Array ();
-			for ($I = 0; $I < count ($Output); $I++)
+			$Output = explode ("\n", $Output);
+			if (count ($Output) >= 2)
 			{
-				if (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=video/') !== false)
+				$OutProcessed = Array ();
+				for ($I = 0; $I < count ($Output); $I++)
 				{
-					$OutProcessed['VIDEO'] = $Output[$I];
+					if (strlen (trim ($Output[$I])) > 0)
+					{
+						if (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=video/') !== false)
+						{
+							$OutProcessed['VIDEO'] = $Output[$I];
+						}
+						elseif (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=audio/') !== false)
+						{
+							$OutProcessed['AUDIO'] = $Output[$I];
+						}
+						else
+						{
+							$OutProcessed['FULLNAME'] = $Output[$I];
+						}
+					}
 				}
-				elseif (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=audio/') !== false)
-				{
-					$OutProcessed['AUDIO'] = $Output[$I];
-				}
-				else
-				{
-					$OutProcessed['FULLNAME'] = $Output[$I];
-				}
+				return $OutProcessed;
 			}
-			return $OutProcessed;
 		}
 		return null;
 	}

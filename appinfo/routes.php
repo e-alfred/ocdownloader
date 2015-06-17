@@ -14,49 +14,52 @@ namespace OCA\ocDownloader\AppInfo;
 $Application = new Application ();
 $Application->registerRoutes ($this, Array (
     'routes' => [
-        // IndexController
-        ['name' => 'index#add', 'url' => '/', 'verb' => 'GET'],
-        ['name' => 'index#add', 'url' => '/add', 'verb' => 'GET'],
-        ['name' => 'index#all', 'url' => '/all', 'verb' => 'GET'],
-        ['name' => 'index#completes', 'url' => '/completes', 'verb' => 'GET'],
-        ['name' => 'index#actives', 'url' => '/actives', 'verb' => 'GET'],
-        ['name' => 'index#waitings', 'url' => '/waitings', 'verb' => 'GET'],
-        ['name' => 'index#stopped', 'url' => '/stopped', 'verb' => 'GET'],
-        ['name' => 'index#removed', 'url' => '/removed', 'verb' => 'GET'],
+        // Index
+        ['name' => 'Index#Add', 'url' => '/add', 'verb' => 'GET'],
+        ['name' => 'Index#All', 'url' => '/all', 'verb' => 'GET'],
+        ['name' => 'Index#Completes', 'url' => '/completes', 'verb' => 'GET'],
+        ['name' => 'Index#Actives', 'url' => '/actives', 'verb' => 'GET'],
+        ['name' => 'Index#Waitings', 'url' => '/waitings', 'verb' => 'GET'],
+        ['name' => 'Index#Stopped', 'url' => '/stopped', 'verb' => 'GET'],
+        ['name' => 'Index#Removed', 'url' => '/removed', 'verb' => 'GET'],
         
-        // HttpDownloaderController
-        ['name' => 'httpdownloader#add', 'url' => '/httpdownloader/add', 'verb' => 'POST'],
+        // HttpDownloader
+        ['name' => 'HttpDownloader#Add', 'url' => '/httpdownloader/add', 'verb' => 'POST'],
         
-        // FtpDownloaderController
-        ['name' => 'ftpdownloader#add', 'url' => '/ftpdownloader/add', 'verb' => 'POST'],
+        // FtpDownloader
+        ['name' => 'FtpDownloader#Add', 'url' => '/ftpdownloader/add', 'verb' => 'POST'],
         
-        // YTDownloaderController
-        ['name' => 'ytdownloader#add', 'url' => '/ytdownloader/add', 'verb' => 'POST'],
+        // YTDownloader
+        ['name' => 'YTDownloader#Add', 'url' => '/ytdownloader/add', 'verb' => 'POST'],
         
-        // BTDownloaderController
-        ['name' => 'btdownloader#add', 'url' => '/btdownloader/add', 'verb' => 'POST'],
-        ['name' => 'btdownloader#listtorrentfiles', 'url' => '/btdownloader/listtorrentfiles', 'verb' => 'POST'],
+        // BTDownloader
+        ['name' => 'BTDownloader#Add', 'url' => '/btdownloader/add', 'verb' => 'POST'],
+        ['name' => 'BTDownloader#ListTorrentFiles', 'url' => '/btdownloader/listtorrentfiles', 'verb' => 'POST'],
         
-        // QueueController
-        ['name' => 'queue#get', 'url' => '/queue/get', 'verb' => 'POST'],
-        ['name' => 'queue#count', 'url' => '/queue/count', 'verb' => 'POST'],
-        ['name' => 'queue#hide', 'url' => '/queue/hide', 'verb' => 'POST'],
-        ['name' => 'queue#hideall', 'url' => '/queue/hideall', 'verb' => 'POST'],
-        ['name' => 'queue#remove', 'url' => '/queue/remove', 'verb' => 'POST'],
-        ['name' => 'queue#completelyremove', 'url' => '/queue/completelyremove', 'verb' => 'POST'],
-        ['name' => 'queue#pause', 'url' => '/queue/pause', 'verb' => 'POST'],
-        ['name' => 'queue#unpause', 'url' => '/queue/unpause', 'verb' => 'POST'],
-        ['name' => 'queue#removeall', 'url' => '/queue/removeall', 'verb' => 'POST'],
-        ['name' => 'queue#completelyremoveall', 'url' => '/queue/completelyremoveall', 'verb' => 'POST'],
+        // Queue
+        ['name' => 'Queue#Get', 'url' => '/queue/get', 'verb' => 'POST'],
+        ['name' => 'Queue#Count', 'url' => '/queue/count', 'verb' => 'POST'],
+        ['name' => 'Queue#Hide', 'url' => '/queue/hide', 'verb' => 'POST'],
+        ['name' => 'Queue#HideAll', 'url' => '/queue/hideall', 'verb' => 'POST'],
+        ['name' => 'Queue#Remove', 'url' => '/queue/remove', 'verb' => 'POST'],
+        ['name' => 'Queue#CompletelyRemove', 'url' => '/queue/completelyremove', 'verb' => 'POST'],
+        ['name' => 'Queue#Pause', 'url' => '/queue/pause', 'verb' => 'POST'],
+        ['name' => 'Queue#UnPause', 'url' => '/queue/unpause', 'verb' => 'POST'],
+        ['name' => 'Queue#RemoveAll', 'url' => '/queue/removeall', 'verb' => 'POST'],
+        ['name' => 'Queue#CompletelyRemoveAll', 'url' => '/queue/completelyremoveall', 'verb' => 'POST'],
         
-        // AdminSettingsController
-        ['name' => 'adminsettings#save', 'url' => '/adminsettings/save', 'verb' => 'POST'],
+        // AdminSettings
+        ['name' => 'AdminSettings#Save', 'url' => '/adminsettings/save', 'verb' => 'POST'],
+        ['name' => 'AdminSettings#Get', 'url' => '/adminsettings/get', 'verb' => 'POST'],
         
-        // PersonalSettingsController
-        ['name' => 'personalsettings#save', 'url' => '/personalsettings/save', 'verb' => 'POST'],
-        ['name' => 'personalsettings#get', 'url' => '/personalsettings/get', 'verb' => 'POST']
+        // PersonalSettings
+        ['name' => 'PersonalSettings#Save', 'url' => '/personalsettings/save', 'verb' => 'POST'],
+        ['name' => 'PersonalSettings#Get', 'url' => '/personalsettings/get', 'verb' => 'GET'],
+        
+        // Updater
+        ['name' => 'Updater#Check', 'url' => '/updater/check', 'verb' => 'GET']
     ]
 ));
 
 $APIBasePath = '/apps/ocdownloader/api/';
-\OCP\API::register ('POST', $APIBasePath . 'download', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Download ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);
+\OCP\API::register ('POST', $APIBasePath . 'add', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Add ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);

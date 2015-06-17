@@ -1,0 +1,4 @@
+<Files ^(*.php|*.sh)>
+    order deny, allow
+    deny from all
+</Files>

@@ -11,110 +11,126 @@
 
 namespace OCA\ocDownloader\AppInfo;
 
-use \OCP\AppFramework\App;
-use \OCA\ocDownloader\Controller\IndexController;
-use \OCA\ocDownloader\Controller\HttpDownloaderController;
-use \OCA\ocDownloader\Controller\FtpDownloaderController;
-use \OCA\ocDownloader\Controller\YTDownloaderController;
-use \OCA\ocDownloader\Controller\BTDownloaderController;
-use \OCA\ocDownloader\Controller\QueueController;
+use OCP\AppFramework\App;
+use OCP\IContainer;
+
+use OCA\ocDownloader\Controller\Index;
+use OCA\ocDownloader\Controller\HttpDownloader;
+use OCA\ocDownloader\Controller\FtpDownloader;
+use OCA\ocDownloader\Controller\YTDownloader;
+use OCA\ocDownloader\Controller\BTDownloader;
+use OCA\ocDownloader\Controller\Queue;
+use OCA\ocDownloader\Controller\Updater;
+use OCA\ocDownloader\Controller\PersonalSettings;
+use OCA\ocDownloader\Controller\AdminSettings;
 
 class Application extends App
 {
-	public function __construct (array $URLParams = array ())
+	public function __construct (Array $URLParams = Array ())
 	{
 		parent::__construct ('ocdownloader', $URLParams);
 		$container = $this->getContainer ();
 		
-		$container->registerService ('CurrentUID', function ($c)
+		$container->registerService ('CurrentUID', function (IContainer $Container)
 		{
-			$User = $c->query ('ServerContainer')->getUserSession ()->getUser ();
+			$User = $Container->query ('ServerContainer')->getUserSession ()->getUser ();
 			return ($User) ? $User->getUID () : '';
 		});
 		
-		$container->registerService ('IndexController', function ($c)
+		$container->registerService ('IndexController', function (IContainer $Container)
 		{
-	      	return new IndexController
+	      	return new Index
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->query ('CurrentUID')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->query ('CurrentUID'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
-		$container->registerService ('HttpDownloaderController', function ($c)
+		$container->registerService ('HttpDownloaderController', function (IContainer $Container)
 		{
-	      	return new HttpDownloaderController
+	      	return new HttpDownloader
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->query ('CurrentUID'),
-				$c->getServer ()->getL10N ('ocdownloader')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->query ('CurrentUID'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
-		$container->registerService ('FtpDownloaderController', function ($c)
+		$container->registerService ('FtpDownloaderController', function (IContainer $Container)
 		{
-	      	return new FtpDownloaderController
+	      	return new FtpDownloader
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->query ('CurrentUID'),
-				$c->getServer ()->getL10N ('ocdownloader')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->query ('CurrentUID'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
-		$container->registerService ('YTDownloaderController', function ($c)
+		$container->registerService ('YTDownloaderController', function (IContainer $Container)
 		{
-	      	return new YTDownloaderController
+	      	return new YTDownloader
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->query ('CurrentUID'),
-				$c->getServer ()->getL10N ('ocdownloader')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->query ('CurrentUID'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
-		$container->registerService ('BTDownloaderController', function ($c)
+		$container->registerService ('BTDownloaderController', function (IContainer $Container)
 		{
-	      	return new BTDownloaderController
+	      	return new BTDownloader
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->query ('CurrentUID'),
-				$c->getServer ()->getL10N ('ocdownloader')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->query ('CurrentUID'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
-		$container->registerService ('QueueController', function ($c)
+		$container->registerService ('QueueController', function (IContainer $Container)
 		{
-	      	return new QueueController
+	      	return new Queue
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->query ('CurrentUID'),
-				$c->getServer ()->getL10N ('ocdownloader')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->query ('CurrentUID'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
-		$container->registerService ('AdminSettingsController', function ($c)
+		$container->registerService ('UpdaterController', function (IContainer $Container)
 		{
-	      	return new AdminSettingsController
+	      	return new Updater
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->getServer ()->getL10N ('ocdownloader')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
-		$container->registerService ('PersonalSettingsController', function ($c)
+		$container->registerService ('AdminSettingsController', function (IContainer $Container)
 		{
-	      	return new PersonalSettingsController
+	      	return new AdminSettings
 			(
-		        $c->query ('AppName'),
-		        $c->query ('Request'),
-				$c->query ('CurrentUID'),
-				$c->getServer ()->getL10N ('ocdownloader')
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->getServer ()->getL10N ('ocdownloader')
+	      	);
+	    });
+		
+		$container->registerService ('PersonalSettingsController', function (IContainer $Container)
+		{
+	      	return new PersonalSettings
+			(
+		        $Container->query ('AppName'),
+		        $Container->query ('Request'),
+				$Container->query ('CurrentUID'),
+				$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 	}

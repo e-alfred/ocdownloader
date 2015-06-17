@@ -8,10 +8,12 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-style ('ocdownloader', 'styles.min');
+style ('ocdownloader', 'styles');
 script ('ocdownloader', 'badger.min');
-script ('ocdownloader', 'ocdownloader.min');
-script ('ocdownloader', 'add.min');
+script ('ocdownloader', 'ocdownloader');
+script ('ocdownloader', 'add');
+
+if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
 ?>
 <div id="app">
     <div id="app-navigation">
@@ -21,7 +23,7 @@ script ('ocdownloader', 'add.min');
         <div id="app-content-wrapper">
             <div class="jumbotron">
                 <h1><?php print ($l->t ('Manage Your Downloads Anywhere!')); ?></h1>
-                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with')); ?> <a href="http://aria2.sourceforge.net/manual/en/html/aria2c.html" target="_blank">ARIA2</a>.</p>
+                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <strong>%s</strong>', $_['WD'])); ?></p>
             </div>
             <div id="controls">
                 <div class="actions">
@@ -31,7 +33,7 @@ script ('ocdownloader', 'add.min');
         					<li><p data-rel="OCDHTTP">HTTP</p></li>
         					<li><p data-rel="OCDFTP">FTP</p></li>
                             <li><p data-rel="OCDYT">YOUTUBE</p></li>
-                            <li><p data-rel="OCDBT">BITTORRENT</p></li>
+                            <?php if (strcmp ($_['WD'], 'ARIA2') == 0): ?><li><p data-rel="OCDBT">BITTORRENT</p></li><?php endif; ?>
         				</ul>
         			</div>
                     <div class="loadingtext loadinginline" style="display:none;"><?php print ($l->t ('Loading')); ?> ...</div>
@@ -100,7 +102,7 @@ script ('ocdownloader', 'add.min');
                 </h3>
                 <div class="actions">
                     <div class="button" id="TorrentsList">
-        				<a><?php print ($l->t ('Select a file.torrent')); ?> <?php print (strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>' . $l->t ('(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personnal Settings panel)') . '</i>'); ?><div class="icon-caret-dark svg"></div></a>
+        				<a><?php print ($l->t ('Select a file.torrent')); ?> <?php print (strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>' . $l->t ('(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personal Settings panel)') . '</i>'); ?><div class="icon-caret-dark svg"></div></a>
         				<ul>
                             <li><p class="loader"><span class="icon-loading-small"></span></p></li>
                         </ul>

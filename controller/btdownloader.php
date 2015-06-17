@@ -11,17 +11,17 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use \OCP\IRequest;
-use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\AppFramework\Controller;
-use \OCP\Config;
-use \OCP\IL10N;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\Config;
+use OCP\IL10N;
+use OCP\IRequest;
 
-use \OCA\ocDownloader\Controller\Lib\Aria2;
-use \OCA\ocDownloader\Controller\Lib\Tools;
-use \OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Aria2;
+use OCA\ocDownloader\Controller\Lib\Tools;
+use OCA\ocDownloader\Controller\Lib\Settings;
 
-class BTDownloaderController extends Controller
+class BTDownloader extends Controller
 {
       private $CurrentUID = null;
       private $DownloadsFolder = null;
@@ -80,11 +80,17 @@ class BTDownloaderController extends Controller
        */
       public function add ()
       {
+            \OCP\JSON::setContentTypeHeader ('application/json');
+            
             if (isset ($_POST['FILE']) && strlen (trim ($_POST['FILE'])) > 0 && (Tools::CheckURL ($_POST['FILE']) || Tools::CheckFilepath ($this->TorrentsFolder . '/' . $_POST['FILE'])) && isset ($_POST['OPTIONS']))
             {
                   try
                   {
-                        $Target = str_replace ('.torrent', '', Tools::CleanString ($_POST['FILE']));
+                        if (Tools::EndsWith ($_POST['FILE'], '.torrent'))
+                        {
+                              $Target = substr ($_POST['FILE'], 0, strrpos ($_POST['FILE'], '.torrent'));
+                        }
+                        $Target = Tools::CleanString ($_POST['FILE']);
                         
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::is_dir ($this->DownloadsFolder . '/' . $Target))
@@ -97,8 +103,7 @@ class BTDownloaderController extends Controller
                         
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder . $Target);
                         
-                        $Aria2 = new Aria2 ();
-                        $AddTorrent = $Aria2->addTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['FILE'])), Array (), $OPTIONS);
+                        $AddTorrent = Aria2::AddTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['FILE'])), Array (), $OPTIONS);
                         
                         if (isset ($AddTorrent['result']) && !is_null ($AddTorrent['result']))
                         {
@@ -124,35 +129,35 @@ class BTDownloaderController extends Controller
                               }
                               
                               sleep (1);
-                              $Status = $Aria2->tellStatus ($AddTorrent['result']);
+                              $Status = Aria2::TellStatus ($AddTorrent['result']);
                               $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
-                              die (json_encode (Array (
+                              return new JSONResponse (Array (
                                     'ERROR' => false,
                                     'MESSAGE' => (string)$this->L10N->t ('Download started'),
                                     'GID' => $AddTorrent['result'],
                                     'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
                                     'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress) . ' - ' . $this->L10N->t ('Seeders') . ': ' . $Status['result']['numSeeders'],
-                                    'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
+                                    'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
                                     'FILENAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
                                     'PROTO' => 'BitTorrent',
                                     'ISTORRENT' => true
-                              )));
+                              ));
                         }
                         else
                         {
-                              die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?'))));
+                              return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?')));
                         }
                   }
                   catch (Exception $E)
                   {
-                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+                        return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
                   }
             }
             else
             {
-                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL or filepath you\'ve just provided'))));
+                  return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL or filepath you\'ve just provided')));
             }
       }
       
@@ -160,8 +165,10 @@ class BTDownloaderController extends Controller
        * @NoAdminRequired
        * @NoCSRFRequired
        */
-      public function listtorrentfiles ()
+      public function ListTorrentFiles ()
       {
+            \OCP\JSON::setContentTypeHeader ('application/json');
+            
             try
             {
                   if (!\OC\Files\Filesystem::is_dir ($this->TorrentsFolder))
@@ -174,11 +181,11 @@ class BTDownloaderController extends Controller
                   $Files = \OCA\Files\Helper::getFiles ($this->TorrentsFolder, 'name', 'desc');
                   $Files = \OCA\Files\Helper::formatFileInfos ($Files);
                   
-                  die (json_encode (Array ('ERROR' => false, 'FILES' => $Files)));
+                  return new JSONResponse (Array ('ERROR' => false, 'FILES' => $Files));
             }
             catch (Exception $E)
             {
-                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+                  return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
 }

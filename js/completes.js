@@ -17,15 +17,6 @@ $(document).ready (function ()
 	$('#bstopped').Badger ('...');
 	$('#bremoved').Badger ('...');
 	
-	// Get completes downloads every 5 seconds
-    setInterval (function ()
-	{
-		if ($(OCDLR.Utils.QueueElt + '[data-rel="LOADER"]').length == 0)
-		{
-			OCDLR.Utils.UpdateQueue (true, 'completes');
-		}
-	}, 5000);
-	
 	OCDLR.Utils.UpdateQueue (true, 'completes');
 	
 	OCDLR.Utils.GetCounters ();

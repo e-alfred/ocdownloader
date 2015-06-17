@@ -7,6 +7,9 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
+#app-navigation {
+  padding-bottom: 0;
+}
 #app-navigation li[data-id="all"] {
   border-bottom: 1px solid #ddd;
 }
@@ -54,6 +57,23 @@
 #app-navigation .badger-number {
 	font-size: 12px;
 }
+#app-navigation .nav-updater {
+  bottom: 0;
+  position: absolute !important;
+  display: none;
+}
+#app-navigation .nav-updater h3 {
+  background-color: #66ff66;
+  line-height: 50px;
+  padding: 0 12px 10px;
+  color: #009900;
+  font-size: 20px;
+}
+#app-navigation .nav-updater h3 .button {
+  height: 40px;
+  line-height: 30px;
+  text-align: center;
+}
 #app-content-wrapper .table {
   width: 100%;
   margin-bottom: 20px;
@@ -78,6 +98,9 @@
   font-size: inherited;
   font-weight: 200;
   font-style: italic;
+}
+#app-content-wrapper .jumbotron p strong {
+  font-weight: bold;
 }
 #app-content-wrapper .jumbotron p a {
   color: #428bca;

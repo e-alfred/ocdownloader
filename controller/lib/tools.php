@@ -11,6 +11,8 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
+use OCA\ocDownloader\Controller\Lib\Aria2;
+
 class Tools
 {
 	public static function CheckURL ($URL)
@@ -39,14 +41,15 @@ class Tools
 		$CompletedStr = self::FormatSizeUnits ($Completed);
 		$TotalStr = self::FormatSizeUnits ($Total);
 		
-		if ($Progress < 1)
+		if ($Progress < 1 && $Progress > 0)
 		{
 			return $CompletedStr . ' / ' . $TotalStr . ' (' . round ((($Completed / $Total) * 100), 2) . '%)';
 		}
-		else
+		elseif ($Progress >= 1)
 		{
 			return $TotalStr . ' (' . round ((($Completed / $Total) * 100), 2) . '%)';
 		}
+		return null;
 	}
 	
 	public static function FormatSizeUnits ($Bytes)
@@ -155,6 +158,85 @@ class Tools
 		$Request = $Query->execute (Array (5, 0, 1, 2, 3, 4));
 		
 		return $Request->fetchRow ();
+	}
+	
+	public static function StartsWith ($Haystack, $Needle)
+	{
+	    return $Needle === "" || strrpos ($Haystack, $Needle, -strlen ($Haystack)) !== FALSE;
+	}
+	
+	public static function EndsWith ($Haystack, $Needle)
+	{
+	    return $Needle === "" || (($Temp = strlen ($Haystack) - strlen ($Needle)) >= 0 && strpos ($Haystack, $Needle, $Temp) !== FALSE);
+	}
+	
+	public static function GetLastVersionNumber ()
+	{
+		$CH = curl_init ('https://raw.githubusercontent.com/DjazzLab/ocdownloader/master/appinfo/version');
+		
+		curl_setopt_array ($CH, Array (
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_TIMEOUT => 10,
+	    	CURLOPT_CONNECTTIMEOUT => 10,
+	    	CURLOPT_RETURNTRANSFER => true,
+	    	CURLOPT_FOLLOWLOCATION => true,
+	    	CURLOPT_MAXREDIRS => 10
+		));
+		
+		$Data = curl_exec ($CH);
+		curl_close ($CH);
+		
+		return $Data;
+	}
+	
+	public static function CanCheckForUpdate ()
+	{
+		// Is the user in the admin group ?
+        if (\OC_User::isAdminUser (\OC_User::getUser ()))
+        {
+			// Is the ocdownloader option to automatically check is enable ?
+			$Settings = new Settings ();
+			$Settings->SetKey ('CheckForUpdates');
+			$CheckForUpdates = $Settings->GetValue ();
+			if (strcmp ($CheckForUpdates, 'Y') == 0 || is_null ($CheckForUpdates))
+			{
+				return true;
+			}
+        }
+		return false;
+	}
+	
+	public static function ResetAria2 ($DbType)
+	{
+		$SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`';
+		if ($DbType == 1)
+		{
+			$SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue';
+		}
+		$Query = \OCP\DB::prepare ($SQL);
+		$Request = $Query->execute ();
+		
+		while ($Row = $Request->fetchRow ())
+		{
+			$Status = Aria2::TellStatus ($GID);
+			
+			if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
+			{
+				Aria2::Remove ($GID);
+			}
+		}
+		
+		$Purge = Aria2::PurgeDownloadResult ();
+		if (isset ($Purge['result']) && strcmp ($Purge['result'], 'OK') == 0)
+		{
+			$SQL = 'TRUNCATE TABLE `*PREFIX*ocdownloader_queue`';
+			if ($DbType == 1)
+			{
+				$SQL = 'TRUNCATE TABLE *PREFIX*ocdownloader_queue';
+			}
+			$Query = \OCP\DB::prepare ($SQL);
+			$Request = $Query->execute ();
+		}
 	}
 }
 ?>

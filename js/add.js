@@ -17,15 +17,6 @@ $(document).ready (function ()
 	$('#bstopped').Badger ('...');
 	$('#bremoved').Badger ('...');
 	
-	// Get current downloader queue every 5 seconds
-    setInterval (function ()
-	{
-		if ($(OCDLR.Utils.QueueElt + '[data-rel="LOADER"]').length == 0)
-		{
-			OCDLR.Utils.UpdateQueue (false, 'add');
-		}
-	}, 5000);
-	
 	OCDLR.Utils.UpdateQueue (true, 'add');
 	
 	// Display or hide the "New Download" menu

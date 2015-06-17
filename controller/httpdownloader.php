@@ -11,27 +11,27 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use \OCP\IRequest;
-use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\AppFramework\Controller;
-use \OCP\Config;
-use \OCP\IL10N;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\Config;
+use OCP\IL10N;
+use OCP\IRequest;
 
-use \OCA\ocDownloader\Controller\Lib\YouTube;
-use \OCA\ocDownloader\Controller\Lib\Tools;
-use \OCA\ocDownloader\Controller\Lib\Aria2;
-use \OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Aria2;
+use OCA\ocDownloader\Controller\Lib\CURL;
+use OCA\ocDownloader\Controller\Lib\Tools;
+use OCA\ocDownloader\Controller\Lib\Settings;
 
-class YTDownloaderController extends Controller
+class HttpDownloader extends Controller
 {
       private $AbsoluteDownloadsFolder = null;
       private $DownloadsFolder = null;
       private $DbType = 0;
-      private $YTDLBinary = null;
       private $ProxyAddress = null;
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
+      private $WhichDownloader = 0;
       private $CurrentUID = null;
       private $L10N = null;
       
@@ -47,15 +47,6 @@ class YTDownloaderController extends Controller
             $this->CurrentUID = $CurrentUID;
             
             $Settings = new Settings ();
-            $Settings->SetKey ('YTDLBinary');
-            $YTDLBinary = $Settings->GetValue ();
-            
-            $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
-            if (!is_null ($YTDLBinary))
-            {
-                  $this->YTDLBinary = $YTDLBinary;
-            }
-            
             $Settings->SetKey ('ProxyAddress');
             $this->ProxyAddress = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPort');
@@ -64,6 +55,9 @@ class YTDownloaderController extends Controller
             $this->ProxyUser = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPasswd');
             $this->ProxyPasswd = $Settings->GetValue ();
+            $Settings->SetKey ('WhichDownloader');
+            $this->WhichDownloader = $Settings->GetValue ();
+            $this->WhichDownloader = is_null ($this->WhichDownloader) ? 0 : (strcmp ($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
             
             $Settings->SetTable ('personal');
             $Settings->SetUID ($this->CurrentUID);
@@ -80,59 +74,35 @@ class YTDownloaderController extends Controller
        * @NoAdminRequired
        * @NoCSRFRequired
        */
-      public function add ()
+      public function Add ()
       {
+            \OCP\JSON::setContentTypeHeader ('application/json');
+            
             if (isset ($_POST['FILE']) && strlen ($_POST['FILE']) > 0 && Tools::CheckURL ($_POST['FILE']) && isset ($_POST['OPTIONS']))
             {
                   try
                   {
-                        $YouTube = new YouTube ($this->YTDLBinary, $_POST['FILE']);
-                        
-                        if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
-                        {
-                              $YouTube->SetProxy ($this->ProxyAddress, $this->ProxyPort);
-                        }
-                        
-                        if (isset ($_POST['OPTIONS']['YTForceIPv4']) && strcmp ($_POST['OPTIONS']['YTForceIPv4'], 'false') == 0)
-                        {
-                              $YouTube->SetForceIPv4 (false);
-                        }
-                        
-                        // Extract Audio YES
-                        if (isset ($_POST['OPTIONS']['YTExtractAudio']) && strcmp ($_POST['OPTIONS']['YTExtractAudio'], 'true') == 0)
-                        {
-                              $VideoData = $YouTube->GetVideoData (true);
-                              if (!isset ($VideoData['AUDIO']) || !isset ($VideoData['FULLNAME']))
-                              {
-                                    die (json_encode (Array (
-                                          'ERROR' => true, 
-                                          'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube audio URL')
-                                    )));
-                              }
-                              $DL = Array ('URL' => $VideoData['AUDIO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => (string)$this->L10N->t ('Audio'));
-                        }
-                        else // No audio extract
-                        {
-                              $VideoData = $YouTube->GetVideoData ();
-                              if (!isset ($VideoData['VIDEO']) || !isset ($VideoData['FULLNAME']))
-                              {
-                                    die (json_encode (Array (
-                                          'ERROR' => true, 
-                                          'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube video URL')
-                                    )));
-                              }
-                              $DL = Array ('URL' => $VideoData['VIDEO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => (string)$this->L10N->t ('Video'));
-                        }
+                        $Target = Tools::CleanString (substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1));
                         
                         // If target file exists, create a new one
-                        if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $DL['FILENAME']))
+                        if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $Target))
                         {
-                              $DL['FILENAME'] = time () . '_' . $DL['FILENAME'];
+                              $Target = time () . '_' . $Target;
                         }
-                        // Create the target file
-                        \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $DL['FILENAME']);
                         
-                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);
+                        // Create the target file if the downloader is ARIA2
+                        if ($this->WhichDownloader == 0)
+                        {
+                              \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $Target);
+                        }
+                        
+                        // Download in the user root folder
+                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target, 'follow-torrent' => false);
+                        if (isset ($_POST['OPTIONS']['HTTPUser']) && strlen (trim ($_POST['OPTIONS']['HTTPUser'])) > 0 && isset ($_POST['OPTIONS']['HTTPPasswd']) && strlen (trim ($_POST['OPTIONS']['HTTPPasswd'])) > 0)
+                        {
+                              $OPTIONS['http-user'] = $_POST['OPTIONS']['HTTPUser'];
+                              $OPTIONS['http-passwd'] = $_POST['OPTIONS']['HTTPPasswd'];
+                        }
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
@@ -143,8 +113,7 @@ class YTDownloaderController extends Controller
                               }
                         }
                         
-                        $Aria2 = new Aria2 ();
-                        $AddURI = $Aria2->addUri (Array ($DL['URL']), $OPTIONS);
+                        $AddURI = ($this->WhichDownloader == 0 ? Aria2::AddUri (Array ($_POST['FILE']), Array ('Params' => $OPTIONS)) : CURL::AddUri ($_POST['FILE'], $OPTIONS));
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
@@ -158,45 +127,50 @@ class YTDownloaderController extends Controller
                               $Result = $Query->execute (Array (
                                     $this->CurrentUID,
                                     $AddURI['result'],
-                                    $DL['FILENAME'],
-                                    'YT ' . $DL['TYPE'],
+                                    $Target,
+                                    strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
                                     1,
                                     time()
                               ));
                               
                               sleep (1);
-                              $Status = $Aria2->tellStatus ($AddURI['result']);
-                              $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
-                              die (json_encode (Array (
+                              $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($AddURI['result']) : CURL::TellStatus ($AddURI['result']));
+                              
+                              $Progress = 0;
+                              if ($Status['result']['totalLength'] > 0)
+                              {
+                                    $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
+                              }
+                              
+                              $ProgressString = Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress);
+                              
+                              return new JSONResponse (Array (
                                     'ERROR' => false, 
-                                    'MESSAGE' => (string)$this->L10N->t ('Download started'), 
+                                    'MESSAGE' => (string)$this->L10N->t ('Download started'),
                                     'GID' => $AddURI['result'],
                                     'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
-                                    'PROGRESS' => Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress),
+                                    'PROGRESS' => is_null ($ProgressString) ? (string)$this->L10N->t ('N/A') : $ProgressString,
                                     'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
-                                    'FILENAME' => (strlen ($DL['FILENAME']) > 40 ? substr ($DL['FILENAME'], 0, 40) . '...' : $DL['FILENAME']),
-                                    'PROTO' => 'YT ' . $DL['TYPE'],
+                                    'FILENAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
+                                    'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
                                     'ISTORRENT' => false
-                              )));
+                              ));
                         }
                         else
                         {
-                              die (json_encode (Array (
-                                    'ERROR' => true, 
-                                    'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?')
-                              )));
+                              return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ($this->WhichDownloader == 0 ? 'Returned GID is null ! Is Aria2c running as a daemon ?' : 'An error occurred while running the CURL download')));
                         }
                   }
                   catch (Exception $E)
                   {
-                        die (json_encode (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ())));
+                        return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
                   }
             }
             else
             {
-                  die (json_encode (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL you\'ve just provided'))));
+                  return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Please check the URL you\'ve just provided')));
             }
       }
 }

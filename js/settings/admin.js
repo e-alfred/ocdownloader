@@ -10,23 +10,21 @@
 
 $(document).ready (function ()
 {
-	$('form#ocdownloader > p > input[type="text"].ToUse, form#ocdownloader > p > input[type="password"].ToUse').bind ('change', function ()
+	$('form#ocdownloader > p > input.ToUse, form#ocdownloader > p > select.ToUse').bind ('change', function ()
 	{
 		$('#OCDSLoader').show ();
 		$('#OCDSMsg').hide ();
 		$('#OCDSMsg').removeClass ('error');
 		$('#OCDSMsg').removeClass ('success');
 		
+		var Field = $(this);
+		
 		$.ajax({
 	        url: OC.generateUrl ('/apps/ocdownloader/adminsettings/save'),
 	        method: 'POST',
 			dataType: 'json',
 			data: {
-				'YTDLBinary': $('#OCDYTDLBinary').val (),
-				'ProxyAddress': $('#OCDProxyAddress').val (),
-				'ProxyPort': $('#OCDProxyPort').val (),
-				'ProxyUser': $('#OCDProxyUser').val (),
-				'ProxyPasswd': $('#OCDProxyPasswd').val ()
+				[Field.attr ('id').replace ('OCD', '')]: Field.val ()
 			},
 	        async: true,
 	        cache: false,
@@ -46,12 +44,11 @@ $(document).ready (function ()
 				}
 			
 				$('#OCDSMsg').show ();
-				$('#OCDYTDLBinary').val (Data.SETTINGS.OCDS_YTDLBinary);
-				$('#OCDProxyAddress').val (Data.SETTINGS.OCDS_ProxyAddress);
-				$('#OCDProxyPort').val (Data.SETTINGS.OCDS_ProxyPort);
-				$('#OCDProxyUser').val (Data.SETTINGS.OCDS_ProxyUser);
-				$('#OCDProxyPasswd').val (Data.SETTINGS.OCDS_ProxyPasswd);
+				
+				$('form#ocdownloader > p > span.details > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
 			}
 	    });
 	});
+	
+	$('form#ocdownloader > p > span.details > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
 });
