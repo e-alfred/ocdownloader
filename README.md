@@ -13,7 +13,8 @@ Everything you need to install ARIA2 and to run aria2c as a daemon !
 
 ## Other articles
 Download YouTube video : [OCDownloader:Install The YouTube-DL Provider](https://wiki.sgc-univ.net/index.php/OCDownloader:Install_The_YouTube-DL_Provider)
-Note : You have to install Python on your server. This a requierement for youtube-dl.
+*Note : You have to install Python on your server. This a requierement for youtube-dl.*
+ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_%28Requirements%29)
 
 ## Translators
 - Polish : Andrzej Kaczmarczyk
