@@ -18,9 +18,10 @@ ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)
 
 ## Translators
 - Polish : Andrzej Kaczmarczyk
-- Spanish : Julián Sackmann, Erik Fargas
+- Spanish / Catalan : Julián Sackmann, Erik Fargas
 - German : sinus23, Moritz
 - Russian : AlucoST, novikoz
+- Hungarian : Károly Polacsek
 
 ## Author
 Xavier Beurois
