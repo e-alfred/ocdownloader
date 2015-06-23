@@ -45,7 +45,7 @@ class Index extends Controller
             $this->Settings = new Settings ();
             $this->Settings->SetKey ('WhichDownloader');
             $this->WhichDownloader = $this->Settings->GetValue ();
-            $this->WhichDownloader = is_null ($this->WhichDownloader) ? 'ARAI2' : $this->WhichDownloader;
+            $this->WhichDownloader = is_null ($this->WhichDownloader) ? 'ARIA2' : $this->WhichDownloader;
       }
 
       /**
@@ -114,7 +114,7 @@ class Index extends Controller
       {
             if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
             {
-                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARAI2';
+                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
             }
             return new TemplateResponse('ocdownloader', 'waitings', [
                   'PAGE' => 4,
@@ -131,7 +131,7 @@ class Index extends Controller
       {
             if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
             {
-                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARAI2';
+                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
             }
             return new TemplateResponse('ocdownloader', 'stopped', [
                   'PAGE' => 5,
@@ -148,7 +148,7 @@ class Index extends Controller
       {
             if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
             {
-                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARAI2';
+                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
             }
             return new TemplateResponse('ocdownloader', 'removed', [
                   'PAGE' => 6,
