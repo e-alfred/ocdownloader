@@ -8,9 +8,9 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-style ('ocdownloader', 'styles');
+style ('ocdownloader', 'styles.min');
 script ('ocdownloader', 'badger.min');
-script ('ocdownloader', 'ocdownloader');
+script ('ocdownloader', 'ocdownloader.min');
 script ('ocdownloader', 'all');
 
 if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');

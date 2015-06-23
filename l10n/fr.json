@@ -103,6 +103,7 @@
 		"WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2":"ATTENTION !! Passer de ARIA2 à un autre téléchargeur supprimera tous les téléchargements en cours dans ARIA2",
 		"You are using %s ! This page is only available with the following engines :":"Vous utilisez %s ! Cette page est uniquement disponible avec les téléchargeurs suivants :",
 		"Unable to find download status file %s":"Impossible de trouver le fichier de statut du téléchargement %s",
-		"An error occurred while running the CURL download":"Une erreur est survenue lors du lancement du téléchargement avec CURL"
+		"An error occurred while running the CURL download":"Une erreur est survenue lors du lancement du téléchargement avec CURL",
+		"Only use proxy settings with YouTube-DL ?":"Utiliser uniquement les paramètres du proxy avec YouTube-DL ?"
 	}
 }

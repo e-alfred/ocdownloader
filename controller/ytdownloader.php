@@ -33,6 +33,7 @@ class YTDownloader extends Controller
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
+      private $ProxyOnlyWithYTDL = null;
       private $WhichDownloader = 0;
       private $CurrentUID = null;
       private $L10N = null;
@@ -141,6 +142,13 @@ class YTDownloader extends Controller
                         if ($this->WhichDownloader == 0)
                         {
                               \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $DL['FILENAME']);
+                        }
+                        else
+                        {
+                              if (!\OC\Files\Filesystem::is_dir ($this->DownloadsFolder))
+                              {
+                                    \OC\Files\Filesystem::mkdir ($this->DownloadsFolder);
+                              }
                         }
                         
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);

@@ -24,7 +24,8 @@ $(document).ready (function ()
 	        method: 'POST',
 			dataType: 'json',
 			data: {
-				[Field.attr ('id').replace ('OCD', '')]: Field.val ()
+				'KEY': Field.attr ('id').replace ('OCD', ''),
+				'VAL': Field.val ()
 			},
 	        async: true,
 	        cache: false,

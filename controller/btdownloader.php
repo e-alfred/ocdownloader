@@ -33,6 +33,7 @@ class BTDownloader extends Controller
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
+      private $ProxyOnlyWithYTDL = null;
       private $Settings = null;
       private $L10N = null;
 	  
@@ -57,6 +58,9 @@ class BTDownloader extends Controller
             $this->ProxyUser = $this->Settings->GetValue ();
             $this->Settings->SetKey ('ProxyPasswd');
             $this->ProxyPasswd = $this->Settings->GetValue ();
+            $this->Settings->SetKey ('ProxyOnlyWithYTDL');
+            $this->ProxyOnlyWithYTDL = $Settings->GetValue ();
+            $this->ProxyOnlyWithYTDL = is_null ($this->ProxyOnlyWithYTDL) ? false : (strcmp ($this->ProxyOnlyWithYTDL, 'Y') == 0);
             
             $this->Settings->SetTable ('personal');
             $this->Settings->SetUID ($this->CurrentUID);
@@ -102,6 +106,15 @@ class BTDownloader extends Controller
                         \OC\Files\Filesystem::mkdir ($this->DownloadsFolder . '/' . $Target);
                         
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder . $Target);
+                        if (!$this->ProxyOnlyWithYTDL && !is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
+                        {
+                              $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
+                              if (!is_null ($this->ProxyUser) && !is_null ($this->ProxyPasswd))
+                              {
+                                    $OPTIONS['all-proxy-user'] = $this->ProxyUser;
+                                    $OPTIONS['all-proxy-passwd'] = $this->ProxyPasswd;
+                              }
+                        }
                         
                         $AddTorrent = Aria2::AddTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['FILE'])), Array (), $OPTIONS);
                         

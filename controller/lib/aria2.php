@@ -12,15 +12,13 @@ namespace OCA\ocDownloader\Controller\Lib;
 
 class Aria2
 {
-    private static $Server = 'http://127.0.0.1:6800/jsonrpc';
+    private static $Server = null;
     private static $CurlHandler;
     
     public static function __callStatic ($Name, $Args)
     {
-        if (isset ($Args['Server']) && !is_null ($Args['Server']))
-        {
-            self::$Server = $Args['Server'];
-        }
+        self::$Server = 'http://127.0.0.1:6800/jsonrpc';
+        $Args = self::RebuildArgs ($Args);
         
         self::Load ();
         
@@ -28,7 +26,7 @@ class Aria2
             'jsonrpc'   => '2.0',
             'id'        => 'ocdownloader',
             'method'    => 'aria2.' . lcfirst ($Name),
-            'params'    =>  $Args['Params']
+            'params'    =>  $Args
         );
         
         return json_decode (self::Request ($Data), 1);
@@ -53,6 +51,23 @@ class Aria2
         curl_close (self::$CurlHandler);
         
         return $Data;
+    }
+    
+    private static function RebuildArgs ($Args)
+    {
+        if (isset ($Args[1]['Server']) && !is_null ($Args[1]['Server']))
+        {
+            self::$Server = $Args[1]['Server'];
+        }
+        
+        $RebuildArgs = Array ($Args[0]);
+        
+        if (isset ($Args[1]['Params']))
+        {
+            $RebuildArgs[1] = $Args[1]['Params'];
+        }
+        
+        return $RebuildArgs;
     }
 }
 ?>

@@ -24,7 +24,7 @@ class AdminSettings extends Controller
 {
       private $DbType = 0;
       private $L10N;
-      private $OCDSettingKeys = Array ('YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'CheckForUpdates', 'WhichDownloader');
+      private $OCDSettingKeys = Array ('YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'CheckForUpdates', 'WhichDownloader', 'ProxyOnlyWithYTDL');
       private $Settings = null;
       
       public function __construct ($AppName, IRequest $Request, IL10N $L10N)
@@ -52,8 +52,11 @@ class AdminSettings extends Controller
             $Error = false;
             $Message = null;
             
-            foreach ($_POST as $PostKey => $PostValue)
+            if (isset ($_POST['KEY']) && strlen (trim ($_POST['KEY'])) > 0 && isset ($_POST['VAL']) && strlen (trim ($_POST['VAL'])) >= 0)
             {
+                  $PostKey = $_POST['KEY'];
+                  $PostValue = $_POST['VAL'];
+                  
                   if (in_array ($PostKey, $this->OCDSettingKeys))
                   {
                         $this->Settings->SetKey ($PostKey);
@@ -108,6 +111,13 @@ class AdminSettings extends Controller
                               elseif (strcmp ($PostValue, 'ARIA2') != 0)
                               {
                                     Tools::ResetAria2 ($this->DbType);
+                              }
+                        }
+                        elseif (strcmp ($PostKey, 'ProxyOnlyWithYTDL') == 0)
+                        {
+                              if (!in_array ($PostValue, Array ('Y', 'N')))
+                              {
+                                    $PostValue = 'N';
                               }
                         }
                         else

@@ -31,6 +31,7 @@ class FtpDownloader extends Controller
       private $ProxyPort = 0;
       private $ProxyUser = null;
       private $ProxyPasswd = null;
+      private $ProxyOnlyWithYTDL = null;
       private $WhichDownloader = 0;
       private $CurrentUID = null;
       private $L10N = null;
@@ -56,6 +57,9 @@ class FtpDownloader extends Controller
             $this->ProxyUser = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPasswd');
             $this->ProxyPasswd = $Settings->GetValue ();
+            $Settings->SetKey ('ProxyOnlyWithYTDL');
+            $this->ProxyOnlyWithYTDL = $Settings->GetValue ();
+            $this->ProxyOnlyWithYTDL = is_null ($this->ProxyOnlyWithYTDL) ? false : (strcmp ($this->ProxyOnlyWithYTDL, 'Y') == 0);
             $Settings->SetKey ('WhichDownloader');
             $this->WhichDownloader = $Settings->GetValue ();
             $this->WhichDownloader = is_null ($this->WhichDownloader) ? 0 : (strcmp ($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
@@ -96,6 +100,13 @@ class FtpDownloader extends Controller
                         {
                               \OC\Files\Filesystem::touch ($this->DownloadsFolder . '/' . $Target);
                         }
+                        else
+                        {
+                              if (!\OC\Files\Filesystem::is_dir ($this->DownloadsFolder))
+                              {
+                                    \OC\Files\Filesystem::mkdir ($this->DownloadsFolder);
+                              }
+                        }
                         
                         // Build OPTIONS array
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target, 'follow-torrent' => false);
@@ -108,7 +119,7 @@ class FtpDownloader extends Controller
                         {
                               $OPTIONS['ftp-pasv'] = strcmp ($_POST['OPTIONS']['FTPPasv'], "true") == 0 ? true : false;
                         }
-                        if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
+                        if (!$this->ProxyOnlyWithYTDL && !is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
                               if (!is_null ($this->ProxyUser) && !is_null ($this->ProxyPasswd))

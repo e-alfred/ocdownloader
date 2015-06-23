@@ -101,7 +101,7 @@
         "Unable to find YouTube-DL binary": "Невозможно найти YouTube-DL binary",
         "Available protocols": "Доступные протоколы",
         "You are using %s ! This page is only available with the following engines :": "Вы используете %s ! Эта страница доступна только со следующими движками:",
-        "Unable to find download status file %s": "Unable to find download status file %s",
+        "Unable to find download status file %s": "Невозможно найти ста",
         "An error occurred while running the CURL download": "Произошла ошибка при запуске загрузки с CURL"
     }
 }

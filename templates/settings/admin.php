@@ -38,6 +38,13 @@
 		<label for="OCDProxyPasswd"><?php print ($l->t ('Proxy Password')); ?></label>
 		<input type="password" class="OCDProxyPasswd ToUse" id="OCDProxyPasswd" placeholder="<?php print ($l->t ('Password')); ?>" />
 	</p>
+	<p>
+		<label for="OCDProxyOnlyWithYTDL"><?php print ($l->t ('Only use proxy settings with YouTube-DL ?')); ?></label>
+		<select id="OCDProxyOnlyWithYTDL" class="ToUse">
+			<option value="N"><?php print ($l->t ('No')); ?></option>
+			<option value="Y"<?php print((isset ($_['OCDS_ProxyOnlyWithYTDL']) && strcmp ($_['OCDS_ProxyOnlyWithYTDL'], 'Y') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('Yes')); ?></option>
+		</select>
+	</p>
 	<hr />
 	<div style="clear:both;"></div>
 	<p>
