@@ -59,7 +59,7 @@ class BTDownloader extends Controller
             $this->Settings->SetKey ('ProxyPasswd');
             $this->ProxyPasswd = $this->Settings->GetValue ();
             $this->Settings->SetKey ('ProxyOnlyWithYTDL');
-            $this->ProxyOnlyWithYTDL = $Settings->GetValue ();
+            $this->ProxyOnlyWithYTDL = $this->Settings->GetValue ();
             $this->ProxyOnlyWithYTDL = is_null ($this->ProxyOnlyWithYTDL) ? false : (strcmp ($this->ProxyOnlyWithYTDL, 'Y') == 0);
             
             $this->Settings->SetTable ('personal');
