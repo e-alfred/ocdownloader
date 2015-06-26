@@ -514,9 +514,9 @@ class Queue extends Controller
                                           $this->CurrentUID,
                                           $GID
                                     ));
+                                    
+                                    $GIDS[] = $GID;
                               }
-                              
-                              $GIDS[] = $GID;
                         }
                         
                         return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('All downloads have been removed'), 'GIDS' => $GIDS));
