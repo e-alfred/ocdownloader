@@ -22,6 +22,7 @@ ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)
 - German : sinus23, Moritz
 - Russian : AlucoST, novikoz
 - Hungarian : Károly Polacsek
+- Bulgarian : Asen Gonov
 
 ## Author
 Xavier Beurois
