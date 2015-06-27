@@ -103,6 +103,7 @@ class BTDownloader extends Controller
                         else
                         {
                               $OPTIONS['bt-hash-check-seed'] = true;
+                              $OPTIONS['check-integrity'] = true;
                         }
                         
                         if (!$this->ProxyOnlyWithYTDL && !is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
