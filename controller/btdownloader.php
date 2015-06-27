@@ -96,16 +96,19 @@ class BTDownloader extends Controller
                         }
                         $Target = Tools::CleanString ($_POST['FILE']);
                         
+                        $OPTIONS = Array ('dir' => rtrim ($this->AbsoluteDownloadsFolder, '/') . '/' . $Target);
+                        
                         // If target file exists, create a new one
-                        if (\OC\Files\Filesystem::is_dir ($this->DownloadsFolder . '/' . $Target))
+                        if (!\OC\Files\Filesystem::is_dir (rtrim ($this->DownloadsFolder, '/') . '/' . $Target))
                         {
-                              $Target = time () . '_' . $Target;
+                              // Create the target file
+                              \OC\Files\Filesystem::mkdir (rtrim ($this->DownloadsFolder, '/') . '/' . $Target);
+                        }
+                        else
+                        {
+                              $OPTIONS['bt-hash-check-seed'] = true;
                         }
                         
-                        // Create the target file
-                        \OC\Files\Filesystem::mkdir ($this->DownloadsFolder . '/' . $Target);
-                        
-                        $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder . $Target);
                         if (!$this->ProxyOnlyWithYTDL && !is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
@@ -116,7 +119,7 @@ class BTDownloader extends Controller
                               }
                         }
                         
-                        $AddTorrent = Aria2::AddTorrent (base64_encode (file_get_contents ($this->AbsoluteTorrentsFolder . '/' . $_POST['FILE'])), Array (), $OPTIONS);
+                        $AddTorrent = Aria2::AddTorrent (base64_encode (file_get_contents (rtrim ($this->AbsoluteTorrentsFolder, '/') . '/' . $_POST['FILE'])), Array (), $OPTIONS);
                         
                         if (isset ($AddTorrent['result']) && !is_null ($AddTorrent['result']))
                         {
