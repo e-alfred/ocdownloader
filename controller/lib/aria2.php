@@ -18,6 +18,7 @@ class Aria2
     public static function __callStatic ($Name, $Args)
     {
         self::$Server = 'http://127.0.0.1:6800/jsonrpc';
+        $Args = self::RebuildArgs ($Args);
         
         self::Load ();
         
@@ -25,7 +26,7 @@ class Aria2
             'jsonrpc'   => '2.0',
             'id'        => 'ocdownloader',
             'method'    => 'aria2.' . lcfirst ($Name),
-            'params'    =>  self::RebuildArgs ($Args)
+            'params'    =>  strcmp ($Name, 'AddTorrent') == 0 ? Array ($Args[0], Array (), $Args [1]) : $Args
         );
         
         return json_decode (self::Request ($Data), 1);
