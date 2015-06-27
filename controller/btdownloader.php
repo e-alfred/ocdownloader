@@ -90,11 +90,7 @@ class BTDownloader extends Controller
             {
                   try
                   {
-                        if (Tools::EndsWith ($_POST['FILE'], '.torrent'))
-                        {
-                              $Target = substr ($_POST['FILE'], 0, strrpos ($_POST['FILE'], '.torrent'));
-                        }
-                        $Target = Tools::CleanString ($_POST['FILE']);
+                        $Target = Tools::CleanString (str_replace ('.torrent', '', $_POST['FILE']));
                         
                         $OPTIONS = Array ('dir' => rtrim ($this->AbsoluteDownloadsFolder, '/') . '/' . $Target);
                         
