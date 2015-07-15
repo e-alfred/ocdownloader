@@ -195,7 +195,7 @@ class Queue extends Controller
                                     );
                               }
                         }
-                        return new JSONResponse (Array ('ERROR' => false, 'QUEUE' => $Queue, 'COUNTER' => Tools::GetCounters ($this->DbType)));
+                        return new JSONResponse (Array ('ERROR' => false, 'QUEUE' => $Queue, 'COUNTER' => Tools::GetCounters ($this->DbType, $this->CurrentUID)));
                   }
             }
             catch (Exception $E)
