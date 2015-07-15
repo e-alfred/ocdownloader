@@ -62,4 +62,5 @@ $Application->registerRoutes ($this, Array (
 ));
 
 $APIBasePath = '/apps/ocdownloader/api/';
+\OCP\API::register ('POST', $APIBasePath . 'version', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::CheckAddonVersion ($_POST['AddonVersion'])); }, 'ocdownloader', \OC_API::USER_AUTH);
 \OCP\API::register ('POST', $APIBasePath . 'add', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Add ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);

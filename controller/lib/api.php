@@ -28,6 +28,7 @@ class API
 	private static $ProxyPort = 0;
 	private static $ProxyUser = null;
 	private static $ProxyPasswd = null;
+      private static $WhichDownloader = 0;
 	private static $CurrentUID = null;
       private static $L10N = null;
 	
@@ -70,7 +71,7 @@ class API
                         }
                         
                         
-                        $OPTIONS = Array ('dir' => self::$AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);
+                        $OPTIONS = Array ('dir' => self::$AbsoluteDownloadsFolder, 'out' => $DL['FILENAME'], 'follow-torrent' => false);
                         if (!is_null (self::$ProxyAddress) && self::$ProxyPort > 0 && self::$ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = rtrim (self::$ProxyAddress, '/') . ':' . self::$ProxyPort;
@@ -81,7 +82,7 @@ class API
                               }
                         }
                         
-                        $AddURI = Aria2::AddUri (Array ($DL['URL']), $OPTIONS);
+                        $AddURI = (self::$WhichDownloader == 0 ? Aria2::AddUri (Array ($DL['URL']), Array ('Params' => $OPTIONS)) : CURL::AddUri ($DL['URL'], $OPTIONS));
                         
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
@@ -118,6 +119,12 @@ class API
                   return Array ('ERROR' => true, 'MESSAGE' => 'Unabletolaunchthedownload');
             }
 	}
+      
+      public static function CheckAddonVersion ($Version)
+	{
+            $AppVersion = Config::getAppValue ('ocdownloader', 'installed_version');
+            return Array ('RESULT' => version_compare ($Version, $AppVersion, '<='));
+      }
 	
 	/********** PRIVATE STATIC METHODS **********/
 	private static function Load ()
@@ -142,6 +149,9 @@ class API
             self::$ProxyUser = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPasswd');
             self::$ProxyPasswd = $Settings->GetValue ();
+            $Settings->SetKey ('WhichDownloader');
+            self::$WhichDownloader = $Settings->GetValue ();
+            self::$WhichDownloader = is_null (self::$WhichDownloader) ? 0 : (strcmp (self::$WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
             
             $Settings->SetTable ('personal');
             $Settings->SetUID (self::$CurrentUID);

@@ -214,7 +214,7 @@ class Queue extends Controller
             
             try
             {
-                  return new JSONResponse (Array ('ERROR' => false, 'COUNTER' => Tools::GetCounters ($this->DbType)));
+                  return new JSONResponse (Array ('ERROR' => false, 'COUNTER' => Tools::GetCounters ($this->DbType, $this->CurrentUID)));
             }
             catch (Exception $E)
             {

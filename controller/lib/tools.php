@@ -137,25 +137,25 @@ class Tools
 		return $DLStatus;
 	}
 	
-	public static function GetCounters ($DbType)
+	public static function GetCounters ($DbType, $UID)
 	{
-		$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` < ?) as `ALL`,' .
-					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `COMPLETES`,' .
-					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `ACTIVES`,' .
-					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `WAITINGS`,' .
-					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `STOPPED`,' .
-					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ?) as `REMOVED`';
+		$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` < ? AND `UID` = ?) as `ALL`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ? AND `UID` = ?) as `COMPLETES`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ? AND `UID` = ?) as `ACTIVES`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ? AND `UID` = ?) as `WAITINGS`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ? AND `UID` = ?) as `STOPPED`,' .
+					  '(SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` = ? AND `UID` = ?) as `REMOVED`';
 		if ($DbType == 1)
 		{
-			$SQL = 'SELECT (SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" < ?) as "ALL",' .
-						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "COMPLETES",' .
-						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "ACTIVES",' .
-						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "WAITINGS",' .
-						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "STOPPED",' .
-						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ?) as "REMOVED"';
+			$SQL = 'SELECT (SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" < ? AND "UID" = ?) as "ALL",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "COMPLETES",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "ACTIVES",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "WAITINGS",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "STOPPED",' .
+						  '(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "REMOVED"';
 		}
 		$Query = \OCP\DB::prepare ($SQL);
-		$Request = $Query->execute (Array (5, 0, 1, 2, 3, 4));
+		$Request = $Query->execute (Array (5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 		
 		return $Request->fetchRow ();
 	}
