@@ -36,6 +36,8 @@ Xavier Beurois
 - Wiki : [Visit SGC-Univ.Net Wiki!](https://wiki.sgc-univ.net)
 
 ## Releases notes
+### v1.5.1
+- Fixing minor CSS / JS bug
 ### v1.5
 - Update languages, add following languages : Persian, Chinese, Italian, Danish, Korean
 - You can now upload a torrent file directly from the application
