@@ -8,12 +8,12 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-style ('ocdownloader', 'styles');
+style ('ocdownloader', 'styles.min');
 script ('ocdownloader', 'badger.min');
-script ('ocdownloader', 'ocdownloader');
+script ('ocdownloader', 'ocdownloader.min');
 script ('files', 'jquery.iframe-transport');
 script ('files', 'jquery.fileupload');
-script ('ocdownloader', 'add');
+script ('ocdownloader', 'add.min');
 
 $g = \OC::$server->getURLGenerator ();
 
