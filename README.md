@@ -35,8 +35,8 @@ Xavier Beurois
 - Blog : [Visit SGC-Univ.Net Blog!](https://www.sgc-univ.net)
 - Wiki : [Visit SGC-Univ.Net Wiki!](https://wiki.sgc-univ.net)
 
-# Releases notes
-## v1.5
+## Releases notes
+### v1.5
 - Update languages, add following languages : Persian, Chinese, Italian, Danish, Korean
 - You can now upload a torrent file directly from the application
 - The checkbox to remove a torrent file when adding a torrent download is now checked by default
