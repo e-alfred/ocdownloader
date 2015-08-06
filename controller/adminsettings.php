@@ -24,7 +24,7 @@ class AdminSettings extends Controller
 {
       private $DbType = 0;
       private $L10N;
-      private $OCDSettingKeys = Array ('YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'CheckForUpdates', 'WhichDownloader', 'ProxyOnlyWithYTDL');
+      private $OCDSettingKeys = Array ('YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'CheckForUpdates', 'WhichDownloader', 'ProxyOnlyWithYTDL', 'AllowProtocolHTTP', 'AllowProtocolFTP', 'AllowProtocolYT', 'AllowProtocolBT', 'MaxDownloadSpeed', 'BTMaxUploadSpeed');
       private $Settings = null;
       
       public function __construct ($AppName, IRequest $Request, IL10N $L10N)
@@ -61,74 +61,126 @@ class AdminSettings extends Controller
                   {
                         $this->Settings->SetKey ($PostKey);
                         
-                        if (strcmp ($PostKey, 'YTDLBinary') == 0)
+                        if (strlen (trim ($PostValue)) > 0)
                         {
-                              $PostValue = trim (str_replace (' ', '\ ', $PostValue));
-                              if (!file_exists ($PostValue))
+                              if (strcmp ($PostKey, 'YTDLBinary') == 0)
+                              {
+                                    $PostValue = trim (str_replace (' ', '\ ', $PostValue));
+                                    if (!file_exists ($PostValue))
+                                    {
+                                          $PostValue = null;
+                                          $Error = true;
+                                          $Message = (string)$this->L10N->t ('Unable to find YouTube-DL binary');
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'ProxyAddress') == 0)
+                              {
+                                    if (!Tools::CheckURL ($PostValue) && strlen (trim ($PostValue)) > 0)
+                                    {
+                                          $PostValue = null;
+                                          $Error = true;
+                                          $Message = (string)$this->L10N->t ('Invalid proxy address URL');
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'ProxyPort') == 0)
+                              {
+                                    if (!is_numeric ($PostValue))
+                                    {
+                                          $PostValue = null;
+                                          $Error = true;
+                                          $Message = (string)$this->L10N->t ('Proxy port should be a numeric value');
+                                    }
+                                    elseif ($PostValue <= 0 || $PostValue > 65536)
+                                    {
+                                          $PostValue = null;
+                                          $Error = true;
+                                          $Message = (string)$this->L10N->t ('Proxy port should be a value from 1 to 65536');
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'ProxyUser') == 0)
+                              {
+                                    $Error = false;
+                              }
+                              elseif (strcmp ($PostKey, 'ProxyPasswd') == 0)
+                              {
+                                    $Error = false;
+                              }
+                              elseif (strcmp ($PostKey, 'CheckForUpdates') == 0)
+                              {
+                                    if (!in_array ($PostValue, Array ('Y', 'N')))
+                                    {
+                                          $PostValue = 'Y';
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'WhichDownloader') == 0)
+                              {
+                                    if (!in_array ($PostValue, Array ('ARIA2', 'CURL')))
+                                    {
+                                          $PostValue = 'ARIA2';
+                                    }
+                                    elseif (strcmp ($PostValue, 'ARIA2') != 0)
+                                    {
+                                          Tools::ResetAria2 ($this->DbType);
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'ProxyOnlyWithYTDL') == 0)
+                              {
+                                    if (!in_array ($PostValue, Array ('Y', 'N')))
+                                    {
+                                          $PostValue = 'N';
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'AllowProtocolHTTP') == 0)
+                              {
+                                    if (!in_array ($PostValue, Array ('Y', 'N')))
+                                    {
+                                          $PostValue = 'N';
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'AllowProtocolFTP') == 0)
+                              {
+                                    if (!in_array ($PostValue, Array ('Y', 'N')))
+                                    {
+                                          $PostValue = 'N';
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'AllowProtocolYT') == 0)
+                              {
+                                    if (!in_array ($PostValue, Array ('Y', 'N')))
+                                    {
+                                          $PostValue = 'N';
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'AllowProtocolBT') == 0)
+                              {
+                                    if (!in_array ($PostValue, Array ('Y', 'N')))
+                                    {
+                                          $PostValue = 'N';
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'MaxDownloadSpeed') == 0)
+                              {
+                                    if (!is_numeric ($PostValue))
+                                    {
+                                          $PostValue = null;
+                                          $Error = true;
+                                          $Message = (string)$this->L10N->t ('Max download speed setting should be a numeric value');
+                                    }
+                              }
+                              elseif (strcmp ($PostKey, 'BTMaxUploadSpeed') == 0)
+                              {
+                                    if (!is_numeric ($PostValue))
+                                    {
+                                          $PostValue = null;
+                                          $Error = true;
+                                          $Message = (string)$this->L10N->t ('BitTorrent protocol max upload speed setting should be a numeric value');
+                                    }
+                              }
+                              else
                               {
                                     $PostValue = null;
                                     $Error = true;
-                                    $Message = (string)$this->L10N->t ('Unable to find YouTube-DL binary');
                               }
-                        }
-                        elseif (strcmp ($PostKey, 'ProxyAddress') == 0)
-                        {
-                              if (!Tools::CheckURL ($PostValue) && strlen (trim ($PostValue)) > 0)
-                              {
-                                    $PostValue = null;
-                                    $Error = true;
-                                    $Message = (string)$this->L10N->t ('Invalid proxy address URL');
-                              }
-                        }
-                        elseif (strcmp ($PostKey, 'ProxyPort') == 0)
-                        {
-                              if (!is_numeric ($PostValue))
-                              {
-                                    $PostValue = null;
-                                    $Error = true;
-                                    $Message = (string)$this->L10N->t ('Proxy port should be a numeric value');
-                              }
-                              elseif ($PostValue <= 0 || $PostValue > 65536)
-                              {
-                                    $PostValue = null;
-                                    $Error = true;
-                                    $Message = (string)$this->L10N->t ('Proxy port should be a value from 1 to 65536');
-                              }
-                        }
-                        elseif (strcmp ($PostKey, 'CheckForUpdates') == 0)
-                        {
-                              if (!in_array ($PostValue, Array ('Y', 'N')))
-                              {
-                                    $PostValue = 'Y';
-                              }
-                        }
-                        elseif (strcmp ($PostKey, 'WhichDownloader') == 0)
-                        {
-                              if (!in_array ($PostValue, Array ('ARIA2', 'CURL')))
-                              {
-                                    $PostValue = 'ARIA2';
-                              }
-                              elseif (strcmp ($PostValue, 'ARIA2') != 0)
-                              {
-                                    Tools::ResetAria2 ($this->DbType);
-                              }
-                        }
-                        elseif (strcmp ($PostKey, 'ProxyOnlyWithYTDL') == 0)
-                        {
-                              if (!in_array ($PostValue, Array ('Y', 'N')))
-                              {
-                                    $PostValue = 'N';
-                              }
-                        }
-                        else
-                        {
-                              $PostValue = null;
-                              $Error = true;
-                        }
-                        
-                        if (strlen (trim ($PostValue)) <= 0)
-                        {
-                              $PostValue = null;
                         }
                         
                         if ($this->Settings->CheckIfKeyExists ())

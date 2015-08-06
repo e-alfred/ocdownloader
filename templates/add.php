@@ -8,10 +8,14 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-style ('ocdownloader', 'styles.min');
+style ('ocdownloader', 'styles');
 script ('ocdownloader', 'badger.min');
-script ('ocdownloader', 'ocdownloader.min');
-script ('ocdownloader', 'add.min');
+script ('ocdownloader', 'ocdownloader');
+script ('files', 'jquery.iframe-transport');
+script ('files', 'jquery.fileupload');
+script ('ocdownloader', 'add');
+
+$g = \OC::$server->getURLGenerator ();
 
 if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
 ?>
@@ -30,16 +34,17 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     <div class="button" id="NewDL">
         				<a><?php print ($l->t ('New Download')); ?><div class="icon-caret-dark svg"></div></a>
         				<ul>
-        					<li><p data-rel="OCDHTTP">HTTP</p></li>
-        					<li><p data-rel="OCDFTP">FTP</p></li>
-                            <li><p data-rel="OCDYT">YOUTUBE</p></li>
-                            <?php if (strcmp ($_['WD'], 'ARIA2') == 0): ?><li><p data-rel="OCDBT">BITTORRENT</p></li><?php endif; ?>
+        					<?php if ($_['AllowProtocolHTTP']): ?><li><p data-rel="OCDHTTP">HTTP</p></li><?php endif; ?>
+        					<?php if ($_['AllowProtocolFTP']): ?><li><p data-rel="OCDFTP">FTP</p></li><?php endif; ?>
+                            <?php if ($_['AllowProtocolYT']): ?><li><p data-rel="OCDYT">YOUTUBE</p></li><?php endif; ?>
+                            <?php if ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0): ?><li><p data-rel="OCDBT">BITTORRENT</p></li><?php endif; ?>
         				</ul>
         			</div>
                     <div class="loadingtext loadinginline" style="display:none;"><?php print ($l->t ('Loading')); ?> ...</div>
                 </div>
                 <div class="righttitle"><?php print ($l->t ('Add Download')); ?></div>
             </div>
+            <?php if ($_['AllowProtocolHTTP']): ?>
             <div class="content-page" rel="OCDHTTP">
                 <h3>
                     <?php print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
@@ -56,6 +61,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     </div>
                 </div>
             </div>
+            <?php endif; if ($_['AllowProtocolFTP']): ?>
             <div class="content-page" rel="OCDFTP" style="display:none;">
                 <h3>
                     <?php print ($l->t ('New FTP download')); ?><span class="muted OCDLRMsg"></span>
@@ -75,6 +81,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     </div>
                 </div>
             </div>
+            <?php endif; if ($_['AllowProtocolYT']): ?>
             <div class="content-page" rel="OCDYT" style="display:none;">
                 <h3>
                     <?php print ($l->t ('New YouTube download')); ?><span class="muted OCDLRMsg"></span>
@@ -93,12 +100,19 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     </div>
                 </div>
             </div>
+            <?php endif; if ($_['AllowProtocolBT']): ?>
             <div class="content-page" rel="OCDBT" style="display:none;">
                 <h3>
                     <?php print ($l->t ('New BitTorrent download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
         				<a><?php print ($l->t ('Launch BitTorrent Download')); ?></a>
                     </div>
+                    <div class="button uploadfile">
+    					<input type="file" name="files[]" id="uploadfile" accept=".torrent" multiple="multiple" data-url="<?php print_unescaped($g->linkToRoute ('ocdownloader.BTDownloader.UploadFiles')); ?>">
+    					<label class="svg icon-upload" for="uploadfile">
+                            <span class="hidden-visually">Upload</span>
+                        </label>
+        			</div>
                 </h3>
                 <div class="actions">
                     <div class="button" id="TorrentsList">
@@ -115,6 +129,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
             <div class="content-queue">
                 <table id="Queue" border="0" cellspacing="0" cellpadding="0">
                     <thead>

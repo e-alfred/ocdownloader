@@ -103,5 +103,6 @@
         "You are using %s ! This page is only available with the following engines :": "You are using %s ! This page is only available with the following engines :",
         "Unable to find download status file %s": "Unable to find download status file %s",
         "An error occurred while running the CURL download": "An error occurred while running the CURL download"
-    }
+    },
+    "pluralForm" :"nplurals=2; plural=(n != 1);"
 }

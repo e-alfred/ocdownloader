@@ -35,6 +35,8 @@ class HttpDownloader extends Controller
       private $WhichDownloader = 0;
       private $CurrentUID = null;
       private $L10N = null;
+      private $AllowProtocolHTTP = null;
+      private $MaxDownloadSpeed = null;
       
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
@@ -62,12 +64,17 @@ class HttpDownloader extends Controller
             $Settings->SetKey ('WhichDownloader');
             $this->WhichDownloader = $Settings->GetValue ();
             $this->WhichDownloader = is_null ($this->WhichDownloader) ? 0 : (strcmp ($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
+            $Settings->SetKey ('MaxDownloadSpeed');
+            $this->MaxDownloadSpeed = $Settings->GetValue ();
+            $Settings->SetKey ('AllowProtocolHTTP');
+            $this->AllowProtocolHTTP = $Settings->GetValue ();
+            $this->AllowProtocolHTTP = is_null ($this->AllowProtocolHTTP) ? true : strcmp ($this->AllowProtocolHTTP, 'Y') == 0;
             
             $Settings->SetTable ('personal');
             $Settings->SetUID ($this->CurrentUID);
             $Settings->SetKey ('DownloadsFolder');
             $this->DownloadsFolder = $Settings->GetValue ();
-            
+
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
             $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder ($this->DownloadsFolder);
             
@@ -86,7 +93,12 @@ class HttpDownloader extends Controller
             {
                   try
                   {
-                        $Target = Tools::CleanString (substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1));
+                        if (!$this->AllowProtocolHTTP && !\OC_User::isAdminUser ($this->CurrentUID))
+                        {
+                              throw new \Exception ((string)$this->L10N->t ('You are not allowed to use the HTTP protocol'));
+                        }
+                        
+                        $Target = Tools::CleanString (substr($_POST['FILE'], strrpos ($_POST['FILE'], '/') + 1));
                         
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $Target))
@@ -122,6 +134,10 @@ class HttpDownloader extends Controller
                                     $OPTIONS['all-proxy-user'] = $this->ProxyUser;
                                     $OPTIONS['all-proxy-passwd'] = $this->ProxyPasswd;
                               }
+                        }
+                        if (!is_null ($this->MaxDownloadSpeed) && $this->MaxDownloadSpeed > 0)
+                        {
+                              $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
                         }
                         
                         $AddURI = ($this->WhichDownloader == 0 ? Aria2::AddUri (Array ($_POST['FILE']), Array ('Params' => $OPTIONS)) : CURL::AddUri ($_POST['FILE'], $OPTIONS));

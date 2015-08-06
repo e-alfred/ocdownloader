@@ -644,7 +644,7 @@ OCDLR = {};
 		{
 			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
 				'<td data-rel="FILENAME" class="padding">' + Data.FILENAME + '</td>' +
-				'<td data-rel="PROTO" class="border padding">' + Data.PROTO + '</td>' +
+				'<td data-rel="PROTO" class="border padding">' + t ('ocdownloader', Data.PROTO) + '</td>' +
 				'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: ' + Data.PROGRESSVAL + ';"><div class="pb-text">' + Data.PROGRESS + '</div></div></div></td>' +
 				(['add', 'actives', 'all'].indexOf (View) > -1 ? '<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' : '') +
 				(['add', 'all'].indexOf (View) > -1 ? '<td data-rel="STATUS" data-statusid="' + Data.STATUSID + '" class="border padding">' + Data.STATUS + '</td>' : '') +

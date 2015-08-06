@@ -37,6 +37,8 @@ class YTDownloader extends Controller
       private $WhichDownloader = 0;
       private $CurrentUID = null;
       private $L10N = null;
+      private $AllowProtocolYT = null;
+      private $MaxDownloadSpeed = null;
       
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
@@ -70,6 +72,11 @@ class YTDownloader extends Controller
             $Settings->SetKey ('WhichDownloader');
             $this->WhichDownloader = $Settings->GetValue ();
             $this->WhichDownloader = is_null ($this->WhichDownloader) ? 0 : (strcmp ($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
+            $Settings->SetKey ('MaxDownloadSpeed');
+            $this->MaxDownloadSpeed = $Settings->GetValue ();
+            $Settings->SetKey ('AllowProtocolYT');
+            $this->AllowProtocolYT = $Settings->GetValue ();
+            $this->AllowProtocolYT = is_null ($this->AllowProtocolYT) ? true : strcmp ($this->AllowProtocolYT, 'Y') == 0;
             
             $Settings->SetTable ('personal');
             $Settings->SetUID ($this->CurrentUID);
@@ -94,6 +101,11 @@ class YTDownloader extends Controller
             {
                   try
                   {
+                        if (!$this->AllowProtocolYT && !\OC_User::isAdminUser ($this->CurrentUID))
+                        {
+                              throw new \Exception ((string)$this->L10N->t ('You are not allowed to use the YouTube protocol'));
+                        }
+                        
                         $YouTube = new YouTube ($this->YTDLBinary, $_POST['FILE']);
                         
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
@@ -117,7 +129,7 @@ class YTDownloader extends Controller
                                           'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube audio URL')
                                     ));
                               }
-                              $DL = Array ('URL' => $VideoData['AUDIO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => (string)$this->L10N->t ('Audio'));
+                              $DL = Array ('URL' => $VideoData['AUDIO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => 'YT Audio');
                         }
                         else // No audio extract
                         {
@@ -129,7 +141,7 @@ class YTDownloader extends Controller
                                           'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube video URL')
                                     ));
                               }
-                              $DL = Array ('URL' => $VideoData['VIDEO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => (string)$this->L10N->t ('Video'));
+                              $DL = Array ('URL' => $VideoData['VIDEO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => 'YT Video');
                         }
                         
                         // If target file exists, create a new one
@@ -161,6 +173,10 @@ class YTDownloader extends Controller
                                     $OPTIONS['all-proxy-passwd'] = $this->ProxyPasswd;
                               }
                         }
+                        if (!is_null ($this->MaxDownloadSpeed) && $this->MaxDownloadSpeed > 0)
+                        {
+                              $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
+                        }
                         
                         $AddURI = ($this->WhichDownloader == 0 ? Aria2::AddUri (Array ($DL['URL']), Array ('Params' => $OPTIONS)) : CURL::AddUri ($DL['URL'], $OPTIONS));
                         
@@ -177,7 +193,7 @@ class YTDownloader extends Controller
                                     $this->CurrentUID,
                                     $AddURI['result'],
                                     $DL['FILENAME'],
-                                    'YT ' . $DL['TYPE'],
+                                    $DL['TYPE'],
                                     1,
                                     time()
                               ));
@@ -203,7 +219,7 @@ class YTDownloader extends Controller
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
                                     'FILENAME' => (strlen ($DL['FILENAME']) > 40 ? substr ($DL['FILENAME'], 0, 40) . '...' : $DL['FILENAME']),
-                                    'PROTO' => 'YT ' . $DL['TYPE'],
+                                    'PROTO' => $DL['TYPE'],
                                     'ISTORRENT' => false
                               ));
                         }

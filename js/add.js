@@ -43,7 +43,7 @@ $(document).ready (function ()
 	$('#option-ftp-pasv').prop ('checked', true);
 	$('#option-yt-extractaudio').prop ('checked', false);
 	$('#option-yt-forceipv4').prop ('checked', true);
-	$('#option-bt-rmtorrent').prop ('checked', false);
+	$('#option-bt-rmtorrent').prop ('checked', true);
 	
 	// Load torrent files when opening the available torrents list
 	$('#TorrentsList').bind ('click', function ()
@@ -137,7 +137,42 @@ $(document).ready (function ()
 		}
 		
 		InputFile.text (SELECTTEXT);
-		$('#option-bt-rmtorrent').prop ('checked', false);
+		$('#option-bt-rmtorrent').prop ('checked', true);
+	});
+	
+	var FileUpload = $('#app-content-wrapper .content-page[rel=OCDBT] div.uploadfile #uploadfile').fileupload (
+	{
+		autoUpload: true,
+		sequentialUploads: true,
+		type: 'POST',
+		dataType: 'json'
+	});
+	FileUpload.on ('fileuploadstart', function (E, Data)
+	{
+		$('#TorrentsList').children ('ul').hide ();
+		
+		$('#app-content-wrapper .content-page[rel=OCDBT] div.uploadfile label').removeClass ('icon-upload');
+		$('#app-content-wrapper .content-page[rel=OCDBT] div.uploadfile label').addClass ('icon-loading-small');
+		$('#app-content-wrapper .content-page[rel=OCDBT] div.uploadfile input').prop('disabled', true);
+	});
+	FileUpload.on ('fileuploaddone', function (E, Data)
+	{
+		if (!Data.result.ERROR)
+		{
+			OCDLR.Utils.PrintInfo (Data.result.MESSAGE);
+		}
+		else
+		{
+			OCDLR.Utils.PrintError (Data.result.MESSAGE);
+		}
+		
+		$('#app-content-wrapper .content-page[rel=OCDBT] div.uploadfile input').prop('disabled', false);
+		$('#app-content-wrapper .content-page[rel=OCDBT] div.uploadfile label').removeClass ('icon-loading-small');
+		$('#app-content-wrapper .content-page[rel=OCDBT] div.uploadfile label').addClass ('icon-upload');
+	});
+	FileUpload.on ('fileuploadfail', function (E, Data)
+	{
+		OCDLR.Utils.PrintError (t ('ocdownloader', 'Error while uploading torrent file'));
 	});
 	
 	OCDLR.Utils.GetCounters ();

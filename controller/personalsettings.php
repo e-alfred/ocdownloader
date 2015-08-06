@@ -22,7 +22,7 @@ use OCA\ocDownloader\Controller\Lib\Tools;
 class PersonalSettings extends Controller
 {
       private $CurrentUID = null;
-      private $OCDSettingKeys = Array ('DownloadsFolder', 'TorrentsFolder');
+      private $OCDSettingKeys = Array ('DownloadsFolder', 'TorrentsFolder', 'BTRatioToReach', 'BTSeedTimeToReach_BTSeedTimeToReachUnit');
       private $Settings = null;
       private $L10N = null;
       

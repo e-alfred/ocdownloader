@@ -36,6 +36,11 @@ class BTDownloader extends Controller
       private $ProxyOnlyWithYTDL = null;
       private $Settings = null;
       private $L10N = null;
+      private $AllowProtocolBT = null;
+      private $MaxDownloadSpeed = null;
+      private $BTMaxUploadSpeed = null;
+      private $BTRatioToReach = null;
+      private $SeedTime = null;
 	  
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
@@ -62,12 +67,39 @@ class BTDownloader extends Controller
             $this->ProxyOnlyWithYTDL = $this->Settings->GetValue ();
             $this->ProxyOnlyWithYTDL = is_null ($this->ProxyOnlyWithYTDL) ? false : (strcmp ($this->ProxyOnlyWithYTDL, 'Y') == 0);
             
+            $this->Settings->SetKey ('MaxDownloadSpeed');
+            $this->MaxDownloadSpeed = $this->Settings->GetValue ();
+            $this->Settings->SetKey ('BTMaxUploadSpeed');
+            $this->BTMaxUploadSpeed = $this->Settings->GetValue ();
+            
+            $this->Settings->SetKey ('AllowProtocolBT');
+            $this->AllowProtocolBT = $this->Settings->GetValue ();
+            $this->AllowProtocolBT = is_null ($this->AllowProtocolBT) ? true : strcmp ($this->AllowProtocolBT, 'Y') == 0;
+            
             $this->Settings->SetTable ('personal');
             $this->Settings->SetUID ($this->CurrentUID);
             $this->Settings->SetKey ('DownloadsFolder');
             $this->DownloadsFolder = $this->Settings->GetValue ();
             $this->Settings->SetKey ('TorrentsFolder');
             $this->TorrentsFolder = $this->Settings->GetValue ();
+            $this->Settings->SetKey ('BTRatioToReach');
+            $this->BTRatioToReach = $this->Settings->GetValue ();
+            $this->BTRatioToReach = is_null ($this->BTRatioToReach) ? '0.0' : $this->BTRatioToReach;
+            
+            $this->Settings->SetKey ('BTSeedTimeToReach_BTSeedTimeToReachUnit');
+            $this->SeedTime = $this->Settings->GetValue ();
+            if (!is_null ($this->SeedTime))
+            {
+                  $this->SeedTime = explode ('_', $this->SeedTime);
+                  if (count ($this->SeedTime) == 2)
+            	{
+                        $this->SeedTime = Tools::GetMinutes ($this->SeedTime[0], $this->SeedTime[1]);
+            	}
+            }
+            else
+            {
+                  $this->SeedTime = 10080; // minutes in 1 week - default
+            }
             
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
             $this->TorrentsFolder = '/' . (is_null ($this->TorrentsFolder) ? 'Downloads/Files/Torrents' : $this->TorrentsFolder);
@@ -90,10 +122,14 @@ class BTDownloader extends Controller
             {
                   try
                   {
+                        if (!$this->AllowProtocolBT && !\OC_User::isAdminUser ($this->CurrentUID))
+                        {
+                              throw new \Exception ((string)$this->L10N->t ('You are not allowed to use the BitTorrent protocol'));
+                        }
+                        
                         $Target = Tools::CleanString (str_replace ('.torrent', '', $_POST['FILE']));
                         
-                        $OPTIONS = Array ('dir' => rtrim ($this->AbsoluteDownloadsFolder, '/') . '/' . $Target);
-                        
+                        $OPTIONS = Array ('dir' => rtrim ($this->AbsoluteDownloadsFolder, '/') . '/' . $Target, 'seed-ratio' => $this->BTRatioToReach, 'seed-time' => $this->SeedTime);
                         // If target file exists, create a new one
                         if (!\OC\Files\Filesystem::is_dir (rtrim ($this->DownloadsFolder, '/') . '/' . $Target))
                         {
@@ -105,7 +141,14 @@ class BTDownloader extends Controller
                               $OPTIONS['bt-hash-check-seed'] = true;
                               $OPTIONS['check-integrity'] = true;
                         }
-                        
+                        if (!is_null ($this->MaxDownloadSpeed) && $this->MaxDownloadSpeed > 0)
+                        {
+                              $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
+                        }
+                        if (!is_null ($this->BTMaxUploadSpeed) && $this->BTMaxUploadSpeed > 0)
+                        {
+                              $OPTIONS['max-upload-limit'] = $this->BTMaxUploadSpeed . 'K';
+                        }
                         if (!$this->ProxyOnlyWithYTDL && !is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
@@ -184,6 +227,11 @@ class BTDownloader extends Controller
             
             try
             {
+                  if (!$this->AllowProtocolBT && !\OC_User::isAdminUser ($this->CurrentUID))
+                  {
+                        throw new \Exception ((string)$this->L10N->t ('You are not allowed to use the BitTorrent protocol'));
+                  }
+                  
                   if (!\OC\Files\Filesystem::is_dir ($this->TorrentsFolder))
                   {
                         \OC\Files\Filesystem::mkdir ($this->TorrentsFolder);
@@ -191,7 +239,7 @@ class BTDownloader extends Controller
                   
                   $this->TorrentsFolder = \OC\Files\Filesystem::normalizePath($this->TorrentsFolder);
                   
-                  $Files = \OCA\Files\Helper::getFiles ($this->TorrentsFolder, 'name', 'desc');
+                  $Files = \OCA\Files\Helper::getFiles ($this->TorrentsFolder, 'name', 'desc', 'application/octet-stream');
                   $Files = \OCA\Files\Helper::formatFileInfos ($Files);
                   
                   return new JSONResponse (Array ('ERROR' => false, 'FILES' => $Files));
@@ -199,6 +247,52 @@ class BTDownloader extends Controller
             catch (Exception $E)
             {
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
+            }
+      }
+      
+      /**
+       * @NoAdminRequired
+       * @NoCSRFRequired
+       */
+      public function UploadFiles ()
+      {
+            \OCP\JSON::setContentTypeHeader ('text/plain');
+            
+            if (!$this->AllowProtocolBT && !\OC_User::isAdminUser ($this->CurrentUID))
+            {
+                  return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('You are not allowed to use the BitTorrent protocol')));
+            }
+            
+            if (!isset ($_FILES['files']))
+            {
+                  return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Error while uploading torrent file')));
+            }
+            else
+            {
+                  if (!isset ($_FILES['files']['name'][0]))
+                  {
+                        throw new \Exception ('Unable to find the uploaded file');
+                  }
+                  
+                  $Target = rtrim ($this->TorrentsFolder, '/') . '/' . $_FILES['files']['name'][0];
+                  try
+			{
+				if (is_uploaded_file ($_FILES['files']['tmp_name'][0]) && \OC\Files\Filesystem::fromTmpFile ($_FILES['files']['tmp_name'][0], $Target))
+                        {
+					$StorageStats = \OCA\Files\Helper::buildFileStorageStatistics ($this->TorrentsFolder);
+
+					if (\OC\Files\Filesystem::getFileInfo ($Target) !== false)
+                              {
+                                    return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('Upload OK')));
+					}
+				} else {
+					return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Error while uploading torrent file')));
+				}
+			}
+                  catch (Exception $E)
+                  {
+				return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
+			}
             }
       }
 }

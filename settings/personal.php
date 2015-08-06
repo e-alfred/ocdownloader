@@ -19,7 +19,14 @@ script ('ocdownloader', 'settings/personal');
 
 $Tmpl = new OCP\Template ('ocdownloader', 'settings/personal');
 
-$Settings = new Settings ('personal');
+$Settings = new Settings ();
+$Settings->SetKey ('AllowProtocolBT');
+$AllowProtocolBT = $Settings->GetValue ();
+$AllowProtocolBT = is_null ($AllowProtocolBT) ? true : strcmp ($AllowProtocolBT, 'Y') == 0;
+
+$Tmpl->assign ('AllowProtocolBT', $AllowProtocolBT);
+
+$Settings->SetTable ('personal');
 $Settings->SetUID (OC_User::getUser ());
 $Rows = $Settings->GetAllValues ();
 

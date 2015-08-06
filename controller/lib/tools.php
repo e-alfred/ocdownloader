@@ -238,5 +238,19 @@ class Tools
 			$Request = $Query->execute ();
 		}
 	}
+	
+	public static function GetMinutes ($Number, $UnitLetter)
+	{
+		if (strcmp ($UnitLetter, 'i') == 0)
+		{
+			return $Number;
+		}
+		
+		$Units = array ('h' => 'hour', 'd' => 'day', 'w' => 'week', 'm' => 'month', 'y' => 'year');
+		
+		$To = strtotime ('+' . $Number . ' ' . $Units[$UnitLetter] . ($Number > 1 ? 's' : ''));
+		$From = strtotime ('now'); 
+		return round (abs ($To - $From) / 60,2);
+	}
 }
 ?>

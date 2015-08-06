@@ -28,6 +28,10 @@ class Index extends Controller
       private $Settings = null;
       private $WhichDownloader = null;
       private $L10N = null;
+      private $AllowProtocolHTTP = null;
+      private $AllowProtocolFTP = null;
+      private $AllowProtocolYT = null;
+      private $AllowProtocolBT = null;
       
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
@@ -46,6 +50,19 @@ class Index extends Controller
             $this->Settings->SetKey ('WhichDownloader');
             $this->WhichDownloader = $this->Settings->GetValue ();
             $this->WhichDownloader = is_null ($this->WhichDownloader) ? 'ARIA2' : $this->WhichDownloader;
+            
+            $this->Settings->SetKey ('AllowProtocolHTTP');
+            $this->AllowProtocolHTTP = $this->Settings->GetValue ();
+            $this->AllowProtocolHTTP = is_null ($this->AllowProtocolHTTP) || \OC_User::isAdminUser ($this->CurrentUID) ? true : strcmp ($this->AllowProtocolHTTP, 'Y') == 0;
+            $this->Settings->SetKey ('AllowProtocolFTP');
+            $this->AllowProtocolFTP = $this->Settings->GetValue ();
+            $this->AllowProtocolFTP = is_null ($this->AllowProtocolFTP) || \OC_User::isAdminUser ($this->CurrentUID) ? true : strcmp ($this->AllowProtocolFTP, 'Y') == 0;
+            $this->Settings->SetKey ('AllowProtocolYT');
+            $this->AllowProtocolYT = $this->Settings->GetValue ();
+            $this->AllowProtocolYT = is_null ($this->AllowProtocolYT) || \OC_User::isAdminUser ($this->CurrentUID) ? true : strcmp ($this->AllowProtocolYT, 'Y') == 0;
+            $this->Settings->SetKey ('AllowProtocolBT');
+            $this->AllowProtocolBT = $this->Settings->GetValue ();
+            $this->AllowProtocolBT = is_null ($this->AllowProtocolBT) || \OC_User::isAdminUser ($this->CurrentUID) ? true : strcmp ($this->AllowProtocolBT, 'Y') == 0;
       }
 
       /**
@@ -63,7 +80,11 @@ class Index extends Controller
                   'PAGE' => 0,
                   'TTSFOLD' => $TorrentsFolder,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
-                  'WD' => $this->WhichDownloader
+                  'WD' => $this->WhichDownloader,
+                  'AllowProtocolHTTP' => $this->AllowProtocolHTTP,
+                  'AllowProtocolFTP' => $this->AllowProtocolFTP,
+                  'AllowProtocolYT' => $this->AllowProtocolYT,
+                  'AllowProtocolBT' => $this->AllowProtocolBT
             ]);
       }
       

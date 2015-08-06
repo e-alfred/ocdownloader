@@ -23,9 +23,25 @@ ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)
 - Russian : AlucoST, novikoz
 - Hungarian : Károly Polacsek
 - Bulgarian : Asen Gonov
+- Persian : Amir Keshavarz
+- Chinese : Young You, dzxx36gyy (顾益阳), whatot huang
+- Italian : Leonardo Bartoletti, adelutti (Andrea), r.bicelli Riccardo Bicelli
+- Danish : Janus Ljósheim, Johannes Hessellund
+- Korean : Asen Gonov
 
 ## Author
 Xavier Beurois
 - Twitter : [@djazzlab](https://twitter.com/djazzlab)
 - Blog : [Visit SGC-Univ.Net Blog!](https://www.sgc-univ.net)
 - Wiki : [Visit SGC-Univ.Net Wiki!](https://wiki.sgc-univ.net)
+
+# Releases notes
+## v1.5
+- Update languages, add following languages : Persian, Chinese, Italian, Danish, Korean
+- You can now upload a torrent file directly from the application
+- The checkbox to remove a torrent file when adding a torrent download is now checked by default
+- Add admin settings to manage protocols permissions
+- Add a set_time_limit to 0 for the cURL fallback download script
+- Add upload / download speed limit settings in the admin panel
+- Add a ratio control for the BitTorrent protocol in the personal settings panel (default : unlimited - "0.0")
+- Add a seed time control for the BitTorrent protocol in the personal settings panel (default : 1 week)

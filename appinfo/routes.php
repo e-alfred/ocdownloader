@@ -35,6 +35,7 @@ $Application->registerRoutes ($this, Array (
         // BTDownloader
         ['name' => 'BTDownloader#Add', 'url' => '/btdownloader/add', 'verb' => 'POST'],
         ['name' => 'BTDownloader#ListTorrentFiles', 'url' => '/btdownloader/listtorrentfiles', 'verb' => 'POST'],
+        ['name' => 'BTDownloader#UploadFiles', 'url' => '/btdownloader/uploadfiles', 'verb' => 'POST'],
         
         // Queue
         ['name' => 'Queue#Get', 'url' => '/queue/get', 'verb' => 'POST'],
@@ -63,4 +64,5 @@ $Application->registerRoutes ($this, Array (
 
 $APIBasePath = '/apps/ocdownloader/api/';
 \OCP\API::register ('POST', $APIBasePath . 'version', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::CheckAddonVersion ($_POST['AddonVersion'])); }, 'ocdownloader', \OC_API::USER_AUTH);
+\OCP\API::register ('GET', $APIBasePath . 'queue/get', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::GetQueue ()); }, 'ocdownloader', \OC_API::USER_AUTH);
 \OCP\API::register ('POST', $APIBasePath . 'add', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Add ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);

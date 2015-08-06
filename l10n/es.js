@@ -24,6 +24,13 @@ OC.L10N.register
         "No downloads in the queue ...": "Sin descargas en la cola",
         "Removed": "Eliminado",
         "Active": "Activo",
-        "Paused": "Pausado"
+        "Paused": "Pausado",
+        "HTTP": "HTTP",
+        "HTTPS": "HTTPS",
+        "FTP": "FTP",
+        "FTPS": "FTPS",
+        "BitTorrent": "BitTorrent",
+        "YT Audio": "YT Audio",
+        "YT Video": "YT Vídeo"
     }
 )

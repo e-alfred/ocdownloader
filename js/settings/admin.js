@@ -10,14 +10,46 @@
 
 $(document).ready (function ()
 {
-	$('form#ocdownloader > p > input.ToUse, form#ocdownloader > p > select.ToUse').bind ('change', function ()
+	$('#OCDWhichDownloader').bind ('change', function ()
 	{
-		$('#OCDSLoader').show ();
-		$('#OCDSMsg').hide ();
-		$('#OCDSMsg').removeClass ('error');
-		$('#OCDSMsg').removeClass ('success');
-		
+		if ($('#OCDWhichDownloader').val () == 'ARIA2')
+		{
+			$('#OCDBTSettings').show ();
+			$('#OCDAllowProtocolBT').show ();
+			$('#OCDAllowProtocolBTDetails').hide ();
+		}
+		else
+		{
+			$('#OCDBTSettings').hide ();
+			if ($('#OCDAllowProtocolBT').val () != 'N')
+			{
+				$('#OCDAllowProtocolBT').val ('N');
+				$('#OCDAllowProtocolBT').change ();
+			}
+			$('#OCDAllowProtocolBT').hide ();
+			$('#OCDAllowProtocolBTDetails').show ();
+		}
+	});
+	$('#OCDAllowProtocolBT').bind ('change', function ()
+	{
+		if ($('#OCDAllowProtocolBT').val () == 'Y')
+		{
+			$('#OCDBTSettings').show ();
+		}
+		else
+		{
+			$('#OCDBTSettings').hide ();
+		}
+	});
+	
+	$('form#ocdownloader input.ToUse, form#ocdownloader select.ToUse').bind ('change', function ()
+	{
 		var Field = $(this);
+		
+		$('#' + Field.attr ('data-loader')).show ();
+		$('#' + Field.attr ('data-loader') + 'Msg').hide ();
+		$('#' + Field.attr ('data-loader') + 'Msg').removeClass ('error');
+		$('#' + Field.attr ('data-loader') + 'Msg').removeClass ('success');
 		
 		$.ajax({
 	        url: OC.generateUrl ('/apps/ocdownloader/adminsettings/save'),
@@ -32,24 +64,24 @@ $(document).ready (function ()
 	        timeout: 30000,
 	        success: function (Data)
 			{
-				$('#OCDSLoader').hide ();
+				$('#' + Field.attr ('data-loader')).hide ();
 				
-				$('#OCDSMsg').text (Data.MESSAGE);
+				$('#' + Field.attr ('data-loader') + 'Msg').text (Data.MESSAGE);
 				if (Data.ERROR)
 				{
-					$('#OCDSMsg').addClass ('error');
+					$('#' + Field.attr ('data-loader') + 'Msg').addClass ('error');
 				}
 				else
 				{
-					$('#OCDSMsg').addClass ('success');
+					$('#' + Field.attr ('data-loader') + 'Msg').addClass ('success');
 				}
 			
-				$('#OCDSMsg').show ();
+				$('#' + Field.attr ('data-loader') + 'Msg').show ();
 				
-				$('form#ocdownloader > p > span.details > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
+				$('#OCDWhichDownloaderDetails > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
 			}
 	    });
 	});
 	
-	$('form#ocdownloader > p > span.details > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
+	$('#OCDWhichDownloaderDetails > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
 });

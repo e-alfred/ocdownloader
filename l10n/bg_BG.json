@@ -103,5 +103,6 @@
         "You are using %s ! This page is only available with the following engines :": "Вие използвате %s ! Тази страница е налична само за следните енджини :",
         "Unable to find download status file %s": "Не е намерен статус файла %s",
         "An error occurred while running the CURL download": "Възникна грешка при изпълнението на CURL теглeнето"
-    }
+    },
+    "pluralForm" :"nplurals=2; plural=(n != 1);"
 }

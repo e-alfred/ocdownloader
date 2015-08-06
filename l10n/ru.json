@@ -103,5 +103,6 @@
         "You are using %s ! This page is only available with the following engines :": "Вы используете %s ! Эта страница доступна только со следующими движками:",
         "Unable to find download status file %s": "Невозможно найти файл статуса %s",
         "An error occurred while running the CURL download": "Произошла ошибка при запуске загрузки с CURL"
-    }
+    },
+    "pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

@@ -107,8 +107,14 @@ class OCD
 				curl_setopt (self::$CurlHandler, CURLOPT_PROXYUSERPWD, $OPTIONS['all-proxy-user'] . ':' . $OPTIONS['all-proxy-passwd']);
 			}
 		}
+		if (isset ($OPTIONS['max-download-limit']))
+		{
+			$OPTIONS['max-download-limit'] = (rtrim ($OPTIONS['max-download-limit'], 'K')) * 1024;
+			curl_setopt (self::$CurlHandler, CURLOPT_MAX_RECV_SPEED_LARGE, $OPTIONS['max-download-limit']);
+		}
 	}
 }
 
+set_time_limit (0);
 OCD::Load ($argv[1], urldecode ($argv[2]), json_decode (urldecode ($argv[3]), true, 512, JSON_HEX_APOS | JSON_HEX_QUOT));
 ?>

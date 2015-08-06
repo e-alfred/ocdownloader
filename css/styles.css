@@ -265,12 +265,46 @@
 #app-content-wrapper .content-page > h3 > span.info {
   color: #084B8A;
 }
+#app-content-wrapper .content-page .uploadfile,
 #app-content-wrapper .content-page .launch {
   float: right !important;
   box-sizing: border-box;
   height: 36px;
   padding: 10px;
   margin-top: -5px;
+}
+#app-content-wrapper .content-page .uploadfile input[type="file"] {
+  cursor: pointer;
+  font-size: 16px;
+  left: 0;
+  margin: -5px -3px;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  top: 0;
+  width: 44px;
+  z-index: 20;
+  float:left;
+}
+#app-content-wrapper .content-page .uploadfile .icon-loading-small,
+#app-content-wrapper .content-page .uploadfile .icon-upload {
+  cursor: pointer;
+  display: block;
+  height: 27px;
+  margin: -5px -3px;
+  opacity: 0.65;
+  position: relative;
+  width: 44px;
+  z-index: 10;
+}
+#app-content-wrapper .content-page .uploadfile .icon-upload .hidden-visually {
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    width: 1px;
 }
 #app-content-wrapper .content-page > input {
   width: 100%;

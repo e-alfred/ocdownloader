@@ -17,14 +17,20 @@ $(document).ready (function ()
 		$('#OCDSMsg').removeClass ('error');
 		$('#OCDSMsg').removeClass ('success');
 		
+		var KEY = $(this).attr ('data-rel');
+		var VAL = $('#' + KEY).val ();
+		
+		if (KEY == 'OCDBTSeedTimeToReach_OCDBTSeedTimeToReachUnit')
+		{
+			KEY = 'BTSeedTimeToReach_BTSeedTimeToReachUnit';
+			VAL = $('#OCDBTSeedTimeToReach').val () + '_' + $('#OCDBTSeedTimeToReachUnit').val ();
+		}
+		
 		$.ajax({
 	        url: OC.generateUrl ('/apps/ocdownloader/personalsettings/save'),
 	        method: 'POST',
 			dataType: 'json',
-			data: {
-				'KEY': $(this).attr ('data-rel'),
-				'VAL': $('#' + $(this).attr ('data-rel')).val ()
-			},
+			data: { 'KEY': KEY, 'VAL': VAL },
 	        async: true,
 	        cache: false,
 	        timeout: 30000,

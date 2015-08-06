@@ -31,6 +31,11 @@ class API
       private static $WhichDownloader = 0;
 	private static $CurrentUID = null;
       private static $L10N = null;
+      private static $AllowProtocolHTTP = null;
+      private static $AllowProtocolFTP = null;
+      private static $AllowProtocolYT = null;
+      private static $AllowProtocolBT = null;
+      private static $MaxDownloadSpeed = null;
 	
 	public static function Add ($URL)
 	{
@@ -43,6 +48,11 @@ class API
                   {
                         if (preg_match ('/^https{0,1}:\/\/www\.youtube\.com\/watch\?v=.*$/', $URL) == 1)
                         {
+                              if (!self::$AllowProtocolYT && !\OC_User::isAdminUser (self::$CurrentUID))
+                              {
+                                    return Array ('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolyt');
+                              }
+                              
                               $YouTube = new YouTube (self::$YTDLBinary, $URL);
                         
                               if (!is_null (self::$ProxyAddress) && self::$ProxyPort > 0 && self::$ProxyPort <= 65536)
@@ -63,10 +73,19 @@ class API
                         }
                         else
                         {
+                              if (!self::$AllowProtocolHTTP && !\OC_User::isAdminUser (self::$CurrentUID) && Tools::StartsWith (strtolower ($URL), 'http'))
+                              {
+                                    return Array ('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolhttp');
+                              }
+                              elseif (!self::$AllowProtocolFTP && !\OC_User::isAdminUser (self::$CurrentUID) && Tools::StartsWith (strtolower ($URL), 'ftp'))
+                              {
+                                    return Array ('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolftp');
+                              }
+                              
                               $DL = Array (
                                     'URL' => $URL,
                                     'FILENAME' => Tools::CleanString (substr($URL, strrpos($URL, '/') + 1)),
-                                    'PROTO' => strtoupper(substr($URL, 0, strpos($URL, ':')))
+                                    'PROTO' => strtoupper (substr ($URL, 0, strpos ($URL, ':')))
                               );
                         }
                         
@@ -125,6 +144,140 @@ class API
             $AppVersion = Config::getAppValue ('ocdownloader', 'installed_version');
             return Array ('RESULT' => version_compare ($Version, $AppVersion, '<='));
       }
+      
+      public static function GetQueue ()
+      {
+            self::Load ();
+            
+            try
+            {
+                  $Params = Array (self::$CurrentUID);
+                  $StatusReq = '(?, ?, ?, ?, ?)';
+                  $Params[] = 0; $Params[] = 1; $Params[] = 2; $Params[] = 3; $Params[] = 4;
+                  $IsCleanedReq = '(?, ?)';
+                  $Params[] = 0; $Params[] = 1;
+                        
+                  $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `STATUS` IN ' . $StatusReq . ' AND `IS_CLEANED` IN ' . $IsCleanedReq . ' ORDER BY `TIMESTAMP` ASC';
+                  if (self::$DbType == 1)
+                  {
+                        $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "STATUS" IN ' . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
+                  }
+                  $Query = \OCP\DB::prepare ($SQL);
+                  $Request = $Query->execute ($Params);
+                  
+                  $Queue = [];
+                  
+                  while ($Row = $Request->fetchRow ())
+                  {
+                        $Status = (self::$WhichDownloader == 0 ? Aria2::TellStatus ($Row['GID']) : CURL::TellStatus ($Row['GID']));
+                        $DLStatus = 5; // Error
+                        
+                        if (!is_null ($Status))
+                        {
+                              if (!isset ($Status['error']))
+                              {
+                                    $Progress = 0;
+                                    if ($Status['result']['totalLength'] > 0)
+                                    {
+                                          $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
+                                    }
+                                    
+                                    $DLStatus = Tools::GetDownloadStatusID ($Status['result']['status']);
+                                    $ProgressString = Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress);
+                                    
+                                    $Queue[] = Array (
+                                          'GID' => $Row['GID'],
+                                          'PROGRESSVAL' => round((($Progress) * 100), 2),
+                                          'PROGRESS' => Array (
+                                                'Message' => null,
+                                                'ProgressString' => is_null ($ProgressString) ? 'N_A' : $ProgressString,
+                                                'NumSeeders' => isset ($Status['result']['bittorrent']) && $Progress < 1 ? $Status['result']['numSeeders'] : null,
+                                                'UploadLength' => isset ($Status['result']['bittorrent']) && $Progress == 1 ? Tools::FormatSizeUnits ($Status['result']['uploadLength']) : null,
+                                                'Ratio' => isset ($Status['result']['bittorrent']) ? round (($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2) : null
+                                          ),
+                                          'STATUS' => Array (
+                                                'Value' => isset ($Status['result']['status']) ? ($Row['STATUS'] == 4 ? 'Removed' : ucfirst ($Status['result']['status'])) : 'N_A',
+                                                'Seeding' => isset ($Status['result']['bittorrent']) && $Progress == 1 && $DLStatus != 3 ? true : false
+                                          ),
+                                          'STATUSID' => $Row['STATUS'] == 4 ? 4 : $DLStatus,
+                                          'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Progress == 1 ? (isset ($Status['result']['bittorrent']) ? ($Status['result']['uploadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s') : '--') : ($DLStatus == 4 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s')) : 'N_A',
+                                          'FILENAME' => $Row['FILENAME'],
+                                          'PROTO' => $Row['PROTOCOL'],
+                                          'ISTORRENT' => isset ($Status['result']['bittorrent']),
+                                    );
+                                    
+                                    if ($Row['STATUS'] != $DLStatus)
+                                    {
+                                          $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
+                                          if (self::$DbType == 1)
+                                          {
+                                                $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
+                                          }
+                                          
+                                          $Query = \OCP\DB::prepare ($SQL);
+                                          $Result = $Query->execute (Array (
+                                                $DLStatus,
+                                                self::$CurrentUID,
+                                                $Row['GID'],
+                                                4
+                                          ));
+                                    }
+                              }
+                              else
+                              {
+                                    $Queue[] = Array (
+                                          'GID' => $Row['GID'],
+                                          'PROGRESSVAL' => 0,
+                                          'PROGRESS' => Array (
+                                                'Message' => 'ErrorGIDnotfound',
+                                                'ProgressString' => null,
+                                                'NumSeeders' => null,
+                                                'UploadLength' => null,
+                                                'Ratio' => null
+                                          ),
+                                          'STATUS' => Array(
+                                                'Value' => 'N_A',
+                                                'Seeding' => null
+                                          ),
+                                          'STATUSID' => $DLStatus,
+                                          'SPEED' => 'N_A',
+                                          'FILENAME' => $Row['FILENAME'],
+                                          'PROTO' => $Row['PROTOCOL'],
+                                          'ISTORRENT' => isset ($Status['result']['bittorrent'])
+                                    );
+                              }
+                        }
+                        else
+                        {
+                              $Queue[] = Array (
+                                    'GID' => $Row['GID'],
+                                    'PROGRESSVAL' => 0,
+                                    'PROGRESS' => Array (
+                                          'Message' => self::$WhichDownloader == 0 ? 'ReturnedstatusisnullIsAria2crunningasadaemon' : 'Unabletofinddownloadstatusfile',
+                                          'ProgressString' => null,
+                                          'NumSeeders' => null,
+                                          'UploadLength' => null,
+                                          'Ratio' => null
+                                    ),
+                                    'STATUS' => Array(
+                                          'Value' => 'N_A',
+                                          'Seeding' => null
+                                    ),
+                                    'STATUSID' => $DLStatus,
+                                    'SPEED' => 'N_A',
+                                    'FILENAME' => $Row['FILENAME'],
+                                    'PROTO' => $Row['PROTOCOL'],
+                                    'ISTORRENT' => isset ($Status['result']['bittorrent'])
+                              );
+                        }
+                  }
+                  return Array ('ERROR' => false, 'MESSAGE' => null, 'QUEUE' => $Queue, 'COUNTER' => Tools::GetCounters (self::$DbType, self::$CurrentUID));
+            }
+            catch (Exception $E)
+            {
+                  return Array ('ERROR' => true, 'MESSAGE' => $E->getMessage (), 'QUEUE' => null, 'COUNTER' => null);
+            }
+      }
 	
 	/********** PRIVATE STATIC METHODS **********/
 	private static function Load ()
@@ -152,6 +305,19 @@ class API
             $Settings->SetKey ('WhichDownloader');
             self::$WhichDownloader = $Settings->GetValue ();
             self::$WhichDownloader = is_null (self::$WhichDownloader) ? 0 : (strcmp (self::$WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
+            
+            $Settings->SetKey ('AllowProtocolHTTP');
+            self::$AllowProtocolHTTP = $Settings->GetValue ();
+            self::$AllowProtocolHTTP = is_null (self::$AllowProtocolHTTP) ? true : strcmp (self::$AllowProtocolHTTP, 'Y') == 0;
+            $Settings->SetKey ('AllowProtocolFTP');
+            self::$AllowProtocolFTP = $Settings->GetValue ();
+            self::$AllowProtocolFTP = is_null (self::$AllowProtocolFTP) ? true : strcmp (self::$AllowProtocolFTP, 'Y') == 0;
+            $Settings->SetKey ('AllowProtocolYT');
+            self::$AllowProtocolYT = $Settings->GetValue ();
+            self::$AllowProtocolYT = is_null (self::$AllowProtocolYT) ? true : strcmp (self::$AllowProtocolYT, 'Y') == 0;
+            $Settings->SetKey ('AllowProtocolBT');
+            self::$AllowProtocolBT = $Settings->GetValue ();
+            self::$AllowProtocolBT = is_null (self::$AllowProtocolBT) ? true : strcmp (self::$AllowProtocolBT, 'Y') == 0;
             
             $Settings->SetTable ('personal');
             $Settings->SetUID (self::$CurrentUID);

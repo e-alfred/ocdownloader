@@ -26,7 +26,7 @@
         "New YouTube download": "Neuer YouTube Download",
         "Launch YouTube Download": "Starte YouTube Download",
         "YouTube Video URL to download": "YouTube Video URL vom Download",
-        "Only Extract audio ?": "Nur die Audiospur herunterladen? ?",
+        "Only Extract audio ?": "Nur die Audiospur herunterladen?",
         "(No post-processing, just extract the best audio quality)": "(Keine Nachbearbeitung, nur die beste Audioqualität)",
         "New BitTorrent download": "Neuer BitTorrent Download",
         "Launch BitTorrent Download": "Starte BitTorrent Download",
@@ -103,5 +103,6 @@
         "You are using %s ! This page is only available with the following engines :": "Du benutzt %s! Diese Seite ist nur mit den folgenden Engines nutzbar: ",
         "Unable to find download status file %s": "Unmöglich den Downloadstatus von Datei %s festzustellen.",
         "An error occurred while running the CURL download": "Ein Fehler im CURL Download wurde festgestellt"
-    }
+    },
+    "pluralForm" :"nplurals=2; plural=(n != 1);"
 }
