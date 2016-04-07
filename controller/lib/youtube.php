@@ -44,6 +44,9 @@ class YouTube
 			$Proxy = ' --proxy ' . rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
 		}
 		
+		//youtube multibyte support
+		putenv('LANG=en_US.UTF-8');
+		
 		$Output = shell_exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -f bestaudio -x' : ' -f best') . ($this->ForceIPv4 ? ' -4' : '') . (is_null ($Proxy) ? '' : $Proxy));
 		
 		if (!is_null ($Output))
