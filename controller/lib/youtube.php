@@ -63,11 +63,11 @@ class YouTube
 				{
 					if (mb_strlen (trim ($Output[$I])) > 0)
 					{
-						if (mb_strpos (urldecode ($Output[$I]), 'https://') == 0 && mb_strpos (urldecode ($Output[$I]), '&mime=video/') !== false)
+						if (mb_strpos (urldecode ($Output[$I]), 'https://') === 0 && mb_strpos (urldecode ($Output[$I]), '&mime=video/') !== false)
 						{
 							$OutProcessed['VIDEO'] = $Output[$I];
 						}
-						elseif (mb_strpos (urldecode ($Output[$I]), 'https://') == 0 && mb_strpos (urldecode ($Output[$I]), '&mime=audio/') !== false)
+						elseif (mb_strpos (urldecode ($Output[$I]), 'https://') === 0 && mb_strpos (urldecode ($Output[$I]), '&mime=audio/') !== false)
 						{
 							$OutProcessed['AUDIO'] = $Output[$I];
 						}
