@@ -39,7 +39,7 @@ Xavier Beurois
 ### v1.5.2 by Nibbels
 - Added some basic function which scans the downloads folder to make new downloads visible within Owncloud/Nextcloud
 - hooked in the new function to the pageload of "Complete Downloads" and "All Downloads" (This is way from perfect but works somehow)
-- Hint: fallback.sh still needs chmod 740 (I used CURL on nextcloud 11.0.3)
+- Hint: SERVER/fallback.sh still needs chmod 740 (I used CURL on nextcloud 11.0.3)
 ### v1.5.1
 - Fixing minor CSS / JS bug
 ### v1.5
