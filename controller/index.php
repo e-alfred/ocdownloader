@@ -167,10 +167,10 @@ class Index extends Controller
        */
       public function Removed ()
       {
-            if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
-            {
-                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
-            }
+            //if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
+            //{
+            //      return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
+            //}
             return new TemplateResponse('ocdownloader', 'removed', [
                   'PAGE' => 6,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
