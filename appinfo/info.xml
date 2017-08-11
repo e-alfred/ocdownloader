@@ -4,7 +4,7 @@
 	<name>ocDownloader</name>
 	<description>Easy to use downloader client. ocDownloader now uses Aria2 to allow downloading via HTTP(S), FTP(S), YouTube videos, BitTorrent files</description>
 	<version>1.5.2</version>
-	<licence>Creative Commons by-sa</licence>
+	<licence>AGPL</licence>
 	<author>Xavier Beurois</author>
 	<website>http://www.sgc-univ.net</website>
 	<bugs>https://github.com/DjazzLab/ocdownloader/issues</bugs>
