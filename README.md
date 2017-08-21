@@ -44,8 +44,7 @@ Xavier Beurois
 ### v1.5.2
 - Added some basic function which scans the downloads folder to make new downloads visible within Owncloud/Nextcloud
 - hooked in the new function to the pageload of "Complete Downloads" and "All Downloads" (This is way from perfect but works somehow)
-### v1.5.1
-- Fixing minor CSS / JS bug
+- removed 1.5.1 from commits because of license change.
 ### v1.5
 - Update languages, add following languages : Persian, Chinese, Italian, Danish, Korean
 - You can now upload a torrent file directly from the application
