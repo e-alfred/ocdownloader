@@ -218,7 +218,7 @@ class YTDownloader extends Controller
                                     'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
-                                    'FILENAME' => (mb_strlen ($DL['FILENAME'], "UTF-8") > 40 ? mb_substr ($DL['FILENAME'], 0, 40, "UTF-8") . '...' : $DL['FILENAME']),
+                                    'FILENAME' => (strlen ($DL['FILENAME']) > 40 ? substr ($DL['FILENAME'], 0, 40) . '...' : $DL['FILENAME']),
                                     'PROTO' => $DL['TYPE'],
                                     'ISTORRENT' => false
                               ));
