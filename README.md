@@ -8,13 +8,18 @@ ocDownloader is an application for [ownCloud](https://owncloud.org). ocDownloade
 ***If you are interested, go to [ocDownloader Transifex Project](https://www.transifex.com/projects/p/ocdownloader)***
 
 ## ARIA2 installation
-Please visit : [OCDownloader:Requirements (Linux Debian - JESSIE)](https://wiki.sgc-univ.net/index.php/OCDownloader:Requirements_%28Linux_Debian_-_JESSIE%29)
+Please visit : [OCDownloader:Requirements (Linux Debian - JESSIE)](https://web.archive.org/web/20160912231334/https://wiki.sgc-univ.net/index.php/OCDownloader:Requirements_(Linux_Debian_-_JESSIE))
 Everything you need to install ARIA2 and to run aria2c as a daemon !
 
 ## Other articles
-Download YouTube video : [OCDownloader:Install The YouTube-DL Provider](https://wiki.sgc-univ.net/index.php/OCDownloader:Install_The_YouTube-DL_Provider)
-*Note : You have to install Python on your server. This a requierement for youtube-dl.*
-ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_%28Requirements%29)
+Download YouTube video : [OCDownloader:Install The YouTube-DL Provider](https://wiki.sgc-univ.net/index.php/OCDownloader:Install_The_YouTube-DL_Provider)  
+Another Reference : [OCDownloader:Install The YouTube-DL](https://rg3.github.io/youtube-dl/download.html)
+*Note : You have to install Python on your server. This a requierement for youtube-dl.*  
+
+ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://web.archive.org/web/20160912225929/https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_(Requirements))
+
+## CURL installation hint
+The File SERVER/fallback.sh still needs chmod 740. This is no perfect solution but seems to work.
 
 ## Translators
 - Polish : Andrzej Kaczmarczyk
@@ -36,8 +41,10 @@ Xavier Beurois
 - Wiki : [Visit SGC-Univ.Net Wiki!](https://wiki.sgc-univ.net)
 
 ## Releases notes
-### v1.5.1
-- Fixing minor CSS / JS bug
+### v1.5.2
+- Added some basic function which scans the downloads folder to make new downloads visible within Owncloud/Nextcloud
+- hooked in the new function to the pageload of "Complete Downloads" and "All Downloads" (This is way from perfect but works somehow)
+- removed 1.5.1 from commits because of license change.
 ### v1.5
 - Update languages, add following languages : Persian, Chinese, Italian, Danish, Korean
 - You can now upload a torrent file directly from the application
