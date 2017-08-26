@@ -34,11 +34,11 @@ The File SERVER/fallback.sh still needs chmod 740. This is no perfect solution b
 
 ## Authors
 e-alfred  
-nibbels  
+Nibbels  
 (formerly) Xavier Beurois
 
 ## Releases notes
-### v1.5.2
+### v1.5.2 (thanks @Nibbels)
 - Added some basic function which scans the downloads folder to make new downloads visible within Owncloud/Nextcloud
 - hooked in the new function to the pageload of "Complete Downloads" and "All Downloads" (This is way from perfect but works somehow)
 - removed 1.5.1 from commits because of license change.
