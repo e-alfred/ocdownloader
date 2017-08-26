@@ -1,5 +1,5 @@
 # ocDownloader
-ocDownloader is an application for [Nextcloud](https://nextcloud.com) which allows you to download files from HTTP(S)/FTP(S)/Youtube/Bittorrent using the ARIA2 download manager/Curl and youtube-dl.
+ocDownloader is an AGPL-licensed application for [Nextcloud](https://nextcloud.com) which allows you to download files from HTTP(S)/FTP(S)/Youtube/Bittorrent using the ARIA2 download manager/Curl and youtube-dl.
 
 ***I'm looking for maintainers and translators, every kind of support (especially pull requests) is highly welcome***
 
