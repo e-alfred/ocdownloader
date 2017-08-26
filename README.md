@@ -1,9 +1,9 @@
 # ocDownloader
 ocDownloader is an application for [Nextcloud](https://nextcloud.org) which allows you to download files from HTTP(S)/FTP(S)/Youtube/Bittorrent using the ARIA2 download manager/curl and youtube-dl.
 
-***I'm looking for maintainers and translators, every kind of support is highly welcome***
+***I'm looking for maintainers and translators, every kind of support (especially pull requests) is highly welcome***
 
-***If you are interested, go to [ocDownloader Transifex Project](https://www.transifex.com/projects/p/ocdownloader)***
+***If you are interested in translating, visit to [ocDownloader Transifex Project](https://www.transifex.com/projects/p/ocdownloader)***
 
 ## ARIA2 installation
 Please visit : [OCDownloader:Requirements (Linux Debian - JESSIE)](https://web.archive.org/web/20160912231334/https://wiki.sgc-univ.net/index.php/OCDownloader:Requirements_(Linux_Debian_-_JESSIE))
@@ -12,9 +12,7 @@ Everything you need to install ARIA2 and to run aria2c as a daemon !
 ## Other articles
 To download YouTube videos, you have to install youtube-dl. For Ubuntu, you can use this repository: [Webupd8 PPA](https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8)
 
-Another Reference : [OCDownloader:Install The YouTube-DL](https://rg3.github.io/youtube-dl/download.html)
-
-*Note : You have to install Python on your server. This a requierement for youtube-dl.*  
+Another Reference : [Install youTube-dlmanually](https://rg3.github.io/youtube-dl/download.html) *Note : You have to install Python on your server. This a requierement for youtube-dl.*  
 
 ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://web.archive.org/web/20160912225929/https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_(Requirements))
 
