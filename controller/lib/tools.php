@@ -18,7 +18,7 @@ class Tools
 	public static function CheckURL ($URL)
 	{
 		$URLPattern = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
-		
+
 		preg_match ($URLPattern, $URL, $Matches);
 		if (count ($Matches) == 1)
 		{
@@ -26,7 +26,7 @@ class Tools
 		}
 		return false;
 	}
-	
+
 	public static function CheckFilepath ($FP)
 	{
 		if (\OC\Files\Filesystem::file_exists ($FP))
@@ -35,12 +35,12 @@ class Tools
         }
 		return false;
 	}
-	
+
 	public static function GetProgressString ($Completed, $Total, $Progress)
 	{
 		$CompletedStr = self::FormatSizeUnits ($Completed);
 		$TotalStr = self::FormatSizeUnits ($Total);
-		
+
 		if ($Progress < 1 && $Progress > 0)
 		{
 			return $CompletedStr . ' / ' . $TotalStr . ' (' . round ((($Completed / $Total) * 100), 2) . '%)';
@@ -51,7 +51,7 @@ class Tools
 		}
 		return null;
 	}
-	
+
 	public static function FormatSizeUnits ($Bytes)
     {
         if ($Bytes >= 1073741824)
@@ -73,18 +73,18 @@ class Tools
 
         return $Bytes;
 	}
-	
+
 	public static function CheckBinary ($Binary)
 	{
 		exec ('which ' . $Binary, $Output, $Return);
-		
+
 		if ($Return == 0)
 		{
 		    return true;
 		}
 		return false;
 	}
-	
+
 	public static function CleanString ($Text)
 	{
 	    $UTF8 = Array
@@ -110,7 +110,7 @@ class Tools
 	    );
     	return preg_replace (array_keys ($UTF8), array_values ($UTF8), $Text);
 	}
-	
+
 	public static function GetDownloadStatusID ($Status)
 	{
 		switch (strtolower ($Status))
@@ -136,7 +136,7 @@ class Tools
 		}
 		return $DLStatus;
 	}
-	
+
 	public static function GetCounters ($DbType, $UID)
 	{
 		$SQL = 'SELECT (SELECT COUNT(*) FROM `*PREFIX*ocdownloader_queue` WHERE `STATUS` < ? AND `UID` = ?) as `ALL`,' .
@@ -156,24 +156,24 @@ class Tools
 		}
 		$Query = \OCP\DB::prepare ($SQL);
 		$Request = $Query->execute (Array (5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
-		
+
 		return $Request->fetchRow ();
 	}
-	
+
 	public static function StartsWith ($Haystack, $Needle)
 	{
 	    return $Needle === "" || strrpos ($Haystack, $Needle, -strlen ($Haystack)) !== FALSE;
 	}
-	
+
 	public static function EndsWith ($Haystack, $Needle)
 	{
 	    return $Needle === "" || (($Temp = strlen ($Haystack) - strlen ($Needle)) >= 0 && strpos ($Haystack, $Needle, $Temp) !== FALSE);
 	}
-	
+
 	public static function GetLastVersionNumber ()
 	{
-		$CH = curl_init ('https://raw.githubusercontent.com/DjazzLab/ocdownloader/master/appinfo/version');
-		
+		$CH = curl_init ('https://raw.githubusercontent.com/e-alfred/ocdownloader/master/appinfo/version');
+
 		curl_setopt_array ($CH, Array (
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_TIMEOUT => 10,
@@ -182,13 +182,13 @@ class Tools
 	    	CURLOPT_FOLLOWLOCATION => true,
 	    	CURLOPT_MAXREDIRS => 10
 		));
-		
+
 		$Data = curl_exec ($CH);
 		curl_close ($CH);
-		
+
 		return $Data;
 	}
-	
+
 	public static function CanCheckForUpdate ()
 	{
 		// Is the user in the admin group ?
@@ -205,7 +205,7 @@ class Tools
         }
 		return false;
 	}
-	
+
 	public static function ResetAria2 ($DbType)
 	{
 		$SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`';
@@ -215,17 +215,17 @@ class Tools
 		}
 		$Query = \OCP\DB::prepare ($SQL);
 		$Request = $Query->execute ();
-		
+
 		while ($Row = $Request->fetchRow ())
 		{
 			$Status = Aria2::TellStatus ($GID);
-			
+
 			if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
 			{
 				Aria2::Remove ($GID);
 			}
 		}
-		
+
 		$Purge = Aria2::PurgeDownloadResult ();
 		if (isset ($Purge['result']) && strcmp ($Purge['result'], 'OK') == 0)
 		{
@@ -238,18 +238,19 @@ class Tools
 			$Request = $Query->execute ();
 		}
 	}
-	
+
 	public static function GetMinutes ($Number, $UnitLetter)
 	{
 		if (strcmp ($UnitLetter, 'i') == 0)
 		{
 			return $Number;
 		}
-		
+
 		$Units = array ('h' => 'hour', 'd' => 'day', 'w' => 'week', 'm' => 'month', 'y' => 'year');
-		
+
 		$To = strtotime ('+' . $Number . ' ' . $Units[$UnitLetter] . ($Number > 1 ? 's' : ''));
-		$From = strtotime ('now'); 
+		$From = strtotime ('now');
 		return round (abs ($To - $From) / 60,2);
 	}
 }
+?>
