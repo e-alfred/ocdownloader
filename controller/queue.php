@@ -8,7 +8,7 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-      
+
 namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
@@ -28,24 +28,24 @@ class Queue extends Controller
       private $DbType;
       private $CurrentUID;
       private $WhichDownloader = 0;
-      
+
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct($AppName, $Request);
-            
+
             $this->DbType = 0;
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
                   $this->DbType = 1;
             }
-            
+
             $this->CurrentUID = $CurrentUID;
-            
+
             $Settings = new Settings ();
             $Settings->SetKey ('WhichDownloader');
             $this->WhichDownloader = $Settings->GetValue ();
             $this->WhichDownloader = is_null ($this->WhichDownloader) ? 0 : (strcmp ($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
-            
+
             $this->L10N = $L10N;
       }
 
@@ -56,7 +56,7 @@ class Queue extends Controller
       public function Get ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if (isset ($_POST['VIEW']) && strlen (trim ($_POST['VIEW'])) > 0)
@@ -100,14 +100,14 @@ class Queue extends Controller
                                     $IsCleanedReq = '(?, ?)';
                                     $Params[] = 0; $Params[] = 1;
                               break;
-                              default: // add view 
+                              default: // add view
                                     $StatusReq = '(?, ?, ?, ?)';
                                     $Params[] = 0; $Params[] = 1; $Params[] = 2; $Params[] = 3; // STATUS
                                     $IsCleanedReq = '(?)';
                                     $Params[] = 0; // IS_CLEANED
                               break;
                         }
-                        
+
                         $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `STATUS` IN ' . $StatusReq . ' AND `IS_CLEANED` IN ' . $IsCleanedReq . ' ORDER BY `TIMESTAMP` ASC';
                         if ($this->DbType == 1)
                         {
@@ -115,14 +115,14 @@ class Queue extends Controller
                         }
                         $Query = \OCP\DB::prepare ($SQL);
                         $Request = $Query->execute ($Params);
-                        
+
                         $Queue = [];
-                        
+
                         while ($Row = $Request->fetchRow ())
                         {
                               $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($Row['GID']) : CURL::TellStatus ($Row['GID']));
                               $DLStatus = 5; // Error
-                              
+
                               if (!is_null ($Status))
                               {
                                     if (!isset ($Status['error']))
@@ -132,10 +132,10 @@ class Queue extends Controller
                                           {
                                                 $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                                           }
-                                          
+
                                           $DLStatus = Tools::GetDownloadStatusID ($Status['result']['status']);
                                           $ProgressString = Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress);
-                                          
+
                                           $Queue[] = Array (
                                                 'GID' => $Row['GID'],
                                                 'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
@@ -143,11 +143,10 @@ class Queue extends Controller
                                                 'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t ($Row['STATUS'] == 4 ? 'Removed' : ucfirst ($Status['result']['status'])) . (isset ($Status['result']['bittorrent']) && $Progress == 1 && $DLStatus != 3 ? ' - ' . $this->L10N->t ('Seeding') : '') : (string)$this->L10N->t ('N/A'),
                                                 'STATUSID' => $Row['STATUS'] == 4 ? 4 : $DLStatus,
                                                 'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Progress == 1 ? (isset ($Status['result']['bittorrent']) ? ($Status['result']['uploadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s') : '--') : ($DLStatus == 4 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s')) : (string)$this->L10N->t ('N/A'),
-                                                'FILENAME' => (strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']),
-                                                'PROTO' => $Row['PROTOCOL'],
+                                                'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),                                                'PROTO' => $Row['PROTOCOL'],
                                                 'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                           );
-                                          
+
                                           if ($Row['STATUS'] != $DLStatus)
                                           {
                                                 $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
@@ -155,7 +154,7 @@ class Queue extends Controller
                                                 {
                                                       $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                                                 }
-                                                
+
                                                 $Query = \OCP\DB::prepare ($SQL);
                                                 $Result = $Query->execute (Array (
                                                       $DLStatus,
@@ -174,8 +173,7 @@ class Queue extends Controller
                                                 'STATUS' => (string)$this->L10N->t ('N/A'),
                                                 'STATUSID' => $DLStatus,
                                                 'SPEED' => (string)$this->L10N->t ('N/A'),
-                                                'FILENAME' => (strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']),
-                                                'PROTO' => $Row['PROTOCOL'],
+                                                'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),                                                'PROTO' => $Row['PROTOCOL'],
                                                 'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                           );
                                     }
@@ -189,8 +187,7 @@ class Queue extends Controller
                                           'STATUS' => (string)$this->L10N->t ('N/A'),
                                           'STATUSID' => $DLStatus,
                                           'SPEED' => (string)$this->L10N->t ('N/A'),
-                                          'FILENAME' => (strlen ($Row['FILENAME']) > 40 ? substr ($Row['FILENAME'], 0, 40) . '...' : $Row['FILENAME']),
-                                          'PROTO' => $Row['PROTOCOL'],
+                                          'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),                                          'PROTO' => $Row['PROTOCOL'],
                                           'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                     );
                               }
@@ -203,7 +200,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -211,7 +208,7 @@ class Queue extends Controller
       public function Count ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   return new JSONResponse (Array ('ERROR' => false, 'COUNTER' => Tools::GetCounters ($this->DbType, $this->CurrentUID)));
@@ -221,7 +218,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -229,7 +226,7 @@ class Queue extends Controller
       public function Pause ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if ($this->WhichDownloader == 0)
@@ -237,13 +234,13 @@ class Queue extends Controller
                         if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
                         {
                               $Status = Aria2::TellStatus ($_POST['GID']);
-                              
+
                               $Pause['result'] = $_POST['GID'];
                               if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0  && strcmp ($Status['result']['status'], 'active') == 0)
                               {
                                     $Pause = Aria2::Pause ($_POST['GID']);
                               }
-                              
+
                               if (strcmp ($Pause['result'], $_POST['GID']) == 0)
                               {
                                     $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
@@ -251,14 +248,14 @@ class Queue extends Controller
                                     {
                                           $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                                     }
-                  
+
                                     $Query = \OCP\DB::prepare ($SQL);
                                     $Result = $Query->execute (Array (
                                           3,
                                           $this->CurrentUID,
                                           $_POST['GID']
                                     ));
-                                    
+
                                     return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been paused')));
                               }
                               else
@@ -277,7 +274,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -285,7 +282,7 @@ class Queue extends Controller
       public function UnPause ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if ($this->WhichDownloader == 0)
@@ -293,13 +290,13 @@ class Queue extends Controller
                         if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
                         {
                               $Status = Aria2::TellStatus ($_POST['GID']);
-                              
+
                               $UnPause['result'] = $_POST['GID'];
                               if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0  && strcmp ($Status['result']['status'], 'paused') == 0)
                               {
                                     $UnPause = Aria2::Unpause ($_POST['GID']);
                               }
-                              
+
                               if (strcmp ($UnPause['result'], $_POST['GID']) == 0)
                               {
                                     $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
@@ -307,14 +304,14 @@ class Queue extends Controller
                                     {
                                           $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                                     }
-                  
+
                                     $Query = \OCP\DB::prepare ($SQL);
                                     $Result = $Query->execute (Array (
                                           1,
                                           $this->CurrentUID,
                                           $_POST['GID']
                                     ));
-                                    
+
                                     return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been unpaused')));
                               }
                               else
@@ -333,7 +330,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -341,7 +338,7 @@ class Queue extends Controller
       public function Hide ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
@@ -351,14 +348,14 @@ class Queue extends Controller
                         {
                               $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
-      
+
                         $Query = \OCP\DB::prepare ($SQL);
                         $Result = $Query->execute (Array (
                               1,
                               $this->CurrentUID,
                               $_POST['GID']
                         ));
-                        
+
                         return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been cleaned')));
                   }
                   else
@@ -371,7 +368,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -379,13 +376,13 @@ class Queue extends Controller
       public function HideAll ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if (isset ($_POST['GIDS']) && count ($_POST['GIDS']) > 0)
                   {
                         $Queue = Array ();
-                        
+
                         foreach ($_POST['GIDS'] as $GID)
                         {
                               $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
@@ -393,19 +390,19 @@ class Queue extends Controller
                               {
                                     $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                               }
-            
+
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     1,
                                     $this->CurrentUID,
                                     $GID
                               ));
-                              
+
                               $Queue[] = Array (
                                     'GID' => $GID
                               );
                         }
-                        
+
                         return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('All downloads have been cleaned'), 'QUEUE' => $Queue));
                   }
                   else
@@ -418,7 +415,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -426,13 +423,13 @@ class Queue extends Controller
       public function Remove ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
                   {
                         $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($_POST['GID']) : CURL::TellStatus ($_POST['GID']));
-                        
+
                         $Remove['result'] = $_POST['GID'];
                         if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
                         {
@@ -442,7 +439,7 @@ class Queue extends Controller
                         {
                               $Remove = CURL::Remove ($Status['result']);
                         }
-                        
+
                         if (!is_null ($Remove) && strcmp ($Remove['result'], $_POST['GID']) == 0)
                         {
                               $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
@@ -450,14 +447,14 @@ class Queue extends Controller
                               {
                                     $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                               }
-            
+
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     4, 1,
                                     $this->CurrentUID,
                                     $_POST['GID']
                               ));
-                              
+
                               return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been removed')));
                         }
                         else
@@ -475,7 +472,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -483,23 +480,23 @@ class Queue extends Controller
       public function RemoveAll ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if (isset ($_POST['GIDS']) && count ($_POST['GIDS']) > 0)
                   {
                         $GIDS = Array ();
-                        
+
                         foreach ($_POST['GIDS'] as $GID)
                         {
                               $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($GID) : CURL::TellStatus ($GID));
                               $Remove = Array ('result' => $GID);
-                              
+
                               if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
                               {
                                     $Remove = ($this->WhichDownloader == 0 ? Aria2::Remove ($GID) : CURL::Remove ($Status['result']));
                               }
-                              
+
                               if (!is_null ($Remove) && strcmp ($Remove['result'], $GID) == 0)
                               {
                                     $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
@@ -507,18 +504,18 @@ class Queue extends Controller
                                     {
                                           $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                                     }
-                  
+
                                     $Query = \OCP\DB::prepare ($SQL);
                                     $Result = $Query->execute (Array (
                                           4, 1,
                                           $this->CurrentUID,
                                           $GID
                                     ));
-                                    
+
                                     $GIDS[] = $GID;
                               }
                         }
-                        
+
                         return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('All downloads have been removed'), 'GIDS' => $GIDS));
                   }
                   else
@@ -531,7 +528,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -539,30 +536,30 @@ class Queue extends Controller
       public function CompletelyRemove ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if (isset ($_POST['GID']) && strlen (trim ($_POST['GID'])) > 0)
                   {
                         $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($_POST['GID']) : CURL::TellStatus ($_POST['GID']));
-                        
+
                         if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'removed') == 0)
                         {
                               $Remove = ($this->WhichDownloader == 0 ? Aria2::RemoveDownloadResult ($_POST['GID']) : CURL::RemoveDownloadResult ($_POST['GID']));
                         }
-                        
+
                         $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1)
                         {
                               $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
                         }
-      
+
                         $Query = \OCP\DB::prepare ($SQL);
                         $Result = $Query->execute (Array (
                               $this->CurrentUID,
                               $_POST['GID']
                         ));
-                        
+
                         return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been totally removed')));
                   }
                   else
@@ -575,7 +572,7 @@ class Queue extends Controller
                   return new JSONResponse (Array ('ERROR' => true, 'MESSAGE' => $E->getMessage ()));
             }
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -583,37 +580,37 @@ class Queue extends Controller
       public function CompletelyRemoveAll ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             try
             {
                   if (isset ($_POST['GIDS']) && count ($_POST['GIDS']) > 0)
                   {
                         $GIDS = Array ();
-                        
+
                         foreach ($_POST['GIDS'] as $GID)
                         {
                               $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($GID) : CURL::TellStatus ($GID));
-                              
+
                               if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'removed') == 0)
                               {
                                     $Remove = ($this->WhichDownloader == 0 ? Aria2::RemoveDownloadResult ($GID) : CURL::RemoveDownloadResult ($GID));
                               }
-                              
+
                               $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
                               if ($this->DbType == 1)
                               {
                                     $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
                               }
-            
+
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     $this->CurrentUID,
                                     $GID
                               ));
-                              
+
                               $GIDS[] = $GID;
                         }
-                        
+
                         return new JSONResponse (Array ('ERROR' => false, 'MESSAGE' => (string)$this->L10N->t ('The download has been totally removed'), 'GIDS' => $GIDS));
                   }
                   else

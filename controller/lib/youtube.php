@@ -18,24 +18,24 @@ class YouTube
 	private $ForceIPv4 = true;
 	private $ProxyAddress = null;
 	private $ProxyPort = 0;
-	
+
 	public function __construct ($YTDLBinary, $URL)
 	{
 		$this->YTDLBinary = $YTDLBinary;
 		$this->URL = $URL;
 	}
-	
+
 	public function SetForceIPv4 ($ForceIPv4)
 	{
 		$this->ForceIPv4 = $ForceIPv4;
 	}
-	
+
 	public function SetProxy ($ProxyAddress, $ProxyPort)
 	{
 		$this->ProxyAddress = $ProxyAddress;
 		$this->ProxyPort = $ProxyPort;
 	}
-	
+
 	public function GetVideoData ($ExtractAudio = false)
 	{
 		$Proxy = null;
@@ -43,24 +43,32 @@ class YouTube
 		{
 			$Proxy = ' --proxy ' . rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
 		}
-		
+
+
+		//youtube multibyte support
+		putenv('LANG=en_US.UTF-8');
+
 		$Output = shell_exec ($this->YTDLBinary . ' -i \'' . $this->URL . '\' --get-url --get-filename' . ($ExtractAudio ? ' -f bestaudio -x' : ' -f best') . ($this->ForceIPv4 ? ' -4' : '') . (is_null ($Proxy) ? '' : $Proxy));
-		
+
+    $index=(preg_match('/&index=(\d+)/', $this->URL, $current))?$current[1]:1;
+
 		if (!is_null ($Output))
 		{
 			$Output = explode ("\n", $Output);
+
 			if (count ($Output) >= 2)
 			{
 				$OutProcessed = Array ();
+				$current_index=1;
 				for ($I = 0; $I < count ($Output); $I++)
 				{
-					if (strlen (trim ($Output[$I])) > 0)
+					if (mb_strlen (trim ($Output[$I])) > 0)
 					{
-						if (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=video/') !== false)
+						if (mb_strpos (urldecode ($Output[$I]), 'https://') === 0 && mb_strpos (urldecode ($Output[$I]), '&mime=video/') !== false)
 						{
 							$OutProcessed['VIDEO'] = $Output[$I];
 						}
-						elseif (strpos (urldecode ($Output[$I]), 'https://') == 0 && strpos (urldecode ($Output[$I]), '&mime=audio/') !== false)
+						elseif (mb_strpos (urldecode ($Output[$I]), 'https://') === 0 && mb_strpos (urldecode ($Output[$I]), '&mime=audio/') !== false)
 						{
 							$OutProcessed['AUDIO'] = $Output[$I];
 						}
@@ -69,10 +77,23 @@ class YouTube
 							$OutProcessed['FULLNAME'] = $Output[$I];
 						}
 					}
+				 if ((!empty($OutProcessed['VIDEO']) || !empty($OutProcessed['AUDIO'])) && !empty($OutProcessed['FULLNAME']))
+					{
+						if ($index==$current_index)
+						{
+							break;
+						}
+						else
+						{
+							$OutProcessed = Array ();
+							$current_index++;
+						}
+					}
 				}
 				return $OutProcessed;
 			}
 		}
 		return null;
 	}
+
 }

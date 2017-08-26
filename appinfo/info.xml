@@ -2,20 +2,22 @@
 <info>
 	<id>ocdownloader</id>
 	<name>ocDownloader</name>
-	<description>Easy to use downloader client. ocDownloader now uses Aria2 to allow downloading via HTTP(S), FTP(S), YouTube videos, BitTorrent files</description>
-	<version>1.5</version>
+	<description>Easy to use downloader client. ocDownloader now uses Aria2 and youtube-dl to allow downloading via HTTP(S), FTP(S), YouTube videos, BitTorrent files</description>
+	<version>1.5.2</version>
 	<licence>AGPL</licence>
 	<author>Xavier Beurois</author>
-	<website>http://www.sgc-univ.net</website>
-	<bugs>https://github.com/DjazzLab/ocdownloader/issues</bugs>
-	<repository type="git">https://github.com/DjazzLab/ocdownloader.git</repository>
+	<author>e-alfred</author>
+	<website>https://github.com/e-alfred/ocdownloader</website>
+	<bugs>https://github.com/e-alfred/ocdownloader/issues</bugs>
+	<repository type="git">https://github.com/e-alfred/ocdownloader.git</repository>
 	<dependencies>
-		<owncloud min-version="8.0" />
+		<owncloud min-version="9.0" />
+		<nextcloud min-version="11" max-version="12" />
 		<php min-version="5.5.0" />
 		<lib>curl</lib>
 		<os>Linux</os>
 	</dependencies>
 	<documentation>
-		<user>https://wiki.sgc-univ.net/index.php/OCDownloader:User_Documentation</user>
+		<user>https://github.com/e-alfred/ocdownloader</user>
 	</documentation>
 </info>

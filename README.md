@@ -1,20 +1,23 @@
 # ocDownloader
-ocDownloader is an application for [ownCloud](https://owncloud.org). ocDownloader allows you to download files with multi-protocols using ARIA2 (HTTP(S)/FTP(S)/Youtube/BitTorrent)
+ocDownloader is an application for [Nextcloud](https://nextcloud.org). ocDownloader allows you to download files with from HTTP(S)/FTP(S)/Youtube/Bittorrent using the ARIA2 download manager and youtube-dl.
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/DjazzLab/ocdownloader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-***I'm looking for translators, every languages are needed***
+***I'm looking for maintainers and translators, every kind of support is highly welcome***
 
 ***If you are interested, go to [ocDownloader Transifex Project](https://www.transifex.com/projects/p/ocdownloader)***
 
 ## ARIA2 installation
-Please visit : [OCDownloader:Requirements (Linux Debian - JESSIE)](https://wiki.sgc-univ.net/index.php/OCDownloader:Requirements_%28Linux_Debian_-_JESSIE%29)
+Please visit : [OCDownloader:Requirements (Linux Debian - JESSIE)](https://web.archive.org/web/20160912231334/https://wiki.sgc-univ.net/index.php/OCDownloader:Requirements_(Linux_Debian_-_JESSIE))
 Everything you need to install ARIA2 and to run aria2c as a daemon !
 
 ## Other articles
-Download YouTube video : [OCDownloader:Install The YouTube-DL Provider](https://wiki.sgc-univ.net/index.php/OCDownloader:Install_The_YouTube-DL_Provider)
-*Note : You have to install Python on your server. This a requierement for youtube-dl.*
-ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_%28Requirements%29)
+To download YouTube videos, you have to install youtube-dl. For Ubuntu, you can use this repository: [Webupd8 PPA](https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8)  
+Another Reference : [OCDownloader:Install The YouTube-DL](https://rg3.github.io/youtube-dl/download.html)
+*Note : You have to install Python on your server. This a requierement for youtube-dl.*  
+
+ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://web.archive.org/web/20160912225929/https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_(Requirements))
+
+## CURL installation hint
+The File SERVER/fallback.sh still needs chmod 740. This is no perfect solution but seems to work.
 
 ## Translators
 - Polish : Andrzej Kaczmarczyk
@@ -36,6 +39,10 @@ Xavier Beurois
 - Wiki : [Visit SGC-Univ.Net Wiki!](https://wiki.sgc-univ.net)
 
 ## Releases notes
+### v1.5.2
+- Added some basic function which scans the downloads folder to make new downloads visible within Owncloud/Nextcloud
+- hooked in the new function to the pageload of "Complete Downloads" and "All Downloads" (This is way from perfect but works somehow)
+- removed 1.5.1 from commits because of license change.
 ### v1.5.1
 - Fixing minor CSS / JS bug
 ### v1.5

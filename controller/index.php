@@ -32,25 +32,26 @@ class Index extends Controller
       private $AllowProtocolFTP = null;
       private $AllowProtocolYT = null;
       private $AllowProtocolBT = null;
-      
+      private $DownloadsFolder = null;
+
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
             $this->CurrentUID = $CurrentUID;
             $this->L10N = $L10N;
-            
+
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
                   $this->DbType = 1;
             }
-            
+
             $this->CanCheckForUpdate = Tools::CanCheckForUpdate ();
-            
+
             $this->Settings = new Settings ();
             $this->Settings->SetKey ('WhichDownloader');
             $this->WhichDownloader = $this->Settings->GetValue ();
             $this->WhichDownloader = is_null ($this->WhichDownloader) ? 'ARIA2' : $this->WhichDownloader;
-            
+
             $this->Settings->SetKey ('AllowProtocolHTTP');
             $this->AllowProtocolHTTP = $this->Settings->GetValue ();
             $this->AllowProtocolHTTP = is_null ($this->AllowProtocolHTTP) || \OC_User::isAdminUser ($this->CurrentUID) ? true : strcmp ($this->AllowProtocolHTTP, 'Y') == 0;
@@ -63,6 +64,13 @@ class Index extends Controller
             $this->Settings->SetKey ('AllowProtocolBT');
             $this->AllowProtocolBT = $this->Settings->GetValue ();
             $this->AllowProtocolBT = is_null ($this->AllowProtocolBT) || \OC_User::isAdminUser ($this->CurrentUID) ? true : strcmp ($this->AllowProtocolBT, 'Y') == 0;
+
+            $this->Settings->SetTable ('personal');
+            $this->Settings->SetUID ($this->CurrentUID);
+
+            $this->Settings->SetKey ('DownloadsFolder');
+            $this->DownloadsFolder = $this->Settings->GetValue ();
+            $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
       }
 
       /**
@@ -75,8 +83,8 @@ class Index extends Controller
             $this->Settings->SetUID ($this->CurrentUID);
             $this->Settings->SetKey ('TorrentsFolder');
             $TorrentsFolder = $this->Settings->GetValue ();
-            
-            return new TemplateResponse ('ocdownloader', 'add', [ 
+
+            return new TemplateResponse ('ocdownloader', 'add', [
                   'PAGE' => 0,
                   'TTSFOLD' => $TorrentsFolder,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
@@ -87,33 +95,35 @@ class Index extends Controller
                   'AllowProtocolBT' => $this->AllowProtocolBT
             ]);
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
        */
       public function All ()
       {
-            return new TemplateResponse ('ocdownloader', 'all', [ 
+            self::syncDownloadsFolder();
+            return new TemplateResponse ('ocdownloader', 'all', [
                   'PAGE' => 1,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
                   'WD' => $this->WhichDownloader
             ]);
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
        */
       public function Completes ()
       {
-            return new TemplateResponse ('ocdownloader', 'completes', [ 
+            self::syncDownloadsFolder();
+            return new TemplateResponse ('ocdownloader', 'completes', [
                   'PAGE' => 2,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
                   'WD' => $this->WhichDownloader
             ]);
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -126,7 +136,7 @@ class Index extends Controller
                   'WD' => $this->WhichDownloader
             ]);
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -143,7 +153,7 @@ class Index extends Controller
                   'WD' => $this->WhichDownloader
             ]);
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -160,7 +170,7 @@ class Index extends Controller
                   'WD' => $this->WhichDownloader
             ]);
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -169,12 +179,31 @@ class Index extends Controller
       {
             if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
             {
-                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
+                  //return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
             }
             return new TemplateResponse('ocdownloader', 'removed', [
                   'PAGE' => 6,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
                   'WD' => $this->WhichDownloader
             ]);
+      }
+
+       /**
+       * Testfunction by Nibbels
+       * Fix for https://github.com/DjazzLab/ocdownloader/issues/44
+       */
+      protected function syncDownloadsFolder () {
+            $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
+            $scanner = new \OC\Files\Utils\Scanner( $user , \OC::$server->getDatabaseConnection(), \OC::$server->getLogger() );
+            $path = '/'.$user.'/files/'.ltrim($this->DownloadsFolder,'/\\');
+            try {
+                  $scanner->scan($path);
+            } catch (ForbiddenException $e) {
+                  //$arr['forbidden'] = 1;
+                  //"<error>Home storage for user $user not writable</error>" "Make sure you're running the scan command only as the user the web server runs as"
+            } catch (\Exception $e) {
+                  //$arr['exception'] = 1;
+                  //'<error>Exception during scan: ' . $e->getMessage() . "\n" . $e->getTraceAsString() . '</error>');
+            }
       }
 }

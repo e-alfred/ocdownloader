@@ -37,20 +37,20 @@ class FtpDownloader extends Controller
       private $L10N = null;
       private $AllowProtocolFTP = null;
       private $MaxDownloadSpeed = null;
-      
+
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
-            
+
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
                   $this->DbType = 1;
             }
-            
+
             $this->CurrentUID = $CurrentUID;
-            
+
             $Settings = new Settings ();
-            
+
             $Settings->SetKey ('ProxyAddress');
             $this->ProxyAddress = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPort');
@@ -70,18 +70,18 @@ class FtpDownloader extends Controller
             $Settings->SetKey ('AllowProtocolFTP');
             $this->AllowProtocolFTP = $Settings->GetValue ();
             $this->AllowProtocolFTP = is_null ($this->AllowProtocolFTP) ? true : strcmp ($this->AllowProtocolFTP, 'Y') == 0;
-            
+
             $Settings->SetTable ('personal');
             $Settings->SetUID ($this->CurrentUID);
             $Settings->SetKey ('DownloadsFolder');
             $this->DownloadsFolder = $Settings->GetValue ();
-            
+
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
             $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder ($this->DownloadsFolder);
-            
+
             $this->L10N = $L10N;
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -89,7 +89,7 @@ class FtpDownloader extends Controller
       public function Add ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             if (isset ($_POST['FILE']) && strlen ($_POST['FILE']) > 0 && Tools::CheckURL ($_POST['FILE']) && isset ($_POST['OPTIONS']))
             {
                   try
@@ -98,15 +98,15 @@ class FtpDownloader extends Controller
                         {
                               throw new \Exception ((string)$this->L10N->t ('You are not allowed to use the FTP protocol'));
                         }
-                        
+
                         $Target = Tools::CleanString (substr($_POST['FILE'], strrpos ($_POST['FILE'], '/') + 1));
-                        
+
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $Target))
                         {
                               $Target = time () . '_' . $Target;
                         }
-                        
+
                         // Create the target file if the downloader is Aria2
                         if ($this->WhichDownloader == 0)
                         {
@@ -119,7 +119,7 @@ class FtpDownloader extends Controller
                                     \OC\Files\Filesystem::mkdir ($this->DownloadsFolder);
                               }
                         }
-                        
+
                         // Build OPTIONS array
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target, 'follow-torrent' => false);
                         if (isset ($_POST['OPTIONS']['FTPUser']) && strlen (trim ($_POST['OPTIONS']['FTPUser'])) > 0 && isset ($_POST['OPTIONS']['FTPPasswd']) && strlen (trim ($_POST['OPTIONS']['FTPPasswd'])) > 0)
@@ -144,9 +144,9 @@ class FtpDownloader extends Controller
                         {
                               $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
                         }
-                        
+
                         $AddURI = ($this->WhichDownloader == 0 ? Aria2::AddUri (Array ($_POST['FILE']), Array ('Params' => $OPTIONS)) : CURL::AddUri ($_POST['FILE'], $OPTIONS));
-                        
+
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
                               $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES (?, ?, ?, ?, ?, ?)';
@@ -154,7 +154,7 @@ class FtpDownloader extends Controller
                               {
                                     $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?, ?)';
                               }
-                              
+
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     $this->CurrentUID,
@@ -164,18 +164,18 @@ class FtpDownloader extends Controller
                                     1,
                                     time()
                               ));
-                              
+
                               sleep (1);
                               $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($AddURI['result']) : CURL::TellStatus ($AddURI['result']));
-                              
+
                               $Progress = 0;
                               if ($Status['result']['totalLength'] > 0)
                               {
                                     $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                               }
-                              
+
                               $ProgressString = Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress);
-                              
+
                               return new JSONResponse (Array (
                                     'ERROR' => false,
                                     'MESSAGE' => (string)$this->L10N->t ('Download started'),
@@ -185,8 +185,7 @@ class FtpDownloader extends Controller
                                     'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
-                                    'FILENAME' => (strlen ($Target) > 40 ? substr ($Target, 0, 40) . '...' : $Target),
-                                    'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
+                                    'FILENAME' => (mb_strlen ($Target, "UTF-8") > 40 ? mb_substr ($Target, 0, 40, "UTF-8") . '...' : $Target),                                    'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
                                     'ISTORRENT' => false
                               ));
                         }
