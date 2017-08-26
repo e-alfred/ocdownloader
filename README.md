@@ -5,6 +5,12 @@ ocDownloader is an application for [Nextcloud](https://nextcloud.com) which allo
 
 ***If you are interested in translating, visit to [ocDownloader Transifex Project](https://www.transifex.com/projects/p/ocdownloader)***
 
+## Companion apps/extensions for Firefox/Chrome/Opera/Vivaldi and Windows
+
+Webextension plugin for both Firefox-based and Chromium-based browsers: https://github.com/e-alfred/ocDownloader_ChromeExtension
+
+UWP Windows 8.1/10 app: https://github.com/e-alfred/ocDownloader_WindowsDesktop
+
 ## ARIA2 installation
 Please visit : [OCDownloader:Requirements (Linux Debian - JESSIE)](https://web.archive.org/web/20160912231334/https://wiki.sgc-univ.net/index.php/OCDownloader:Requirements_(Linux_Debian_-_JESSIE))
 Everything you need to install ARIA2 and to run aria2c as a daemon !
