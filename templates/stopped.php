@@ -21,15 +21,9 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
     </div>
     <div id="app-content">
         <div id="app-content-wrapper">
-            <div class="jumbotron">
-                <h1><?php print ($l->t ('Manage Your Downloads Anywhere!')); ?></h1>
-                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <strong>%s</strong>', $_['WD'])); ?></p>
-            </div>
             <div id="controls">
-                <div class="actions">
-                    <div class="loadingtext loadingblock" style="display:none;"><?php print ($l->t ('Loading')); ?> ...</div>
-                </div>
                 <div class="righttitle"><?php print ($l->t ('Stopped Downloads')); ?></div>
+                <div style="float: right;"><p class="lead"><?php print ($l->t (' using <strong>%s</strong>', $_['WD'])); ?></p></div>
             </div>
             <div class="content-queue">
                 <table id="Queue" border="0" cellspacing="0" cellpadding="0">
@@ -48,6 +42,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     </tbody>
                 </table>
             </div>
+            <div class="loadingtext loadingblock" style="display:none;"><?php print ($l->t ('Loading')); ?> ...</div>
         </div>
     </div>
 </div>

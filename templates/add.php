@@ -11,7 +11,7 @@
 style ('ocdownloader', 'styles.min');
 script ('ocdownloader', 'badger.min');
 script ('ocdownloader', 'ocdownloader.min');
-script ('files', 'jquery.iframe-transport');
+//script ('files', 'jquery.iframe-transport');
 script ('files', 'jquery.fileupload');
 script ('ocdownloader', 'add.min');
 
@@ -25,31 +25,40 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
     </div>
     <div id="app-content">
         <div id="app-content-wrapper">
-            <div class="jumbotron">
-                <h1><?php print ($l->t ('Manage Your Downloads Anywhere!')); ?></h1>
-                <p class="lead"><?php print ($l->t ('Enough dealing with tricky downloads syntax. Manage your downloads via the web easily with <strong>%s</strong>', $_['WD'])); ?></p>
-            </div>
             <div id="controls">
                 <div class="actions">
-                    <div class="button" id="NewDL">
-        				<a><?php print ($l->t ('New Download')); ?><div class="icon-caret-dark svg"></div></a>
-        				<ul>
-        					<?php if ($_['AllowProtocolHTTP']): ?><li><p data-rel="OCDHTTP">HTTP</p></li><?php endif; ?>
-        					<?php if ($_['AllowProtocolFTP']): ?><li><p data-rel="OCDFTP">FTP</p></li><?php endif; ?>
-                            <?php if ($_['AllowProtocolYT']): ?><li><p data-rel="OCDYT">YOUTUBE</p></li><?php endif; ?>
-                            <?php if ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0): ?><li><p data-rel="OCDBT">BITTORRENT</p></li><?php endif; ?>
-        				</ul>
-        			</div>
-                    <div class="loadingtext loadinginline" style="display:none;"><?php print ($l->t ('Loading')); ?> ...</div>
+                    <div id="NewDL">
+                        <?php if ($_['AllowProtocolHTTP']){ ?>
+                        <div class="button" data-rel="OCDHTTP">
+                            <p data-rel="OCDHTTP">HTTP</p>
+                        </div>
+                        <?php } ?>
+                        <?php if ($_['AllowProtocolFTP']){ ?>
+                        <div class="button" data-rel="OCDFTP">
+                            <p data-rel="OCDFTP">FTP</p>
+                        </div>
+                        <?php } ?>
+                        <?php if ($_['AllowProtocolYT']){ ?>
+                        <div class="button" data-rel="OCDYT">
+                            <p data-rel="OCDYT">YOUTUBE</p>
+                        </div>
+                        <?php } ?>
+                        <?php if ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0){ ?>
+                        <div class="button" data-rel="OCDBT">
+                            <p data-rel="OCDBT">BITTORRENT</p>
+                        </div>
+                        <?php } ?>
+                    </div>
                 </div>
                 <div class="righttitle"><?php print ($l->t ('Add Download')); ?></div>
+                <div style="float: right;"><p class="lead"><?php print ($l->t (' using <strong>%s</strong>', $_['WD'])); ?></p></div>
             </div>
             <?php if ($_['AllowProtocolHTTP']): ?>
             <div class="content-page" rel="OCDHTTP">
                 <h3>
                     <?php print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
-        				<a><?php print ($l->t ('Launch HTTP Download')); ?></a>
+                        <a><?php print ($l->t ('Launch HTTP Download')); ?></a>
                     </div>
                 </h3>
                 <input type="text" placeholder="<?php print ($l->t ('HTTP URL to download')); ?>" class="form-control url" />
@@ -66,7 +75,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                 <h3>
                     <?php print ($l->t ('New FTP download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
-        				<a><?php print ($l->t ('Launch FTP Download')); ?></a>
+                        <a><?php print ($l->t ('Launch FTP Download')); ?></a>
                     </div>
                 </h3>
                 <input type="text" placeholder="<?php print ($l->t ('FTP URL to download')); ?>" class="form-control url" />
@@ -86,7 +95,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                 <h3>
                     <?php print ($l->t ('New YouTube download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
-        				<a><?php print ($l->t ('Launch YouTube Download')); ?></a>
+                        <a><?php print ($l->t ('Launch YouTube Download')); ?></a>
                     </div>
                 </h3>
                 <input type="text" placeholder="<?php print ($l->t ('YouTube Video URL to download')); ?>" class="form-control url" />
@@ -105,22 +114,22 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                 <h3>
                     <?php print ($l->t ('New BitTorrent download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
-        				<a><?php print ($l->t ('Launch BitTorrent Download')); ?></a>
+                        <a><?php print ($l->t ('Launch BitTorrent Download')); ?></a>
                     </div>
                     <div class="button uploadfile">
-    					<input type="file" name="files[]" id="uploadfile" accept=".torrent" multiple="multiple" data-url="<?php print_unescaped($g->linkToRoute ('ocdownloader.BTDownloader.UploadFiles')); ?>">
-    					<label class="svg icon-upload" for="uploadfile">
+                        <input type="file" name="files[]" id="uploadfile" accept=".torrent" multiple="multiple" data-url="<?php print_unescaped($g->linkToRoute ('ocdownloader.BTDownloader.UploadFiles')); ?>">
+                        <label class="svg icon-upload" for="uploadfile">
                             <span class="hidden-visually">Upload</span>
                         </label>
-        			</div>
+                    </div>
                 </h3>
                 <div class="actions">
                     <div class="button" id="TorrentsList">
-        				<a><?php print ($l->t ('Select a file.torrent')); ?> <?php print (strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>' . $l->t ('(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personal Settings panel)') . '</i>'); ?><div class="icon-caret-dark svg"></div></a>
-        				<ul>
+                        <a><?php print ($l->t ('Select a file.torrent')); ?> <?php print (strlen (trim ($_['TTSFOLD'])) > 0 ? '' : '&nbsp;<i>' . $l->t ('(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personal Settings panel)') . '</i>'); ?><div class="icon-caret-dark svg"></div></a>
+                        <ul>
                             <li><p class="loader"><span class="icon-loading-small"></span></p></li>
                         </ul>
-        			</div>
+                    </div>
                 </div>
                 <div class="jumbotron">
                     <h5><?php print ($l->t ('Options')); ?></h5>
@@ -149,6 +158,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     </tbody>
                 </table>
             </div>
+            <div class="loadingtext loadinginline" style="display:none;"><?php print ($l->t ('Loading')); ?> ...</div>
         </div>
     </div>
 </div>

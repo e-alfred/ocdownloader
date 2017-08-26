@@ -253,4 +253,3 @@ class Tools
 		return round (abs ($To - $From) / 60,2);
 	}
 }
-?>

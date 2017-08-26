@@ -87,4 +87,3 @@ class Aria2
         return $RebuildArgs;
     }
 }
-?>
