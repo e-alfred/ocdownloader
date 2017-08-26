@@ -12,9 +12,9 @@ Everything you need to install ARIA2 and to run aria2c as a daemon !
 ## Other articles
 To download YouTube videos, you have to install youtube-dl. For Ubuntu, you can use this repository: [Webupd8 PPA](https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8)
 
-Another Reference : [Install youTube-dlmanually](https://rg3.github.io/youtube-dl/download.html) *Note : You have to install Python on your server. This a requierement for youtube-dl.*  
+For other distributions, you can [install youtube-dl manually](https://rg3.github.io/youtube-dl/download.html) *Note : You have to install Python on your server. This a requierement for youtube-dl.*  
 
-ARIA2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://web.archive.org/web/20160912225929/https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_(Requirements))
+Aria2 fallback : [OCDownloader:Aria2 fallback using CURL directly (Requirements)](https://web.archive.org/web/20160912225929/https://wiki.sgc-univ.net/index.php/OCDownloader:Aria2_fallback_using_CURL_directly_(Requirements))
 
 ## CURL installation hint
 The File SERVER/fallback.sh still needs chmod 740. This is no perfect solution but seems to work.
@@ -33,8 +33,8 @@ The File SERVER/fallback.sh still needs chmod 740. This is no perfect solution b
 - Korean : Asen Gonov
 
 ## Authors
-e-alfred
-nibbels
+e-alfred  
+nibbels  
 (formerly) Xavier Beurois
 
 ## Releases notes
