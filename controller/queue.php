@@ -173,7 +173,8 @@ class Queue extends Controller
                                                 'STATUS' => (string)$this->L10N->t ('N/A'),
                                                 'STATUSID' => $DLStatus,
                                                 'SPEED' => (string)$this->L10N->t ('N/A'),
-                                                'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),                                                'PROTO' => $Row['PROTOCOL'],
+                                                'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),
+                                                'PROTO' => $Row['PROTOCOL'],
                                                 'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                           );
                                     }
@@ -187,7 +188,8 @@ class Queue extends Controller
                                           'STATUS' => (string)$this->L10N->t ('N/A'),
                                           'STATUSID' => $DLStatus,
                                           'SPEED' => (string)$this->L10N->t ('N/A'),
-                                          'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),                                          'PROTO' => $Row['PROTOCOL'],
+                                          'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),
+                                          'PROTO' => $Row['PROTOCOL'],
                                           'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                     );
                               }
