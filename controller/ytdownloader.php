@@ -39,28 +39,28 @@ class YTDownloader extends Controller
       private $L10N = null;
       private $AllowProtocolYT = null;
       private $MaxDownloadSpeed = null;
-      
+
       public function __construct ($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
       {
             parent::__construct ($AppName, $Request);
-            
+
             if (strcmp (Config::getSystemValue ('dbtype'), 'pgsql') == 0)
             {
                   $this->DbType = 1;
             }
-            
+
             $this->CurrentUID = $CurrentUID;
-            
+
             $Settings = new Settings ();
             $Settings->SetKey ('YTDLBinary');
             $YTDLBinary = $Settings->GetValue ();
-            
+
             $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
             if (!is_null ($YTDLBinary))
             {
                   $this->YTDLBinary = $YTDLBinary;
             }
-            
+
             $Settings->SetKey ('ProxyAddress');
             $this->ProxyAddress = $Settings->GetValue ();
             $Settings->SetKey ('ProxyPort');
@@ -77,18 +77,18 @@ class YTDownloader extends Controller
             $Settings->SetKey ('AllowProtocolYT');
             $this->AllowProtocolYT = $Settings->GetValue ();
             $this->AllowProtocolYT = is_null ($this->AllowProtocolYT) ? true : strcmp ($this->AllowProtocolYT, 'Y') == 0;
-            
+
             $Settings->SetTable ('personal');
             $Settings->SetUID ($this->CurrentUID);
             $Settings->SetKey ('DownloadsFolder');
             $this->DownloadsFolder = $Settings->GetValue ();
-            
+
             $this->DownloadsFolder = '/' . (is_null ($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
             $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder ($this->DownloadsFolder);
-            
+
             $this->L10N = $L10N;
       }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -96,7 +96,7 @@ class YTDownloader extends Controller
       public function Add ()
       {
             \OCP\JSON::setContentTypeHeader ('application/json');
-            
+
             if (isset ($_POST['FILE']) && strlen ($_POST['FILE']) > 0 && Tools::CheckURL ($_POST['FILE']) && isset ($_POST['OPTIONS']))
             {
                   try
@@ -105,19 +105,19 @@ class YTDownloader extends Controller
                         {
                               throw new \Exception ((string)$this->L10N->t ('You are not allowed to use the YouTube protocol'));
                         }
-                        
+
                         $YouTube = new YouTube ($this->YTDLBinary, $_POST['FILE']);
-                        
+
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $YouTube->SetProxy ($this->ProxyAddress, $this->ProxyPort);
                         }
-                        
+
                         if (isset ($_POST['OPTIONS']['YTForceIPv4']) && strcmp ($_POST['OPTIONS']['YTForceIPv4'], 'false') == 0)
                         {
                               $YouTube->SetForceIPv4 (false);
                         }
-                        
+
                         // Extract Audio YES
                         if (isset ($_POST['OPTIONS']['YTExtractAudio']) && strcmp ($_POST['OPTIONS']['YTExtractAudio'], 'true') == 0)
                         {
@@ -125,7 +125,7 @@ class YTDownloader extends Controller
                               if (!isset ($VideoData['AUDIO']) || !isset ($VideoData['FULLNAME']))
                               {
                                     return new JSONResponse (Array (
-                                          'ERROR' => true, 
+                                          'ERROR' => true,
                                           'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube audio URL')
                                     ));
                               }
@@ -137,19 +137,19 @@ class YTDownloader extends Controller
                               if (!isset ($VideoData['VIDEO']) || !isset ($VideoData['FULLNAME']))
                               {
                                     return new JSONResponse (Array (
-                                          'ERROR' => true, 
+                                          'ERROR' => true,
                                           'MESSAGE' => (string)$this->L10N->t ('Unable to retrieve true YouTube video URL')
                                     ));
                               }
                               $DL = Array ('URL' => $VideoData['VIDEO'], 'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']), 'TYPE' => 'YT Video');
                         }
-                        
+
                         // If target file exists, create a new one
                         if (\OC\Files\Filesystem::file_exists ($this->DownloadsFolder . '/' . $DL['FILENAME']))
                         {
                               $DL['FILENAME'] = time () . '_' . $DL['FILENAME'];
                         }
-                        
+
                         // Create the target file if the downloader is ARIA2
                         if ($this->WhichDownloader == 0)
                         {
@@ -162,7 +162,7 @@ class YTDownloader extends Controller
                                     \OC\Files\Filesystem::mkdir ($this->DownloadsFolder);
                               }
                         }
-                        
+
                         $OPTIONS = Array ('dir' => $this->AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);
                         if (!is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
@@ -177,9 +177,9 @@ class YTDownloader extends Controller
                         {
                               $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
                         }
-                        
+
                         $AddURI = ($this->WhichDownloader == 0 ? Aria2::AddUri (Array ($DL['URL']), Array ('Params' => $OPTIONS)) : CURL::AddUri ($DL['URL'], $OPTIONS));
-                        
+
                         if (isset ($AddURI['result']) && !is_null ($AddURI['result']))
                         {
                               $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES (?, ?, ?, ?, ?, ?)';
@@ -187,7 +187,7 @@ class YTDownloader extends Controller
                               {
                                     $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?, ?)';
                               }
-                              
+
                               $Query = \OCP\DB::prepare ($SQL);
                               $Result = $Query->execute (Array (
                                     $this->CurrentUID,
@@ -197,36 +197,35 @@ class YTDownloader extends Controller
                                     1,
                                     time()
                               ));
-                              
+
                               sleep (1);
                               $Status = Aria2::TellStatus ($AddURI['result']);
-                              
+
                               $Progress = 0;
                               if ($Status['result']['totalLength'] > 0)
                               {
                                     $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                               }
-                              
+
                               $ProgressString = Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress);
-                              
+
                               return new JSONResponse (Array (
-                                    'ERROR' => false, 
-                                    'MESSAGE' => (string)$this->L10N->t ('Download started'), 
+                                    'ERROR' => false,
+                                    'MESSAGE' => (string)$this->L10N->t ('Download started'),
                                     'GID' => $AddURI['result'],
                                     'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
                                     'PROGRESS' => is_null ($ProgressString) ? (string)$this->L10N->t ('N/A') : $ProgressString,
                                     'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
-                                    'FILENAME' => (strlen ($DL['FILENAME']) > 40 ? substr ($DL['FILENAME'], 0, 40) . '...' : $DL['FILENAME']),
-                                    'PROTO' => $DL['TYPE'],
+                                    'FILENAME' => (mb_strlen ($DL['FILENAME'], "UTF-8") > 40 ? mb_substr ($DL['FILENAME'], 0, 40, "UTF-8") . '...' : $DL['FILENAME']),                                    'PROTO' => $DL['TYPE'],
                                     'ISTORRENT' => false
                               ));
                         }
                         else
                         {
                               return new JSONResponse (Array (
-                                    'ERROR' => true, 
+                                    'ERROR' => true,
                                     'MESSAGE' => (string)$this->L10N->t ('Returned GID is null ! Is Aria2c running as a daemon ?')
                               ));
                         }
