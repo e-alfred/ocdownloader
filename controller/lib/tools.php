@@ -3,7 +3,7 @@
  * ownCloud - ocDownloader
  *
  * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
+ * later. See the LICENSE file.
  *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
@@ -218,11 +218,11 @@ class Tools
 
 		while ($Row = $Request->fetchRow ())
 		{
-			$Status = Aria2::TellStatus ($GID);
+			$Status = Aria2::TellStatus ($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
 
 			if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
 			{
-				Aria2::Remove ($GID);
+				Aria2::Remove ($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
 			}
 		}
 
