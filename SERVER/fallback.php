@@ -117,4 +117,3 @@ class OCD
 
 set_time_limit (0);
 OCD::Load ($argv[1], urldecode ($argv[2]), json_decode (urldecode ($argv[3]), true, 512, JSON_HEX_APOS | JSON_HEX_QUOT));
-?>
