@@ -3,7 +3,7 @@
  * ownCloud - ocDownloader
  *
  * This file is licensed under the Affero General Public License version 3 or
- * later. See the LICENSE file.
+ * later. See the COPYING file.
  *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
@@ -20,7 +20,7 @@ class Tools
 		$URLPattern = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
 
 		preg_match ($URLPattern, $URL, $Matches);
-		if (count ($Matches) === 1)
+		if (count ($Matches) == 1)
 		{
 			return true;
 		}
@@ -218,11 +218,11 @@ class Tools
 
 		while ($Row = $Request->fetchRow ())
 		{
-			$Status = Aria2::TellStatus ($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
+			$Status = Aria2::TellStatus ($GID);
 
 			if (!isset ($Status['error']) && strcmp ($Status['result']['status'], 'error') != 0 && strcmp ($Status['result']['status'], 'complete') != 0)
 			{
-				Aria2::Remove ($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
+				Aria2::Remove ($GID);
 			}
 		}
 
@@ -253,3 +253,4 @@ class Tools
 		return round (abs ($To - $From) / 60,2);
 	}
 }
+?>
