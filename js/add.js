@@ -2,7 +2,7 @@
  * ownCloud - ocDownloader
  *
  * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
+ * later. See the LICENSE file.
  *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
@@ -33,7 +33,12 @@ $(document).ready (function ()
 	});
 	
 	// Display or hide content pages depending on the "New Download" menu
-	$('#NewDL').children ('ul').children ('li').children ('p').bind ('click', function ()
+	$('#NewDL').children ('div').children ('p').bind ('click', function ()
+	{
+		$('#app-content-wrapper .content-page').hide ();
+		$('#app-content-wrapper .content-page[rel=' + $(this).attr ('data-rel') + ']').show ();
+	});
+	$('#NewDL').children ('div').bind ('click', function ()
 	{
 		$('#app-content-wrapper .content-page').hide ();
 		$('#app-content-wrapper .content-page[rel=' + $(this).attr ('data-rel') + ']').show ();

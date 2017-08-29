@@ -3,7 +3,7 @@
  * ownCloud - ocDownloader
  *
  * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
+ * later. See the LICENSE file.
  *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
@@ -55,6 +55,8 @@ class Aria2
     
     private static function RebuildArgs ($Args)
     {
+        if(!is_array($Args)) return array(); //Nibbels: Test: Is this muting another fault or possible state of Args?? >See https://github.com/e-alfred/ocdownloader/issues/11
+        if(!count($Args)) return array(); //Nibbels: Test: Is this muting another fault or possible state of Args?? >See https://github.com/e-alfred/ocdownloader/issues/11
         if (isset ($Args[1]['Server']) && !is_null ($Args[1]['Server']))
         {
             self::$Server = $Args[1]['Server'];
@@ -72,6 +74,8 @@ class Aria2
     
     private static function RebuildTorrentArgs ($Args)
     {
+        if(!is_array($Args)) return array(); //Nibbels: Test: Is this muting another fault or possible state of Args?? >See https://github.com/e-alfred/ocdownloader/issues/11
+        if(!count($Args)) return array(); //Nibbels: Test: Is this muting another fault or possible state of Args?? >See https://github.com/e-alfred/ocdownloader/issues/11
         if (isset ($Args[2]['Server']) && !is_null ($Args[2]['Server']))
         {
             self::$Server = $Args[2]['Server'];
@@ -87,4 +91,3 @@ class Aria2
         return $RebuildArgs;
     }
 }
-?>
