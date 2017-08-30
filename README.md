@@ -67,6 +67,8 @@ Nibbels
 (formerly) Xavier Beurois
 
 ## Releases notes
+### v1.5.3 (thanks @Nibbels)
+- Some changes within design and site unlocks for CURL-Users
 ### v1.5.2 (thanks @Nibbels)
 - Added some basic function which scans the downloads folder to make new downloads visible within Owncloud/Nextcloud
 - hooked in the new function to the pageload of "Complete Downloads" and "All Downloads" (This is way from perfect but works somehow)

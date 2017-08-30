@@ -4,7 +4,7 @@
  * ownCloud - ocDownloader
  *
  * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
+ * later. See the LICENSE file.
  *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
@@ -117,4 +117,3 @@ class OCD
 
 set_time_limit (0);
 OCD::Load ($argv[1], urldecode ($argv[2]), json_decode (urldecode ($argv[3]), true, 512, JSON_HEX_APOS | JSON_HEX_QUOT));
-?>

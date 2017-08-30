@@ -3,7 +3,7 @@
  * ownCloud - ocDownloader
  *
  * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
+ * later. See the LICENSE file.
  *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
@@ -130,6 +130,7 @@ class Index extends Controller
        */
       public function Actives ()
       {
+            self::syncDownloadsFolder();
             return new TemplateResponse('ocdownloader', 'actives', [
                   'PAGE' => 3,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
@@ -143,9 +144,10 @@ class Index extends Controller
        */
       public function Waitings ()
       {
+            self::syncDownloadsFolder();
             if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
             {
-                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
+                  //return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
             }
             return new TemplateResponse('ocdownloader', 'waitings', [
                   'PAGE' => 4,
@@ -160,9 +162,10 @@ class Index extends Controller
        */
       public function Stopped ()
       {
+            self::syncDownloadsFolder();
             if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
             {
-                  return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
+                  //return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
             }
             return new TemplateResponse('ocdownloader', 'stopped', [
                   'PAGE' => 5,
@@ -177,10 +180,7 @@ class Index extends Controller
        */
       public function Removed ()
       {
-            if (strcmp ($this->WhichDownloader, 'ARIA2') != 0)
-            {
-                  //return $this->L10N->t ('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
-            }
+            self::syncDownloadsFolder();
             return new TemplateResponse('ocdownloader', 'removed', [
                   'PAGE' => 6,
                   'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
