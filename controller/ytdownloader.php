@@ -219,6 +219,7 @@ class YTDownloader extends Controller
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
                                     'FILENAME' => (mb_strlen ($DL['FILENAME'], "UTF-8") > 40 ? mb_substr ($DL['FILENAME'], 0, 40, "UTF-8") . '...' : $DL['FILENAME']),
+                                    'FILENAME_SHORT' => Tools::getShortFilename($DL['FILENAME']),
                                     'PROTO' => $DL['TYPE'],
                                     'ISTORRENT' => false
                               ));

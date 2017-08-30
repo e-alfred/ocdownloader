@@ -252,4 +252,9 @@ class Tools
 		$From = strtotime ('now');
 		return round (abs ($To - $From) / 60,2);
 	}
+	
+	public static function getShortFilename($filename)
+	{
+		return mb_strlen ($filename, "UTF-8") > 40 ? mb_substr ($filename, 0, 40, "UTF-8") . '...' : $filename;
+	}
 }

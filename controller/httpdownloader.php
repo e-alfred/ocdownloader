@@ -180,7 +180,8 @@ class HttpDownloader extends Controller
                                     'STATUS' => isset ($Status['result']['status']) ? (string)$this->L10N->t (ucfirst ($Status['result']['status'])) : (string)$this->L10N->t ('N/A'),
                                     'STATUSID' => Tools::GetDownloadStatusID ($Status['result']['status']),
                                     'SPEED' => isset ($Status['result']['downloadSpeed']) ? Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s' : (string)$this->L10N->t ('N/A'),
-                                    'FILENAME' => (mb_strlen ($Target, "UTF-8") > 40 ? mb_substr ($Target, 0, 40, "UTF-8") . '...' : $Target),
+                                    'FILENAME' => $Target,
+                                    'FILENAME_SHORT' => Tools::getShortFilename($Target),
                                     'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
                                     'ISTORRENT' => false
                               ));

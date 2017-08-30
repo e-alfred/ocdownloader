@@ -143,7 +143,9 @@ class Queue extends Controller
                                                 'STATUS' => isset ($Status['result']['status']) ? $this->L10N->t ($Row['STATUS'] == 4 ? 'Removed' : ucfirst ($Status['result']['status'])) . (isset ($Status['result']['bittorrent']) && $Progress == 1 && $DLStatus != 3 ? ' - ' . $this->L10N->t ('Seeding') : '') : (string)$this->L10N->t ('N/A'),
                                                 'STATUSID' => $Row['STATUS'] == 4 ? 4 : $DLStatus,
                                                 'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Progress == 1 ? (isset ($Status['result']['bittorrent']) ? ($Status['result']['uploadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s') : '--') : ($DLStatus == 4 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s')) : (string)$this->L10N->t ('N/A'),
-                                                'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),                                                'PROTO' => $Row['PROTOCOL'],
+                                                'FILENAME' => $Row['FILENAME'],
+                                                'FILENAME_SHORT' => Tools::getShortFilename($Row['FILENAME']),
+                                                'PROTO' => $Row['PROTOCOL'],
                                                 'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                           );
 
@@ -173,7 +175,8 @@ class Queue extends Controller
                                                 'STATUS' => (string)$this->L10N->t ('N/A'),
                                                 'STATUSID' => $DLStatus,
                                                 'SPEED' => (string)$this->L10N->t ('N/A'),
-                                                'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),
+                                                'FILENAME' => $Row['FILENAME'],
+                                                'FILENAME_SHORT' => Tools::getShortFilename($Row['FILENAME']),
                                                 'PROTO' => $Row['PROTOCOL'],
                                                 'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                           );
@@ -188,7 +191,8 @@ class Queue extends Controller
                                           'STATUS' => (string)$this->L10N->t ('N/A'),
                                           'STATUSID' => $DLStatus,
                                           'SPEED' => (string)$this->L10N->t ('N/A'),
-                                          'FILENAME' => (mb_strlen ($Row['FILENAME'], "UTF-8") > 40 ? mb_substr ($Row['FILENAME'], 0, 40, "UTF-8") . '...' : $Row['FILENAME']),
+                                          'FILENAME' => $Row['FILENAME'],
+                                          'FILENAME_SHORT' => Tools::getShortFilename($Row['FILENAME']),
                                           'PROTO' => $Row['PROTOCOL'],
                                           'ISTORRENT' => isset ($Status['result']['bittorrent'])
                                     );
