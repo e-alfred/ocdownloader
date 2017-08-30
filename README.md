@@ -12,29 +12,35 @@ Webextension plugin for both Firefox-based and Chromium-based browsers: https://
 UWP Windows 8.1/10 app: https://github.com/e-alfred/ocDownloader_WindowsDesktop
 
 ## ARIA2 installation
-To install Aria2 on Debian/Ubuntu use the following command:
+You have to install Aria2 on your system. To do this on Debian/Ubuntu you can use the following command:
 
 `apt-get install aria2 curl php-curl`
 
 After that, you have to run Aria2 on every boot with the same user that your webserver is running:
 
-`sudo -u www-data aria2c --enable-rpc --rpc-allow-origin-all -c -D --log=/var/log/aria2.log --check-certificate=false  --save-session=/var/www/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/www/aria2c.sess  --rpc-save-upload-metadata=true --force-save=true`
+`sudo -u www-data aria2c --enable-rpc --rpc-allow-origin-all -c -D --log=/var/log/aria2.log --check-certificate=false  --save-session=/var/www/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/www/aria2c.sess  --rpc-save-upload-metadata=true --force-save=true --log-level=warn`
 
 You have to enable the RPC interface and save the session file of Aria2, otherwise your old downloads won't be listed after you restart Aria2. The file in the example is stored in /var/www/aria2c.sess, but you can put it anywhere as long as the user running your webserver can access/write to it.
 
-You can find the documentation of Aria2 [here](https://aria2.github.io/manual/en/html/index.html)
+You can find the documentation of Aria2 [here](https://aria2.github.io/manual/en/html/index.html).
 
 ## Youtube-dl installation
-To download Youtube videos, you have to install youtube-dl. For Ubuntu, you can use this repository and follow the instructions there: [Webupd8 PPA](https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8)
+To download Youtube videos, you have to install youtube-dl. The packages shipped with distributions are very outdated most of the time. To get around this, you can use this repository containing recent youtube-dl packages for Ubuntu by following the instructions there: [Webupd8 PPA](https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8)
 
 For other distributions, you can [install youtube-dl manually](https://rg3.github.io/youtube-dl/download.html) *Note : You have to install Python on your server. This a requierement for youtube-dl.*  
 
 After installing youtube-dl, you have to set the right path to your youtube-dl executeable in the admin settings of ocDownloader.
 
 ## Using Curl instead of Aria2
-If you don't have aria2 available on your server, you can use curl which is directly integrated into PHP. This allows you to make HTTP(S) and FTP(S) downloads (BitTorrent is not supported by Curl) To run this, you have to install the corresponding PHP curl module. Afterwards, you have to make sure that fallback.sh and fallback.php in the /SERVER directory are executeable by your webserver user (chmod 740 should be sufficient).
+If you don't have aria2 available on your server, you can use curl which is directly integrated into PHP. This allows you to make HTTP(S) and FTP(S) downloads (BitTorrent is not supported by Curl) You need to install the PHP curl module, on Debian you can use this command to do this:
 
-Log files are saved to the /tmp folder on your server with these semicolon-seperated values:
+`apt-get install curl php-curl`
+
+ Afterwards, you have to make sure that fallback.sh and fallback.php in the /SERVER directory of the ocDownloader app are executeable by your webserver user:
+
+ `chmod +x SERVER/fallback.*`
+
+If you have problems with Curl, the log files are saved to the /tmp folder on your server with these semicolon-seperated values:
 
 - The status
 - The download total size
