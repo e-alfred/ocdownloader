@@ -67,7 +67,7 @@ $APIBasePath = '/apps/ocdownloader/api/';
     'POST',
     $APIBasePath.'version',
     function ($URLParams) {
-        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::CheckAddonVersion($_POST['AddonVersion']));
+        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::checkAddonVersion($_POST['AddonVersion']));
     },
     'ocdownloader',
     \OC_API::USER_AUTH
@@ -77,7 +77,7 @@ $APIBasePath = '/apps/ocdownloader/api/';
     'GET',
     $APIBasePath.'queue/get',
     function ($URLParams) {
-        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::GetQueue());
+        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::getQueue());
     },
     'ocdownloader',
     \OC_API::USER_AUTH
@@ -87,7 +87,7 @@ $APIBasePath = '/apps/ocdownloader/api/';
     'POST',
     $APIBasePath.'add',
     function ($URLParams) {
-        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::Add($_POST['URL']));
+        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::add($_POST['URL']));
     },
     'ocdownloader',
     \OC_API::USER_AUTH

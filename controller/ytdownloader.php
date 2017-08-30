@@ -124,7 +124,7 @@ class YTDownloader extends Controller
                     }
                     $DL = array(
                         'URL' => $VideoData['AUDIO'],
-                        'FILENAME' => Tools::CleanString($VideoData['FULLNAME']),
+                        'FILENAME' => Tools::cleanString($VideoData['FULLNAME']),
                         'TYPE' => 'YT Audio'
                     );
                 } else // No audio extract
@@ -138,7 +138,7 @@ class YTDownloader extends Controller
                     }
                     $DL = array(
                         'URL' => $VideoData['VIDEO'],
-                        'FILENAME' => Tools::CleanString($VideoData['FULLNAME']),
+                        'FILENAME' => Tools::cleanString($VideoData['FULLNAME']),
                         'TYPE' => 'YT Video'
                     );
                 }
@@ -170,8 +170,8 @@ class YTDownloader extends Controller
                 }
 
                 $AddURI =($this->WhichDownloader == 0
-                ?Aria2::AddUri(array($DL['URL']), array('Params' => $OPTIONS))
-                :CURL::AddUri($DL['URL'], $OPTIONS));
+                ?Aria2::addUri(array($DL['URL']), array('Params' => $OPTIONS))
+                :CURL::addUri($DL['URL'], $OPTIONS));
 
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
                     $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
@@ -195,14 +195,14 @@ class YTDownloader extends Controller
                     ));
 
                     sleep(1);
-                    $Status = Aria2::TellStatus($AddURI['result']);
+                    $Status = Aria2::tellStatus($AddURI['result']);
 
                     $Progress = 0;
                     if ($Status['result']['totalLength'] > 0) {
                         $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                     }
 
-                    $ProgressString = Tools::GetProgressString(
+                    $ProgressString = Tools::getProgressString(
                         $Status['result']['completedLength'],
                         $Status['result']['totalLength'],
                         $Progress
@@ -217,9 +217,9 @@ class YTDownloader extends Controller
                           'STATUS' => isset($Status['result']['status'])
                           ?(string)$this->L10N->t(ucfirst($Status['result']['status']))
                           :(string)$this->L10N->t('N/A'),
-                          'STATUSID' => Tools::GetDownloadStatusID($Status['result']['status']),
+                          'STATUSID' => Tools::getDownloadStatusID($Status['result']['status']),
                           'SPEED' => isset($Status['result']['downloadSpeed'])
-                          ?Tools::FormatSizeUnits($Status['result']['downloadSpeed'])
+                          ?Tools::formatSizeUnits($Status['result']['downloadSpeed'])
                           .'/s' :(string)$this->L10N->t('N/A'),
                           'FILENAME' =>$DL['FILENAME'],
                           'FILENAME_SHORT' => Tools::getShortFilename($DL['FILENAME']),

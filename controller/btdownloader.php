@@ -90,7 +90,7 @@ class BTDownloader extends Controller
         if (!is_null($this->SeedTime)) {
             $this->SeedTime = explode('_', $this->SeedTime);
             if (count($this->SeedTime) == 2) {
-                $this->SeedTime = Tools::GetMinutes($this->SeedTime[0], $this->SeedTime[1]);
+                $this->SeedTime = Tools::getMinutes($this->SeedTime[0], $this->SeedTime[1]);
             }
         } else {
             $this->SeedTime = 10080; // minutes in 1 week - default
@@ -114,14 +114,14 @@ class BTDownloader extends Controller
         \OCP\JSON::setContentTypeHeader('application/json');
 
         if (isset($_POST['FILE']) && strlen(trim($_POST['FILE'])) > 0
-            && (Tools::CheckURL($_POST['FILE']) || Tools::CheckFilepath($this->TorrentsFolder . '/' . $_POST['FILE']))
+            && (Tools::checkURL($_POST['FILE']) || Tools::checkFilepath($this->TorrentsFolder . '/' . $_POST['FILE']))
             && isset($_POST['OPTIONS'])) {
             try {
                 if (!$this->AllowProtocolBT && !\OC_User::isAdminUser($this->CurrentUID)) {
                     throw new \Exception((string)$this->L10N->t('You are not allowed to use the BitTorrent protocol'));
                 }
 
-                $Target = Tools::CleanString(str_replace('.torrent', '', $_POST['FILE']));
+                $Target = Tools::cleanString(str_replace('.torrent', '', $_POST['FILE']));
 
                 $OPTIONS = array(
                     'dir' => rtrim($this->AbsoluteDownloadsFolder, '/').'/'.$Target,
@@ -151,7 +151,7 @@ class BTDownloader extends Controller
                     }
                 }
 
-                $AddTorrent = Aria2::AddTorrent(
+                $AddTorrent = Aria2::addTorrent(
                     base64_encode(file_get_contents(rtrim($this->AbsoluteTorrentsFolder, '/').'/' . $_POST['FILE'])),
                     array(),
                     array('Params' => $OPTIONS)
@@ -181,14 +181,14 @@ class BTDownloader extends Controller
                     }
 
                     sleep(1);
-                    $Status = Aria2::TellStatus($AddTorrent['result']);
+                    $Status = Aria2::tellStatus($AddTorrent['result']);
                     $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                     return new JSONResponse(array(
                         'ERROR' => false,
                         'MESSAGE' =>(string)$this->L10N->t('Download started'),
                         'GID' => $AddTorrent['result'],
                         'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
-                        'PROGRESS' => Tools::GetProgressString(
+                        'PROGRESS' => Tools::getProgressString(
                             $Status['result']['completedLength'],
                             $Status['result']['totalLength'],
                             $Progress
@@ -196,9 +196,9 @@ class BTDownloader extends Controller
                         'STATUS' => isset($Status['result']['status'])
                             ?(string)$this->L10N->t(ucfirst($Status['result']['status']))
                             :(string)$this->L10N->t('N/A'),
-                        'STATUSID' => Tools::GetDownloadStatusID($Status['result']['status']),
+                        'STATUSID' => Tools::getDownloadStatusID($Status['result']['status']),
                         'SPEED' => isset($Status['result']['downloadSpeed'])
-                            ?Tools::FormatSizeUnits($Status['result']['downloadSpeed']).'/s'
+                            ?Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'
                             :(string)$this->L10N->t('N/A'),
                         'FILENAME' => $Target,
                         'FILENAME_SHORT' => Tools::getShortFilename($Target),

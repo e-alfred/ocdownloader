@@ -89,14 +89,14 @@ class HttpDownloader extends Controller
     {
         \OCP\JSON::setContentTypeHeader('application/json');
 
-        if (isset($_POST['FILE']) && strlen($_POST['FILE']) > 0 && Tools::CheckURL($_POST['FILE'])
+        if (isset($_POST['FILE']) && strlen($_POST['FILE']) > 0 && Tools::checkURL($_POST['FILE'])
             && isset($_POST['OPTIONS'])) {
             try {
                 if (!$this->AllowProtocolHTTP && !\OC_User::isAdminUser($this->CurrentUID)) {
                     throw new \Exception((string)$this->L10N->t('You are not allowed to use the HTTP protocol'));
                 }
 
-                $Target = Tools::CleanString(substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1));
+                $Target = Tools::cleanString(substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1));
 
                 // If target file exists, create a new one
                 if (\OC\Files\Filesystem::file_exists($this->DownloadsFolder . '/' . $Target)) {
@@ -133,8 +133,8 @@ class HttpDownloader extends Controller
 
                 $AddURI =(
                     $this->WhichDownloader == 0
-                    ?Aria2::AddUri(array($_POST['FILE']), array('Params' => $OPTIONS))
-                    : CURL::AddUri($_POST['FILE'], $OPTIONS)
+                    ?Aria2::addUri(array($_POST['FILE']), array('Params' => $OPTIONS))
+                    : CURL::addUri($_POST['FILE'], $OPTIONS)
                 );
 
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
@@ -158,8 +158,8 @@ class HttpDownloader extends Controller
                     sleep(1);
                     $Status =(
                         $this->WhichDownloader == 0
-                        ?Aria2::TellStatus($AddURI['result'])
-                        :CURL::TellStatus($AddURI['result'])
+                        ?Aria2::tellStatus($AddURI['result'])
+                        :CURL::tellStatus($AddURI['result'])
                     );
 
                     $Progress = 0;
@@ -167,7 +167,7 @@ class HttpDownloader extends Controller
                         $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                     }
 
-                    $ProgressString = Tools::GetProgressString(
+                    $ProgressString = Tools::getProgressString(
                         $Status['result']['completedLength'],
                         $Status['result']['totalLength'],
                         $Progress
@@ -182,9 +182,9 @@ class HttpDownloader extends Controller
                         'STATUS' => isset($Status['result']['status'])
                             ?(string)$this->L10N->t(ucfirst($Status['result']['status']))
                             :(string)$this->L10N->t('N/A'),
-                        'STATUSID' => Tools::GetDownloadStatusID($Status['result']['status']),
+                        'STATUSID' => Tools::getDownloadStatusID($Status['result']['status']),
                         'SPEED' => isset($Status['result']['downloadSpeed'])
-                            ?Tools::FormatSizeUnits($Status['result']['downloadSpeed']).'/s'
+                            ?Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'
                             :(string)$this->L10N->t('N/A'),
                         'FILENAME' => $Target,
                         'FILENAME_SHORT' => Tools::getShortFilename($Target),

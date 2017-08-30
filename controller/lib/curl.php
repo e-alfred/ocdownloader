@@ -22,7 +22,7 @@ class CURL
         self::$URI = $URI;
         self::$OPTIONS = $OPTIONS;
         
-        self::Run();
+        self::run();
         
         return array('result' => self::$GID);
     }

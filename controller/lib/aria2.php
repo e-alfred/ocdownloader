@@ -18,9 +18,9 @@ class Aria2
     public static function __callStatic($Name, $Args)
     {
         self::$Server = 'http://127.0.0.1:6800/jsonrpc';
-        $Args =(strcmp($Name, 'AddTorrent') == 0 ? self::RebuildTorrentArgs($Args) : self::RebuildArgs($Args));
+        $Args =(strcmp($Name, 'AddTorrent') == 0 ? self::rebuildTorrentArgs($Args) : self::rebuildArgs($Args));
       
-        self::Load();
+        self::load();
       
         $Data = array(
         'jsonrpc'   => '2.0',
@@ -29,7 +29,7 @@ class Aria2
         'params'    => $Args
         );
       
-        return json_decode(self::Request($Data), 1);
+        return json_decode(self::request($Data), 1);
     }
     
     /********** PRIVATE STATIC METHODS **********/

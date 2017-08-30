@@ -131,7 +131,7 @@ class Queue extends Controller
 
                 while ($Row = $Request->fetchRow()) {
                     $Status =($this->WhichDownloader == 0
-                        ?Aria2::TellStatus($Row['GID']):CURL::TellStatus($Row['GID']));
+                        ?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
                     $DLStatus = 5; // Error
 
                     if (!is_null($Status)) {
@@ -141,8 +141,8 @@ class Queue extends Controller
                                 $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                             }
 
-                            $DLStatus = Tools::GetDownloadStatusID($Status['result']['status']);
-                            $ProgressString = Tools::GetProgressString(
+                            $DLStatus = Tools::getDownloadStatusID($Status['result']['status']);
+                            $ProgressString = Tools::getProgressString(
                                 $Status['result']['completedLength'],
                                 $Status['result']['totalLength'],
                                 $Progress
@@ -156,7 +156,7 @@ class Queue extends Controller
                                     :$ProgressString).(isset($Status['result']['bittorrent']) && $Progress < 1
                                         ?' - <strong>'.$this->L10N->t('Seeders').'</strong>: '.$Status['result']['numSeeders']
                                         :(isset($Status['result']['bittorrent']) && $Progress == 1
-                                            ?' - <strong>'.$this->L10N->t('Uploaded').'</strong>: '.Tools::FormatSizeUnits($Status['result']['uploadLength']).' - <strong>' . $this->L10N->t('Ratio') . '</strong>: ' . round(($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2) : '')),
+                                            ?' - <strong>'.$this->L10N->t('Uploaded').'</strong>: '.Tools::formatSizeUnits($Status['result']['uploadLength']).' - <strong>' . $this->L10N->t('Ratio') . '</strong>: ' . round(($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2) : '')),
                                 'STATUS' => isset($Status['result']['status'])
                                     ? $this->L10N->t(
                                         $Row['STATUS'] == 4?'Removed':ucfirst($Status['result']['status'])
@@ -168,11 +168,11 @@ class Queue extends Controller
                                         ?(isset($Status['result']['bittorrent'])
                                             ?($Status['result']['uploadSpeed'] == 0
                                                 ?'--'
-                                                :Tools::FormatSizeUnits($Status['result']['uploadSpeed']).'/s')
+                                                :Tools::formatSizeUnits($Status['result']['uploadSpeed']).'/s')
                                             :'--')
                                         :($DLStatus == 4
                                             ?'--'
-                                            :Tools::FormatSizeUnits($Status['result']['downloadSpeed']).'/s'))
+                                            :Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'))
                                     :(string)$this->L10N->t('N/A'),
                                 'FILENAME' => $Row['FILENAME'],
                                 'FILENAME_SHORT' => Tools::getShortFilename($Row['FILENAME']),
@@ -232,7 +232,7 @@ class Queue extends Controller
                     array(
                         'ERROR' => false,
                         'QUEUE' => $Queue,
-                        'COUNTER' => Tools::GetCounters($this->DbType, $this->CurrentUID)
+                        'COUNTER' => Tools::getCounters($this->DbType, $this->CurrentUID)
                     )
                 );
             }
@@ -251,7 +251,7 @@ class Queue extends Controller
 
         try {
             return new JSONResponse(
-                array('ERROR' => false, 'COUNTER' => Tools::GetCounters($this->DbType, $this->CurrentUID))
+                array('ERROR' => false, 'COUNTER' => Tools::getCounters($this->DbType, $this->CurrentUID))
             );
         } catch (Exception $E) {
             return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
@@ -269,13 +269,13 @@ class Queue extends Controller
         try {
             if ($this->WhichDownloader == 0) {
                 if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
-                    $Status = Aria2::TellStatus($_POST['GID']);
+                    $Status = Aria2::tellStatus($_POST['GID']);
 
                     $Pause['result'] = $_POST['GID'];
                     if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
                         && strcmp($Status['result']['status'], 'complete') != 0
                         && strcmp($Status['result']['status'], 'active') == 0) {
-                            $Pause = Aria2::Pause($_POST['GID']);
+                            $Pause = Aria2::pause($_POST['GID']);
                     }
 
                     if (strcmp($Pause['result'], $_POST['GID']) == 0) {
@@ -322,13 +322,13 @@ class Queue extends Controller
         try {
             if ($this->WhichDownloader == 0) {
                 if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
-                    $Status = Aria2::TellStatus($_POST['GID']);
+                    $Status = Aria2::tellStatus($_POST['GID']);
 
                     $UnPause['result'] = $_POST['GID'];
                     if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
                         && strcmp($Status['result']['status'], 'complete') != 0
                         && strcmp($Status['result']['status'], 'paused') == 0) {
-                            $UnPause = Aria2::Unpause($_POST['GID']);
+                            $UnPause = Aria2::unpause($_POST['GID']);
                     }
 
                     if (strcmp($UnPause['result'], $_POST['GID']) == 0) {
@@ -528,12 +528,12 @@ class Queue extends Controller
                 $GIDS = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $Status =($this->WhichDownloader == 0 ? Aria2::TellStatus($GID) : CURL::TellStatus($GID));
+                    $Status =($this->WhichDownloader == 0 ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
                     $Remove = array('result' => $GID);
 
                     if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
                         && strcmp($Status['result']['status'], 'complete') != 0) {
-                        $Remove =($this->WhichDownloader == 0 ? Aria2::Remove($GID) : CURL::Remove($Status['result']));
+                        $Remove =($this->WhichDownloader == 0 ? Aria2::remove($GID) : CURL::remove($Status['result']));
                     }
 
                     if (!is_null($Remove) && strcmp($Remove['result'], $GID) == 0) {
@@ -587,15 +587,15 @@ class Queue extends Controller
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                 $Status =(
                     $this->WhichDownloader == 0
-                    ?Aria2::TellStatus($_POST['GID'])
-                    :CURL::TellStatus($_POST['GID'])
+                    ?Aria2::tellStatus($_POST['GID'])
+                    :CURL::tellStatus($_POST['GID'])
                 );
 
                 if (!isset($Status['error']) && strcmp($Status['result']['status'], 'removed') == 0) {
                     $Remove =(
                         $this->WhichDownloader == 0
-                        ? Aria2::RemoveDownloadResult($_POST['GID'])
-                        :CURL::RemoveDownloadResult($_POST['GID'])
+                        ? Aria2::removeDownloadResult($_POST['GID'])
+                        :CURL::removeDownloadResult($_POST['GID'])
                     );
                 }
 
@@ -637,13 +637,13 @@ class Queue extends Controller
                 $GIDS = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $Status =($this->WhichDownloader == 0 ? Aria2::TellStatus($GID) : CURL::TellStatus($GID));
+                    $Status =($this->WhichDownloader == 0 ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
 
                     if (!isset($Status['error']) && strcmp($Status['result']['status'], 'removed') == 0) {
                         $Remove =(
                             $this->WhichDownloader == 0
-                            ?Aria2::RemoveDownloadResult($GID)
-                            :CURL::RemoveDownloadResult($GID)
+                            ?Aria2::removeDownloadResult($GID)
+                            :CURL::removeDownloadResult($GID)
                         );
                     }
 

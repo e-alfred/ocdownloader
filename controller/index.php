@@ -44,7 +44,7 @@ class Index extends Controller
             $this->DbType = 1;
         }
 
-        $this->CanCheckForUpdate = Tools::CanCheckForUpdate();
+        $this->CanCheckForUpdate = Tools::canCheckForUpdate();
 
         $this->Settings = new Settings();
         $this->Settings->setKey('WhichDownloader');

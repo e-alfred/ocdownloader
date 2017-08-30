@@ -29,7 +29,7 @@ class Updater extends Controller
     public function __construct($AppName, IRequest $Request, IL10N $L10N)
     {
         $this->L10N = $L10N;
-        $this->Allow = Tools::CanCheckForUpdate();
+        $this->Allow = Tools::canCheckForUpdate();
     }
       
       /**
@@ -42,7 +42,7 @@ class Updater extends Controller
             
         if ($this->Allow) {
             try {
-                $LastVersionNumber = Tools::GetLastVersionNumber();
+                $LastVersionNumber = Tools::getLastVersionNumber();
                 $AppVersion = \OCP\App::getAppVersion('ocdownloader');
                         
                 $Response = array('ERROR' => false, 'RESULT' => version_compare($AppVersion, $LastVersionNumber, '<'));

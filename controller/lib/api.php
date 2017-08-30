@@ -40,7 +40,7 @@ class API
     public static function add($URL)
     {
         try {
-            self::Load();
+            self::load();
             
             $URL = urldecode($URL);
             if (Tools::checkURL($URL)) {
@@ -75,7 +75,7 @@ class API
                     
                     $DL = array(
                         'URL' => $URL,
-                        'FILENAME' => Tools::CleanString(substr($URL, strrpos($URL, '/') + 1)),
+                        'FILENAME' => Tools::cleanString(substr($URL, strrpos($URL, '/') + 1)),
                         'PROTO' => strtoupper(substr($URL, 0, strpos($URL, ':')))
                     );
                 }
@@ -96,8 +96,8 @@ class API
                 
                 $AddURI =(
                     self::$WhichDownloader == 0
-                        ?Aria2::AddUri(array($DL['URL']), array('Params' => $OPTIONS))
-                        :CURL::AddUri($DL['URL'], $OPTIONS)
+                        ?Aria2::addUri(array($DL['URL']), array('Params' => $OPTIONS))
+                        :CURL::addUri($DL['URL'], $OPTIONS)
                 );
                 
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
@@ -140,7 +140,7 @@ class API
     
     public static function getQueue()
     {
-        self::Load();
+        self::load();
         
         try {
             $Params = array(self::$CurrentUID);
@@ -168,7 +168,7 @@ class API
             $Queue = [];
             
             while ($Row = $Request->fetchRow()) {
-                $Status =(self::$WhichDownloader == 0?Aria2::TellStatus($Row['GID']):CURL::TellStatus($Row['GID']));
+                $Status =(self::$WhichDownloader == 0?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
                 $DLStatus = 5; // Error
                 
                 if (!is_null($Status)) {
@@ -178,8 +178,8 @@ class API
                             $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                         }
                         
-                        $DLStatus = Tools::GetDownloadStatusID($Status['result']['status']);
-                        $ProgressString = Tools::GetProgressString(
+                        $DLStatus = Tools::getDownloadStatusID($Status['result']['status']);
+                        $ProgressString = Tools::getProgressString(
                             $Status['result']['completedLength'],
                             $Status['result']['totalLength'],
                             $Progress
@@ -192,7 +192,7 @@ class API
                                 'Message' => null,
                                 'ProgressString' => is_null($ProgressString)?'N_A':$ProgressString,
                                 'NumSeeders' => isset($Status['result']['bittorrent']) && $Progress < 1?$Status['result']['numSeeders']:null,
-                                'UploadLength' => isset($Status['result']['bittorrent']) && $Progress == 1?Tools::FormatSizeUnits($Status['result']['uploadLength']):null,
+                                'UploadLength' => isset($Status['result']['bittorrent']) && $Progress == 1?Tools::formatSizeUnits($Status['result']['uploadLength']):null,
                                 'Ratio' => isset($Status['result']['bittorrent'])?round(($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2):null
                             ),
                             'STATUS' => array(
@@ -205,11 +205,11 @@ class API
                                     ?(isset($Status['result']['bittorrent'])
                                         ?($Status['result']['uploadSpeed'] == 0
                                             ?'--'
-                                            :Tools::FormatSizeUnits($Status['result']['uploadSpeed']).'/s')
+                                            :Tools::formatSizeUnits($Status['result']['uploadSpeed']).'/s')
                                         :'--')
                                     :($DLStatus == 4
                                         ?'--'
-                                        :Tools::FormatSizeUnits($Status['result']['downloadSpeed']).'/s'))
+                                        :Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'))
                                 :'N_A',
                             'FILENAME' => $Row['FILENAME'],
                             'PROTO' => $Row['PROTOCOL'],
@@ -283,7 +283,7 @@ class API
                 'ERROR' => false,
                 'MESSAGE' => null,
                 'QUEUE' => $Queue,
-                'COUNTER' => Tools::GetCounters(self::$DbType, self::$CurrentUID)
+                'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
             );
         } catch (Exception $E) {
             return array('ERROR' => true, 'MESSAGE' => $E->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
