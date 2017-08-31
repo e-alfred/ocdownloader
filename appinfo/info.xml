@@ -13,7 +13,7 @@
 	<repository type="git">https://github.com/e-alfred/ocdownloader.git</repository>
 	<dependencies>
 		<owncloud min-version="9.0" />
-		<nextcloud min-version="11" max-version="12" />
+		<nextcloud min-version="11" max-version="13" />
 		<php min-version="5.5.0" />
 		<lib>curl</lib>
 		<os>Linux</os>
