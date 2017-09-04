@@ -11,6 +11,7 @@
 	<website>https://github.com/e-alfred/ocdownloader</website>
 	<bugs>https://github.com/e-alfred/ocdownloader/issues</bugs>
 	<documentation>https://github.com/e-alfred/ocdownloader/</documentation>
+	<screenshot>https://raw.githubusercontent.com/e-alfred/ocdownloader/master/appinfo/Screenshot.jpg</screenshot>
 	<repository>https://github.com/e-alfred/</repository>
 	<dependencies>
 		<owncloud min-version="9.0" />
