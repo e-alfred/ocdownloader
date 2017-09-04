@@ -79,7 +79,7 @@ class YouTube
                     }
                  if ((!empty($OutProcessed['VIDEO']) || !empty($OutProcessed['AUDIO'])) && !empty($OutProcessed['FULLNAME']))
                     {
-                        if ($index==$current_index)
+                        if ($index == $current_index)
                         {
                             break;
                         }
