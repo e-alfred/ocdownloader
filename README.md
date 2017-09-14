@@ -18,7 +18,7 @@ You have to install Aria2 on your system. To do this on Debian/Ubuntu you can us
 
 After that, you have to run Aria2 on every boot with the same user that your webserver is running:
 
-`sudo -u www-data aria2c --enable-rpc --rpc-allow-origin-all -c -D --log=/var/log/aria2.log --check-certificate=false  --save-session=/var/www/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/www/aria2c.sess  --rpc-save-upload-metadata=true --force-save=true --log-level=warn`
+`sudo -u www-data aria2c --daemon=true --enable-rpc=true --rpc-allow-origin-all --rpc-save-upload-metadata=true --log=/var/log/aria2.log --log-level=warn --input-file=/var/www/aria2c.sess --save-session=/var/www/aria2c.sess --save-session-interval=2 --force-save=true --continue=true --check-certificate=false --remote-time=true`
 
 You have to enable the RPC interface and save the session file of Aria2, otherwise your old downloads won't be listed after you restart Aria2. The file in the example is stored in /var/www/aria2c.sess, but you can put it anywhere as long as the user running your webserver can access/write to it.
 
