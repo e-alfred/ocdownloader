@@ -73,9 +73,10 @@ class YouTube
                             $OutProcessed['FULLNAME'] = $Output[$I];
                         }
                     }
-                    if ((!empty($OutProcessed['VIDEO']) || !empty($OutProcessed['AUDIO']))
-                        && !empty($OutProcessed['FULLNAME'])) {
-                        if ($index==$current_index) {
+                 if ((!empty($OutProcessed['VIDEO']) || !empty($OutProcessed['AUDIO'])) && !empty($OutProcessed['FULLNAME']))
+                    {
+                        if ($index == $current_index)
+                        {
                             break;
                         } else {
                             $OutProcessed = array();
@@ -88,4 +89,5 @@ class YouTube
         }
         return null;
     }
+
 }
