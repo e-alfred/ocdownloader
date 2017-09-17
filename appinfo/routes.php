@@ -11,8 +11,8 @@
 
 namespace OCA\ocDownloader\AppInfo;
 
-$Application = new Application ();
-$Application->registerRoutes ($this, Array (
+$Application = new Application();
+$Application->registerRoutes($this, array(
     'routes' => [
         // Index
         ['name' => 'Index#Add', 'url' => '/add', 'verb' => 'GET'],
@@ -63,6 +63,32 @@ $Application->registerRoutes ($this, Array (
 ));
 
 $APIBasePath = '/apps/ocdownloader/api/';
-\OCP\API::register ('POST', $APIBasePath . 'version', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::CheckAddonVersion ($_POST['AddonVersion'])); }, 'ocdownloader', \OC_API::USER_AUTH);
-\OCP\API::register ('GET', $APIBasePath . 'queue/get', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::GetQueue ()); }, 'ocdownloader', \OC_API::USER_AUTH);
-\OCP\API::register ('POST', $APIBasePath . 'add', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Add ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);
+\OCP\API::register(
+    'POST',
+    $APIBasePath.'version',
+    function ($URLParams) {
+        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::checkAddonVersion($_POST['AddonVersion']));
+    },
+    'ocdownloader',
+    \OC_API::USER_AUTH
+);
+
+\OCP\API::register(
+    'GET',
+    $APIBasePath.'queue/get',
+    function ($URLParams) {
+        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::getQueue());
+    },
+    'ocdownloader',
+    \OC_API::USER_AUTH
+);
+
+\OCP\API::register(
+    'POST',
+    $APIBasePath.'add',
+    function ($URLParams) {
+        return new \OC_OCS_Result(\OCA\ocDownloader\Controller\Lib\API::add($_POST['URL']));
+    },
+    'ocdownloader',
+    \OC_API::USER_AUTH
+);
