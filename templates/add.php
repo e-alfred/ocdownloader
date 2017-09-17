@@ -86,6 +86,8 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     <div class="group-option">
                         <label for="option-ftp-user"><?php print ($l->t ('FTP User')); ?> :</label><input type="text" id="option-ftp-user" placeholder="<?php print ($l->t ('Username')); ?>" />
                         <label for="option-ftp-pwd"><?php print ($l->t ('FTP Password')); ?> :</label><input type="password" id="option-ftp-pwd" placeholder="<?php print ($l->t ('Password')); ?>" />
+                        <label for="option-ftp-referer"><?php print ($l->t ('Referer')); ?> :</label><input type="text" id="option-ftp-referer" placeholder="<?php print ($l->t ('Referer')); ?>" />
+                        <label for="option-ftp-useragent"><?php print ($l->t ('User Agent')); ?> :</label><input type="text" id="option-ftp-useragent" placeholder="<?php print ($l->t ('Useragent')); ?>" />
                     </div>
                     <div class="group-option">
                         <label for="option-ftp-pasv"><?php print ($l->t ('Passive Mode')); ?> :</label><input type="checkbox" id="option-ftp-pasv" checked />

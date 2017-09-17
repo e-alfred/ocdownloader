@@ -94,7 +94,9 @@ $(document).ready (function ()
 			{
 				FTPUser: $('#option-ftp-user').val (),
 				FTPPasswd: $('#option-ftp-pwd').val (),
-				FTPPasv: $('#option-ftp-pasv').prop ('checked')
+				FTPPasv: $('#option-ftp-pasv').prop ('checked'),
+				FTPReferer: $('#option-ftp-referer').val (),
+				FTPUseragent: $('#option-ftp-useragent').val ()
 			});
 		}
 		else
@@ -106,6 +108,8 @@ $(document).ready (function ()
 		$('#option-ftp-user').val ('');
 		$('#option-ftp-pwd').val ('');
 		$('#option-ftp-pasv').prop ('checked', true);
+		$('#option-ftp-referer').val ('');
+		$('#option-ftp-useragent').val ('');
 	});
 
 	// Launch YT download
