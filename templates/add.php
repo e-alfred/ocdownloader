@@ -66,7 +66,9 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     <h5><?php print ($l->t ('Options')); ?></h5>
                     <div class="group-option">
                         <label for="option-http-user"><?php print ($l->t ('Basic Auth User')); ?> :</label><input type="text" id="option-http-user" placeholder="<?php print ($l->t ('Username')); ?>" />
-                        <label for="option-http-pwd"><?php print ($l->t ('Basic Auth Password')); ?> :</label><input type="password" id="option-http-pwd" placeholder="<?php print ($l->t ('Password')); ?>" /> 
+                        <label for="option-http-pwd"><?php print ($l->t ('Basic Auth Password')); ?> :</label><input type="password" id="option-http-pwd" placeholder="<?php print ($l->t ('Password')); ?>" />
+                        <label for="option-http-referrer"><?php print ($l->t ('Referrer')); ?> :</label><input type="text" id="option-http-referrer" placeholder="<?php print ($l->t ('Referrer')); ?>" />
+                        <label for="option-http-useragent"><?php print ($l->t ('User Agent')); ?> :</label><input type="text" id="option-http-useragent" placeholder="<?php print ($l->t ('Useragent')); ?>" />
                     </div>
                 </div>
             </div>
@@ -83,7 +85,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     <h5><?php print ($l->t ('Options')); ?></h5>
                     <div class="group-option">
                         <label for="option-ftp-user"><?php print ($l->t ('FTP User')); ?> :</label><input type="text" id="option-ftp-user" placeholder="<?php print ($l->t ('Username')); ?>" />
-                        <label for="option-ftp-pwd"><?php print ($l->t ('FTP Password')); ?> :</label><input type="password" id="option-ftp-pwd" placeholder="<?php print ($l->t ('Password')); ?>" /> 
+                        <label for="option-ftp-pwd"><?php print ($l->t ('FTP Password')); ?> :</label><input type="password" id="option-ftp-pwd" placeholder="<?php print ($l->t ('Password')); ?>" />
                     </div>
                     <div class="group-option">
                         <label for="option-ftp-pasv"><?php print ($l->t ('Passive Mode')); ?> :</label><input type="checkbox" id="option-ftp-pasv" checked />

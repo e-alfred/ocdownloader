@@ -126,6 +126,17 @@ class HttpDownloader extends Controller
                               $OPTIONS['http-user'] = $_POST['OPTIONS']['HTTPUser'];
                               $OPTIONS['http-passwd'] = $_POST['OPTIONS']['HTTPPasswd'];
                         }
+
+                        if (isset ($_POST['OPTIONS']['HTTPReferrer']) && strlen (trim ($_POST['OPTIONS']['HTTPReferrer'])) > 0)
+                        {
+                              $OPTIONS['referrer'] = $_POST['OPTIONS']['HTTPReferrer'];
+                        }
+
+                        if (isset ($_POST['OPTIONS']['HTTPUseragent']) && strlen (trim ($_POST['OPTIONS']['HTTPUseragent'])) > 0)
+                        {
+                              $OPTIONS['user-agent'] = $_POST['OPTIONS']['HTTPUseragent'];
+                        }
+
                         if (!$this->ProxyOnlyWithYTDL && !is_null ($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536)
                         {
                               $OPTIONS['all-proxy'] = rtrim ($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
