@@ -66,8 +66,8 @@ $(document).ready (function ()
 			OCDLR.Utils.AddDownload ($(this), 'http', InputURL.val (),
 			{
 				HTTPUser: $('#option-http-user').val (),
-				HTTPPasswd: $('#option-http-pwd').val ()
-        HTTPReferrer: $('#option-http-referrer').val ()
+				HTTPPasswd: $('#option-http-pwd').val (),
+        HTTPReferrer: $('#option-http-referrer').val (),
         HTTPUseragent: $('#option-http-useragent').val ()
 			});
 		}
@@ -79,6 +79,8 @@ $(document).ready (function ()
 		InputURL.val ('');
 		$('#option-http-user').val ('');
 		$('#option-http-pwd').val ('');
+		$('#option-http-referrer').val ('');
+		$('#option-http-useragent').val ('');
 	});
 
 	// Launch FTP download
