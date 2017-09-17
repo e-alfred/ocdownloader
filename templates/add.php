@@ -67,8 +67,8 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     <div class="group-option">
                         <label for="option-http-user"><?php print ($l->t ('Basic Auth User')); ?> :</label><input type="text" id="option-http-user" placeholder="<?php print ($l->t ('Username')); ?>" />
                         <label for="option-http-pwd"><?php print ($l->t ('Basic Auth Password')); ?> :</label><input type="password" id="option-http-pwd" placeholder="<?php print ($l->t ('Password')); ?>" />
-                        <label for="option-http-referer"><?php print ($l->t ('Referer')); ?> :</label><input type="text" id="option-http-referer" placeholder="<?php print ($l->t ('Referer')); ?>" />
-                        <label for="option-http-useragent"><?php print ($l->t ('User Agent')); ?> :</label><input type="text" id="option-http-useragent" placeholder="<?php print ($l->t ('Useragent')); ?>" />
+                        <label for="option-http-referer"><?php print ($l->t ('HTTP Referer')); ?> :</label><input type="text" id="option-http-referer" placeholder="<?php print ($l->t ('Referer')); ?>" />
+                        <label for="option-http-useragent"><?php print ($l->t ('HTTP User Agent')); ?> :</label><input type="text" id="option-http-useragent" placeholder="<?php print ($l->t ('Useragent')); ?>" />
                     </div>
                 </div>
             </div>
@@ -86,8 +86,8 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     <div class="group-option">
                         <label for="option-ftp-user"><?php print ($l->t ('FTP User')); ?> :</label><input type="text" id="option-ftp-user" placeholder="<?php print ($l->t ('Username')); ?>" />
                         <label for="option-ftp-pwd"><?php print ($l->t ('FTP Password')); ?> :</label><input type="password" id="option-ftp-pwd" placeholder="<?php print ($l->t ('Password')); ?>" />
-                        <label for="option-ftp-referer"><?php print ($l->t ('Referer')); ?> :</label><input type="text" id="option-ftp-referer" placeholder="<?php print ($l->t ('Referer')); ?>" />
-                        <label for="option-ftp-useragent"><?php print ($l->t ('User Agent')); ?> :</label><input type="text" id="option-ftp-useragent" placeholder="<?php print ($l->t ('Useragent')); ?>" />
+                        <label for="option-ftp-referer"><?php print ($l->t ('FTP Referer')); ?> :</label><input type="text" id="option-ftp-referer" placeholder="<?php print ($l->t ('Referer')); ?>" />
+                        <label for="option-ftp-useragent"><?php print ($l->t ('FTP User Agent')); ?> :</label><input type="text" id="option-ftp-useragent" placeholder="<?php print ($l->t ('Useragent')); ?>" />
                     </div>
                     <div class="group-option">
                         <label for="option-ftp-pasv"><?php print ($l->t ('Passive Mode')); ?> :</label><input type="checkbox" id="option-ftp-pasv" checked />
