@@ -67,7 +67,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     <div class="group-option">
                         <label for="option-http-user"><?php print ($l->t ('Basic Auth User')); ?> :</label><input type="text" id="option-http-user" placeholder="<?php print ($l->t ('Username')); ?>" />
                         <label for="option-http-pwd"><?php print ($l->t ('Basic Auth Password')); ?> :</label><input type="password" id="option-http-pwd" placeholder="<?php print ($l->t ('Password')); ?>" />
-                        <label for="option-http-referrer"><?php print ($l->t ('Referrer')); ?> :</label><input type="text" id="option-http-referrer" placeholder="<?php print ($l->t ('Referrer')); ?>" />
+                        <label for="option-http-referer"><?php print ($l->t ('Referer')); ?> :</label><input type="text" id="option-http-referer" placeholder="<?php print ($l->t ('Referer')); ?>" />
                         <label for="option-http-useragent"><?php print ($l->t ('User Agent')); ?> :</label><input type="text" id="option-http-useragent" placeholder="<?php print ($l->t ('Useragent')); ?>" />
                     </div>
                 </div>

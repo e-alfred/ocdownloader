@@ -67,7 +67,7 @@ $(document).ready (function ()
 			{
 				HTTPUser: $('#option-http-user').val (),
 				HTTPPasswd: $('#option-http-pwd').val (),
-        HTTPReferrer: $('#option-http-referrer').val (),
+        HTTPReferer: $('#option-http-referer').val (),
         HTTPUseragent: $('#option-http-useragent').val ()
 			});
 		}
@@ -79,7 +79,7 @@ $(document).ready (function ()
 		InputURL.val ('');
 		$('#option-http-user').val ('');
 		$('#option-http-pwd').val ('');
-		$('#option-http-referrer').val ('');
+		$('#option-http-referer').val ('');
 		$('#option-http-useragent').val ('');
 	});
 

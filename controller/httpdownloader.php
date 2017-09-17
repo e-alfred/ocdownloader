@@ -127,9 +127,9 @@ class HttpDownloader extends Controller
                               $OPTIONS['http-passwd'] = $_POST['OPTIONS']['HTTPPasswd'];
                         }
 
-                        if (isset ($_POST['OPTIONS']['HTTPReferrer']) && strlen (trim ($_POST['OPTIONS']['HTTPReferrer'])) > 0)
+                        if (isset ($_POST['OPTIONS']['HTTPReferer']) && strlen (trim ($_POST['OPTIONS']['HTTPReferer'])) > 0)
                         {
-                              $OPTIONS['referrer'] = $_POST['OPTIONS']['HTTPReferrer'];
+                              $OPTIONS['referer'] = $_POST['OPTIONS']['HTTPReferer'];
                         }
 
                         if (isset ($_POST['OPTIONS']['HTTPUseragent']) && strlen (trim ($_POST['OPTIONS']['HTTPUseragent'])) > 0)
