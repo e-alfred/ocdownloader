@@ -22,43 +22,43 @@ use OCA\ocDownloader\Controller\Lib\Settings;
 
 class Updater extends Controller
 {
-      private $Settings = null;
-      private $Allow = false;
-      private $L10N = null;
+    private $Settings = null;
+    private $Allow = false;
+    private $L10N = null;
       
-      public function __construct ($AppName, IRequest $Request, IL10N $L10N)
-      {
-            $this->L10N = $L10N;
-            $this->Allow = Tools::CanCheckForUpdate ();
-      }
+    public function __construct($AppName, IRequest $Request, IL10N $L10N)
+    {
+        $this->L10N = $L10N;
+        $this->Allow = Tools::canCheckForUpdate();
+    }
       
       /**
        * @AdminRequired
        * @NoCSRFRequired
        */
-      public function Check ()
-      {
-            \OCP\JSON::setContentTypeHeader ('application/json');
+    public function check()
+    {
+        \OCP\JSON::setContentTypeHeader('application/json');
             
-            if ($this->Allow)
-            {
-                  try
-                  {
-                        $LastVersionNumber = Tools::GetLastVersionNumber ();
-                        $AppVersion = \OCP\App::getAppVersion ('ocdownloader');
+        if ($this->Allow) {
+            try {
+                $LastVersionNumber = Tools::getLastVersionNumber();
+                $AppVersion = \OCP\App::getAppVersion('ocdownloader');
                         
-                        $Response = Array ('ERROR' => false, 'RESULT' => version_compare ($AppVersion, $LastVersionNumber, '<'));
-                  }
-                  catch (Exception $E)
-                  {
-                        $Response = Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('Error while checking application version on GitHub'));
-                  }
+                $Response = array('ERROR' => false, 'RESULT' => version_compare($AppVersion, $LastVersionNumber, '<'));
+            } catch (Exception $E) {
+                $Response = array(
+                      'ERROR' => true,
+                      'MESSAGE' =>(string)$this->L10N->t('Error while checking application version on GitHub')
+                  );
             }
-            else
-            {
-                  $Response = Array ('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t ('You are not allowed to check for application updates'));
-            }
+        } else {
+            $Response = array(
+                  'ERROR' => true,
+                  'MESSAGE' =>(string)$this->L10N->t('You are not allowed to check for application updates')
+            );
+        }
             
-            return new JSONResponse ($Response);
-      }
+        return new JSONResponse($Response);
+    }
 }
