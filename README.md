@@ -63,8 +63,8 @@ If you have problems with Curl, the log files are saved to the /tmp folder on yo
 
 ## Authors
 e-alfred  
-Nibbels
-loki3000
+Nibbels  
+Loki3000  
 (formerly) Xavier Beurois
 
 ## Releases notes
