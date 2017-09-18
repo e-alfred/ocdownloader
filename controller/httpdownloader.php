@@ -96,7 +96,8 @@ class HttpDownloader extends Controller
                     throw new \Exception((string)$this->L10N->t('You are not allowed to use the HTTP protocol'));
                 }
 
-                $Target = Tools::cleanString(substr($_POST['FILE'], strrpos($_POST['FILE'], '/') + 1));
+                $Target=parse_url($_POST['FILE'], PHP_URL_PATH);
+                $Target = Tools::cleanString(substr($Target, strrpos($Target, '/') + 1));
 
                 // If target file exists, create a new one
                 if (\OC\Files\Filesystem::file_exists($this->DownloadsFolder . '/' . $Target)) {
