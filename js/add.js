@@ -67,8 +67,8 @@ $(document).ready (function ()
 			{
 				HTTPUser: $('#option-http-user').val (),
 				HTTPPasswd: $('#option-http-pwd').val (),
-        HTTPReferer: $('#option-http-referer').val (),
-        HTTPUseragent: $('#option-http-useragent').val ()
+				HTTPReferer: $('#option-http-referer').val (),
+				HTTPUseragent: $('#option-http-useragent').val ()
 			});
 		}
 		else
