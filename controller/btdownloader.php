@@ -121,7 +121,8 @@ class BTDownloader extends Controller
                     throw new \Exception((string)$this->L10N->t('You are not allowed to use the BitTorrent protocol'));
                 }
 
-                $Target = Tools::cleanString(str_replace('.torrent', '', $_POST['FILE']));
+                $Target=parse_url($_POST['FILE'], PHP_URL_PATH);
+                $Target = Tools::cleanString(str_replace('.torrent', '', $Target));
 
                 $OPTIONS = array(
                     'dir' => rtrim($this->AbsoluteDownloadsFolder, '/').'/'.$Target,
