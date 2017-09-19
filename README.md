@@ -1,13 +1,13 @@
 # ocDownloader
 ocDownloader is an AGPL-licensed application for [Nextcloud](https://nextcloud.com) which allows you to download files from HTTP(S)/FTP(S)/Youtube/Bittorrent using the ARIA2 download manager/Curl and youtube-dl.
 
-***I'm looking for maintainers and translators, every kind of support (especially pull requests) is highly welcome***
-
-***If you are interested in translating, visit to [ocDownloader Transifex Project](https://www.transifex.com/projects/p/ocdownloader)***
+***I'm looking for maintainers and translators, every kind of support (especially pull requests) is highly welcome***.
 
 ## Companion apps/extensions for Firefox/Chrome/Opera/Vivaldi and Windows
 
-Webextension plugin for both Firefox-based and Chromium-based browsers: https://github.com/e-alfred/ocDownloader_ChromeExtension
+Webextension addon for both Firefox-based and Chromium-based browsers: https://github.com/e-alfred/ocDownloader_ChromeExtension
+
+Jetpack/PMKit addon for Firefox <=56 and Palemoon: https://github.com/e-alfred/ocdownloader_FFAddon
 
 UWP Windows 8.1/10 app: https://github.com/e-alfred/ocDownloader_WindowsDesktop
 
@@ -46,7 +46,7 @@ If you have problems with Curl, the log files are saved to the /tmp folder on yo
 - The download total size
 - The current downloaded size
 - The speed
-- The PID of the PHP process which downloads your file (this allow to stop the download while it is in progress)
+- The PID of the PHP process which downloads your file (this allows to pause/restart the download while it is in progress)
 
 ## Translators
 - Polish : Andrzej Kaczmarczyk
@@ -64,6 +64,7 @@ If you have problems with Curl, the log files are saved to the /tmp folder on yo
 ## Authors
 e-alfred  
 Nibbels  
+Loki3000  
 (formerly) Xavier Beurois
 
 ## Releases notes

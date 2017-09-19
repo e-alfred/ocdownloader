@@ -127,8 +127,8 @@ OCDLR = {};
 
 									if (Value.PROGRESSVAL == '100%')
 									{
-										$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME + '</a>');
-
+										$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a title="'+Value.FILENAME+'" href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME_SHORT + '</a>');
+										
 										if (Value.ISTORRENT && Value.SPEED != '--')
 										{
 											$(QueueElt + ' > td[data-rel="SPEED"]').html ('<div class="icon-upload svg"></div>' + Value.SPEED);
@@ -642,8 +642,8 @@ OCDLR = {};
 
 		PrependToQueue: function (Data, View)
 		{
-			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' +
-				'<td data-rel="FILENAME" class="padding">' + Data.FILENAME + '</td>' +
+			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+				'<td data-rel="FILENAME" class="padding">' + Data.FILENAME_SHORT + '</td>' +
 				'<td data-rel="PROTO" class="border padding">' + t ('ocdownloader', Data.PROTO) + '</td>' +
 				'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: ' + Data.PROGRESSVAL + ';"><div class="pb-text">' + Data.PROGRESS + '</div></div></div></td>' +
 				(['add', 'actives', 'all'].indexOf (View) > -1 ? '<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' : '') +
