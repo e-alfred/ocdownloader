@@ -122,8 +122,11 @@ class HttpDownloader extends Controller
                 if (isset ($_POST['OPTIONS']['HTTPReferer']) && strlen (trim ($_POST['OPTIONS']['HTTPReferer'])) > 0) {
                               $OPTIONS['referer'] = $_POST['OPTIONS']['HTTPReferer'];
                      }
-                 if (isset ($_POST['OPTIONS']['HTTPUseragent']) && strlen (trim ($_POST['OPTIONS']['HTTPUseragent'])) > 0) {
+                if (isset ($_POST['OPTIONS']['HTTPUseragent']) && strlen (trim ($_POST['OPTIONS']['HTTPUseragent'])) > 0) {
                               $OPTIONS['user-agent'] = $_POST['OPTIONS']['HTTPUseragent'];
+                    }
+                if (isset ($_POST['OPTIONS']['HTTPOutfilename']) && strlen (trim ($_POST['OPTIONS']['HTTPOutfilename'])) > 0) {
+                                 $OPTIONS['out'] = $_POST['OPTIONS']['HTTPOutfilename'];
                     }
                 if (!$this->ProxyOnlyWithYTDL && !is_null($this->ProxyAddress)
                     && $this->ProxyPort > 0 && $this->ProxyPort <= 65536) {

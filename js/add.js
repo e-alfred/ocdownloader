@@ -68,7 +68,8 @@ $(document).ready (function ()
 				HTTPUser: $('#option-http-user').val (),
 				HTTPPasswd: $('#option-http-pwd').val (),
 				HTTPReferer: $('#option-http-referer').val (),
-				HTTPUseragent: $('#option-http-useragent').val ()
+				HTTPUseragent: $('#option-http-useragent').val (),
+				HTTPOutfilename: $('#option-http-outfilename').val ()
 			});
 		}
 		else
@@ -81,6 +82,7 @@ $(document).ready (function ()
 		$('#option-http-pwd').val ('');
 		$('#option-http-referer').val ('');
 		$('#option-http-useragent').val ('');
+		$('#option-http-outfilename').val ('');
 	});
 
 	// Launch FTP download
@@ -96,7 +98,8 @@ $(document).ready (function ()
 				FTPPasswd: $('#option-ftp-pwd').val (),
 				FTPPasv: $('#option-ftp-pasv').prop ('checked'),
 				FTPReferer: $('#option-ftp-referer').val (),
-				FTPUseragent: $('#option-ftp-useragent').val ()
+				FTPUseragent: $('#option-ftp-useragent').val (),
+				FTPOutfilename: $('#option-ftp-outfilename').val ()
 			});
 		}
 		else
