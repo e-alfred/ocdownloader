@@ -60,6 +60,7 @@ If you have problems with Curl, the log files are saved to the /tmp folder on yo
 - Italian : Leonardo Bartoletti, adelutti (Andrea), r.bicelli Riccardo Bicelli
 - Danish : Janus Ljósheim, Johannes Hessellund
 - Korean : Asen Gonov
+- Dutch : msberends
 
 ## Authors
 e-alfred  
@@ -68,6 +69,12 @@ Loki3000
 (formerly) Xavier Beurois
 
 ## Releases notes
+### v1.5.4
+- Dutch translation (thanks to @msberends)
+- Allow setting a custom filename after downloading for HTTP/FTP
+- Truncate filenames if URL contains parameters after filename (thanks @Loki3000)
+- Show tooltip if filename is too long for downloaded items table (thanks @Loki3000)
+- Add fields for custom referer and user agent if using HTTP/FTP for download
 ### v1.5.3 (thanks @Nibbels)
 - Some changes within design and site unlocks for CURL-Users
 ### v1.5.2 (thanks @Nibbels)
