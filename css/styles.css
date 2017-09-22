@@ -107,7 +107,7 @@
 }
 #app-content-wrapper .content-page {
   padding: 0 20px;
-  height: 300px;
+  /* height: 300px; */
   border-bottom: 1px solid #ddd;
 }
 #app-content-wrapper h3, #app-content-wrapper .h3 {
@@ -131,6 +131,31 @@
   font-size: 12px;
   margin-left: 1em;
 }
+
+#app-content-wrapper .handler {
+
+  display: inline;
+  width: 20%;
+  text-align: right;
+  margin: 3px 3px 3px 0;
+  padding: 7px 6px;
+  font-size: 13px;
+  background-color: none;
+  color: white;
+  border: 1px solid #dbdbdb;
+  outline: none;
+  border-radius: 3px;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+
 #app-content-wrapper .pull-right {
   float: right;
 }
@@ -270,8 +295,7 @@
   float: right !important;
   box-sizing: border-box;
   height: 36px;
-  padding: 10px;
-  margin-top: -5px;
+  padding:  7px;
 }
 #app-content-wrapper .content-page .uploadfile input[type="file"] {
   cursor: pointer;
@@ -307,7 +331,7 @@
     width: 1px;
 }
 #app-content-wrapper .content-page > input {
-  width: 100%;
+  width: 70%;
 }
 #app-content-wrapper .content-page > div.actions {
   display: block;
