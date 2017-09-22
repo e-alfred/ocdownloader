@@ -53,7 +53,18 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                 <div class="righttitle"><?php print ($l->t ('Add Download')); ?></div>
                 <div style="float: right;"><p class="lead"><?php print ($l->t (' using <strong>%s</strong>', $_['WD'])); ?></p></div>
             </div>
-            <?php if ($_['AllowProtocolHTTP']): ?>
+            <div class="content-page" rel="OCDURI">
+                <h3>
+                    <?php print ($l->t ('New URI download')); ?><span class="muted OCDLRMsg"></span>
+                </h3>
+                <div class="handler info"></div>
+                <input type="text" placeholder="<?php print ($l->t ('URI to download')); ?>" class="form-control url" />
+                <div class="button launch">
+                    <a><?php print ($l->t ('Launch Download')); ?></a>
+                </div>
+            </div>
+          <!--
+            <?php if (false and $_['AllowProtocolHTTP']): ?>
             <div class="content-page" rel="OCDHTTP">
                 <h3>
                     <?php print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
@@ -138,7 +149,7 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
                     </div>
                 </div>
             </div>
-            <?php endif; ?>
+          <?php endif; ?> -->
             <div class="content-queue">
                 <table id="Queue" border="0" cellspacing="0" cellpadding="0">
                     <thead>

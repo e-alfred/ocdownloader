@@ -733,7 +733,102 @@ OCDLR = {};
 				}
 			}
 		},
-		
+
+		GetHandler: function (Handler, Button, Options, URL)
+		{
+			var RESULT = false;
+
+
+			if (!Button.hasClass ('icon-loading-small'))
+			{
+				Button.children ('a').css ('display', 'none');
+				Button.addClass ('icon-loading-small');
+
+				var LIST = Options.children('div.group-option');
+				LIST.empty ();
+				LIST.show ();
+
+				$.ajax ({
+			        url: OC.generateUrl ("/ocs/v1.php/apps/ocdownloader/api/handler?format=json"),
+			        method: 'POST',
+					dataType: 'json',
+					data: {'URL' : URL},
+			        async: true,
+			        cache: false,
+			        timeout: 30000,
+			        success: function (Data)
+					{
+						$('#app-content-wrapper div[rel=OCDINFO]').remove();
+						$('#app-content-wrapper div[rel=OCDOPTIONS]').remove();
+			      if (Data.ocs.data.ERROR)
+						{
+							if (Data.ocs.data.hasOwnProperty('HANDLER'))
+								Handler.addClass ('info red').text (Data.ocs.data.HANDLER);
+							else
+							  Handler.removeClass ('info red');
+
+							OCDLRSelf.PrintError (Data.ocs.data.MESSAGE);
+						}
+						else
+						{
+							Handler.removeClass ('info alert red');
+							Handler.addClass ('info green').text (Data.ocs.data.HANDLER);
+
+							OCDLRSelf.PrintInfo ("");
+
+
+							if (Data.ocs.data.hasOwnProperty('INFO')) {
+
+								$('#app-content-wrapper .content-page[rel=OCDURI]')
+									.append('<div class="jumbotron" rel="OCDINFO"><h5>INFO</h5></div>');
+								$.each(Data.ocs.data.INFO, function (k,v) {
+									//alert( k + ": " + v );
+										$('div[rel=OCDINFO]').append('<span>'+ k + ': '+ v +'</span>');
+								});
+
+								//$('#app-content-wrapper .content-page[rel=OCDURI]')
+								//	.append('<div class="jumbotron rel="OCDINFO"><h5>INFO</h5></div>');
+								//$('div[rel=OCDINFO]').append(nfo);
+							}
+
+							if (Data.ocs.data.hasOwnProperty('OPTIONS')) {
+								$('#app-content-wrapper .content-page[rel=OCDURI]')
+									.append('<div class="jumbotron" rel="OCDOPTIONS"><h5>Options</h5></div>');
+								$.each(Data.ocs.data.OPTIONS, function (k,v) {
+									//alert( k + ": " + v );
+										$('div[rel=OCDOPTIONS]').append('<label for="option-'+v[0]+'">'+v[2]+':</label><input type="'+v[1]+'" id="option-'+v[0]+'" placeholder="'+v[3]+'" />');
+								});
+
+							}
+
+							// show options
+							Options.css ('display', 'block');
+							//OCDLRSelf.PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+							//OCDLRSelf.PrependToQueue (Data, 'add');
+
+/*							$('#ball').Badger ('+1');
+							if (Data.STATUSID == 1)
+							{
+								$('#bactives').Badger ('+1');
+							}
+							if (Data.STATUSID == 3)
+							{
+								$('#bwaitings').Badger ('+1');
+							} */
+
+							RESULT = true;
+						}
+
+						// Reset add button
+						Button.children ('a').css ('display', 'block');
+						Button.removeClass ('icon-loading-small');
+			      }
+			    });
+			}
+
+			return RESULT;
+		},
+
 		AddDownload: function (Button, TYPE, URL, OPTIONS)
 		{
 			var RESULT = false;
