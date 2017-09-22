@@ -139,6 +139,110 @@ class API
             }
 	}
       
+
+	public static function Handler ($URI)
+	{
+            try
+            {
+                  self::Load ();
+
+                //  $URL = urldecode ($URI);
+								$URL = $URI;
+                  if (Tools::CheckURL ($URL))
+                  {
+										// FIXME: make handlers pluggeable.
+										\OCP\JSON::setContentTypeHeader ('application/json');
+
+										if (preg_match ('/^https{0,1}:\/\/www\.youtube\.com\/watch\?v=.*$/', $URL) == 1)
+										{
+													if (!self::$AllowProtocolYT && !\OC_User::isAdminUser (self::$CurrentUID))
+													{
+																return Array ('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolyt');
+													}
+
+													$YouTube = new YouTube (self::$YTDLBinary, $URL);
+
+													if (!is_null (self::$ProxyAddress) && self::$ProxyPort > 0 && self::$ProxyPort <= 65536)
+													{
+																$YouTube->SetProxy (self::$ProxyAddress, self::$ProxyPort);
+													}
+
+													$VideoData = $YouTube->GetVideoData ();
+													if (!isset ($VideoData['VIDEO']) || !isset ($VideoData['FULLNAME']))
+													{
+																return Array ('ERROR' => true, 'MESSAGE' => 'UnabletoretrievetrueYouTubevideoURL');
+													}
+													$DL = Array (
+																'URL' => $VideoData['VIDEO'],
+																'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']),
+																'PROTO' => 'Video'
+													);
+													return Array (
+																'ERROR' => false,
+																'HANDLER'  => 'youtube',
+																'OPTIONS' => Array(
+																		array('yt-extractaudio', 'checkbox', 'Only Extract audio ?', 'No post-processing, just extract the best audio quality'),
+																		array('yt-foceipv4', 'checkbox', 'Force IPv4 ?'),
+																	),
+																'INFO'=> $DL,
+															);
+										}
+
+										if (Tools::StartsWith (strtolower ($URL), 'http'))
+										{
+											if (!self::$AllowProtocolHTTP && !\OC_User::isAdminUser (self::$CurrentUID))
+													return Array ('ERROR' => true, 'HANDLER' => 'http', 'MESSAGE' => 'Notallowedtouseprotocolhttp');
+
+										return Array (
+													'ERROR' => false,
+													'HANDLER'  => 'http',
+													'OPTIONS' => Array(
+															array('http-user', 'text', 'Basic Auth User', 'Username'),
+															array('http-pwd', 'password', 'Basic Auth Password', 'Password'),
+															)
+												);
+											}
+
+											if (Tools::StartsWith (strtolower ($URL), 'ftp'))
+											{
+												if (!self::$AllowProtocolFTP && !\OC_User::isAdminUser (self::$CurrentUID))
+														return Array ('ERROR' => true, 'HANDLER' => 'ftp', 'MESSAGE' => 'Notallowedtouseprotocolftp');
+
+											return Array (
+														'ERROR' => false,
+														'HANDLER'  => 'ftp',
+														'OPTIONS' => Array(
+																array('ftp-user', 'text', 'FTP User', 'Username'),
+																array('ftp-pwd', 'password', 'FTP Password', 'Password'),
+																array('ftp_pasv', 'checkbox', 'Passive Mode' ),
+																)
+													);
+												}
+
+												if (Tools::StartsWith (strtolower ($URL), 'magnet'))
+												{
+													if (!self::$AllowProtocolBT && !\OC_User::isAdminUser (self::$CurrentUID))
+															return Array ('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolbt');
+
+												parse_str(str_replace('tr=','tr[]=',parse_url($URL,PHP_URL_QUERY)),$query);
+												return Array (
+															'ERROR' => false,
+															'HANDLER'  => 'magnet',
+															'INFO' => $query
+														);
+													}
+									return Array ('ERROR' => true, 'MESSAGE' => 'No Handler');
+
+                  }
+
+									return Array ('ERROR' => true, 'MESSAGE' => 'InvalidURL');
+            }
+            catch (Exception $E)
+            {
+                  return Array ('ERROR' => true, 'MESSAGE' => 'Unabletogethandler');
+            }
+	}
+
       public static function CheckAddonVersion ($Version)
 	{
             $AppVersion = Config::getAppValue ('ocdownloader', 'installed_version');
