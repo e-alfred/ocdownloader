@@ -127,6 +127,11 @@ class Queue extends Controller
                               {
                                     if (!isset ($Status['error']))
                                     {
+                                          # Following
+                                          if (count($Status['result']['followedBy'])) {
+                                              $Status = ($this->WhichDownloader == 0 ? Aria2::TellStatus ($Status['result']['followedBy'][0]) : CURL::TellStatus ($Status['result']['followedBy'][0]));
+                                              $Row['FILENAME'] = $Status['result']['bittorrent']['info']['name'];
+                                          }
                                           $Progress = 0;
                                           if ($Status['result']['totalLength'] > 0)
                                           {
