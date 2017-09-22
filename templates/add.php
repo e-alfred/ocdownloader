@@ -26,30 +26,6 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
     <div id="app-content">
         <div id="app-content-wrapper">
             <div id="controls">
-                <div class="actions">
-                    <div id="NewDL">
-                        <?php if ($_['AllowProtocolHTTP']){ ?>
-                        <div class="button" data-rel="OCDHTTP">
-                            <p data-rel="OCDHTTP">HTTP</p>
-                        </div>
-                        <?php } ?>
-                        <?php if ($_['AllowProtocolFTP']){ ?>
-                        <div class="button" data-rel="OCDFTP">
-                            <p data-rel="OCDFTP">FTP</p>
-                        </div>
-                        <?php } ?>
-                        <?php if ($_['AllowProtocolYT']){ ?>
-                        <div class="button" data-rel="OCDYT">
-                            <p data-rel="OCDYT">YOUTUBE</p>
-                        </div>
-                        <?php } ?>
-                        <?php if ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0){ ?>
-                        <div class="button" data-rel="OCDBT">
-                            <p data-rel="OCDBT">BITTORRENT</p>
-                        </div>
-                        <?php } ?>
-                    </div>
-                </div>
                 <div class="righttitle"><?php print ($l->t ('Add Download')); ?></div>
                 <div style="float: right;"><p class="lead"><?php print ($l->t (' using <strong>%s</strong>', $_['WD'])); ?></p></div>
             </div>
