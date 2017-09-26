@@ -4,7 +4,7 @@
 	<name>ocDownloader</name>
 	<summary>Easy to use download manager for Nextcloud</summary>
 	<description>Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files</description>
-	<version>1.5.3</version>
+	<version>1.5.4</version>
 	<licence>AGPL</licence>
 	<author>e-alfred</author>
 	<author>Nibbels</author>

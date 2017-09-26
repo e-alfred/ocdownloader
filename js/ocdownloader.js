@@ -12,7 +12,7 @@ OCDLR = {};
 
 (function ()
 {
-	OCDLR.Utils = 
+	OCDLR.Utils =
 	{
 		BaseURL: '/apps/ocdownloader/',
 		BaseID: '#app-content-wrapper ',
@@ -24,12 +24,12 @@ OCDLR = {};
 		TorrentsFolder: '',
 		WhichDownloader: '',
 		BadgerStatus: [],
-		
+
 		ValidURL: function (URLString)
 		{
 			return /^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(URLString);
 		},
-		
+
 		PrintError: function (Msg)
 		{
 			$(OCDLRSelf.BaseID + 'span.muted').removeClass ('info alert');
@@ -41,7 +41,7 @@ OCDLR = {};
 			$(OCDLRSelf.BaseID + 'span.muted').removeClass ('info alert');
 			$(OCDLRSelf.BaseID + 'span.muted').addClass ('info').text (Msg);
 		},
-		
+
 		CheckVersion: function ()
 		{
 			$.ajax ({
@@ -58,7 +58,7 @@ OCDLR = {};
 						$(OCDLRSelf.MenuID + '.nav-updater').show ();
 						$(OCDLRSelf.MenuID + '.nav-updater .button').bind ('click', function ()
 						{
-							OCDLRSelf.AddDownload ($(this), 'http', 'https://github.com/DjazzLab/ocdownloader/archive/master.zip',
+							OCDLRSelf.AddDownload ($(this), 'http', 'https://github.com/e-alfred/ocdownloader/archive/master.zip',
 							{
 								HTTPUser: '', HTTPPasswd: ''
 							});
@@ -67,13 +67,13 @@ OCDLR = {};
 				}
 			});
 		},
-		
+
 		UpdateQueue: function (DynMode, View)
 		{
 			var IntervalHandle = setInterval (function ()
 			{
 				clearInterval (IntervalHandle);
-				
+
 				if ($(OCDLRSelf.QueueElt).length > 0)
 				{
 					$(OCDLRSelf.BaseID + '.loadingtext').show ();
@@ -97,25 +97,25 @@ OCDLR = {};
 								{
 									$(OCDLRSelf.QueueElt + '[data-rel="LOADER"]').remove ();
 								}
-								
+
 								$('#ball').Badger (Data.COUNTER.ALL);
 								$('#bcompletes').Badger (Data.COUNTER.COMPLETES);
 								$('#bactives').Badger (Data.COUNTER.ACTIVES);
 								$('#bwaitings').Badger (Data.COUNTER.WAITINGS);
 								$('#bstopped').Badger (Data.COUNTER.STOPPED);
 								$('#bremoved').Badger (Data.COUNTER.REMOVED);
-								
+
 								var DBGIDS = [];
 								$.each (Data.QUEUE, function (Index, Value)
 								{
 									var QueueElt = OCDLRSelf.QueueElt + '[data-rel="' + Value.GID + '"]';
 									DBGIDS.push (Value.GID);
-									
+
 									if (DynMode && $(QueueElt).length == 0)
 									{
 										OCDLRSelf.PrependToQueue (Value, View);
 									}
-									
+
 									if ($(QueueElt + ' > td[data-rel="ACTION"] > div.icon-pause').length == 0 && Value.STATUSID == 1)
 									{
 										OCDLRSelf.ActionPause ($(QueueElt + ' > td[data-rel="ACTION"]'), View);
@@ -124,7 +124,7 @@ OCDLR = {};
 									{
 										OCDLRSelf.ActionUnPause ($(QueueElt + ' > td[data-rel="ACTION"]'), View);
 									}
-									
+
 									if (Value.PROGRESSVAL == '100%')
 									{
 										$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a title="'+Value.FILENAME+'" href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME_SHORT + '</a>');
@@ -136,7 +136,7 @@ OCDLR = {};
 										else
 										{
 											$(QueueElt + ' > td[data-rel="SPEED"]').html (Value.SPEED);
-											
+
 											if (!Value.ISTORRENT)
 											{
 												$(QueueElt + ' > td[data-rel="ACTION"] > div.icon-pause').remove ();
@@ -155,15 +155,15 @@ OCDLR = {};
 											$(QueueElt + ' > td[data-rel="SPEED"]').html (Value.SPEED);
 										}
 									}
-															
+
 									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').html (Value.PROGRESS);
 									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
 									$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS);
 								});
-								
+
 								OCDLRSelf.RemoveQueueItems (DBGIDS);
 							}
-							
+
 							$(OCDLRSelf.BaseID + '.loadingtext').hide ();
 				        }
 				    });
@@ -171,17 +171,17 @@ OCDLR = {};
 				OCDLRSelf.UpdateQueue ((View == 'add' ? false : true), View);
 			}, 3000);
 		},
-		
+
 		RemoveQueueItem: function (Item)
 		{
 			if (Item.parent ().children ().length == 1)
 			{
 				$(OCDLRSelf.Queue + ' th[data-rel="ACTION"] > div').remove ();
 			}
-			
+
 			Item.remove ();
 		},
-		
+
 		RemoveQueueItems: function (Items)
 		{
 			$(OCDLRSelf.QueueElt).each (function ()
@@ -196,12 +196,12 @@ OCDLR = {};
 				$(OCDLRSelf.Queue + '> thead th[data-rel="ACTION"] > div').remove ();
 			}
 		},
-		
+
 		HideFromQueue: function (Button)
 		{
 			Button.addClass ('icon-loading-small');
 			Button.removeClass ('icon-close');
-			
+
 			var TR = Button.parent ().parent ();
 			var GID = TR.attr ('data-rel');
 			if (GID)
@@ -235,21 +235,21 @@ OCDLR = {};
 				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
 			}
 		},
-		
+
 		HideAllFromQueue: function (Button)
 		{
 			Button.addClass ('icon-loading-small');
 			Button.removeClass ('icon-close');
-			
+
 			var GIDS = [];
 			$(OCDLRSelf.QueueElt + ' td[data-rel="ACTION"] > div.icon-close').each (function ()
 			{
 				$(this).addClass ('icon-loading-small');
 				$(this).removeClass ('icon-close');
-				
+
 				GIDS.push ($(this).parent ().parent ().attr ('data-rel'));
 			});
-			
+
 			if (GIDS.length > 0)
 			{
 				$.ajax ({
@@ -283,15 +283,15 @@ OCDLR = {};
 				OCDLRSelf.PrintError (t ('ocdownloader', 'No downloads in the queue ...'));
 			}
 		},
-		
+
 		PauseDownload: function (Button, View)
 		{
 			Button.addClass ('icon-loading-small');
 			Button.removeClass ('icon-pause');
-			
+
 			$('#bactives').Badger ('-1');
 			$('#bstopped').Badger ('+1');
-			
+
 			var TR = Button.parent ().parent ();
 			var GID = TR.attr ('data-rel');
 			if (GID)
@@ -314,11 +314,11 @@ OCDLR = {};
 						else
 						{
 							OCDLRSelf.PrintInfo (Data.MESSAGE + ' (' + GID + ')');
-							
+
 							if (['add', 'all'].indexOf (View) > -1)
 							{
 								Button.addClass ('icon-play');
-								
+
 								Button.parent ().parent ().children ('td[data-rel="STATUS"]').attr ('data-statusid', 3);
 								Button.parent ().parent ().children ('td[data-rel="STATUS"]').text (t ('ocdownloader', 'Paused'));
 								Button.unbind ('click');
@@ -341,15 +341,15 @@ OCDLR = {};
 				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
 			}
 		},
-		
+
 		UnPauseDownload: function (Button, View)
 		{
 			Button.addClass ('icon-loading-small');
 			Button.removeClass ('icon-play');
-			
+
 			$('#bactives').Badger ('+1');
 			$('#bstopped').Badger ('-1');
-			
+
 			var TR = Button.parent ().parent ();
 			var GID = TR.attr ('data-rel');
 			if (GID)
@@ -372,11 +372,11 @@ OCDLR = {};
 						else
 						{
 							OCDLRSelf.PrintInfo (Data.MESSAGE + ' (' + GID + ')');
-							
+
 							if (['add', 'all'].indexOf (View) > -1)
 							{
 								Button.addClass ('icon-pause');
-								
+
 								Button.parent ().parent ().children ('td[data-rel="STATUS"]').attr ('data-statusid', 1);
 								Button.parent ().parent ().children ('td[data-rel="STATUS"]').text (t ('ocdownloader', 'Active'));
 								Button.unbind ('click');
@@ -399,12 +399,12 @@ OCDLR = {};
 				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
 			}
 		},
-		
+
 		RemoveFromQueue: function (Button, Completely, View)
 		{
 			Button.addClass ('icon-loading-small');
 			Button.removeClass ('icon-delete');
-			
+
 			var TR = Button.parent ().parent ();
 			var GID = TR.attr ('data-rel');
 			if (GID)
@@ -442,7 +442,7 @@ OCDLR = {};
 							{
 								var TD = Button.parent ();
 								TD.children ('div').remove ();
-								
+
 								TD.parent ().children ('td[data-rel="STATUS"]').text (t ('ocdownloader', 'Removed'));
 								OCDLRSelf.ActionDeleteCompletely (TD);
 							}
@@ -455,21 +455,21 @@ OCDLR = {};
 				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'))
 			}
 		},
-		
+
 		RemoveAllFromQueue: function (Button, Completely, View)
 		{
 			Button.addClass ('icon-loading-small');
 			Button.removeClass ('icon-delete');
-			
+
 			var GIDS = [];
 			$(OCDLRSelf.QueueElt + ' td[data-rel="ACTION"] > div.icon-delete').each (function ()
 			{
 				$(this).addClass ('icon-loading-small');
 				$(this).removeClass ('icon-delete');
-				
+
 				GIDS.push ($(this).parent ().parent ().attr ('data-rel'));
 			});
-			
+
 			if (GIDS.length > 0)
 			{
 				$.ajax ({
@@ -490,7 +490,7 @@ OCDLR = {};
 						{
 							OCDLRSelf.PrintInfo (Data.MESSAGE);
 							OCDLRSelf.RemoveQueueItems (Data.GIDS);
-							
+
 							if (Completely.length > 0)
 							{
 								$('#bremoved').Badger ('-' + GIDS.length);
@@ -510,7 +510,7 @@ OCDLR = {};
 				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
 			}
 		},
-		
+
 		GetPersonalSettings: function ()
 		{
 			$.ajax ({
@@ -532,7 +532,7 @@ OCDLR = {};
 		        }
 		    });
 		},
-		
+
 		GetAdminSettings: function (KEYS)
 		{
 			$.ajax ({
@@ -555,7 +555,7 @@ OCDLR = {};
 		        }
 		    });
 		},
-		
+
 		GetTorrentsList: function (LIST)
 		{
 			if (LIST.is (':visible'))
@@ -567,7 +567,7 @@ OCDLR = {};
 				LIST.empty ();
 				LIST.append ('<li><p class="loader"><span class="icon-loading-small"></span></p></li>');
 				LIST.show ();
-				
+
 				$.ajax ({
 			        url: OC.generateUrl (OCDLRSelf.BaseURL + 'btdownloader/listtorrentfiles'),
 			        method: 'POST',
@@ -584,7 +584,7 @@ OCDLR = {};
 						else
 						{
 							LIST.empty ();
-							
+
 							if (Data.FILES.length == 0)
 							{
 								LIST.append ('<li><p>' + t ('ocdownloader', 'No Torrent Files') + ', <a href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.TorrentsFolder).replace(/%2F/g, '/') + '">' + t ('ocdownloader', 'Upload') + '</a></p></li>');
@@ -598,8 +598,8 @@ OCDLR = {};
 										LIST.append ('<li><p class="clickable">' + Data.FILES[I].name + '</p></li>');
 									}
 								}
-								
-								// Select a torrent in the proposed list 
+
+								// Select a torrent in the proposed list
 								LIST.children ('li').children ('p.clickable').bind ('click', function ()
 								{
 									LIST.parent ().children ('a').prop ('data-rel', 'File');
@@ -611,7 +611,7 @@ OCDLR = {};
 			    });
 			}
 		},
-		
+
 		GetCounters: function ()
 		{
 			$.ajax ({
@@ -637,9 +637,9 @@ OCDLR = {};
 						$('#bremoved').Badger (Data.COUNTER.REMOVED);
 					}
 		        }
-		    });	
+		    });
 		},
-		
+
 		PrependToQueue: function (Data, View)
 		{
 			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
@@ -651,9 +651,9 @@ OCDLR = {};
 				'<td data-rel="ACTION" class="padding"></td>' +
 				'</tr>'
 			);
-			
+
 			var ActionTD = $(OCDLRSelf.QueueElt + '[data-rel="' + Data.GID + '"] > td[data-rel="ACTION"]');
-			
+
 			if (['add'].indexOf (View) > -1)
 			{
 				OCDLRSelf.ActionHide (ActionTD);
@@ -665,21 +665,21 @@ OCDLR = {};
 				{
 					OCDLRSelf.ActionPlay (ActionTD, View);
 				}
-				
+
 				var HideAllButton = OCDLRSelf.Queue + '> thead th[data-rel="ACTION"] > div.icon-close';
 				if ($(HideAllButton).length == 0)
 				{
 					$(OCDLRSelf.Queue + '> thead th[data-rel="ACTION"]').append ('<div class="icon-close svg"></div>');
 					$(HideAllButton).bind ('click', function ()
 					{
-						OCDLRSelf.HideAllFromQueue ($(this));	
+						OCDLRSelf.HideAllFromQueue ($(this));
 					});
 				}
 			}
 			if (['completes', 'waitings', 'stopped', 'actives'].indexOf (View) > -1)
 			{
 				OCDLRSelf.ActionDelete (ActionTD, OCDLRSelf.BadgerStatus[Data.STATUSID], View);
-				
+
 				var RemoveAllButton = OCDLRSelf.Queue + '> thead th[data-rel="ACTION"] > div.icon-delete';
 				if ($(RemoveAllButton).length == 0)
 				{
@@ -699,7 +699,7 @@ OCDLR = {};
 				else
 				{
 					OCDLRSelf.ActionDelete (ActionTD, OCDLRSelf.BadgerStatus[Data.STATUSID], View);
-					
+
 					if (Data.STATUSID == 1)
 					{
 						OCDLRSelf.ActionPause (ActionTD, View);
@@ -721,7 +721,7 @@ OCDLR = {};
 			if (View == 'removed')
 			{
 				OCDLRSelf.ActionDeleteCompletely (ActionTD);
-				
+
 				var CompletelyRemoveAllButton = OCDLRSelf.Queue + '> thead th[data-rel="ACTION"] > div.icon-delete';
 				if ($(CompletelyRemoveAllButton).length == 0)
 				{
@@ -733,16 +733,16 @@ OCDLR = {};
 				}
 			}
 		},
-		
+
 		AddDownload: function (Button, TYPE, URL, OPTIONS)
 		{
 			var RESULT = false;
-			
+
 			if (!Button.hasClass ('icon-loading-small'))
 			{
 				Button.children ('a').css ('display', 'none');
 				Button.addClass ('icon-loading-small');
-				
+
 				$.ajax ({
 			        url: OC.generateUrl (OCDLRSelf.BaseURL + TYPE + 'downloader/add'),
 			        method: 'POST',
@@ -761,7 +761,7 @@ OCDLR = {};
 						{
 							OCDLRSelf.PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
 							OCDLRSelf.PrependToQueue (Data, 'add');
-							
+
 							$('#ball').Badger ('+1');
 							if (Data.STATUSID == 1)
 							{
@@ -771,20 +771,20 @@ OCDLR = {};
 							{
 								$('#bwaitings').Badger ('+1');
 							}
-							
+
 							RESULT = true;
 						}
-						
+
 						// Reset add button
 						Button.children ('a').css ('display', 'block');
 						Button.removeClass ('icon-loading-small');
 			        }
 			    });
 			}
-			
+
 			return RESULT;
 		},
-		
+
 		ActionHide: function (TD)
 		{
 			TD.append ('<div class="icon-close svg"></div>');
@@ -793,7 +793,7 @@ OCDLR = {};
 				OCDLRSelf.HideFromQueue ($(this));
 			});
 		},
-		
+
 		ActionPause: function (TD, View)
 		{
 			if (OCDLRSelf.WhichDownloader == 'ARIA2')
@@ -805,7 +805,7 @@ OCDLR = {};
 				});
 			}
 		},
-		
+
 		ActionPlay: function (TD, View)
 		{
 			if (OCDLRSelf.WhichDownloader == 'ARIA2')
@@ -817,7 +817,7 @@ OCDLR = {};
 				});
 			}
 		},
-		
+
 		ActionDelete: function (TD, Status, View)
 		{
 			TD.append ('<div class="icon-delete svg"></div>');
@@ -828,7 +828,7 @@ OCDLR = {};
 				OCDLRSelf.RemoveFromQueue ($(this), '', View);
 			});
 		},
-		
+
 		ActionDeleteCompletely: function (TD)
 		{
 			TD.append ('<div class="icon-delete svg"></div>');
@@ -840,9 +840,9 @@ OCDLR = {};
 			});
 		}
 	};
-	
+
 	var OCDLRSelf = OCDLR.Utils;
-	
+
 	OCDLRSelf.GetPersonalSettings ();
 	OCDLRSelf.GetAdminSettings (['WhichDownloader']);
 	OCDLRSelf.Queue = OCDLRSelf.BaseID + '#Queue ';
