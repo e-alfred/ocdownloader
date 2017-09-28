@@ -107,7 +107,7 @@
 }
 #app-content-wrapper .content-page {
   padding: 0 20px;
-  height: 300px;
+  height: 450px;
   border-bottom: 1px solid #ddd;
 }
 #app-content-wrapper h3, #app-content-wrapper .h3 {
@@ -183,7 +183,7 @@
   margin-left: 0;
   width: 800px;
   z-index: 10;
-  padding-bottom: 0px;  
+  padding-bottom: 0px;
 }
 #app-content-wrapper #TorrentsList > ul > li {
   background: transparent url('../img/torrent.png') no-repeat scroll 10px 8px;
@@ -354,7 +354,7 @@
 }
 #app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
   position: absolute;
-  top:0; 
+  top:0;
   left:0;
   padding: 2px 0 2px 5px;
   width: 100%;
