@@ -5,11 +5,13 @@ ocDownloader is an AGPL-licensed application for [Nextcloud](https://nextcloud.c
 
 ## Companion apps/extensions for Firefox/Chrome/Opera/Vivaldi and Windows
 
-Webextension addon for both Firefox-based and Chromium-based browsers: https://github.com/e-alfred/ocDownloader_ChromeExtension
+Webextension addon for both Firefox-based and Chromium-based browsers (can be found on addons.mozilla.org and the Chrome Web Store): https://github.com/e-alfred/ocDownloader_ChromeExtension
 
 Jetpack/PMKit addon for Firefox <=56 and Palemoon: https://github.com/e-alfred/ocdownloader_FFAddon
 
 UWP Windows 8.1/10 app: https://github.com/e-alfred/ocDownloader_WindowsDesktop
+
+If you want to write your own app or extension, this would be highly welcome. ocDownloader has an API (look at controller/lib/api.php here: https://github.com/e-alfred/ocdownloader/blob/master/controller/lib/api.php) that allows you to add and list downloads using ocDownloader.
 
 ## ARIA2 installation
 You have to install Aria2 on your system. To do this on Debian/Ubuntu you can use the following command:
@@ -32,7 +34,7 @@ For other distributions, you can [install youtube-dl manually](https://rg3.githu
 After installing youtube-dl, you have to set the right path to your youtube-dl executeable in the admin settings of ocDownloader.
 
 ## Using Curl instead of Aria2
-If you don't have aria2 available on your server, you can use curl which is directly integrated into PHP. This allows you to make HTTP(S) and FTP(S) downloads (BitTorrent is not supported by Curl) You need to install the PHP curl module, on Debian you can use this command to do this:
+If you don't have Aria2 available on your server, you can use Curl which is directly integrated into PHP. This allows you to make HTTP(S) and FTP(S) downloads (BitTorrent is not supported by Curl). You need to install the PHP Curl module, on Debian you can use the following command to do this:
 
 `apt-get install curl php-curl`
 
