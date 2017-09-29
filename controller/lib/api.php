@@ -72,6 +72,9 @@ class API
                         && Tools::startsWith(strtolower($URL), 'ftp')) {
                         return array('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolftp');
                     }
+
+                    $URL=parse_url($URL, PHP_URL_PATH);
+                    $URL = Tools::cleanString(substr($URL, strrpos($URL, '/') + 1));
                     
                     $DL = array(
                         'URL' => $URL,
