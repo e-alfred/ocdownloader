@@ -238,4 +238,19 @@ class Tools
     {
         return mb_strlen($filename, "UTF-8") > 40 ? mb_substr($filename, 0, 40, "UTF-8") . '...' : $filename;
     }
+	
+	public static function rescanFolder($Folder)
+	{
+		$PHPVersions = array('php71', 'php70', 'php56');
+		foreach($PHPVersions as $Version)
+		{
+			$FullPath = shell_exec('which ' . $Version);
+			$FullPath = trim($FullPath);
+			if (!empty($FullPath))
+			{
+				shell_exec($FullPath . ' ' . __DIR__ . '/../../../../occ files:scan --path "' . $Folder . '"');
+				break;
+			}
+		}
+	}
 }

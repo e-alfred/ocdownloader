@@ -165,6 +165,7 @@ class API
             $Query = \OCP\DB::prepare($SQL);
             $Request = $Query->execute($Params);
             
+			$DownloadUpdated = false;
             $Queue = [];
             
             while ($Row = $Request->fetchRow()) {
@@ -224,6 +225,8 @@ class API
                                     SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                             }
                             
+							$DownloadUpdated = true;
+							
                             $Query = \OCP\DB::prepare($SQL);
                             $Result = $Query->execute(array(
                                 $DLStatus,
@@ -279,6 +282,12 @@ class API
                     );
                 }
             }
+			
+			// Start rescan on update
+			if ($DownloadUpdated) {
+				Tools::rescanFolder(\OC\Files\Filesystem::getRoot() . self::$DownloadsFolder);
+			}
+			
             return array(
                 'ERROR' => false,
                 'MESSAGE' => null,
