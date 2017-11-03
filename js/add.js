@@ -81,7 +81,7 @@ $(document).ready (function ()
 			var inputs  = $('#app-content-wrapper .content-page div[rel=OCDOPTIONS]').find(':input');
 			$.each(inputs, function(k,v) {
 				var id = $(this).attr('id');
-				var val = $(this).val();
+				var val = $(this).is(':checkbox') ? $(this).prop ('checked') : $(this).val();
 				OPTIONS[id] = val;
 			});
 
