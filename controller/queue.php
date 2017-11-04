@@ -17,10 +17,10 @@ use OCP\Config;
 use OCP\IL10N;
 use OCP\IRequest;
 
-use OCA\ocDownloader\Controller\Lib\Aria2;
-use OCA\ocDownloader\Controller\Lib\CURL;
-use OCA\ocDownloader\Controller\Lib\Tools;
-use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Lib\Aria2;
+use OCA\ocDownloader\Lib\CURL;
+use OCA\ocDownloader\Lib\Tools;
+use OCA\ocDownloader\Lib\Settings;
 
 class Queue extends Controller
 {

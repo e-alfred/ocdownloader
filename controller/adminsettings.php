@@ -17,8 +17,8 @@ use OCP\Config;
 use OCP\IL10N;
 use OCP\IRequest;
 
-use OCA\ocDownloader\Controller\Lib\Settings;
-use OCA\ocDownloader\Controller\Lib\Tools;
+use OCA\ocDownloader\Lib\Settings;
+use OCA\ocDownloader\Lib\Tools;
 
 class AdminSettings extends Controller
 {
