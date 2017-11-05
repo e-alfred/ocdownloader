@@ -58,12 +58,18 @@ $Application->registerRoutes ($this, Array (
         ['name' => 'PersonalSettings#Get', 'url' => '/personalsettings/get', 'verb' => 'GET'],
         
         // Updater
-        ['name' => 'Updater#Check', 'url' => '/updater/check', 'verb' => 'GET']
+        ['name' => 'Updater#Check', 'url' => '/updater/check', 'verb' => 'GET'],
+
+    ],
+    'ocs' => [
+      //API
+      ['name' => 'Api#Handler', 'url' => '/api/handler', 'verb' => 'POST'],
+      ['name' => 'Api#Add', 'url' => '/api/add', 'verb' => 'POST']
     ]
 ));
 
 $APIBasePath = '/apps/ocdownloader/api/';
 \OCP\API::register ('POST', $APIBasePath . 'version', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::CheckAddonVersion ($_POST['AddonVersion'])); }, 'ocdownloader', \OC_API::USER_AUTH);
 \OCP\API::register ('GET', $APIBasePath . 'queue/get', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::GetQueue ()); }, 'ocdownloader', \OC_API::USER_AUTH);
-\OCP\API::register ('POST', $APIBasePath . 'add', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Add ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);
-\OCP\API::register ('POST', $APIBasePath . 'handler', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Handler ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);
+#\OCP\API::register ('POST', $APIBasePath . 'add', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Add ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);
+#\OCP\API::register ('POST', $APIBasePath . 'handler', function ($URLParams) { return new \OC_OCS_Result (\OCA\ocDownloader\Controller\Lib\API::Handler ($_POST['URL'])); }, 'ocdownloader', \OC_API::USER_AUTH);
