@@ -20,4 +20,5 @@
 		<php min-version="5.5.0" />
 		<lib>curl</lib>
 	</dependencies>
+	<namespace>ocDownloader</namespace>
 </info>
