@@ -9,9 +9,9 @@
  * @copyright Xavier Beurois 2015
  */
 
-namespace OCA\ocDownloader\Controller\Lib;
+namespace OCA\ocDownloader\Lib;
 
-use OCA\ocDownloader\Controller\Lib\Aria2;
+use OCA\ocDownloader\Lib\Aria2;
 
 class Tools
 {
