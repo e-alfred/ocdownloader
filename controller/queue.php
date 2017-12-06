@@ -28,6 +28,8 @@ class Queue extends Controller
     private $DbType;
     private $CurrentUID;
     private $WhichDownloader = 0;
+	private $DownloadsFolder;
+	private $AbsoluteDownloadsFolder;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
@@ -44,7 +46,14 @@ class Queue extends Controller
         $Settings->setKey('WhichDownloader');
         $this->WhichDownloader = $Settings->getValue();
         $this->WhichDownloader = is_null($this->WhichDownloader) ? 0 :(strcmp($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
-
+		
+        $Settings->setTable('personal');
+        $Settings->setUID($this->CurrentUID);
+        $Settings->setKey('DownloadsFolder');
+        $this->DownloadsFolder = $Settings->getValue();
+        
+        $this->DownloadsFolder = '/' .(is_null($this->DownloadsFolder)?'Downloads':$this->DownloadsFolder);
+        $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
         $this->L10N = $L10N;
     }
 
@@ -129,6 +138,7 @@ class Queue extends Controller
 
                 $Queue = [];
 
+				$DownloadUpdated = false;
                 while ($Row = $Request->fetchRow()) {
                     $Status =($this->WhichDownloader == 0
                         ?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
@@ -188,6 +198,8 @@ class Queue extends Controller
                                         SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                                 }
 
+								$DownloadUpdated = true;
+								
                                 $Query = \OCP\DB::prepare($SQL);
                                 $Result = $Query->execute(array(
                                 $DLStatus,
@@ -228,6 +240,12 @@ class Queue extends Controller
                         );
                     }
                 }
+				
+				// Start rescan on update
+				if ($DownloadUpdated) {
+					Tools::rescanFolder(\OC\Files\Filesystem::getRoot() . $this->DownloadsFolder);
+				}
+			
                 return new JSONResponse(
                     array(
                         'ERROR' => false,

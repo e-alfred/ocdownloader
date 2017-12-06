@@ -82,7 +82,7 @@ class CURL
     {
         $Return = null;
         if (isset($Status['PID']) && is_numeric($Status['PID']) && isset($Status['GID'])) {
-            if (posix_kill($Status['PID'], 15) === false) {
+            if ($Status['PID'] == 0 || posix_kill($Status['PID'], 15) === false) {
                 $Return = null;
             }
             
