@@ -10,6 +10,9 @@
 #app-navigation {
   padding-bottom: 0;
 }
+#app-navigation ul > li {
+  display: block;
+}
 #app-navigation li[data-id="all"] {
   border-bottom: 1px solid #ddd;
 }
@@ -73,6 +76,10 @@
   height: 40px;
   line-height: 30px;
   text-align: center;
+}
+
+#app-content-wrapper {
+  display: block;
 }
 #app-content-wrapper .table {
   width: 100%;
