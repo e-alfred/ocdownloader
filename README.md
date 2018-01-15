@@ -42,7 +42,7 @@ If you don't have Aria2 available on your server, you can use Curl which is dire
 
  `chmod +x SERVER/fallback.*`
 
-To enable Curl instead of Aria2 please go to Administrative Settings > Additional Settings (http(s)://yourserver/nextcloud/index.php/settings/admin/additional) and scroll down till ocDownloader options, now you can choice which downloader you want to use.
+Additionally, you have to go to the ocDownloader admin settings (go to Settings > Administration/Additional Settings) and select Curl instead of Aria2 as your downloader.
 
 If you have problems with Curl, the log files are saved to the /tmp folder on your server with these semicolon-seperated values:
 
