@@ -42,8 +42,6 @@ If you don't have Aria2 available on your server, you can use Curl which is dire
 
  `chmod +x SERVER/fallback.*`
 
-Additionally, you have to go to the ocDownloader admin settings (go to Settings > Administration/Additional Settings) and select Curl instead of Aria2 as your downloader.
-
 If you have problems with Curl, the log files are saved to the /tmp folder on your server with these semicolon-seperated values:
 
 - The status
@@ -73,6 +71,11 @@ Loki3000
 (formerly) Xavier Beurois
 
 ## Releases notes
+### v1.5.5
+- Fixed CSS compatibility with Nextcloud 13 (thanks @Lokarde)
+- Fixed display problems on mobile browsers
+- Fixed downloads not showing up in Nextcloud using CURL (thanks @muellerlukas)
+- Fixed internal server errro if PID == 0 using CURL (thanks @muellerlukas)
 ### v1.5.4
 - Dutch translation (thanks to @msberends)
 - Allow setting a custom filename after downloading for HTTP/FTP
