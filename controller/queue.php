@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -36,7 +36,7 @@ class Queue extends Controller
         parent::__construct($AppName, $Request);
 
         $this->DbType = 0;
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 
@@ -46,12 +46,12 @@ class Queue extends Controller
         $Settings->setKey('WhichDownloader');
         $this->WhichDownloader = $Settings->getValue();
         $this->WhichDownloader = is_null($this->WhichDownloader) ? 0 :(strcmp($this->WhichDownloader, 'ARIA2') == 0 ? 0 : 1); // 0 means ARIA2, 1 means CURL
-		
+
         $Settings->setTable('personal');
         $Settings->setUID($this->CurrentUID);
         $Settings->setKey('DownloadsFolder');
         $this->DownloadsFolder = $Settings->getValue();
-        
+
         $this->DownloadsFolder = '/' .(is_null($this->DownloadsFolder)?'Downloads':$this->DownloadsFolder);
         $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
         $this->L10N = $L10N;
@@ -199,7 +199,7 @@ class Queue extends Controller
                                 }
 
 								$DownloadUpdated = true;
-								
+
                                 $Query = \OCP\DB::prepare($SQL);
                                 $Result = $Query->execute(array(
                                 $DLStatus,
@@ -240,12 +240,12 @@ class Queue extends Controller
                         );
                     }
                 }
-				
+
 				// Start rescan on update
 				if ($DownloadUpdated) {
 					Tools::rescanFolder(\OC\Files\Filesystem::getRoot() . $this->DownloadsFolder);
 				}
-			
+
                 return new JSONResponse(
                     array(
                         'ERROR' => false,

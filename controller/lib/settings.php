@@ -11,7 +11,7 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
-use \OCP\Config;
+
 
 class Settings
 {
@@ -22,7 +22,7 @@ class Settings
     
     public function __construct($Table = 'admin')
     {
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
               $this->DbType = 1;
         }
         

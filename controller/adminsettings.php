@@ -8,12 +8,12 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-    
+
 namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -30,20 +30,20 @@ class AdminSettings extends Controller
         'MaxDownloadSpeed', 'BTMaxUploadSpeed'
     );
     private $Settings = null;
-    
+
     public function __construct($AppName, IRequest $Request, IL10N $L10N)
     {
         parent::__construct($AppName, $Request);
-        
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
-        
+
         $this->L10N = $L10N;
-        
+
         $this->Settings = new Settings();
     }
-    
+
     /**
      * @AdminRequired
      * @NoCSRFRequired
@@ -51,18 +51,18 @@ class AdminSettings extends Controller
     public function save()
     {
         \OCP\JSON::setContentTypeHeader('application/json');
-        
+
         $Error = false;
         $Message = null;
-        
+
         if (isset($_POST['KEY']) && strlen(trim($_POST['KEY'])) > 0 && isset($_POST['VAL'])
             && strlen(trim($_POST['VAL'])) >= 0) {
             $PostKey = $_POST['KEY'];
             $PostValue = $_POST['VAL'];
-            
+
             if (in_array($PostKey, $this->OCDSettingKeys)) {
                 $this->Settings->setKey($PostKey);
-                
+
                 if (strlen(trim($PostValue)) > 0) {
                     if (strcmp($PostKey, 'YTDLBinary') == 0) {
                         $PostValue = trim(str_replace(' ', '\ ', $PostValue));
@@ -140,7 +140,7 @@ class AdminSettings extends Controller
                         $Error = true;
                     }
                 }
-                
+
                 if ($this->Settings->checkIfKeyExists()) {
                     $this->Settings->updateValue($PostValue);
                 } else {
@@ -148,12 +148,12 @@ class AdminSettings extends Controller
                 }
             }
         }
-        
+
         return new JSONResponse(
             array('ERROR' => $Error, 'MESSAGE' => is_null($Message) ?(string)$this->L10N->t('Saved') : $Message)
         );
     }
-    
+
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
@@ -161,13 +161,13 @@ class AdminSettings extends Controller
     public function get()
     {
         \OCP\JSON::setContentTypeHeader('application/json');
-        
+
         $AdminSettings = array();
         foreach ($_POST['KEYS'] as $PostKey) {
             if (in_array($PostKey, $this->OCDSettingKeys)) {
                 $this->Settings->setKey($PostKey);
                 $AdminSettings[$PostKey] = $this->Settings->getValue();
-            
+
                 // Set default if not set in the database
                 if (is_null($AdminSettings[$PostKey])) {
                     switch ($PostKey) {
@@ -184,7 +184,7 @@ class AdminSettings extends Controller
                 }
             }
         }
-        
+
         return new JSONResponse(array('ERROR' => false, 'VALS' => $AdminSettings));
     }
 }

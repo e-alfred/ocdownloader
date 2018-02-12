@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 

@@ -11,7 +11,7 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
-use \OCP\Config;
+
 
 use \OCA\ocDownloader\Controller\Lib\YouTube;
 use \OCA\ocDownloader\Controller\Lib\Aria2;
@@ -134,7 +134,7 @@ class API
     
     public static function checkAddonVersion($Version)
     {
-        $AppVersion = Config::getAppValue('ocdownloader', 'installed_version');
+        $AppVersion = \OC::$server->getConfig()->getAppValue('ocdownloader', 'installed_version');
         return array('RESULT' => version_compare($Version, $AppVersion, '<='));
     }
     
@@ -302,7 +302,7 @@ class API
     /********** PRIVATE STATIC METHODS **********/
     private static function load()
     {
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             self::$DbType = 1;
         }
         

@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -42,7 +42,7 @@ class FtpDownloader extends Controller
     {
         parent::__construct($AppName, $Request);
 
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 

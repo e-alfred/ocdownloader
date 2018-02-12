@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -40,7 +40,7 @@ class Index extends Controller
         $this->CurrentUID = $CurrentUID;
         $this->L10N = $L10N;
 
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 
