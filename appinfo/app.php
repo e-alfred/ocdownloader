@@ -14,7 +14,7 @@ namespace OCA\ocDownloader\AppInfo;
 $l = \OC::$server->getL10N('ocdownloader');
 $g = \OC::$server->getURLGenerator();
 
-\OCP\App::addNavigationEntry([
+\OC::$server->getNavigationManager()->add([
     'id' => 'ocdownloader',
     'order' => 10,
     'href' => $g->linkToRoute('ocdownloader.Index.Add'),
