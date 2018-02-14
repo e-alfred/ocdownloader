@@ -71,6 +71,8 @@ Loki3000
 (formerly) Xavier Beurois
 
 ## Releases notes
+### v1.5.6
+- Fixed deprecated API calls to support Nextcloud 13+
 ### v1.5.5
 - Fixed CSS compatibility with Nextcloud 13 (thanks @Lokarde)
 - Fixed display problems on mobile browsers
