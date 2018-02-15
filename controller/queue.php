@@ -28,8 +28,7 @@ class Queue extends Controller
     private $DbType;
     private $CurrentUID;
     private $WhichDownloader = 0;
-	private $DownloadsFolder;
-	private $AbsoluteDownloadsFolder;
+    private $DownloadsFolder;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
@@ -51,9 +50,8 @@ class Queue extends Controller
         $Settings->setUID($this->CurrentUID);
         $Settings->setKey('DownloadsFolder');
         $this->DownloadsFolder = $Settings->getValue();
-
         $this->DownloadsFolder = '/' .(is_null($this->DownloadsFolder)?'Downloads':$this->DownloadsFolder);
-        $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
+
         $this->L10N = $L10N;
     }
 
@@ -137,8 +135,7 @@ class Queue extends Controller
                 $Request = $Query->execute($Params);
 
                 $Queue = [];
-
-				$DownloadUpdated = false;
+                $DownloadUpdated = false;
                 while ($Row = $Request->fetchRow()) {
                     $Status =($this->WhichDownloader == 0
                         ?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
@@ -198,7 +195,7 @@ class Queue extends Controller
                                         SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                                 }
 
-								$DownloadUpdated = true;
+                                $DownloadUpdated = true;
 
                                 $Query = \OCP\DB::prepare($SQL);
                                 $Result = $Query->execute(array(
@@ -243,7 +240,7 @@ class Queue extends Controller
 
 				// Start rescan on update
 				if ($DownloadUpdated) {
-					Tools::rescanFolder(\OC\Files\Filesystem::getRoot() . $this->DownloadsFolder);
+          \OC\Files\Filesystem::touch($this->DownloadsFolder . $Row['FILENAME']);
 				}
 
                 return new JSONResponse(

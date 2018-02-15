@@ -36,25 +36,25 @@ class API
     private static $AllowProtocolYT = null;
     private static $AllowProtocolBT = null;
     private static $MaxDownloadSpeed = null;
-    
+
     public static function add($URL)
     {
         try {
             self::load();
-            
+
             $URL = urldecode($URL);
             if (Tools::checkURL($URL)) {
                 if (preg_match('/^https{0,1}:\/\/www\.youtube\.com\/watch\?v=.*$/', $URL) == 1) {
                     if (!self::$AllowProtocolYT && !\OC_User::isAdminUser(self::$CurrentUID)) {
                         return array('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolyt');
                     }
-                    
+
                     $YouTube = new YouTube(self::$YTDLBinary, $URL);
-                
+
                     if (!is_null(self::$ProxyAddress) && self::$ProxyPort > 0 && self::$ProxyPort <= 65536) {
                         $YouTube->setProxy(self::$ProxyAddress, self::$ProxyPort);
                     }
-                    
+
                     $VideoData = $YouTube->getVideoData();
                     if (!isset($VideoData['VIDEO']) || !isset($VideoData['FULLNAME'])) {
                         return array('ERROR' => true, 'MESSAGE' => 'UnabletoretrievetrueYouTubevideoURL');
@@ -72,15 +72,15 @@ class API
                         && Tools::startsWith(strtolower($URL), 'ftp')) {
                         return array('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolftp');
                     }
-                    
+
                     $DL = array(
                         'URL' => $URL,
                         'FILENAME' => Tools::cleanString(substr($URL, strrpos($URL, '/') + 1)),
                         'PROTO' => strtoupper(substr($URL, 0, strpos($URL, ':')))
                     );
                 }
-                
-                
+
+
                 $OPTIONS = array(
                     'dir' => self::$AbsoluteDownloadsFolder,
                     'out' => $DL['FILENAME'],
@@ -93,13 +93,13 @@ class API
                         $OPTIONS['all-proxy-passwd'] = self::$ProxyPasswd;
                     }
                 }
-                
+
                 $AddURI =(
                     self::$WhichDownloader == 0
                         ?Aria2::addUri(array($DL['URL']), array('Params' => $OPTIONS))
                         :CURL::addUri($DL['URL'], $OPTIONS)
                 );
-                
+
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
                     $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
                         (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `IS_CLEANED`, `STATUS`, `TIMESTAMP`)
@@ -109,7 +109,7 @@ class API
                             ("UID", "GID", "FILENAME", "PROTOCOL", "IS_CLEANED", "STATUS", "TIMESTAMP")
                             VALUES(?, ?, ?, ?, ?, ?, ?)';
                     }
-                    
+
                     $Query = \OCP\DB::prepare($SQL);
                     $Result = $Query->execute(array(
                         self::$CurrentUID,
@@ -119,7 +119,7 @@ class API
                         1, 1,
                         time()
                     ));
-                    
+
                     return array('ERROR' => false, 'FILENAME' => $DL['FILENAME']);
                 } else {
                     return array('ERROR' => true, 'MESSAGE' => 'ReturnedGIDisnullIsAria2crunningasadaemon');
@@ -131,17 +131,17 @@ class API
             return array('ERROR' => true, 'MESSAGE' => 'Unabletolaunchthedownload');
         }
     }
-    
+
     public static function checkAddonVersion($Version)
     {
         $AppVersion = \OC::$server->getConfig()->getAppValue('ocdownloader', 'installed_version');
         return array('RESULT' => version_compare($Version, $AppVersion, '<='));
     }
-    
+
     public static function getQueue()
     {
         self::load();
-        
+
         try {
             $Params = array(self::$CurrentUID);
             $StatusReq = '(?, ?, ?, ?, ?)';
@@ -153,39 +153,39 @@ class API
             $IsCleanedReq = '(?, ?)';
             $Params[] = 0;
             $Params[] = 1;
-                
+
             $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`
                 WHERE `UID` = ? AND `STATUS` IN '.$StatusReq.' AND `IS_CLEANED` IN '.$IsCleanedReq
                 .' ORDER BY `TIMESTAMP` ASC';
             if (self::$DbType == 1) {
-                $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue 
+                $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue
                     WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
                     .' ORDER BY "TIMESTAMP" ASC';
             }
             $Query = \OCP\DB::prepare($SQL);
             $Request = $Query->execute($Params);
-            
-			$DownloadUpdated = false;
+
+            $DownloadUpdated = false;
             $Queue = [];
-            
+
             while ($Row = $Request->fetchRow()) {
                 $Status =(self::$WhichDownloader == 0?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
                 $DLStatus = 5; // Error
-                
+
                 if (!is_null($Status)) {
                     if (!isset($Status['error'])) {
                         $Progress = 0;
                         if ($Status['result']['totalLength'] > 0) {
                             $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
                         }
-                        
+
                         $DLStatus = Tools::getDownloadStatusID($Status['result']['status']);
                         $ProgressString = Tools::getProgressString(
                             $Status['result']['completedLength'],
                             $Status['result']['totalLength'],
                             $Progress
                         );
-                        
+
                         $Queue[] = array(
                             'GID' => $Row['GID'],
                             'PROGRESSVAL' => round((($Progress) * 100), 2),
@@ -216,7 +216,7 @@ class API
                             'PROTO' => $Row['PROTOCOL'],
                             'ISTORRENT' => isset($Status['result']['bittorrent']),
                         );
-                        
+
                         if ($Row['STATUS'] != $DLStatus) {
                             $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
                                 SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
@@ -224,9 +224,9 @@ class API
                                 $SQL = 'UPDATE *PREFIX*ocdownloader_queue
                                     SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                             }
-                            
-							$DownloadUpdated = true;
-							
+
+                            $DownloadUpdated = true;
+
                             $Query = \OCP\DB::prepare($SQL);
                             $Result = $Query->execute(array(
                                 $DLStatus,
@@ -282,10 +282,10 @@ class API
                     );
                 }
             }
-			
+
 			// Start rescan on update
 			if ($DownloadUpdated) {
-				Tools::rescanFolder(\OC\Files\Filesystem::getRoot() . self::$DownloadsFolder);
+        \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
 			}
 			
             return array(
@@ -298,21 +298,21 @@ class API
             return array('ERROR' => true, 'MESSAGE' => $E->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
         }
     }
-    
+
     /********** PRIVATE STATIC METHODS **********/
     private static function load()
     {
         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             self::$DbType = 1;
         }
-        
+
         self::$CurrentUID = \OC::$server->getUserSession()->getUser();
         self::$CurrentUID =(self::$CurrentUID)?self::$CurrentUID->getUID():'';
-        
+
         self::$L10N = \OC::$server->getL10N('ocdownloader');
-        
+
         $Settings = new Settings();
-        
+
         $Settings->setKey('ProxyAddress');
         self::$ProxyAddress = $Settings->getValue();
         $Settings->setKey('ProxyPort');
@@ -324,7 +324,7 @@ class API
         $Settings->setKey('WhichDownloader');
         self::$WhichDownloader = $Settings->getValue();
         self::$WhichDownloader = is_null(self::$WhichDownloader)?0 :(strcmp(self::$WhichDownloader, 'ARIA2') == 0?0:1); // 0 means ARIA2, 1 means CURL
-        
+
         $Settings->setKey('AllowProtocolHTTP');
         self::$AllowProtocolHTTP = $Settings->getValue();
         self::$AllowProtocolHTTP = is_null(self::$AllowProtocolHTTP)?true:strcmp(self::$AllowProtocolHTTP, 'Y') == 0;
@@ -337,18 +337,18 @@ class API
         $Settings->setKey('AllowProtocolBT');
         self::$AllowProtocolBT = $Settings->getValue();
         self::$AllowProtocolBT = is_null(self::$AllowProtocolBT)?true:strcmp(self::$AllowProtocolBT, 'Y') == 0;
-        
+
         $Settings->setTable('personal');
         $Settings->setUID(self::$CurrentUID);
         $Settings->setKey('DownloadsFolder');
         self::$DownloadsFolder = $Settings->getValue();
-        
+
         self::$DownloadsFolder = '/' .(is_null(self::$DownloadsFolder)?'Downloads':self::$DownloadsFolder);
         self::$AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder(self::$DownloadsFolder);
-        
+
         $Settings->setKey('YTDLBinary');
         $YTDLBinary = $Settings->getValue();
-        
+
         self::$YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
         if (!is_null($YTDLBinary)) {
             self::$YTDLBinary = $YTDLBinary;
