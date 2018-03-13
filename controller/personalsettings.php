@@ -45,7 +45,7 @@ class PersonalSettings extends Controller
        */
     public function save()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
             
         $Error = false;
         $Message = '';
@@ -101,7 +101,7 @@ class PersonalSettings extends Controller
        */
     public function get()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
             
         $PersonalSettings = array();
         foreach ($this->OCDSettingKeys as $SettingKey) {

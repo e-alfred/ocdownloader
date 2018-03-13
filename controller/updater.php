@@ -38,7 +38,7 @@ class Updater extends Controller
        */
     public function check()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
             
         if ($this->Allow) {
             try {

@@ -50,7 +50,7 @@ class AdminSettings extends Controller
      */
     public function save()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         $Error = false;
         $Message = null;
@@ -160,7 +160,7 @@ class AdminSettings extends Controller
      */
     public function get()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         $AdminSettings = array();
         foreach ($_POST['KEYS'] as $PostKey) {
