@@ -88,7 +88,7 @@ class FtpDownloader extends Controller
      */
     public function add()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         if (isset($_POST['FILE']) && strlen($_POST['FILE']) > 0
             && Tools::checkURL($_POST['FILE']) && isset($_POST['OPTIONS'])) {

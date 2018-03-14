@@ -61,7 +61,7 @@ class Queue extends Controller
        */
     public function get()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (isset($_POST['VIEW']) && strlen(trim($_POST['VIEW'])) > 0) {
@@ -262,7 +262,7 @@ class Queue extends Controller
        */
     public function count()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             return new JSONResponse(
@@ -279,7 +279,7 @@ class Queue extends Controller
        */
     public function pause()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if ($this->WhichDownloader == 0) {
@@ -332,7 +332,7 @@ class Queue extends Controller
        */
     public function unPause()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if ($this->WhichDownloader == 0) {
@@ -388,7 +388,7 @@ class Queue extends Controller
        */
     public function hide()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
@@ -421,7 +421,7 @@ class Queue extends Controller
        */
     public function hideAll()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (isset($_POST['GIDS']) && count($_POST['GIDS']) > 0) {
@@ -471,7 +471,7 @@ class Queue extends Controller
        */
     public function remove()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
@@ -536,7 +536,7 @@ class Queue extends Controller
        */
     public function removeAll()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (isset($_POST['GIDS']) && count($_POST['GIDS']) > 0) {
@@ -596,7 +596,7 @@ class Queue extends Controller
        */
     public function completelyRemove()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
@@ -645,7 +645,7 @@ class Queue extends Controller
        */
     public function completelyRemoveAll()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (isset($_POST['GIDS']) && count($_POST['GIDS']) > 0) {
