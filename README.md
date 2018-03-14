@@ -5,9 +5,9 @@ ocDownloader is an AGPL-licensed application for [Nextcloud](https://nextcloud.c
 
 ## Companion apps/extensions for Firefox/Chrome/Opera/Vivaldi and Windows
 
-Webextension addon for both Firefox-based and Chromium-based browsers (can be found on addons.mozilla.org and the Chrome Web Store): https://github.com/e-alfred/ocDownloader_ChromeExtension
+Webextension addon for both Firefox-based and Chromium-based browsers (can be found on addons.mozilla.org and the Chrome Web Store): https://github.com/e-alfred/ocDownloader_webextension
 
-Jetpack/PMKit addon for Firefox <=56 and Palemoon: https://github.com/e-alfred/ocdownloader_FFAddon
+Jetpack/PMKit addon for Firefox <=56 and Palemoon: https://github.com/e-alfred/ocDownloader_palemoon
 
 UWP Windows 8.1/10 app: https://github.com/e-alfred/ocDownloader_WindowsDesktop
 
