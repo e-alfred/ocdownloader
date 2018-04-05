@@ -159,22 +159,17 @@ class BTDownloader extends Controller
                 );
 
                 if (isset($AddTorrent['result']) && !is_null($AddTorrent['result'])) {
-                    $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
-                        (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                    if ($this->DbType == 1) {
-                        $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                            ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
-                    }
-
-                    $Query = \OCP\DB::prepare($SQL);
-                    $Result = $Query->execute(array(
-                        $this->CurrentUID,
-                        $AddTorrent['result'],
-                        $Target,
-                        'BitTorrent',
-                        1,
-                        time()
-                    ));
+                  $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->insert('ocdownloader_queue')
+                        ->values([
+                            'UID' => $qb->createNamedParameter($this->CurrentUID),
+                            'GID' => $qb->createNamedParameter($AddTorrent['result']),
+                            'FILENAME' => $qb->createNamedParameter($Target),
+                            'PROTOCOL' => $qb->createNamedParameter('BitTorrent'),
+                            'STATUS' => $qb->createNamedParameter(1),
+                            'TIMESTAMP' => time(),
+                            ]);
+                    $qb->execute();
 
                     if (isset($_POST['OPTIONS']['BTRMTorrent'])
                         && strcmp($_POST['OPTIONS']['BTRMTorrent'], "true") == 0) {

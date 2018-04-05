@@ -174,25 +174,17 @@ class YTDownloader extends Controller
                 :CURL::addUri($DL['URL'], $OPTIONS));
 
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
-                    $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
-                    (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`)
-                    VALUES(?, ?, ?, ?, ?, ?)';
-
-                    if ($this->DbType == 1) {
-                        $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                        ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP")
-                        VALUES(?, ?, ?, ?, ?, ?)';
-                    }
-
-                    $Query = \OCP\DB::prepare($SQL);
-                    $Result = $Query->execute(array(
-                          $this->CurrentUID,
-                          $AddURI['result'],
-                          $DL['FILENAME'],
-                          $DL['TYPE'],
-                          1,
-                          time()
-                    ));
+                  $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->insert('ocdownloader_queue')
+                        ->values([
+                            'UID' => $qb->createNamedParameter($this->CurrentUID),
+                            'GID' => $qb->createNamedParameter($AddURI['result']),
+                            'FILENAME' => $qb->createNamedParameter($DL['FILENAME']),
+                            'PROTOCOL' => $qb->createNamedParameter($DL['TYPE']),
+                            'STATUS' => $qb->createNamedParameter(1),
+                            'TIMESTAMP' => time(),
+                            ]);
+                    $qb->execute();
 
                     sleep(1);
                     $Status = Aria2::tellStatus($AddURI['result']);

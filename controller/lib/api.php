@@ -101,24 +101,18 @@ class API
                 );
 
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
-                    $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
-                        (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `IS_CLEANED`, `STATUS`, `TIMESTAMP`)
-                        VALUES(?, ?, ?, ?, ?, ?, ?)';
-                    if (self::$DbType == 1) {
-                        $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                            ("UID", "GID", "FILENAME", "PROTOCOL", "IS_CLEANED", "STATUS", "TIMESTAMP")
-                            VALUES(?, ?, ?, ?, ?, ?, ?)';
-                    }
-
-                    $Query = \OCP\DB::prepare($SQL);
-                    $Result = $Query->execute(array(
-                        self::$CurrentUID,
-                        $AddURI['result'],
-                        $DL['FILENAME'],
-                       (strcmp($DL['PROTO'], 'Video') == 0?'YT ' .(string)self::$L10N->t('Video'):$DL['PROTO']),
-                        1, 1,
-                        time()
-                    ));
+                  $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->insert('ocdownloader_queue')
+                        ->values([
+                            'UID' => $qb->createNamedParameter($this->CurrentUID),
+                            'GID' => $qb->createNamedParameter($AddURI['result']),
+                            'FILENAME' => $qb->createNamedParameter($DL['FILENAME']),
+                            'PROTOCOL' => $qb->createNamedParameter(strcmp($DL['PROTO'], 'Video') == 0?'YT ' .(string)self::$L10N->t('Video'):$DL['PROTO']),
+                            'IS_CLEANED' => $qb->createNamedParameter(1)
+                            'STATUS' => $qb->createNamedParameter(1),
+                            'TIMESTAMP' => time(),
+                            ]);
+                    $qb->execute();
 
                     return array('ERROR' => false, 'FILENAME' => $DL['FILENAME']);
                 } else {
@@ -287,7 +281,7 @@ class API
 			if ($DownloadUpdated) {
         \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
 			}
-			
+
             return array(
                 'ERROR' => false,
                 'MESSAGE' => null,
