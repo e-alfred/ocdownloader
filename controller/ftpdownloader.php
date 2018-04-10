@@ -105,15 +105,6 @@ class FtpDownloader extends Controller
                     $Target = time() . '_' . $Target;
                 }
 
-                // Create the target file if the downloader is Aria2
-                if ($this->WhichDownloader == 0) {
-                    \OC\Files\Filesystem::touch($this->DownloadsFolder . '/' . $Target);
-                } else {
-                    if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-                        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
-                    }
-                }
-
                 // Build OPTIONS array
                 $OPTIONS = array('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target, 'follow-torrent' => false);
                 if (isset($_POST['OPTIONS']['FTPUser']) && strlen(trim($_POST['OPTIONS']['FTPUser'])) > 0
