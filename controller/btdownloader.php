@@ -28,7 +28,6 @@ class BTDownloader extends Controller
     private $TorrentsFolder = null;
     private $AbsoluteDownloadsFolder = null;
     private $AbsoluteTorrentsFolder = null;
-    private $DbType = 0;
     private $ProxyAddress = null;
     private $ProxyPort = 0;
     private $ProxyUser = null;
@@ -45,10 +44,6 @@ class BTDownloader extends Controller
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
         parent::__construct($AppName, $Request);
-
-        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-            $this->DbType = 1;
-        }
 
         $this->CurrentUID = $CurrentUID;
 

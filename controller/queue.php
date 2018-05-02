@@ -25,7 +25,6 @@ use OCA\ocDownloader\Controller\Lib\Settings;
 class Queue extends Controller
 {
     private $UserStorage;
-    private $DbType;
     private $CurrentUID;
     private $WhichDownloader = 0;
     private $DownloadsFolder;

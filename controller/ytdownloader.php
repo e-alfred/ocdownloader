@@ -27,7 +27,6 @@ class YTDownloader extends Controller
 {
     private $AbsoluteDownloadsFolder = null;
     private $DownloadsFolder = null;
-    private $DbType = 0;
     private $YTDLBinary = null;
     private $ProxyAddress = null;
     private $ProxyPort = 0;
@@ -43,10 +42,6 @@ class YTDownloader extends Controller
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
         parent::__construct($AppName, $Request);
-
-        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-            $this->DbType = 1;
-        }
 
         $this->CurrentUID = $CurrentUID;
 

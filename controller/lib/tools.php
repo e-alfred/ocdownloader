@@ -192,14 +192,10 @@ class Tools
         return false;
     }
 
-    public static function resetAria2($DbType)
+    public static function resetAria2()
     {
-        $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`';
-        if ($DbType == 1) {
-            $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue';
-        }
-        $Query = \OCP\DB::prepare($SQL);
-        $Request = $Query->execute();
+        $qb->select('*')->from('ocdownloader_queue');
+        $Request = $qb->execute();
 
         while ($Row = $Request->fetchRow()) {
             $Status = Aria2::tellStatus($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!

@@ -22,7 +22,6 @@ use OCA\ocDownloader\Controller\Lib\Settings;
 
 class Index extends Controller
 {
-    private $DbType = 0;
     private $CurrentUID = null;
     private $CanCheckForUpdate = false;
     private $Settings = null;
@@ -39,10 +38,6 @@ class Index extends Controller
         parent::__construct($AppName, $Request);
         $this->CurrentUID = $CurrentUID;
         $this->L10N = $L10N;
-
-        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-            $this->DbType = 1;
-        }
 
         $this->CanCheckForUpdate = Tools::canCheckForUpdate();
 

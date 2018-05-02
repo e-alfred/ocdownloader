@@ -22,7 +22,6 @@ use OCA\ocDownloader\Controller\Lib\Tools;
 
 class AdminSettings extends Controller
 {
-    private $DbType = 0;
     private $L10N;
     private $OCDSettingKeys = array(
         'YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'CheckForUpdates', 'WhichDownloader',
@@ -34,10 +33,6 @@ class AdminSettings extends Controller
     public function __construct($AppName, IRequest $Request, IL10N $L10N)
     {
         parent::__construct($AppName, $Request);
-
-        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-            $this->DbType = 1;
-        }
 
         $this->L10N = $L10N;
 
@@ -99,7 +94,7 @@ class AdminSettings extends Controller
                         if (!in_array($PostValue, array('ARIA2', 'CURL'))) {
                             $PostValue = 'ARIA2';
                         } elseif (strcmp($PostValue, 'ARIA2') != 0) {
-                            Tools::resetAria2($this->DbType);
+                            Tools::resetAria2();
                         }
                     } elseif (strcmp($PostKey, 'ProxyOnlyWithYTDL') == 0) {
                         if (!in_array($PostValue, array('Y', 'N'))) {

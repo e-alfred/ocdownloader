@@ -22,7 +22,6 @@ class API
 {
     private static $AbsoluteDownloadsFolder = null;
     private static $DownloadsFolder = null;
-    private static $DbType = 0;
     private static $YTDLBinary = null;
     private static $ProxyAddress = null;
     private static $ProxyPort = 0;
@@ -108,7 +107,7 @@ class API
                             'GID' => $qb->createNamedParameter($AddURI['result']),
                             'FILENAME' => $qb->createNamedParameter($DL['FILENAME']),
                             'PROTOCOL' => $qb->createNamedParameter(strcmp($DL['PROTO'], 'Video') == 0?'YT ' .(string)self::$L10N->t('Video'):$DL['PROTO']),
-                            'IS_CLEANED' => $qb->createNamedParameter(1)
+                            'IS_CLEANED' => $qb->createNamedParameter(1),
                             'STATUS' => $qb->createNamedParameter(1),
                             'TIMESTAMP' => time(),
                             ]);
@@ -137,27 +136,11 @@ class API
         self::load();
 
         try {
-            $Params = array(self::$CurrentUID);
-            $StatusReq = '(?, ?, ?, ?, ?)';
-            $Params[] = 0;
-            $Params[] = 1;
-            $Params[] = 2;
-            $Params[] = 3;
-            $Params[] = 4;
-            $IsCleanedReq = '(?, ?)';
-            $Params[] = 0;
-            $Params[] = 1;
-
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`
-                WHERE `UID` = ? AND `STATUS` IN '.$StatusReq.' AND `IS_CLEANED` IN '.$IsCleanedReq
-                .' ORDER BY `TIMESTAMP` ASC';
-            if (self::$DbType == 1) {
-                $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue
-                    WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
-                    .' ORDER BY "TIMESTAMP" ASC';
-            }
-            $Query = \OCP\DB::prepare($SQL);
-            $Request = $Query->execute($Params);
+              $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+              $qb->select('*')->from('ocdownloader_queue')
+                  ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                  >orderBy('TIMESTAMP', 'ASC');
+              $Request = $qb->execute();
 
             $DownloadUpdated = false;
             $Queue = [];
@@ -212,22 +195,13 @@ class API
                         );
 
                         if ($Row['STATUS'] != $DLStatus) {
-                            $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-                                SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                            if (self::$DbType == 1) {
-                                $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                                    SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
-                            }
-
-                            $DownloadUpdated = true;
-
-                            $Query = \OCP\DB::prepare($SQL);
-                            $Result = $Query->execute(array(
-                                $DLStatus,
-                                self::$CurrentUID,
-                                $Row['GID'],
-                                4
-                            ));
+                          $qb->update('ocdownloader_queue')
+                              ->set('STATUS', $qb->createNamedParameter($DLStatus))
+                              ->where($qb->expr()->eq('UID', $qb->createNamedParameter(self::$CurrentUID)))
+                              ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($Row['GID'])))
+                              ->andwhere($qb->expr()->eq('STATUS', 4));
+                          $qb->execute();
+                        $DownloadUpdated = true;
                         }
                     } else {
                         $Queue[] = array(
@@ -286,7 +260,7 @@ class API
                 'ERROR' => false,
                 'MESSAGE' => null,
                 'QUEUE' => $Queue,
-                'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
+                'COUNTER' => Tools::getCounters(self::$CurrentUID)
             );
         } catch (Exception $E) {
             return array('ERROR' => true, 'MESSAGE' => $E->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
@@ -296,10 +270,6 @@ class API
     /********** PRIVATE STATIC METHODS **********/
     private static function load()
     {
-        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-            self::$DbType = 1;
-        }
-
         self::$CurrentUID = \OC::$server->getUserSession()->getUser();
         self::$CurrentUID =(self::$CurrentUID)?self::$CurrentUID->getUID():'';
 
