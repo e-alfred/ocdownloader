@@ -148,15 +148,6 @@ class YTDownloader extends Controller
                     $DL['FILENAME'] = time() . '_' . $DL['FILENAME'];
                 }
 
-                // Create the target file if the downloader is ARIA2
-                if ($this->WhichDownloader == 0) {
-                    \OC\Files\Filesystem::touch($this->DownloadsFolder . '/' . $DL['FILENAME']);
-                } else {
-                    if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-                        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
-                    }
-                }
-
                 $OPTIONS = array('dir' => $this->AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);
                 if (!is_null($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536) {
                     $OPTIONS['all-proxy'] = rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
