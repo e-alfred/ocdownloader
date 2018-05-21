@@ -33,11 +33,6 @@ class Queue extends Controller
     {
         parent::__construct($AppName, $Request);
 
-        $this->DbType = 0;
-        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-            $this->DbType = 1;
-        }
-
         $this->CurrentUID = $CurrentUID;
 
         $Settings = new Settings();

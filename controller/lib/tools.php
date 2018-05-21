@@ -194,6 +194,7 @@ class Tools
 
     public static function resetAria2()
     {
+        $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
         $qb->select('*')->from('ocdownloader_queue');
         $Request = $qb->execute();
 
@@ -208,12 +209,9 @@ class Tools
 
         $Purge = Aria2::purgeDownloadResult();
         if (isset($Purge['result']) && strcmp($Purge['result'], 'OK') == 0) {
-            $SQL = 'TRUNCATE TABLE `*PREFIX*ocdownloader_queue`';
-            if ($DbType == 1) {
-                $SQL = 'TRUNCATE TABLE *PREFIX*ocdownloader_queue';
-            }
-            $Query = \OCP\DB::prepare($SQL);
-            $Request = $Query->execute();
+            $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+            $qb->delete('ocdownloader_queue');
+            $Request = $qb->execute();
         }
     }
 

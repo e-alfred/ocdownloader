@@ -21,10 +21,6 @@ class Settings
 
     public function __construct($Table = 'admin')
     {
-        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-              $this->DbType = 1;
-        }
-
         $this->Table = $Table;
     }
 
@@ -49,20 +45,23 @@ class Settings
             return false;
         }
 
-        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'settings` WHERE `KEY` = ?'
-            .(!is_null($this->UID) ? ' AND `UID` = ?' : '') . ' LIMIT 1';
-        if ($this->DbType == 1) {
-            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings WHERE "KEY" = ?'
-                .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
-        }
-        $Query = \OCP\DB::prepare($SQL);
         if (!is_null($this->UID)) {
-            $Query->execute(array($this->Key, $this->UID));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+              ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)))
+              ->andwhere($qb->expr()->eq('UID',$qb->createNamedParameter($this->UID)))
+              >setMaxResults('1');
+          $Request = $qb->execute();
+
         } else {
-            $Query->execute(array($this->Key));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+              ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)))
+              >setMaxResults('1');
+          $Request = $qb->execute();
         }
 
-        if ($Query->rowCount() == 1) {
+        if ($Request->rowCount() == 1) {
             return true;
         }
         return false;
@@ -70,74 +69,81 @@ class Settings
 
     public function getValue()
     {
-        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'settings` WHERE `KEY` = ?'
-            .(!is_null($this->UID) ? ' AND `UID` = ?' : '').' LIMIT 1';
-        if ($this->DbType == 1) {
-            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings WHERE "KEY" = ?'
-                .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
-        }
-        $Query = \OCP\DB::prepare($SQL);
-
         if (!is_null($this->UID)) {
-            $Result = $Query->execute(array($this->Key, $this->UID));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+              ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)))
+              ->andwhere($qb->expr()->eq('UID',$qb->createNamedParameter($this->UID)))
+              >setMaxResults('1');
+          return $Request = $qb->execute();
+
         } else {
-            $Result = $Query->execute(array($this->Key));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+              ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)))
+              >setMaxResults('1');
+          return $Request = $qb->execute();
         }
 
-        if ($Query->rowCount() == 1) {
-            return $Result->fetchOne();
-        }
-        return null;
     }
 
     public function getAllValues()
     {
-        $SQL = 'SELECT `KEY`, `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'settings`'
-            .(!is_null($this->UID) ? ' WHERE `UID` = ?' : '');
-        if ($this->DbType == 1) {
-            $SQL = 'SELECT "KEY", "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings'
-                .(!is_null($this->UID) ? ' WHERE "UID" = ?' : '');
-        }
-        $Query = \OCP\DB::prepare($SQL);
-
         if (!is_null($this->UID)) {
-            return $Query->execute(array($this->UID));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+              ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)))
+              ->andwhere($qb->expr()->eq('UID',$qb->createNamedParameter($this->UID)));
+          return $Request = $qb->execute();
+
         } else {
-            return $Query->execute();
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+              ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)));
+          return $Request = $qb->execute();
         }
+
     }
 
     public function updateValue($Value)
     {
-        $SQL = 'UPDATE `*PREFIX*ocdownloader_' . $this->Table . 'settings` SET `VAL` = ? WHERE `KEY` = ?'
-            .(!is_null($this->UID) ? ' AND `UID` = ?' : '');
-        if ($this->DbType == 1) {
-            $SQL = 'UPDATE *PREFIX*ocdownloader_' . $this->Table . 'settings SET "VAL" = ? WHERE "KEY" = ?'
-                .(!is_null($this->UID) ? ' AND "UID" = ?' : '');
-        }
-        $Query = \OCP\DB::prepare($SQL);
-
         if (!is_null($this->UID)) {
-            $Query->execute(array($Value, $this->Key, $this->UID));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->update('ocdownloader_'.$this->Table.'settings')
+              ->set('VAL', $qb->createNamedParameter($Value))
+              ->where($qb->expr()->eq('KEY', $qb->createNamedParameter($this->Key)))
+              ->andwhere($qb->expr()->eq('UID', $qb->createNamedParameter($this->UID)));
+          $qb->execute();
+
         } else {
-            $Query->execute(array($Value, $this->Key));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+          $qb->update('ocdownloader_'.$this->Table.'settings')
+              ->set('VAL', $qb->createNamedParameter($Value))
+              ->where($qb->expr()->eq('KEY', $qb->createNamedParameter($this->Key)));
+          $qb->execute();
         }
     }
 
     public function insertValue($Value)
     {
-        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_'.$this->Table.'settings`(`KEY`, `VAL`'
-            .(!is_null($this->UID) ? ', `UID`' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
-        if ($this->DbType == 1) {
-            $SQL = 'INSERT INTO *PREFIX*ocdownloader_'.$this->Table.'settings("KEY", "VAL"'
-                .(!is_null($this->UID) ? ', "UID"' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
-        }
-        $Query = \OCP\DB::prepare($SQL);
-
         if (!is_null($this->UID)) {
-            $Query->execute(array($this->Key, $Value, $this->UID));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+            $qb->insert('ocdownloader_'.$this->Table.'settings')
+                ->values([
+                    'KEY' => $qb->createNamedParameter($this->Key),
+                    'VAL' => $qb->createNamedParameter($Value),
+                    'UID' => $qb->createNamedParameter($this->UID),
+                    ]);
+            $qb->execute();
+
         } else {
-            $Query->execute(array($this->Key, $Value));
+          $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+            $qb->insert('ocdownloader_'.$this->Table.'settings')
+                ->values([
+                  'KEY' => $qb->createNamedParameter($this->Key),
+                  'VAL' => $qb->createNamedParameter($Value),
+                    ]);
+            $qb->execute();
         }
     }
 }
