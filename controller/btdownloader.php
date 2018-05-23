@@ -16,6 +16,7 @@ use OCP\AppFramework\Http\JSONResponse;
 
 use OCP\IL10N;
 use OCP\IRequest;
+use OCP\IDBConnection;
 
 use OCA\ocDownloader\Controller\Lib\Aria2;
 use OCA\ocDownloader\Controller\Lib\Tools;

@@ -13,8 +13,12 @@ namespace OCA\ocDownloader\Controller\Lib;
 
 use OCA\ocDownloader\Controller\Lib\Aria2;
 
+use OCP\IDBConnection;
+
 class Tools
 {
+    private $dbconnection = null;
+
     public function __construct($AppName)
     {
         $this->dbconnection = \OC::$server->getDatabaseConnection();

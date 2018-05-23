@@ -11,7 +11,7 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
-
+use OCP\IDBConnection;
 
 class Settings
 {

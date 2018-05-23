@@ -11,7 +11,7 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
-
+use OCP\IDBConnection;
 
 use \OCA\ocDownloader\Controller\Lib\YouTube;
 use \OCA\ocDownloader\Controller\Lib\Aria2;

@@ -16,6 +16,7 @@ use OCP\AppFramework\Http\JSONResponse;
 
 use OCP\IL10N;
 use OCP\IRequest;
+use OCP\IDBConnection;
 
 use OCA\ocDownloader\Controller\Lib\YouTube;
 use OCA\ocDownloader\Controller\Lib\Tools;
