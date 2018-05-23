@@ -37,6 +37,7 @@ class FtpDownloader extends Controller
     private $L10N = null;
     private $AllowProtocolFTP = null;
     private $MaxDownloadSpeed = null;
+    private $dbconnection = null;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {

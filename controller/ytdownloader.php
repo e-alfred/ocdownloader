@@ -39,6 +39,7 @@ class YTDownloader extends Controller
     private $L10N = null;
     private $AllowProtocolYT = null;
     private $MaxDownloadSpeed = null;
+    private $dbconnection = null;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {

@@ -19,6 +19,7 @@ class Settings
     private $DbType = 0;
     private $Table = null;
     private $UID = null;
+    private $dbconnection = null;
 
     public function __construct($Table = 'admin')
     {
@@ -58,7 +59,6 @@ class Settings
             $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
         }
-        $this->dbconnection = \OC::$server->getDatabaseConnection();
         $Query = $this->dbconnection->prepare($SQL);
         if (!is_null($this->UID)) {
             $Query->execute(array($this->Key, $this->UID));
@@ -80,7 +80,6 @@ class Settings
             $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
         }
-        $this->dbconnection = \OC::$server->getDatabaseConnection();
         $Query = $this->dbconnection->prepare($SQL);
 
         if (!is_null($this->UID)) {
@@ -103,7 +102,6 @@ class Settings
             $SQL = 'SELECT "KEY", "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings'
                 .(!is_null($this->UID) ? ' WHERE "UID" = ?' : '');
         }
-        $this->dbconnection = \OC::$server->getDatabaseConnection();
         $Query = $this->dbconnection->prepare($SQL);
 
         if (!is_null($this->UID)) {

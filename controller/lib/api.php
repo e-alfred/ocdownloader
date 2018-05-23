@@ -36,6 +36,12 @@ class API
     private static $AllowProtocolYT = null;
     private static $AllowProtocolBT = null;
     private static $MaxDownloadSpeed = null;
+    private $dbconnection = null;
+
+    public function __construct($AppName)
+    {
+        $this->dbconnection = \OC::$server->getDatabaseConnection();
+    }
 
     public static function add($URL)
     {
@@ -110,7 +116,6 @@ class API
                             VALUES(?, ?, ?, ?, ?, ?, ?)';
                     }
 
-                    $this->dbconnection = \OC::$server->getDatabaseConnection();
                     $Query = $this->dbconnection->prepare($SQL);
                     $Result = $Query->execute(array(
                         self::$CurrentUID,
@@ -163,7 +168,6 @@ class API
                     WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
                     .' ORDER BY "TIMESTAMP" ASC';
             }
-            $this->dbconnection = \OC::$server->getDatabaseConnection();
             $Query = $this->dbconnection->prepare($SQL);
             $Request = $Query->execute($Params);
 
@@ -229,7 +233,6 @@ class API
 
                             $DownloadUpdated = true;
 
-                            $this->dbconnection = \OC::$server->getDatabaseConnection();
                             $Query = $this->dbconnection->prepare($SQL);
                             $Result = $Query->execute(array(
                                 $DLStatus,

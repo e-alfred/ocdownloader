@@ -29,6 +29,7 @@ class Queue extends Controller
     private $CurrentUID;
     private $WhichDownloader = 0;
     private $DownloadsFolder;
+    private $dbconnection = null;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {

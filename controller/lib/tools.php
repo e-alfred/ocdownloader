@@ -15,6 +15,11 @@ use OCA\ocDownloader\Controller\Lib\Aria2;
 
 class Tools
 {
+    public function __construct($AppName)
+    {
+        $this->dbconnection = \OC::$server->getDatabaseConnection();
+    }
+
     public static function checkURL($URL)
     {
         $URLPattern = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}'
@@ -141,7 +146,6 @@ class Tools
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "STOPPED",'
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "REMOVED"';
         }
-        $this->dbconnection = \OC::$server->getDatabaseConnection();
         $Query = $this->dbconnection->prepare($SQL);
         $Request = $Query->execute(array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 
@@ -199,7 +203,6 @@ class Tools
         if ($DbType == 1) {
             $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue';
         }
-        $this->dbconnection = \OC::$server->getDatabaseConnection();
         $Query = $this->dbconnection->prepare($SQL);
         $Request = $Query->execute();
 
@@ -218,7 +221,6 @@ class Tools
             if ($DbType == 1) {
                 $SQL = 'TRUNCATE TABLE *PREFIX*ocdownloader_queue';
             }
-            $this->dbconnection = \OC::$server->getDatabaseConnection();
             $Query = $this->dbconnection->prepare($SQL);
             $Request = $Query->execute();
         }

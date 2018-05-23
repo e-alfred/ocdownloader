@@ -41,6 +41,7 @@ class BTDownloader extends Controller
     private $BTMaxUploadSpeed = null;
     private $BTRatioToReach = null;
     private $SeedTime = null;
+    private $dbconnection = null;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
@@ -103,7 +104,7 @@ class BTDownloader extends Controller
         $this->AbsoluteTorrentsFolder = \OC\Files\Filesystem::getLocalFolder($this->TorrentsFolder);
 
         $this->L10N = $L10N;
-  
+
         $this->dbconnection = \OC::$server->getDatabaseConnection();
     }
 
