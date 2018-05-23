@@ -145,7 +145,7 @@ class API
             $DownloadUpdated = false;
             $Queue = [];
 
-            while ($Row = $Request->fetchRow()) {
+            while ($Row = $Request->fetch()) {
                 $Status =(self::$WhichDownloader == 0?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
                 $DLStatus = 5; // Error
 

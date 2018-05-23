@@ -144,7 +144,7 @@ class Tools
         $Query = \OCP\DB::prepare($SQL);
         $Request = $Query->execute(array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 
-        return $Request->fetchRow();
+        return $Request->fetch();
     }
 
     public static function startsWith($Haystack, $Needle)
@@ -198,7 +198,7 @@ class Tools
         $qb->select('*')->from('ocdownloader_queue');
         $Request = $qb->execute();
 
-        while ($Row = $Request->fetchRow()) {
+        while ($Row = $Request->fetch()) {
             $Status = Aria2::tellStatus($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
 
             if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
