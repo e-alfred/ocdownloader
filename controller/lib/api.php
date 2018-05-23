@@ -110,7 +110,8 @@ class API
                             VALUES(?, ?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $this->dbconnection = \OC::$server->getDatabaseConnection();
+                    $Query = $this->dbconnection->prepare($SQL);
                     $Result = $Query->execute(array(
                         self::$CurrentUID,
                         $AddURI['result'],
@@ -162,7 +163,8 @@ class API
                     WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
                     .' ORDER BY "TIMESTAMP" ASC';
             }
-            $Query = \OCP\DB::prepare($SQL);
+            $this->dbconnection = \OC::$server->getDatabaseConnection();
+            $Query = $this->dbconnection->prepare($SQL);
             $Request = $Query->execute($Params);
 
             $DownloadUpdated = false;
@@ -227,7 +229,8 @@ class API
 
                             $DownloadUpdated = true;
 
-                            $Query = \OCP\DB::prepare($SQL);
+                            $this->dbconnection = \OC::$server->getDatabaseConnection();
+                            $Query = $this->dbconnection->prepare($SQL);
                             $Result = $Query->execute(array(
                                 $DLStatus,
                                 self::$CurrentUID,
@@ -287,7 +290,7 @@ class API
 			if ($DownloadUpdated) {
         \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
 			}
-			
+
             return array(
                 'ERROR' => false,
                 'MESSAGE' => null,

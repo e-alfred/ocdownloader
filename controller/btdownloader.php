@@ -103,6 +103,8 @@ class BTDownloader extends Controller
         $this->AbsoluteTorrentsFolder = \OC\Files\Filesystem::getLocalFolder($this->TorrentsFolder);
 
         $this->L10N = $L10N;
+  
+        $this->dbconnection = \OC::$server->getDatabaseConnection();
     }
 
     /**
@@ -166,7 +168,7 @@ class BTDownloader extends Controller
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = $this->dbconnection->prepare($SQL);
                     $Result = $Query->execute(array(
                         $this->CurrentUID,
                         $AddTorrent['result'],

@@ -79,6 +79,8 @@ class HttpDownloader extends Controller
         $this->AbsoluteDownloadsFolder = \OC\Files\Filesystem::getLocalFolder($this->DownloadsFolder);
 
         $this->L10N = $L10N;
+
+        $this->dbconnection = \OC::$server->getDatabaseConnection();
     }
 
     /**
@@ -155,7 +157,7 @@ class HttpDownloader extends Controller
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = $this->dbconnection->prepare($SQL);
                     $Result = $Query->execute(array(
                         $this->CurrentUID,
                         $AddURI['result'],
