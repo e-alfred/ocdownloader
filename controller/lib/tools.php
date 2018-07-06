@@ -151,9 +151,9 @@ class Tools
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "REMOVED"';
         }
         $Query = $this->dbconnection->prepare($SQL);
-        $Request = $Query->execute(array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
+        $Query->execute(array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 
-        return $Request->fetchRow();
+        return $Query->fetchRow();
     }
 
     public static function startsWith($Haystack, $Needle)
@@ -208,9 +208,9 @@ class Tools
             $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue';
         }
         $Query = $this->dbconnection->prepare($SQL);
-        $Request = $Query->execute();
+        $Query->execute();
 
-        while ($Row = $Request->fetchRow()) {
+        while ($Row = $Query->fetchRow()) {
             $Status = Aria2::tellStatus($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
 
             if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0

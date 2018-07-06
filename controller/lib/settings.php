@@ -83,13 +83,13 @@ class Settings
         $Query = $this->dbconnection->prepare($SQL);
 
         if (!is_null($this->UID)) {
-            $Result = $Query->execute(array($this->Key, $this->UID));
+            $Query->execute(array($this->Key, $this->UID));
         } else {
-            $Result = $Query->execute(array($this->Key));
+            $Query->execute(array($this->Key));
         }
 
         if ($Query->rowCount() == 1) {
-            return $Result->fetchOne();
+            return $Query->fetchOne();
         }
         return null;
     }

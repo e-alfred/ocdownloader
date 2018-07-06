@@ -28,9 +28,9 @@ $Tmpl->assign('AllowProtocolBT', $AllowProtocolBT);
 
 $Settings->setTable('personal');
 $Settings->setUID(OC_User::getUser());
-$Rows = $Settings->getAllValues();
+$Settings->getAllValues();
 
-while ($Row = $Rows->fetchRow()) {
+while ($Row = $Settings->fetchRow()) {
       $Tmpl->assign('OCDS_' . $Row['KEY'], $Row['VAL']);
 }
 

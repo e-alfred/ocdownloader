@@ -169,12 +169,12 @@ class API
                     .' ORDER BY "TIMESTAMP" ASC';
             }
             $Query = $this->dbconnection->prepare($SQL);
-            $Request = $Query->execute($Params);
+            $Query->execute($Params);
 
             $DownloadUpdated = false;
             $Queue = [];
 
-            while ($Row = $Request->fetchRow()) {
+            while ($Row = $Query->fetchRow()) {
                 $Status =(self::$WhichDownloader == 0?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
                 $DLStatus = 5; // Error
 

@@ -20,9 +20,9 @@ script('ocdownloader', 'settings/admin');
 $Tmpl = new OCP\Template('ocdownloader', 'settings/admin');
 
 $Settings = new Settings();
-$Rows = $Settings->getAllValues();
+$Settings->getAllValues();
 
-while ($Row = $Rows->fetchRow()) {
+while ($Row = $Settings->fetchRow()) {
       $Tmpl->assign('OCDS_' . $Row['KEY'], $Row['VAL']);
 }
 

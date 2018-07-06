@@ -136,11 +136,11 @@ class Queue extends Controller
                     . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
                 }
                 $Query = $this->dbconnection->prepare($SQL);
-                $Request = $Query->execute($Params);
+                $Query->execute($Params);
 
                 $Queue = [];
                 $DownloadUpdated = false;
-                while ($Row = $Request->fetchRow()) {
+                while ($Row = $Query->fetchRow()) {
                     $Status =($this->WhichDownloader == 0
                         ?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
                     $DLStatus = 5; // Error
