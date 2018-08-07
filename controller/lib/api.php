@@ -107,11 +107,11 @@ class API
                 );
 
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
-                    $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
+                    $SQL = 'INSERT INTO `*PREFIX*ocdl_queue`
                         (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `IS_CLEANED`, `STATUS`, `TIMESTAMP`)
                         VALUES(?, ?, ?, ?, ?, ?, ?)';
                     if (self::$DbType == 1) {
-                        $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
+                        $SQL = 'INSERT INTO *PREFIX*ocdl_queue
                             ("UID", "GID", "FILENAME", "PROTOCOL", "IS_CLEANED", "STATUS", "TIMESTAMP")
                             VALUES(?, ?, ?, ?, ?, ?, ?)';
                     }
@@ -160,11 +160,11 @@ class API
             $Params[] = 0;
             $Params[] = 1;
 
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`
+            $SQL = 'SELECT * FROM `*PREFIX*ocdl_queue`
                 WHERE `UID` = ? AND `STATUS` IN '.$StatusReq.' AND `IS_CLEANED` IN '.$IsCleanedReq
                 .' ORDER BY `TIMESTAMP` ASC';
             if (self::$DbType == 1) {
-                $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue
+                $SQL = 'SELECT * FROM *PREFIX*ocdl_queue
                     WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
                     .' ORDER BY "TIMESTAMP" ASC';
             }
@@ -224,10 +224,10 @@ class API
                         );
 
                         if ($Row['STATUS'] != $DLStatus) {
-                            $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
+                            $SQL = 'UPDATE `*PREFIX*ocdl_queue`
                                 SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
                             if (self::$DbType == 1) {
-                                $SQL = 'UPDATE *PREFIX*ocdownloader_queue
+                                $SQL = 'UPDATE *PREFIX*ocdl_queue
                                     SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                             }
 

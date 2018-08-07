@@ -163,10 +163,10 @@ class BTDownloader extends Controller
                 );
 
                 if (isset($AddTorrent['result']) && !is_null($AddTorrent['result'])) {
-                    $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
+                    $SQL = 'INSERT INTO `*PREFIX*ocdl_queue`
                         (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
                     if ($this->DbType == 1) {
-                        $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
+                        $SQL = 'INSERT INTO *PREFIX*ocdl_queue
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 

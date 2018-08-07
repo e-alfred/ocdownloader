@@ -5,7 +5,7 @@
 	<overwrite>false</overwrite>
 	<charset>utf8</charset>
 	<table>
-		<name>*dbprefix*ocdownloader_queue</name>
+		<name>*dbprefix*ocdl_queue</name>
 		<declaration>
 			<field>
 				<name>ID</name>
@@ -62,7 +62,7 @@
 		</declaration>
 	</table>
 	<table>
-		<name>*dbprefix*ocdownloader_adminsettings</name>
+		<name>*dbprefix*ocdl_adminsettings</name>
 		<declaration>
 			<field>
 				<name>ID</name>
@@ -86,7 +86,7 @@
 		</declaration>
 	</table>
 	<table>
-		<name>*dbprefix*ocdownloader_personalsettings</name>
+		<name>*dbprefix*ocdl_personalsettings</name>
 		<declaration>
 			<field>
 				<name>ID</name>

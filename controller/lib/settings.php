@@ -53,10 +53,10 @@ class Settings
             return false;
         }
 
-        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'settings` WHERE `KEY` = ?'
+        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdl_'.$this->Table.'settings` WHERE `KEY` = ?'
             .(!is_null($this->UID) ? ' AND `UID` = ?' : '') . ' LIMIT 1';
         if ($this->DbType == 1) {
-            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings WHERE "KEY" = ?'
+            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdl_'.$this->Table.'settings WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
         }
         $Query = $this->dbconnection->prepare($SQL);
@@ -74,10 +74,10 @@ class Settings
 
     public function getValue()
     {
-        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'settings` WHERE `KEY` = ?'
+        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdl_'.$this->Table.'settings` WHERE `KEY` = ?'
             .(!is_null($this->UID) ? ' AND `UID` = ?' : '').' LIMIT 1';
         if ($this->DbType == 1) {
-            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings WHERE "KEY" = ?'
+            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdl_'.$this->Table.'settings WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
         }
         $Query = $this->dbconnection->prepare($SQL);
@@ -96,10 +96,10 @@ class Settings
 
     public function getAllValues()
     {
-        $SQL = 'SELECT `KEY`, `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'settings`'
+        $SQL = 'SELECT `KEY`, `VAL` FROM `*PREFIX*ocdl_'.$this->Table.'settings`'
             .(!is_null($this->UID) ? ' WHERE `UID` = ?' : '');
         if ($this->DbType == 1) {
-            $SQL = 'SELECT "KEY", "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'settings'
+            $SQL = 'SELECT "KEY", "VAL" FROM *PREFIX*ocdl_'.$this->Table.'settings'
                 .(!is_null($this->UID) ? ' WHERE "UID" = ?' : '');
         }
         $Query = $this->dbconnection->prepare($SQL);
@@ -113,10 +113,10 @@ class Settings
 
     public function updateValue($Value)
     {
-        $SQL = 'UPDATE `*PREFIX*ocdownloader_' . $this->Table . 'settings` SET `VAL` = ? WHERE `KEY` = ?'
+        $SQL = 'UPDATE `*PREFIX*ocdl_' . $this->Table . 'settings` SET `VAL` = ? WHERE `KEY` = ?'
             .(!is_null($this->UID) ? ' AND `UID` = ?' : '');
         if ($this->DbType == 1) {
-            $SQL = 'UPDATE *PREFIX*ocdownloader_' . $this->Table . 'settings SET "VAL" = ? WHERE "KEY" = ?'
+            $SQL = 'UPDATE *PREFIX*ocdl_' . $this->Table . 'settings SET "VAL" = ? WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '');
         }
         $Query = $this->dbconnection->prepare($SQL);
@@ -130,10 +130,10 @@ class Settings
 
     public function insertValue($Value)
     {
-        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_'.$this->Table.'settings`(`KEY`, `VAL`'
+        $SQL = 'INSERT INTO `*PREFIX*ocdl_'.$this->Table.'settings`(`KEY`, `VAL`'
             .(!is_null($this->UID) ? ', `UID`' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
         if ($this->DbType == 1) {
-            $SQL = 'INSERT INTO *PREFIX*ocdownloader_'.$this->Table.'settings("KEY", "VAL"'
+            $SQL = 'INSERT INTO *PREFIX*ocdl_'.$this->Table.'settings("KEY", "VAL"'
                 .(!is_null($this->UID) ? ', "UID"' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
         }
         $Query = $this->dbconnection->prepare($SQL);

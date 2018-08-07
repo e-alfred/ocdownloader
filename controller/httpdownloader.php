@@ -152,10 +152,10 @@ class HttpDownloader extends Controller
                 );
 
                 if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
-                    $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
+                    $SQL = 'INSERT INTO `*PREFIX*ocdl_queue`
                         (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
                     if ($this->DbType == 1) {
-                        $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
+                        $SQL = 'INSERT INTO *PREFIX*ocdl_queue
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 

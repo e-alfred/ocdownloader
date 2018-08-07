@@ -128,11 +128,11 @@ class Queue extends Controller
                         break;
                 }
 
-                $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `STATUS` IN '
+                $SQL = 'SELECT * FROM `*PREFIX*ocdl_queue` WHERE `UID` = ? AND `STATUS` IN '
                 . $StatusReq . ' AND `IS_CLEANED` IN ' . $IsCleanedReq . ' ORDER BY `TIMESTAMP` ASC';
 
                 if ($this->DbType == 1) {
-                    $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "STATUS" IN '
+                    $SQL = 'SELECT * FROM *PREFIX*ocdl_queue WHERE "UID" = ? AND "STATUS" IN '
                     . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
                 }
                 $Query = $this->dbconnection->prepare($SQL);
@@ -192,10 +192,10 @@ class Queue extends Controller
                             );
 
                             if ($Row['STATUS'] != $DLStatus) {
-                                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
+                                $SQL = 'UPDATE `*PREFIX*ocdl_queue`
                                     SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
                                 if ($this->DbType == 1) {
-                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue
+                                    $SQL = 'UPDATE *PREFIX*ocdl_queue
                                         SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                                 }
 
@@ -298,9 +298,9 @@ class Queue extends Controller
                     }
 
                     if (strcmp($Pause['result'], $_POST['GID']) == 0) {
-                        $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
+                        $SQL = 'UPDATE `*PREFIX*ocdl_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
+                            $SQL = 'UPDATE *PREFIX*ocdl_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
                         $Query = $this->dbconnection->prepare($SQL);
@@ -351,9 +351,9 @@ class Queue extends Controller
                     }
 
                     if (strcmp($UnPause['result'], $_POST['GID']) == 0) {
-                        $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
+                        $SQL = 'UPDATE `*PREFIX*ocdl_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
+                            $SQL = 'UPDATE *PREFIX*ocdl_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
                         $Query = $this->dbconnection->prepare($SQL);
@@ -396,9 +396,9 @@ class Queue extends Controller
 
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
-                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
+                $SQL = 'UPDATE `*PREFIX*ocdl_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                 if ($this->DbType == 1) {
-                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
+                    $SQL = 'UPDATE *PREFIX*ocdl_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                 }
 
                 $Query = $this->dbconnection->prepare($SQL);
@@ -432,9 +432,9 @@ class Queue extends Controller
                 $Queue = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
+                    $SQL = 'UPDATE `*PREFIX*ocdl_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
-                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
+                        $SQL = 'UPDATE *PREFIX*ocdl_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                     }
 
                     $Query = $this->dbconnection->prepare($SQL);
@@ -498,10 +498,10 @@ class Queue extends Controller
                 }
 
                 if (!is_null($Remove) && strcmp($Remove['result'], $_POST['GID']) == 0) {
-                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
+                    $SQL = 'UPDATE `*PREFIX*ocdl_queue`
                         SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
-                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue
+                        $SQL = 'UPDATE *PREFIX*ocdl_queue
                             SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                     }
 
@@ -556,10 +556,10 @@ class Queue extends Controller
                     }
 
                     if (!is_null($Remove) && strcmp($Remove['result'], $GID) == 0) {
-                        $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
+                        $SQL = 'UPDATE `*PREFIX*ocdl_queue`
                             SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue
+                            $SQL = 'UPDATE *PREFIX*ocdl_queue
                                 SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
@@ -618,9 +618,9 @@ class Queue extends Controller
                     );
                 }
 
-                $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
+                $SQL = 'DELETE FROM `*PREFIX*ocdl_queue` WHERE `UID` = ? AND `GID` = ?';
                 if ($this->DbType == 1) {
-                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
+                    $SQL = 'DELETE FROM *PREFIX*ocdl_queue WHERE "UID" = ? AND "GID" = ?';
                 }
 
                 $Query = $this->dbconnection->prepare($SQL);
@@ -666,9 +666,9 @@ class Queue extends Controller
                         );
                     }
 
-                    $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
+                    $SQL = 'DELETE FROM `*PREFIX*ocdl_queue` WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
-                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
+                        $SQL = 'DELETE FROM *PREFIX*ocdl_queue WHERE "UID" = ? AND "GID" = ?';
                     }
 
                     $Query = $this->dbconnection->prepare($SQL);
