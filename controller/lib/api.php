@@ -139,7 +139,7 @@ class API
               $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
               $qb->select('*')->from('ocdownloader_queue')
                   ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
-                  >orderBy('TIMESTAMP', 'ASC');
+                  ->orderBy('TIMESTAMP', 'ASC');
               $Request = $qb->execute();
 
             $DownloadUpdated = false;
