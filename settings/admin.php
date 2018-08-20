@@ -9,6 +9,7 @@
  * @copyright Xavier Beurois 2015
  */
 
+use OCP\IDBConnection;
 use OCA\ocDownloader\Controller\Lib\Settings;
 
 \OC_Util::checkAdminUser();
