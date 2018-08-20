@@ -116,8 +116,7 @@ class API
                             VALUES(?, ?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = $this->dbconnection->prepare($SQL);
-                    $Result = $Query->execute(array(
+                    $Result = $this->dbconnection->executequery($SQL, array(
                         self::$CurrentUID,
                         $AddURI['result'],
                         $DL['FILENAME'],
@@ -168,8 +167,7 @@ class API
                     WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
                     .' ORDER BY "TIMESTAMP" ASC';
             }
-            $Query = $this->dbconnection->prepare($SQL);
-            $Query->execute($Params);
+            $Query = $this->dbconnection->executequery($SQL, $Params);
 
             $DownloadUpdated = false;
             $Queue = [];
@@ -233,8 +231,7 @@ class API
 
                             $DownloadUpdated = true;
 
-                            $Query = $this->dbconnection->prepare($SQL);
-                            $Result = $Query->execute(array(
+                            $Result = $this->dbconnection->executequery($SQL, array(
                                 $DLStatus,
                                 self::$CurrentUID,
                                 $Row['GID'],

@@ -150,8 +150,7 @@ class Tools
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdl_queue WHERE "STATUS" = ? AND "UID" = ?) as "STOPPED",'
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdl_queue WHERE "STATUS" = ? AND "UID" = ?) as "REMOVED"';
         }
-        $Query = $this->dbconnection->prepare($SQL);
-        $Query->execute(array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
+        $Query = $this->dbconnection->executequery($SQL, array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 
         return $Query->fetchRow();
     }
@@ -207,8 +206,7 @@ class Tools
         if ($DbType == 1) {
             $SQL = 'SELECT * FROM *PREFIX*ocdl_queue';
         }
-        $Query = $this->dbconnection->prepare($SQL);
-        $Query->execute();
+        $Query = $this->dbconnection->executequery($SQL);
 
         while ($Row = $Query->fetchRow()) {
             $Status = Aria2::tellStatus($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
@@ -225,8 +223,7 @@ class Tools
             if ($DbType == 1) {
                 $SQL = 'TRUNCATE TABLE *PREFIX*ocdl_queue';
             }
-            $Query = $this->dbconnection->prepare($SQL);
-            $Request = $Query->execute();
+            $Request = $this->dbconnection->executequery($SQL);
         }
     }
 

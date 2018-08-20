@@ -188,8 +188,7 @@ class YTDownloader extends Controller
                         VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = $this->dbconnection->prepare($SQL);
-                    $Result = $Query->execute(array(
+                    $Result = $this->dbconnection->executequery($SQL, array(
                           $this->CurrentUID,
                           $AddURI['result'],
                           $DL['FILENAME'],

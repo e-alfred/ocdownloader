@@ -135,8 +135,7 @@ class Queue extends Controller
                     $SQL = 'SELECT * FROM *PREFIX*ocdl_queue WHERE "UID" = ? AND "STATUS" IN '
                     . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
                 }
-                $Query = $this->dbconnection->prepare($SQL);
-                $Query->execute($Params);
+                $Query = $this->dbconnection->executequery($SQL, $Params);
 
                 $Queue = [];
                 $DownloadUpdated = false;
@@ -201,8 +200,7 @@ class Queue extends Controller
 
                                 $DownloadUpdated = true;
 
-                                $Query = $this->dbconnection->prepare($SQL);
-                                $Result = $Query->execute(array(
+                                $Query = $this->dbconnection->executequery($SQL, array(
                                 $DLStatus,
                                 $this->CurrentUID,
                                 $Row['GID'],
@@ -303,8 +301,7 @@ class Queue extends Controller
                             $SQL = 'UPDATE *PREFIX*ocdl_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
-                        $Query = $this->dbconnection->prepare($SQL);
-                        $Result = $Query->execute(array(
+                        $Query = $this->dbconnection->executequery($SQL, array(
                               3,
                               $this->CurrentUID,
                               $_POST['GID']
@@ -356,8 +353,7 @@ class Queue extends Controller
                             $SQL = 'UPDATE *PREFIX*ocdl_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
-                        $Query = $this->dbconnection->prepare($SQL);
-                        $Result = $Query->execute(array(
+                        $Query = $this->dbconnection->executequery($SQL, array(
                               1,
                               $this->CurrentUID,
                               $_POST['GID']
@@ -401,8 +397,7 @@ class Queue extends Controller
                     $SQL = 'UPDATE *PREFIX*ocdl_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                 }
 
-                $Query = $this->dbconnection->prepare($SQL);
-                $Result = $Query->execute(array(
+                $Query = $this->dbconnection->executequery($SQL, array(
                       1,
                       $this->CurrentUID,
                       $_POST['GID']
@@ -437,8 +432,7 @@ class Queue extends Controller
                         $SQL = 'UPDATE *PREFIX*ocdl_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                     }
 
-                    $Query = $this->dbconnection->prepare($SQL);
-                    $Result = $Query->execute(array(
+                    $Query = $this->dbconnection->executequery($SQL, array(
                           1,
                           $this->CurrentUID,
                           $GID
@@ -505,8 +499,7 @@ class Queue extends Controller
                             SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                     }
 
-                    $Query = $this->dbconnection->prepare($SQL);
-                    $Result = $Query->execute(array(
+                    $Query = $this->dbconnection->executequery($SQL, array(
                           4, 1,
                           $this->CurrentUID,
                           $_POST['GID']
@@ -563,8 +556,7 @@ class Queue extends Controller
                                 SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
-                        $Query = $this->dbconnection->prepare($SQL);
-                        $Result = $Query->execute(array(
+                        $Query = $this->dbconnection->executequery($SQL, array(
                               4, 1,
                               $this->CurrentUID,
                               $GID
@@ -623,8 +615,7 @@ class Queue extends Controller
                     $SQL = 'DELETE FROM *PREFIX*ocdl_queue WHERE "UID" = ? AND "GID" = ?';
                 }
 
-                $Query = $this->dbconnection->prepare($SQL);
-                $Result = $Query->execute(array(
+                $Query = $this->dbconnection->executequery($SQL, array(
                       $this->CurrentUID,
                       $_POST['GID']
                 ));
@@ -671,8 +662,7 @@ class Queue extends Controller
                         $SQL = 'DELETE FROM *PREFIX*ocdl_queue WHERE "UID" = ? AND "GID" = ?';
                     }
 
-                    $Query = $this->dbconnection->prepare($SQL);
-                    $Result = $Query->execute(array(
+                    $Query = $this->dbconnection->executequery($SQL, array(
                           $this->CurrentUID,
                           $GID
                     ));

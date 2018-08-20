@@ -170,8 +170,7 @@ class BTDownloader extends Controller
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = $this->dbconnection->prepare($SQL);
-                    $Result = $Query->execute(array(
+                    $Result = $this->dbconnection->executequery($SQL, array(
                         $this->CurrentUID,
                         $AddTorrent['result'],
                         $Target,

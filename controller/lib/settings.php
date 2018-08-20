@@ -59,11 +59,10 @@ class Settings
             $SQL = 'SELECT "VAL" FROM *PREFIX*ocdl_'.$this->Table.'settings WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
         }
-        $Query = $this->dbconnection->prepare($SQL);
         if (!is_null($this->UID)) {
-            $Query->execute(array($this->Key, $this->UID));
+            $Query = $this->dbconnection->executequery($SQL, array($this->Key, $this->UID));
         } else {
-            $Query->execute(array($this->Key));
+            $Query = $this->dbconnection->executequery($SQL, array($this->Key));
         }
 
         if ($Query->rowCount() == 1) {
@@ -80,12 +79,11 @@ class Settings
             $SQL = 'SELECT "VAL" FROM *PREFIX*ocdl_'.$this->Table.'settings WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
         }
-        $Query = $this->dbconnection->prepare($SQL);
 
         if (!is_null($this->UID)) {
-            $Query->execute(array($this->Key, $this->UID));
+            $Query = $this->dbconnection->executequery($SQL, array($this->Key, $this->UID));
         } else {
-            $Query->execute(array($this->Key));
+            $Query = $this->dbconnection->executequery($SQL, array($this->Key));
         }
 
         if ($Query->rowCount() == 1) {
@@ -102,12 +100,11 @@ class Settings
             $SQL = 'SELECT "KEY", "VAL" FROM *PREFIX*ocdl_'.$this->Table.'settings'
                 .(!is_null($this->UID) ? ' WHERE "UID" = ?' : '');
         }
-        $Query = $this->dbconnection->prepare($SQL);
 
         if (!is_null($this->UID)) {
-            return $Query->execute(array($this->UID));
+            return $Query = $this->dbconnection->executequery($SQL, array($this->UID));
         } else {
-            return $Query->execute();
+            return $Query = $this->dbconnection->executequery($SQL);
         }
     }
 
@@ -119,12 +116,11 @@ class Settings
             $SQL = 'UPDATE *PREFIX*ocdl_' . $this->Table . 'settings SET "VAL" = ? WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '');
         }
-        $Query = $this->dbconnection->prepare($SQL);
 
         if (!is_null($this->UID)) {
-            $Query->execute(array($Value, $this->Key, $this->UID));
+            $Query = $this->dbconnection->executequery($SQL, array($Value, $this->Key, $this->UID));
         } else {
-            $Query->execute(array($Value, $this->Key));
+            $Query = $this->dbconnection->executequery($SQL, array($Value, $this->Key));
         }
     }
 
@@ -136,12 +132,11 @@ class Settings
             $SQL = 'INSERT INTO *PREFIX*ocdl_'.$this->Table.'settings("KEY", "VAL"'
                 .(!is_null($this->UID) ? ', "UID"' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
         }
-        $Query = $this->dbconnection->prepare($SQL);
 
         if (!is_null($this->UID)) {
-            $Query->execute(array($this->Key, $Value, $this->UID));
+            $Query = $this->dbconnection->executequery($SQL, array($this->Key, $Value, $this->UID));
         } else {
-            $Query->execute(array($this->Key, $Value));
+            $Query = $this->dbconnection->executequery($SQL, array($this->Key, $Value));
         }
     }
 }
