@@ -30,7 +30,7 @@ $Settings->setTable('personal');
 $Settings->setUID(OC_User::getUser());
 $Settings->getAllValues();
 
-while ($Row = $Settings->fetchRow()) {
+while ($Row = $Settings->fetch()) {
       $Tmpl->assign('OCDS_' . $Row['KEY'], $Row['VAL']);
 }
 

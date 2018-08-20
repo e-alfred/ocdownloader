@@ -152,7 +152,7 @@ class Tools
         }
         $Query = $this->dbconnection->executequery($SQL, array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 
-        return $Query->fetchRow();
+        return $Query->fetch();
     }
 
     public static function startsWith($Haystack, $Needle)
@@ -208,7 +208,7 @@ class Tools
         }
         $Query = $this->dbconnection->executequery($SQL);
 
-        while ($Row = $Query->fetchRow()) {
+        while ($Row = $Query->fetch()) {
             $Status = Aria2::tellStatus($Row['GID']); //$GID was wrong, but $Row['GID']? untested!!
 
             if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0

@@ -22,7 +22,7 @@ $Tmpl = new OCP\Template('ocdownloader', 'settings/admin');
 $Settings = new Settings();
 $Settings->getAllValues();
 
-while ($Row = $Settings->fetchRow()) {
+while ($Row = $Settings->fetch()) {
       $Tmpl->assign('OCDS_' . $Row['KEY'], $Row['VAL']);
 }
 
