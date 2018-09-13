@@ -182,22 +182,15 @@ class Queue extends Controller
                             );
 
                             if ($Row['STATUS'] != $DLStatus) {
-                                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-                                    SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                                if ($this->DbType == 1) {
-                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                                        SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
-                                }
+                              $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                              $qb->update('ocdownloader_queue')
+                                ->set('STATUS', $qb->createNamedParameter($DLStatus))
+                                ->where($qb->expr()->eq('UID', $qb->createNamedParameter($this->CurrentUID)))
+                                ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($Row['GID'])))
+                                ->andwhere($qb->expr()->neq('STATUS', $qb->createNamedParameter(4)));
+                              $qb->execute();
 
-                                $DownloadUpdated = true;
-
-                                $Query = \OCP\DB::prepare($SQL);
-                                $Result = $Query->execute(array(
-                                $DLStatus,
-                                $this->CurrentUID,
-                                $Row['GID'],
-                                4
-                                ));
+                              $DownloadUpdated = true;
                             }
                         } else {
                             $Queue[] = array(
@@ -288,19 +281,14 @@ class Queue extends Controller
                     }
 
                     if (strcmp($Pause['result'], $_POST['GID']) == 0) {
-                        $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
-                        if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
-                        }
+                      $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                      $qb->update('ocdownloader_queue')
+                        ->set('STATUS', $qb->createNamedParameter(3))
+                        ->where($qb->expr()->eq('UID', $qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($_POST['GID'])));
+                      $qb->execute();
 
-                        $Query = \OCP\DB::prepare($SQL);
-                        $Result = $Query->execute(array(
-                              3,
-                              $this->CurrentUID,
-                              $_POST['GID']
-                        ));
-
-                        return new JSONResponse(
+                      return new JSONResponse(
                             array('ERROR' => false, 'MESSAGE' =>(string)$this->L10N->t('The download has been paused'))
                         );
                     } else {
@@ -341,17 +329,12 @@ class Queue extends Controller
                     }
 
                     if (strcmp($UnPause['result'], $_POST['GID']) == 0) {
-                        $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
-                        if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
-                        }
-
-                        $Query = \OCP\DB::prepare($SQL);
-                        $Result = $Query->execute(array(
-                              1,
-                              $this->CurrentUID,
-                              $_POST['GID']
-                        ));
+                        $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                        $qb->update('ocdownloader_queue')
+                          ->set('STATUS', $qb->createNamedParameter(1))
+                          ->where($qb->expr()->eq('UID', $qb->createNamedParameter($this->CurrentUID)))
+                          ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($_POST['GID'])));
+                        $qb->execute();
 
                         return new JSONResponse(
                             array(
@@ -386,17 +369,12 @@ class Queue extends Controller
 
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
-                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
-                if ($this->DbType == 1) {
-                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
-                }
-
-                $Query = \OCP\DB::prepare($SQL);
-                $Result = $Query->execute(array(
-                      1,
-                      $this->CurrentUID,
-                      $_POST['GID']
-                ));
+              $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+              $qb->update('ocdownloader_queue')
+                ->set('IS_CLEANED', $qb->createNamedParameter(1))
+                ->where($qb->expr()->eq('UID', $qb->createNamedParameter($this->CurrentUID)))
+                ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($_POST['GID'])));
+              $qb->execute();
 
                 return new JSONResponse(
                     array('ERROR' => false, 'MESSAGE' =>(string)$this->L10N->t('The download has been cleaned'))
@@ -422,17 +400,12 @@ class Queue extends Controller
                 $Queue = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
-                    if ($this->DbType == 1) {
-                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
-                    }
-
-                    $Query = \OCP\DB::prepare($SQL);
-                    $Result = $Query->execute(array(
-                          1,
-                          $this->CurrentUID,
-                          $GID
-                    ));
+                    $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->update('ocdownloader_queue')
+                      ->set('IS_CLEANED', $qb->createNamedParameter(1))
+                      ->where($qb->expr()->eq('UID', $qb->createNamedParameter($this->CurrentUID)))
+                      ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($GID)));
+                    $qb->execute();
 
                     $Queue[] = array(
                           'GID' => $GID
@@ -488,19 +461,13 @@ class Queue extends Controller
                 }
 
                 if (!is_null($Remove) && strcmp($Remove['result'], $_POST['GID']) == 0) {
-                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-                        SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
-                    if ($this->DbType == 1) {
-                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                            SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
-                    }
-
-                    $Query = \OCP\DB::prepare($SQL);
-                    $Result = $Query->execute(array(
-                          4, 1,
-                          $this->CurrentUID,
-                          $_POST['GID']
-                    ));
+                    $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->update('ocdownloader_queue')
+                        ->set('STATUS', $qb->createNamedParameter(4))
+                        ->set('IS_CLEANED', $qb->createNamedParameter(1))
+                        ->where($qb->expr()->eq('UID', $qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($_POST['GID'])));
+                    $qb->execute();
 
                     return new JSONResponse(
                         array(
@@ -546,19 +513,13 @@ class Queue extends Controller
                     }
 
                     if (!is_null($Remove) && strcmp($Remove['result'], $GID) == 0) {
-                        $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-                            SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
-                        if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                                SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
-                        }
-
-                        $Query = \OCP\DB::prepare($SQL);
-                        $Result = $Query->execute(array(
-                              4, 1,
-                              $this->CurrentUID,
-                              $GID
-                        ));
+                        $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                        $qb->update('ocdownloader_queue')
+                            ->set('STATUS', $qb->createNamedParameter(4))
+                            ->set('IS_CLEANED', $qb->createNamedParameter(1))
+                            ->where($qb->expr()->eq('UID', $qb->createNamedParameter($this->CurrentUID)))
+                            ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($GID)));
+                        $qb->execute();
 
                         $GIDS[] = $GID;
                     }
@@ -608,16 +569,11 @@ class Queue extends Controller
                     );
                 }
 
-                $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
-                if ($this->DbType == 1) {
-                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
-                }
-
-                $Query = \OCP\DB::prepare($SQL);
-                $Result = $Query->execute(array(
-                      $this->CurrentUID,
-                      $_POST['GID']
-                ));
+                $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                $qb->delete()->from('ocdownloader_queue')
+                    ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                    ->andwhere($qb->expr()->eq('GID',$qb->createNamedParameter($_POST['GID'])));
+                $Request = $qb->execute();
 
                 return new JSONResponse(
                     array(
@@ -656,16 +612,11 @@ class Queue extends Controller
                         );
                     }
 
-                    $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
-                    if ($this->DbType == 1) {
-                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
-                    }
-
-                    $Query = \OCP\DB::prepare($SQL);
-                    $Result = $Query->execute(array(
-                          $this->CurrentUID,
-                          $GID
-                    ));
+                    $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->delete()->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere($qb->expr()->eq('GID',$qb->createNamedParameter($GID)));
+                    $Request = $qb->execute();
 
                     $GIDS[] = $GID;
                 }
