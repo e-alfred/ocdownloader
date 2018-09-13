@@ -20,9 +20,16 @@ You have to install Aria2 on your system. To do this on Debian/Ubuntu you can us
 
 After that, you have to run Aria2 on every boot with the same user that your webserver is running:
 
-`sudo -u www-data aria2c --enable-rpc --rpc-allow-origin-all -c -D --log=/var/log/aria2.log --check-certificate=false  --save-session=/var/local/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/local/aria2c.sess  --rpc-save-upload-metadata=true --force-save=true --log-level=warn`
+```
+mkdir /var/log/aria2c /var/local/aria2c
+touch /var/log/aria2c/aria2c.log
+touch /var/local/aria2c/aria2c.sess
+chown www-data.www-data -R /var/log/aria2c /var/local/aria2c
+chmod 770 -R /var/log/aria2c /var/local/aria2c
+sudo -u www-data aria2c --enable-rpc --rpc-allow-origin-all -c -D --log=/var/log/aria2c/aria2c.log --check-certificate=false --save-session=/var/local/aria2c/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/local/aria2c/aria2c.sess --rpc-save-upload-metadata=true --force-save=true --log-level=warn
+```
 
-You have to enable the RPC interface and save the session file of Aria2, otherwise your old downloads won't be listed after you restart Aria2. The file in the example is stored in /var/local/aria2c.sess, but you can put it anywhere as long as the user running your webserver can access/write to it.
+You have to enable the RPC interface and save the session file of Aria2, otherwise your old downloads won't be listed after you restart Aria2. The file paths in the example can be changed if you want to store them elsewhere as long as the user running your webserver can access/write to them.
 
 You can find the documentation of Aria2 [here](https://aria2.github.io/manual/en/html/index.html).
 
