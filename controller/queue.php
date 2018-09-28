@@ -108,6 +108,15 @@ class Queue extends Controller
                         $Params[] = 1;
                         break;
                     default: // add view
+
+                    $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->select('*')->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere($qb->expr()->eq('STATUS',$qb->createNamedParameter(0,1,2,3)))
+                        ->andwhere($qb->expr()->eq('IS_CLEANED',$qb->createNamedParameter(0)))
+                        ->orderBy('TIMESTAMP', 'ASC');
+                    $Request = $qb->execute();
+
                         $StatusReq = '(?, ?, ?, ?)';
                         $Params[] = 0;
                         $Params[] = 1;
@@ -234,7 +243,7 @@ class Queue extends Controller
                     array(
                         'ERROR' => false,
                         'QUEUE' => $Queue,
-                        'COUNTER' => Tools::getCounters($this->DbType, $this->CurrentUID)
+                        'COUNTER' => Tools::getCounters($this->CurrentUID)
                     )
                 );
             }
@@ -253,7 +262,7 @@ class Queue extends Controller
 
         try {
             return new JSONResponse(
-                array('ERROR' => false, 'COUNTER' => Tools::getCounters($this->DbType, $this->CurrentUID))
+                array('ERROR' => false, 'COUNTER' => Tools::getCounters($this->CurrentUID))
             );
         } catch (Exception $E) {
             return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
