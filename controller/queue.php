@@ -62,80 +62,111 @@ class Queue extends Controller
                 $Params = array($this->CurrentUID);
                 switch ($_POST['VIEW']) {
                     case 'completes':
-                        $StatusReq = '(?)';
-                        $Params[] = 0;
-                        $IsCleanedReq = '(?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        break;
-                    case 'removed':
-                        $StatusReq = '(?)';
-                        $Params[] = 4;
-                        $IsCleanedReq = '(?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        break;
-                    case 'actives':
-                        $StatusReq = '(?)';
-                        $Params[] = 1;
-                        $IsCleanedReq = '(?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        break;
-                    case 'stopped':
-                        $StatusReq = '(?)';
-                        $Params[] = 3;
-                        $IsCleanedReq = '(?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        break;
-                    case 'waitings':
-                        $StatusReq = '(?)';
-                        $Params[] = 2;
-                        $IsCleanedReq = '(?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        break;
-                    case 'all':
-                        $StatusReq = '(?, ?, ?, ?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        $Params[] = 2;
-                        $Params[] = 3;
-                        $Params[] = 4;
-                        $IsCleanedReq = '(?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        break;
-                    default: // add view
+                    $qb->select('*')->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere('STATUS = :status1')
+                        ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
+                        ->orderBy('TIMESTAMP', 'ASC')
+                        ->setParameters(array(
+                          ':status1' => 0,
+                          ':iscleaned1' => 0,
+                          ':iscleaned2' => 1
+                        ));
+                    $Request = $qb->execute();
+                    break;
 
+                    case 'removed':
+                    $qb->select('*')->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere('STATUS = :status1')
+                        ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
+                        ->orderBy('TIMESTAMP', 'ASC')
+                        ->setParameters(array(
+                          ':status1' => 4,
+                          ':iscleaned1' => 0,
+                          ':iscleaned2' => 1
+                        ));
+                    $Request = $qb->execute();
+                    break;
+
+                    case 'actives':
+                    $qb->select('*')->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere('STATUS = :status1')
+                        ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
+                        ->orderBy('TIMESTAMP', 'ASC')
+                        ->setParameters(array(
+                          ':status1' => 1,
+                          ':iscleaned1' => 0,
+                          ':iscleaned2' => 1
+                        ));
+                    $Request = $qb->execute();
+                    break;
+
+                    case 'stopped':
+                    $qb->select('*')->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere('STATUS = :status1')
+                        ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
+                        ->orderBy('TIMESTAMP', 'ASC')
+                        ->setParameters(array(
+                          ':status1' => 3,
+                          ':iscleaned1' => 0,
+                          ':iscleaned2' => 1
+                        ));
+                    $Request = $qb->execute();
+                    break;
+
+                    case 'waitings':
+                    $qb->select('*')->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere('STATUS = :status1')
+                        ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
+                        ->orderBy('TIMESTAMP', 'ASC')
+                        ->setParameters(array(
+                          ':status1' => 2,
+                          ':iscleaned1' => 0,
+                          ':iscleaned2' => 1
+                        ));
+                    $Request = $qb->execute();
+                    break;
+
+                    case 'all':
                     $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
                     $qb->select('*')->from('ocdownloader_queue')
                         ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
-                        ->andwhere($qb->expr()->eq('STATUS',$qb->createNamedParameter(0,1,2,3)))
-                        ->andwhere($qb->expr()->eq('IS_CLEANED',$qb->createNamedParameter(0)))
-                        ->orderBy('TIMESTAMP', 'ASC');
+                        ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4 OR STATUS = :status5')
+                        ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
+                        ->orderBy('TIMESTAMP', 'ASC')
+                        ->setParameters(array(
+                          ':status1' => 0,
+                          ':status2' => 1,
+                          ':status3' => 2,
+                          ':status4' => 3,
+                          ':status5' => 4,
+                          ':iscleaned1' => 0,
+                          ':iscleaned2' => 1
+                        ));
                     $Request = $qb->execute();
+                    break;
 
-                        $StatusReq = '(?, ?, ?, ?)';
-                        $Params[] = 0;
-                        $Params[] = 1;
-                        $Params[] = 2;
-                        $Params[] = 3; // STATUS
-                        $IsCleanedReq = '(?)';
-                        $Params[] = 0; // IS_CLEANED
-                        break;
+                    default: // add view
+                    $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+                    $qb->select('*')->from('ocdownloader_queue')
+                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4')
+                        ->andwhere('IS_CLEANED = :iscleaned1')
+                        ->orderBy('TIMESTAMP', 'ASC')
+                        ->setParameters(array(
+                          ':status1' => 0,
+                          ':status2' => 1,
+                          ':status3' => 2,
+                          ':status4' => 3,
+                          ':iscleaned1' => 0
+                        ));
+                    $Request = $qb->execute();
+                    break;
                 }
-
-                $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `STATUS` IN '
-                . $StatusReq . ' AND `IS_CLEANED` IN ' . $IsCleanedReq . ' ORDER BY `TIMESTAMP` ASC';
-
-                if ($this->DbType == 1) {
-                    $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "STATUS" IN '
-                    . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
-                }
-                $Query = \OCP\DB::prepare($SQL);
-                $Request = $Query->execute($Params);
 
                 $Queue = [];
                 $DownloadUpdated = false;

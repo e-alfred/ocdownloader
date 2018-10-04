@@ -91,14 +91,14 @@ class Settings
     {
         if (!is_null($this->UID)) {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
-          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+          $qb->select('KEY', 'VAL')->from('ocdownloader_'.$this->Table.'settings')
               ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)))
               ->andwhere($qb->expr()->eq('UID',$qb->createNamedParameter($this->UID)));
           return $Request = $qb->execute();
 
         } else {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
-          $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
+          $qb->select('KEY', 'VAL')->from('ocdownloader_'.$this->Table.'settings')
               ->where($qb->expr()->eq('KEY',$qb->createNamedParameter($this->Key)));
           return $Request = $qb->execute();
         }

@@ -136,11 +136,22 @@ class API
         self::load();
 
         try {
-              $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
-              $qb->select('*')->from('ocdownloader_queue')
-                  ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
-                  ->orderBy('TIMESTAMP', 'ASC');
-              $Request = $qb->execute();
+            $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+            $qb->select('*')->from('ocdownloader_queue')
+              ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+              ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4 OR STATUS = :status5')
+              ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
+              ->orderBy('TIMESTAMP', 'ASC')
+              ->setParameters(array(
+                ':status1' => 0,
+                ':status2' => 1,
+                ':status3' => 2,
+                ':status4' => 3,
+                ':status5' => 4,
+                ':iscleaned1' => 0,
+                ':iscleaned2' => 1
+              ));
+            $Request = $qb->execute();
 
             $DownloadUpdated = false;
             $Queue = [];
