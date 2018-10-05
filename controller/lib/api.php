@@ -138,11 +138,12 @@ class API
         try {
             $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
             $qb->select('*')->from('ocdownloader_queue')
-              ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+              ->where('UID = :userid1')
               ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4 OR STATUS = :status5')
               ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
               ->orderBy('TIMESTAMP', 'ASC')
               ->setParameters(array(
+                ':userid1' => $this->CurrentUID,
                 ':status1' => 0,
                 ':status2' => 1,
                 ':status3' => 2,

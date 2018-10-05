@@ -63,11 +63,12 @@ class Queue extends Controller
                 switch ($_POST['VIEW']) {
                     case 'completes':
                     $qb->select('*')->from('ocdownloader_queue')
-                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
                         ->orderBy('TIMESTAMP', 'ASC')
                         ->setParameters(array(
+                          ':userid1' => $this->CurrentUID,
                           ':status1' => 0,
                           ':iscleaned1' => 0,
                           ':iscleaned2' => 1
@@ -77,11 +78,12 @@ class Queue extends Controller
 
                     case 'removed':
                     $qb->select('*')->from('ocdownloader_queue')
-                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
                         ->orderBy('TIMESTAMP', 'ASC')
                         ->setParameters(array(
+                          ':userid1' => $this->CurrentUID,
                           ':status1' => 4,
                           ':iscleaned1' => 0,
                           ':iscleaned2' => 1
@@ -91,11 +93,12 @@ class Queue extends Controller
 
                     case 'actives':
                     $qb->select('*')->from('ocdownloader_queue')
-                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
                         ->orderBy('TIMESTAMP', 'ASC')
                         ->setParameters(array(
+                          ':userid1' => $this->CurrentUID,
                           ':status1' => 1,
                           ':iscleaned1' => 0,
                           ':iscleaned2' => 1
@@ -105,11 +108,12 @@ class Queue extends Controller
 
                     case 'stopped':
                     $qb->select('*')->from('ocdownloader_queue')
-                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
                         ->orderBy('TIMESTAMP', 'ASC')
                         ->setParameters(array(
+                          ':userid1' => $this->CurrentUID,
                           ':status1' => 3,
                           ':iscleaned1' => 0,
                           ':iscleaned2' => 1
@@ -119,11 +123,12 @@ class Queue extends Controller
 
                     case 'waitings':
                     $qb->select('*')->from('ocdownloader_queue')
-                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
                         ->orderBy('TIMESTAMP', 'ASC')
                         ->setParameters(array(
+                          ':userid1' => $this->CurrentUID,
                           ':status1' => 2,
                           ':iscleaned1' => 0,
                           ':iscleaned2' => 1
@@ -134,11 +139,12 @@ class Queue extends Controller
                     case 'all':
                     $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
                     $qb->select('*')->from('ocdownloader_queue')
-                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4 OR STATUS = :status5')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
                         ->orderBy('TIMESTAMP', 'ASC')
                         ->setParameters(array(
+                          ':userid1' => $this->CurrentUID,
                           ':status1' => 0,
                           ':status2' => 1,
                           ':status3' => 2,
@@ -153,11 +159,12 @@ class Queue extends Controller
                     default: // add view
                     $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
                     $qb->select('*')->from('ocdownloader_queue')
-                        ->where($qb->expr()->eq('UID',$qb->createNamedParameter($this->CurrentUID)))
+                        ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4')
                         ->andwhere('IS_CLEANED = :iscleaned1')
                         ->orderBy('TIMESTAMP', 'ASC')
                         ->setParameters(array(
+                          ':userid1' => $this->CurrentUID,
                           ':status1' => 0,
                           ':status2' => 1,
                           ':status3' => 2,
