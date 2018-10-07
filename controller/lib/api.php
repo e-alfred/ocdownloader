@@ -211,7 +211,7 @@ class API
                               ->set('STATUS', $qb->createNamedParameter($DLStatus))
                               ->where($qb->expr()->eq('UID', $qb->createNamedParameter(self::$CurrentUID)))
                               ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($Row['GID'])))
-                              ->andwhere($qb->expr()->eq('STATUS', 4));
+                              ->andwhere($qb->expr()->neq('STATUS', 4));
                           $qb->execute();
                         $DownloadUpdated = true;
                         }
