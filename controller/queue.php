@@ -66,8 +66,8 @@ class Queue extends Controller
                         ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
-                        ->orderBy('TIMESTAMP', 'ASC')
-                        ->setParameters(array(
+                        ->orderBy('TIMESTAMP', 'ASC');
+                        $qb->setParameters(array(
                           ':userid1' => $this->CurrentUID,
                           ':status1' => 0,
                           ':iscleaned1' => 0,
@@ -81,8 +81,8 @@ class Queue extends Controller
                         ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
-                        ->orderBy('TIMESTAMP', 'ASC')
-                        ->setParameters(array(
+                        ->orderBy('TIMESTAMP', 'ASC');
+                        $qb->setParameters(array(
                           ':userid1' => $this->CurrentUID,
                           ':status1' => 4,
                           ':iscleaned1' => 0,
@@ -96,8 +96,8 @@ class Queue extends Controller
                         ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
-                        ->orderBy('TIMESTAMP', 'ASC')
-                        ->setParameters(array(
+                        ->orderBy('TIMESTAMP', 'ASC');
+                        $qb->setParameters(array(
                           ':userid1' => $this->CurrentUID,
                           ':status1' => 1,
                           ':iscleaned1' => 0,
@@ -111,8 +111,8 @@ class Queue extends Controller
                         ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
-                        ->orderBy('TIMESTAMP', 'ASC')
-                        ->setParameters(array(
+                        ->orderBy('TIMESTAMP', 'ASC');
+                        $qb->setParameters(array(
                           ':userid1' => $this->CurrentUID,
                           ':status1' => 3,
                           ':iscleaned1' => 0,
@@ -126,8 +126,8 @@ class Queue extends Controller
                         ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
-                        ->orderBy('TIMESTAMP', 'ASC')
-                        ->setParameters(array(
+                        ->orderBy('TIMESTAMP', 'ASC');
+                        $qb->setParameters(array(
                           ':userid1' => $this->CurrentUID,
                           ':status1' => 2,
                           ':iscleaned1' => 0,
@@ -142,8 +142,8 @@ class Queue extends Controller
                         ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4 OR STATUS = :status5')
                         ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
-                        ->orderBy('TIMESTAMP', 'ASC')
-                        ->setParameters(array(
+                        ->orderBy('TIMESTAMP', 'ASC');
+                        $qb->setParameters(array(
                           ':userid1' => $this->CurrentUID,
                           ':status1' => 0,
                           ':status2' => 1,
@@ -162,8 +162,8 @@ class Queue extends Controller
                         ->where('UID = :userid1')
                         ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4')
                         ->andwhere('IS_CLEANED = :iscleaned1')
-                        ->orderBy('TIMESTAMP', 'ASC')
-                        ->setParameters(array(
+                        ->orderBy('TIMESTAMP', 'ASC');
+                        $qb->setParameters(array(
                           ':userid1' => $this->CurrentUID,
                           ':status1' => 0,
                           ':status2' => 1,

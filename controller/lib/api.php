@@ -141,8 +141,8 @@ class API
               ->where('UID = :userid1')
               ->andwhere('STATUS = :status1 OR STATUS = :status2 OR STATUS = :status3 OR STATUS = :status4 OR STATUS = :status5')
               ->andwhere('IS_CLEANED = :iscleaned1 OR IS_CLEANED = :iscleaned2')
-              ->orderBy('TIMESTAMP', 'ASC')
-              ->setParameters(array(
+              ->orderBy('TIMESTAMP', 'ASC');
+              $qb->setParameters(array(
                 ':userid1' => $this->CurrentUID,
                 ':status1' => 0,
                 ':status2' => 1,
@@ -211,7 +211,7 @@ class API
                               ->set('STATUS', $qb->createNamedParameter($DLStatus))
                               ->where($qb->expr()->eq('UID', $qb->createNamedParameter(self::$CurrentUID)))
                               ->andwhere($qb->expr()->eq('GID', $qb->createNamedParameter($Row['GID'])))
-                              ->andwhere($qb->expr()->neq('STATUS', 4));
+                              ->andwhere($qb->expr()->eq('STATUS', 4));
                           $qb->execute();
                         $DownloadUpdated = true;
                         }
