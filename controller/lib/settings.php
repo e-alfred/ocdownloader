@@ -48,21 +48,16 @@ class Settings
         if (!is_null($this->UID)) {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
           $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
-          ->where('KEY = :key1')
-          ->andwhere('UID = :userid1')
+          ->where($query->expr()->eq('KEY', $query->createNamedParameter($this->Key)))
+          ->andwhere($query->expr()->eq('UID', $query->createNamedParameter($this->UID)))
           ->setMaxResults('1');
-          $qb->setParameters(array(
-            ':key1' => $this->Key,
-            ':userid1' => $this->UID
-          ));
           $Request = $qb->execute();
 
         } else {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
           $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
-              ->where('KEY = :key1')
-              ->setMaxResults('1');
-              $qb->setParameter(':key1', $this->Key);
+          ->where($query->expr()->eq('KEY', $query->createNamedParameter($this->Key)))
+          ->setMaxResults('1');
           $Request = $qb->execute();
         }
 
@@ -77,22 +72,17 @@ class Settings
         if (!is_null($this->UID)) {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
           $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
-              ->where('KEY = :key1')
-              ->andwhere('UID = :userid1')
-              ->setMaxResults('1');
-              $qb->setParameters(array(
-                ':key1' => $this->Key,
-                ':userid1' => $this->UID
-              ));
+          ->where($query->expr()->eq('KEY', $query->createNamedParameter($this->Key)))
+          ->andwhere($query->expr()->eq('UID', $query->createNamedParameter($this->UID)))
+          ->setMaxResults('1');
           return $Request = $qb->execute();
 
         } else {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
 
           $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
-              ->where('KEY = :key1')
-              ->setMaxResults('1');
-              $qb->setParameter(':key1', $this->Key);
+          ->where($query->expr()->eq('KEY', $query->createNamedParameter($this->Key)))
+          ->setMaxResults('1');
           return $Request = $qb->execute();
         }
 
@@ -103,22 +93,16 @@ class Settings
         if (!is_null($this->UID)) {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
           $qb->select('KEY', 'VAL')->from('ocdownloader_'.$this->Table.'settings')
-             ->where('KEY = :key1')
-             ->andwhere('UID = :userid1');
-             $qb->setParameters(array(
-               ':key1' => $this->Key,
-               ':userid1' => $this->UID
-             ));
+          ->where($query->expr()->eq('KEY', $query->createNamedParameter($this->Key)))
+          ->andwhere($query->expr()->eq('UID', $query->createNamedParameter($this->UID)))
+          ->setMaxResults('1');
           return $Request = $qb->execute();
 
         } else {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
           $qb->select('KEY', 'VAL')->from('ocdownloader_'.$this->Table.'settings')
-             ->where('KEY = :key1')
-             ->setMaxResults('1');
-             $qb->setParameters(array(
-                ':key1' => $this->Key
-             ));
+          ->where($query->expr()->eq('KEY', $query->createNamedParameter($this->Key)))
+          ->setMaxResults('1');
           return $Request = $qb->execute();
         }
 
