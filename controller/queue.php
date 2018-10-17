@@ -60,43 +60,43 @@ class Queue extends Controller
         try {
             if (isset($_POST['VIEW']) && strlen(trim($_POST['VIEW'])) > 0) {
 
-              $query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
-              $query->select('*')
+              $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+              $qb->select('*')
               ->from('ocdownloader_queue')
-              ->where($query->expr()->eq('uid', $query->createNamedParameter($this->CurrentUID)))
+              ->where($qb->expr()->eq('uid', $query->createNamedParameter($this->CurrentUID)))
               ->orderBy('timestamp', 'asc');
 
               switch ($_POST['VIEW']) {
       					case 'completes':
-      						$query->andWhere($query->expr()->eq('status', $query->createNamedParameter(0)))
-      							->andWhere($query->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(0)))
+      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'removed':
-      						$query->andWhere($query->expr()->eq('status', $query->createNamedParameter(4)))
-      							->andWhere($query->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(4)))
+      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'actives':
-      						$query->andWhere($query->expr()->eq('status', $query->createNamedParameter(1)))
-      							->andWhere($query->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(1)))
+      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'stopped':
-      						$query->andWhere($query->expr()->eq('status', $query->createNamedParameter(3)))
-      							->andWhere($query->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(3)))
+      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'waitings':
-      						$query->andWhere($query->expr()->eq('status', $query->createNamedParameter(2)))
-      							->andWhere($query->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(2)))
+      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'all':
-      						$query->andWhere($query->expr()->lte('status', $query->createNamedParameter(4)))
-      							->andWhere($query->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->lte('status', $query->createNamedParameter(4)))
+      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					default: // add view
-      						$query->andWhere($query->expr()->lte('status', $query->createNamedParameter(3)))
-      							->andWhere($query->expr()->eq('is_cleaned', $query->createNamedParameter(0)));
+      						$qb->andWhere($qb->expr()->lte('status', $query->createNamedParameter(3)))
+      							->andWhere($qb->expr()->eq('is_cleaned', $query->createNamedParameter(0)));
       						break;
       				}
-      				$Request = $query->execute();
+      				$Request = $qb->execute();
 
       				$Queue = [];
       				$DownloadUpdated = false;

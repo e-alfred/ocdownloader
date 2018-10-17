@@ -127,21 +127,22 @@ class Tools
 
     public static function getCounters($DbType, $UID)
     {
-        $query->select('status')
-        ->selectAlias($query->func()->count('*'), 'counter')
-        ->from('ocdownloader_queue')
-        ->where($query->expr()->eq('uid', $query->createNamedParameter($UID)
-        ->groupBy('status');
-        $result = $query->execute();
+      $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+      $qb->select('status')
+      ->selectAlias($query->func()->count('*'), 'counter')
+      ->from('ocdownloader_queue')
+      ->where($query->expr()->eq('uid', $query->createNamedParameter($UID)
+      ->groupBy('status');
+      $result = $qb->execute();
 
-        $downloads = [
+      $downloads = [
             'ALL' => 0,
             'COMPLETES' => 0,
             'ACTIVES' => 0,
             'WAITINGS' => 0,
             'STOPPED' => 0,
             'REMOVED' => 0,
-        ];
+      ];
 
         while ($row = $result->fetch()) {
             if ($row['status'] == 0) {
@@ -163,7 +164,7 @@ class Tools
         }
         $result->closeCursor();
 
-        return $result;
+        return $row;
     }
 
     public static function startsWith($Haystack, $Needle)
