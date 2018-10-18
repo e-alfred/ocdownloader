@@ -131,7 +131,7 @@ class Tools
       $qb->select('status')
       ->selectAlias($query->func()->count('*'), 'counter')
       ->from('ocdownloader_queue')
-      ->where($query->expr()->eq('uid', $query->createNamedParameter($UID)
+      ->where($query->expr()->eq('uid', $query->createNamedParameter($UID)))
       ->groupBy('status');
       $result = $qb->execute();
 
