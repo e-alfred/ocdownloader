@@ -69,6 +69,7 @@ class Settings
 
     public function getValue()
     {
+      if (!is_null($this->Key)) {
         if (!is_null($this->UID)) {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
           $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
@@ -79,12 +80,14 @@ class Settings
 
         } else {
           $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
-
           $qb->select('VAL')->from('ocdownloader_'.$this->Table.'settings')
           ->where($query->expr()->eq('KEY', $query->createNamedParameter($this->Key)))
           ->setMaxResults('1');
           return $Request = $qb->execute();
         }
+      }
+
+      return null;
 
     }
 
