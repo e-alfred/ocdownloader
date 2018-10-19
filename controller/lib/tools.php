@@ -125,7 +125,7 @@ class Tools
         return $DLStatus;
     }
 
-    public static function getCounters($DbType, $UID)
+    public static function getCounters($UID)
     {
       $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
       $qb->select('status')
