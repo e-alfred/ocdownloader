@@ -63,37 +63,37 @@ class Queue extends Controller
               $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
               $qb->select('*')
               ->from('ocdownloader_queue')
-              ->where($qb->expr()->eq('uid', $query->createNamedParameter($this->CurrentUID)))
+              ->where($qb->expr()->eq('uid', $qb->createNamedParameter($this->CurrentUID)))
               ->orderBy('timestamp', 'asc');
 
               switch ($_POST['VIEW']) {
       					case 'completes':
-      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(0)))
-      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $qb->createNamedParameter(0)))
+      							->andWhere($qb->expr()->in('is_cleaned', $qb->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'removed':
-      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(4)))
-      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $qb->createNamedParameter(4)))
+      							->andWhere($qb->expr()->in('is_cleaned', $qb->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'actives':
-      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(1)))
-      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $qb->createNamedParameter(1)))
+      							->andWhere($qb->expr()->in('is_cleaned', $qb->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'stopped':
-      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(3)))
-      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $qb->createNamedParameter(3)))
+      							->andWhere($qb->expr()->in('is_cleaned', $qb->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'waitings':
-      						$qb->andWhere($qb->expr()->eq('status', $query->createNamedParameter(2)))
-      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->eq('status', $qb->createNamedParameter(2)))
+      							->andWhere($qb->expr()->in('is_cleaned', $qb->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					case 'all':
-      						$qb->andWhere($qb->expr()->lte('status', $query->createNamedParameter(4)))
-      							->andWhere($qb->expr()->in('is_cleaned', $query->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
+      						$qb->andWhere($qb->expr()->lte('status', $qb->createNamedParameter(4)))
+      							->andWhere($qb->expr()->in('is_cleaned', $qb->createNamedParameter([0, 1], IQueryBuilder::PARAM_INT_ARRAY)));
       						break;
       					default: // add view
-      						$qb->andWhere($qb->expr()->lte('status', $query->createNamedParameter(3)))
-      							->andWhere($qb->expr()->eq('is_cleaned', $query->createNamedParameter(0)));
+      						$qb->andWhere($qb->expr()->lte('status', $qb->createNamedParameter(3)))
+      							->andWhere($qb->expr()->eq('is_cleaned', $qb->createNamedParameter(0)));
       						break;
       				}
       				$Request = $qb->execute();

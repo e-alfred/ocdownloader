@@ -125,13 +125,13 @@ class Tools
         return $DLStatus;
     }
 
-    public static function getCounters($DbType, $UID)
+    public static function getCounters($UID)
     {
       $qb = \OC::$server->getDatabaseConnection()->getQueryBuilder();
       $qb->select('status')
-      ->selectAlias($query->func()->count('*'), 'counter')
+      ->selectAlias($qb->func()->count('*'), 'counter')
       ->from('ocdownloader_queue')
-      ->where($query->expr()->eq('uid', $query->createNamedParameter($UID)))
+      ->where($qb->expr()->eq('uid', $qb->createNamedParameter($UID)))
       ->groupBy('status');
       $result = $qb->execute();
 
