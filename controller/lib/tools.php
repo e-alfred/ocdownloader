@@ -141,7 +141,7 @@ class Tools
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "STOPPED",'
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "REMOVED"';
         }
-        $Query = \OCP\DB::prepare($SQL);
+        $Query = \OC_DB::prepare($SQL);
         $Request = $Query->execute(array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 
         return $Request->fetchRow();
@@ -198,7 +198,7 @@ class Tools
         if ($DbType == 1) {
             $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue';
         }
-        $Query = \OCP\DB::prepare($SQL);
+        $Query = \OC_DB::prepare($SQL);
         $Request = $Query->execute();
 
         while ($Row = $Request->fetchRow()) {
@@ -216,7 +216,7 @@ class Tools
             if ($DbType == 1) {
                 $SQL = 'TRUNCATE TABLE *PREFIX*ocdownloader_queue';
             }
-            $Query = \OCP\DB::prepare($SQL);
+            $Query = \OC_DB::prepare($SQL);
             $Request = $Query->execute();
         }
     }

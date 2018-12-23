@@ -150,7 +150,7 @@ class FtpDownloader extends Controller
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = \OC_DB::prepare($SQL);
                     $Result = $Query->execute(array(
                         $this->CurrentUID,
                         $AddURI['result'],
