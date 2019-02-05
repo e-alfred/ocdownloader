@@ -50,8 +50,8 @@ class Application extends App implements IBackendProvider
 			(
 		        $Container->query ('AppName'),
 		        $Container->query ('Request'),
-				$Container->query ('CurrentUID'),
-				$Container->getServer ()->getL10N ('ocdownloader')
+						$Container->query ('CurrentUID'),
+						$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 
@@ -62,8 +62,8 @@ class Application extends App implements IBackendProvider
 			(
 		        $Container->query ('AppName'),
 		        $Container->query ('Request'),
-				$Container->query ('CurrentUID'),
-				$Container->getServer ()->getL10N ('ocdownloader')
+						$Container->query ('CurrentUID'),
+						$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -73,7 +73,7 @@ class Application extends App implements IBackendProvider
 			(
 		        $Container->query ('AppName'),
 		        $Container->query ('Request'),
-				$Container->getServer ()->getL10N ('ocdownloader')
+						$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -83,7 +83,7 @@ class Application extends App implements IBackendProvider
 			(
 		        $Container->query ('AppName'),
 		        $Container->query ('Request'),
-				$Container->getServer ()->getL10N ('ocdownloader')
+						$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 		
@@ -93,8 +93,8 @@ class Application extends App implements IBackendProvider
 			(
 		        $Container->query ('AppName'),
 		        $Container->query ('Request'),
-				$Container->query ('CurrentUID'),
-				$Container->getServer ()->getL10N ('ocdownloader')
+						$Container->query ('CurrentUID'),
+						$Container->getServer ()->getL10N ('ocdownloader')
 	      	);
 	    });
 
