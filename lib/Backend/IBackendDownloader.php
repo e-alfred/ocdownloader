@@ -206,7 +206,7 @@ public function __construct(IUserSession $userSession, IL10N $L10N) {
      }
 
     $Settings->SetKey ($key);
-    $ret = $ettings->GetValue ();
+    $ret = $Settings->GetValue();
 
     // save cache
     $this->settings[$key] = $ret;
