@@ -33,44 +33,6 @@ class Tools
 		return false;
 	}
 
-	public static function CheckFilepath ($FP)
-	{
-		if (\OC\Files\Filesystem::file_exists ($FP))
-        {
-              return true;
-        }
-		return false;
-	}
-
-	public static function GetProgressString ($Completed, $Total, $Progress)
-	{
-		$CompletedStr = self::FormatSizeUnits ($Completed);
-		$TotalStr = self::FormatSizeUnits ($Total);
-
-		if ($Progress < 1 && $Progress > 0)
-		{
-			return $CompletedStr . ' / ' . $TotalStr . ' (' . round ((($Completed / $Total) * 100), 2) . '%)';
-		}
-		elseif ($Progress >= 1)
-		{
-			return $TotalStr . ' (' . round ((($Completed / $Total) * 100), 2) . '%)';
-		}
-		return null;
-	}
-
-	public static function FormatSizeUnits ($Bytes)
-    {
-        $URLPattern = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}'
-            .']+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.'
-            .'[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
-
-        preg_match($URLPattern, $URL, $Matches);
-        if (count($Matches) === 1) {
-            return true;
-        }
-        return false;
-    }
-
     public static function checkFilepath($FP)
     {
         if (\OC\Files\Filesystem::file_exists($FP)) {
