@@ -137,7 +137,7 @@ public function __construct(IUserSession $userSession, IL10N $L10N) {
           $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("UID", "GID", "FILENAME", "PROTOCOL", "IS_CLEANED", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?, ?, ?)';
         }
 
-        $Query = \OCP\DB::prepare ($SQL);
+        $Query = \OC_DB::prepare ($SQL);
         $Result = $Query->execute (Array (
               $this->CurrentUID,
               $AddURI['result'],
