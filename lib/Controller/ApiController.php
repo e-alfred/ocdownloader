@@ -31,7 +31,7 @@ class ApiController extends OCSController {
 
   public function Add($URL, $OPTIONS) {
     try {
-      $backend = $this->getBackends($URL);
+      $backend = $this->backendService->getBackendbyUri($URL);
 
       $DL = $backend->add($URL, $OPTIONS);
 
@@ -53,7 +53,7 @@ class ApiController extends OCSController {
 
   public function Handler ($URL) {
     try {
-      $backend = $this->getBackends($URL);
+      $backend = $this->backendService->getBackendByUri($URL);
       $data  = Array(
         'ERROR' => False,
         'HANDLER' => $backend->getIdentifier()
@@ -75,21 +75,5 @@ class ApiController extends OCSController {
     }
 
   }
-
-  private function getBackends($URL) {
-            $backend = false;
-
-            $be =  $this->backendService->getBackends();
-            foreach ($be as $b) {
-              if ($b->checkURL($URL)) {
-                $backend = $b;
-                break;
-              }
-            }
-            if (!$backend)
-              throw new BackendException("no backends aviable");
-
-            return $backend;
-          }
 
 }

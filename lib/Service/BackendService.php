@@ -185,5 +185,21 @@ class BackendService {
 		}
 		return false;
 	}
+	
+	public function getBackendByUri($uri) {
+		$backend = false;
+
+		$be =  $this->getBackends();
+		foreach ($be as $b) {
+			if ($b->checkUri($uri)) {
+				$backend = $b;
+				break;
+			}
+		}
+		if (!$backend)
+			throw new BackendException("no backends aviable");
+
+		return $backend;
+	}
 
 }
