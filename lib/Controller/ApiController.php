@@ -4,29 +4,40 @@ namespace OCA\ocDownloader\Controller;
 
 use OCA\ocDownloader\Backend\BackendException;
 use OCA\ocDownloader\Service\BackendService;
+use OCA\ocDownloader\Service\DBService;
 use OCP\AppFramework\OCSController;
 use OCP\AppFramework\Http\DataResponse;
 
 use OCP\IRequest;
+use OCP\IUserSession;
 use OCP\Files\IRootFolder;
 
 class ApiController extends OCSController {
 
   /** @var OCA\ocDownloader\Service\BackendService */
   protected $backendService;
+  
+  protected $dbService;
 
-
+  protected $userSession;
+  
   /**
    * Constructor
    * @param mixed $appName AppName
    * @param IRequest $request
+   * @param IUserSession $userSession
   *  @param BackendService $backendService
   */
-	public function __construct($appName,
+	
+  public function __construct($appName,
       IRequest $request,
-      BackendService $backendService) {
+      IUserSession $userSession,
+      BackendService $backendService,
+      DBService $dbService) {
           parent::__construct($appName, $request);
-		      $this->backendService = $backendService;
+          $this->backendService = $backendService;
+          $this->userSession = $userSession;
+          $this->dbService = $dbService;
   }
 
   public function Add($URL, $OPTIONS) {
@@ -74,6 +85,30 @@ class ApiController extends OCSController {
 
     }
 
+  }
+  
+  public function getQueue() {
+    
+    try {
+    
+      $Request = $this->dbService->getQueueByUser($this->userSession->getUser());
+       
+        return new DataResponse(array(
+            'SQL' => $SQL,
+            'ERROR' => false,
+            'MESSAGE' => null,
+            'QUEUE' => $Request->fetchAll(),
+            #'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
+        ));
+        
+      } catch (BackendException $e) {
+
+        return new DataResponse([
+            'ERROR' => true,
+            'MESSAGE' => $e->getMessage()
+        ]);
+
+      }
   }
 
 }
