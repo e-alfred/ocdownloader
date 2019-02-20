@@ -99,7 +99,7 @@ class ApiController extends OCSController {
             'SQL' => $SQL,
             'ERROR' => false,
             'MESSAGE' => null,
-            'QUEUE' => $Request->fetchAll(),
+            'QUEUE' => $this->backendService->updateStatusList($list),
             #'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
         ));
         
