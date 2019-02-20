@@ -65,7 +65,7 @@ $Application->registerRoutes($this, array(
       //API
       ['name' => 'Api#Handler', 'url' => '/api/handler', 'verb' => 'POST'],
       ['name' => 'Api#Add', 'url' => '/api/add', 'verb' => 'POST']
-      ['name' => 'Api#getQueue', 'url' => '/api/queue', 'verb' => 'GET']
+      ['name' => 'Api#getQueue', 'url' => '/api/queue', 'verb' => 'POST']
     ]
 ));
 
