@@ -17,6 +17,7 @@ class ApiController extends OCSController {
   /** @var OCA\ocDownloader\Service\BackendService */
   protected $backendService;
   
+  /** @var OCA\ocDownloader\Service\DBService */
   protected $dbService;
 
   protected $userSession;
@@ -87,11 +88,12 @@ class ApiController extends OCSController {
 
   }
   
-  public function getQueue() {
+  public function getQueue($VIEW) {
+    $filter = ($VIEW == 'all' ? [0,1,2,3,4] : [Tools::getDownloadStatusID($VIEW)]);
     
     try {
     
-      $Request = $this->dbService->getQueueByUser($this->userSession->getUser());
+      $list = $this->dbService->getQueueByUser($this->userSession->getUser(), $filter);
        
         return new DataResponse(array(
             'SQL' => $SQL,
