@@ -215,7 +215,7 @@ class BackendService {
 		foreach ($recordset as $row) {
 			//error_log($row['GID']);
 			// $backend = $this->getBackendByUri($row['']);
-			$status = $this->updateStatus($row['GID']);
+			$status = $this->updateStatus($row);
 			$rows[] = $status;
 		}
 		
