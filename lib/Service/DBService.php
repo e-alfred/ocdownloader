@@ -31,8 +31,7 @@ class DBService {
 	 * @param IUser $user
 	 * @return array
 	 */
-	public function getQueueByUser(IUser $user) {
-    
+	public function getQueueByUser(IUser $user, Array $status = []) {
     $builder = $this->connection->getQueryBuilder();
     
 		$query = $builder->select('*')
@@ -41,7 +40,7 @@ class DBService {
         $builder->expr()->eq('UID', $builder->createNamedParameter($user->getUID(), IQueryBuilder::PARAM_STR))
       )
 			->andwhere(
-				$builder->expr()->in('STATUS', $builder->createNamedParameter([0,1,2,3,4], IQueryBuilder::PARAM_INT_ARRAY))
+				$builder->expr()->in('STATUS', $builder->createNamedParameter($status, IQueryBuilder::PARAM_INT_ARRAY))
       )
 			->andwhere(
 				$builder->expr()->in('IS_CLEANED', $builder->createNamedParameter([0,1], IQueryBuilder::PARAM_INT_ARRAY))
