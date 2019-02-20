@@ -25,8 +25,11 @@ namespace OCA\ocDownloader\Service;
 
 use \OCP\IConfig;
 
+use OCA\ocDownloader\Backend\BackendException;
 use \OCA\ocDownloader\Backend\IBackendDownloader as Backend;
 use \OCA\ocDownloader\Config\IBackendProvider;
+
+use OCA\ocDownloader\Lib\Tools;
 
 /**
  * Service class to manage backend definitions
@@ -201,5 +204,79 @@ class BackendService {
 
 		return $backend;
 	}
+	
+	/**
+	 * list update status data from backend 
+	 * @param  [type] $recordset [description]
+	 * @return [array]            [description]
+	 */
+	public function updateStatusList($recordset) {
+		$rows = [];
+		foreach ($recordset as $row) {
+			//error_log($row['GID']);
+			// $backend = $this->getBackendByUri($row['']);
+			$status = $this->updateStatus($row['GID']);
+			$rows[] = $status;
+		}
+		
+		return $rows;
+	}
+	
+	/**
+	 * get status from backend 
+	 * @param  [array] $row [row of queue database]
+	 * @return [array] map status 
+	 */
+	public function updateStatus($row) {
+		$ba = $this->getBackends();
+		$b = array_pop($ba);
+		
+		$Status = $b->getStatus($row['GID']);
+		
+		$Progress = 0;
+		if ($Status['result']['totalLength'] > 0) {
+				$Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
+		}
+		$DLStatus = Tools::getDownloadStatusID($Status['result']['status']);
+		$ProgressString = Tools::getProgressString(
+				$Status['result']['completedLength'],
+				$Status['result']['totalLength'],
+				$Progress
+				);
+			
+		$row = [
+		  'FILENAME_SHORT' => $row['FILENAME'],
+			'GID' => $row['GID'],
+			'PROGRESSVAL' => round((($Progress) * 100), 2),
+			'PROGRESS' => [
+					'Message' => null,
+					'ProgressString' => is_null($ProgressString)?'N_A':$ProgressString,
+					'NumSeeders' => isset($Status['result']['bittorrent']) && $Progress < 1?$Status['result']['numSeeders']:null,
+					'UploadLength' => isset($Status['result']['bittorrent']) && $Progress == 1?Tools::formatSizeUnits($Status['result']['uploadLength']):null,
+					'Ratio' => isset($Status['result']['bittorrent'])?round(($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2):null
+			],
+			'STATUS' => [
+					'Value' => isset($Status['result']['status']) ?($row['STATUS'] == 4?'Removed':ucfirst($Status['result']['status'])):'N_A',
+					'Seeding' => isset($Status['result']['bittorrent']) && $Progress == 1 && $DLStatus != 3?true:false
+			],
+			'STATUSID' => $row['STATUS'] == 4?4:$DLStatus,
+			'SPEED' => isset($Status['result']['downloadSpeed'])
+					?($Progress == 1
+							?(isset($Status['result']['bittorrent'])
+									?($Status['result']['uploadSpeed'] == 0
+											?'--'
+											:Tools::formatSizeUnits($Status['result']['uploadSpeed']).'/s')
+									:'--')
+							:($DLStatus == 4
+									?'--'
+									:Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'))
+					:'N_A',
+			'FILENAME' => $row['FILENAME'],
+			'PROTO' => $row['PROTOCOL'],
+			'ISTORRENT' => isset($Status['result']['bittorrent']),
+			];
 
+		return $row;
+	}
+	
 }
