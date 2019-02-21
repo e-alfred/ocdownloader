@@ -214,5 +214,8 @@ public function __construct(IUserSession $userSession, IL10N $L10N) {
     return $ret;
   }
 
+  public function getStatus($GID) {
+    return ($this->WhichDownloader == 0 ? Aria2::TellStatus ($GID) : CURL::TellStatus ($GID));
+  }
 
 }
