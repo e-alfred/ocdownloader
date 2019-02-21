@@ -112,6 +112,9 @@
 #app-content-wrapper .jumbotron p a {
   color: #428bca;
 }
+#app-content-wrapper .jumbotron span {
+  display: block;
+}
 #app-content-wrapper .content-page {
   padding: 0 20px;
   height: 450px;
