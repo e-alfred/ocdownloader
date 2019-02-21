@@ -10,10 +10,12 @@ namespace OCA\ocDownloader\Backend;
 
 use OCA\ocDownloader\Lib\Youtube;
 use OCA\ocDownloader\Lib\Tools;
+use OCP\IL10N;  
 use OCP\IUserSession;
 
 class YTDLBackend extends IBackendDownloader {
 
+  #FIXME: match all sites can be youtube-dl handle
   public $pattern = '%^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$%ui';
 
   public $name = "YTDL";
@@ -21,7 +23,7 @@ class YTDLBackend extends IBackendDownloader {
   public $YTDLBinary = '/usr/local/bin/youtube-dl';
 
 
-  public function __construct(IUserSession $userSession) {
+  public function __construct(IUserSession $userSession, IL10N $L10N) {
     $this->setIdentifier($this->name);
 
     $this->options = Array(
@@ -29,7 +31,7 @@ class YTDLBackend extends IBackendDownloader {
         array('yt-foceipv4', 'checkbox', 'Force IPv4 ?'),
       );
     //$home = $userSession->getUser()->getHome();
-    parent::__construct($userSession);
+    parent::__construct($userSession, $L10N);
 
   }
 
