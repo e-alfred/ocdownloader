@@ -7,6 +7,7 @@ use OCA\ocDownloader\Service\BackendService;
 use OCA\ocDownloader\Service\DBService;
 use OCP\AppFramework\OCSController;
 use OCP\AppFramework\Http\DataResponse;
+use OCA\ocDownloader\Lib\Tools;
 
 use OCP\IRequest;
 use OCP\IUserSession;
@@ -20,6 +21,7 @@ class ApiController extends OCSController {
   /** @var OCA\ocDownloader\Service\DBService */
   protected $dbService;
 
+  /** @var OCP\IUserSession */
   protected $userSession;
   
   /**
