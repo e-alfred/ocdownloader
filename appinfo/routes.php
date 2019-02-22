@@ -16,7 +16,7 @@ $Application->registerRoutes($this, array(
     'routes' => [
         // Index
         ['name' => 'Index#Add', 'url' => '/add', 'verb' => 'GET'],
-        ['name' => 'Index#All', 'url' => '/all', 'verb' => 'GET'],
+        ['name' => 'Index#All', 'url' => '/', 'verb' => 'GET'],
         ['name' => 'Index#Completes', 'url' => '/completes', 'verb' => 'GET'],
         ['name' => 'Index#Actives', 'url' => '/actives', 'verb' => 'GET'],
         ['name' => 'Index#Waitings', 'url' => '/waitings', 'verb' => 'GET'],
