@@ -20,6 +20,7 @@ If you want to write your own app or extension, this would be highly welcome. oc
 
 ## TO DO
 * API Count, Cleanup, Hide, Pause, Remove  
+* Simplify API Syntax
 * UI Use API   
 * Single Page Aplication UI  
 * Use Nextcloud Theme
