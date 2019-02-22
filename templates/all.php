@@ -22,8 +22,13 @@ if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
     <div id="app-content">
         <div id="app-content-wrapper">
             <div id="controls">
-                <div class="righttitle"><?php print ($l->t ('All Downloads')); ?></div>
-                <div style="float: right;"><p class="lead"><?php print ($l->t (' using <strong>%s</strong>', $_['WD'])); ?></p></div>
+              <div class="content-page" rel="OCDURI">
+                  <div class="handler info"></div>
+                  <input type="text" placeholder="<?php print ($l->t ('URI to download')); ?>" class="form-control url" />
+                  <div class="button launch">
+                      <a><?php print ($l->t ('Launch Download')); ?></a>
+                  </div>
+              </div>
             </div>
             <div class="content-queue">
                 <table id="Queue" border="0" cellspacing="0" cellpadding="0">

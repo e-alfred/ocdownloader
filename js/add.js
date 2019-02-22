@@ -56,47 +56,7 @@ $(document).ready (function ()
 		OCDLR.Utils.GetTorrentsList ($(this).children ('ul'));
 	});
 
-  // Analisis URI
-  $('#app-content-wrapper .content-page[rel=OCDURI] input.url').bind ('input', function()
-  {
-    var InputURL = $(this).val();
-		if (OCDLR.Utils.ValidURL (InputURL))
-		{
-			var dHandler = $('#app-content-wrapper .content-page[rel=OCDURI] div.handler');
-			var dButtom = $('#app-content-wrapper .content-page[rel=OCDURI] div.launch')
-			var dOptions = $('#app-content-wrapper .content-page[rel=OCDURI] div[rel=OCDOPTIONS]')
-    	var handler = OCDLR.Utils.GetHandler(dHandler, dButtom, dOptions, InputURL);
-		}
 
-  });
-  // Launch URI download
-	$('#app-content-wrapper .content-page[rel=OCDURI] div.launch').bind ('click', function ()
-	{
-		var InputURL = $('#app-content-wrapper .content-page[rel=OCDURI] input.url');
-
-		if (OCDLR.Utils.ValidURL (InputURL.val ()))
-		{
-			var OPTIONS = {};
-			// FIXME: get options.
-			var inputs  = $('#app-content-wrapper .content-page div[rel=OCDOPTIONS]').find(':input');
-			$.each(inputs, function(k,v) {
-				var id = $(this).attr('id');
-				var val = $(this).is(':checkbox') ? $(this).prop ('checked') : $(this).val();
-				OPTIONS[id] = val;
-			});
-
-
-			OCDLR.Utils.AddDownload ($(this), 'http', InputURL.val (), OPTIONS);
-		}
-		else
-		{
-			OCDLR.Utils.PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
-		}
-
-		InputURL.val ('');
-		$('#option-http-user').val ('');
-		$('#option-http-pwd').val ('');
-	});
 
 	// Launch HTTP download
 	$('#app-content-wrapper .content-page[rel=OCDHTTP] div.launch').bind ('click', function ()
