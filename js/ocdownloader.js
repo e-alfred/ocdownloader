@@ -14,7 +14,7 @@ OCDLR = {};
 {
 	OCDLR.Utils =
 	{
-		BaseURL: '/apps/ocdownloader/',
+		BaseURL: '/ocs/v1.php/apps/ocdownloader/api/',
 		BaseID: '#app-content-wrapper ',
 		MenuID: '#app-navigation ',
 		Queue: '',
@@ -78,18 +78,18 @@ OCDLR = {};
 				{
 					$(OCDLRSelf.BaseID + '.loadingtext').show ();
 				    $.ajax ({
-				        url: OC.generateUrl (OCDLRSelf.BaseURL + 'queue/get'),
+				        url: OC.generateUrl (OCDLRSelf.BaseURL + 'queue'),
 				        method: 'POST',
-						data: {'VIEW' : View},
-						dataType: 'json',
-				        async: true,
+                data: {'VIEW' : View, 'format': 'json'},
+				        dataType: 'json',
+                async: true,
 				        cache: false,
 				        timeout: 30000,
 				        success: function (Data)
 						{
-				            if (Data.ERROR)
+				    if (Data.ocs.data.ERROR)
 							{
-								OCDLRSelf.PrintError (Data.MESSAGE);
+								OCDLRSelf.PrintError (Data.ocs.data.MESSAGE);
 							}
 							else
 							{
@@ -97,16 +97,16 @@ OCDLR = {};
 								{
 									$(OCDLRSelf.QueueElt + '[data-rel="LOADER"]').remove ();
 								}
-
-								$('#ball').Badger (Data.COUNTER.ALL);
-								$('#bcompletes').Badger (Data.COUNTER.COMPLETES);
-								$('#bactives').Badger (Data.COUNTER.ACTIVES);
-								$('#bwaitings').Badger (Data.COUNTER.WAITINGS);
-								$('#bstopped').Badger (Data.COUNTER.STOPPED);
-								$('#bremoved').Badger (Data.COUNTER.REMOVED);
+                // FIXME: split this 
+								// $('#ball').Badger (Data.COUNTER.ALL);
+								// $('#bcompletes').Badger (Data.COUNTER.COMPLETES);
+								// $('#bactives').Badger (Data.COUNTER.ACTIVES);
+								// $('#bwaitings').Badger (Data.COUNTER.WAITINGS);
+								// $('#bstopped').Badger (Data.COUNTER.STOPPED);
+								// $('#bremoved').Badger (Data.COUNTER.REMOVED);
 
 								var DBGIDS = [];
-								$.each (Data.QUEUE, function (Index, Value)
+								$.each (Data.ocs.data.QUEUE, function (Index, Value)
 								{
 									var QueueElt = OCDLRSelf.QueueElt + '[data-rel="' + Value.GID + '"]';
 									DBGIDS.push (Value.GID);
@@ -125,7 +125,7 @@ OCDLR = {};
 										OCDLRSelf.ActionUnPause ($(QueueElt + ' > td[data-rel="ACTION"]'), View);
 									}
 
-									if (Value.PROGRESSVAL == '100%')
+									if (Value.PROGRESSVAL == '100')
 									{
 										$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a title="'+Value.FILENAME+'" href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME_SHORT + '</a>');
 										
@@ -158,7 +158,7 @@ OCDLR = {};
 
 									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').html (Value.PROGRESS);
 									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
-									$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS);
+									$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS.Value);
 								});
 
 								OCDLRSelf.RemoveQueueItems (DBGIDS);
@@ -168,7 +168,7 @@ OCDLR = {};
 				        }
 				    });
 				}
-				OCDLRSelf.UpdateQueue ((View == 'add' ? false : true), View);
+				//OCDLRSelf.UpdateQueue ((View == 'add' ? false : true), View);
 			}, 3000);
 		},
 
@@ -749,10 +749,10 @@ OCDLR = {};
 				LIST.show ();
 
 				$.ajax ({
-			        url: OC.generateUrl ("/ocs/v1.php/apps/ocdownloader/api/handler?format=json"),
+			        url: OC.generateUrl ("/ocs/v1.php/apps/ocdownloader/api/handler"),
 			        method: 'POST',
-					dataType: 'json',
-					data: {'URL' : URL},
+					    dataType: 'json',
+					    data: {'URL' : URL, 'format': 'json'},
 			        async: true,
 			        cache: false,
 			        timeout: 30000,
@@ -839,16 +839,16 @@ OCDLR = {};
 				Button.addClass ('icon-loading-small');
 
 				$.ajax ({
-			        url: OC.generateUrl (OCDLRSelf.BaseURL + TYPE + 'downloader/add'),
+			        url: OC.generateUrl (OCDLRSelf.BaseURL + 'add'),
 			        method: 'POST',
-					dataType: 'json',
-					data: {'FILE' : URL, 'OPTIONS' : OPTIONS},
+					    dataType: 'json',
+					    data: {'URL' : URL, 'OPTIONS' : OPTIONS, 'format': 'json'},
 			        async: true,
 			        cache: false,
 			        timeout: 30000,
 			        success: function (Data)
 					{
-			            if (Data.ERROR)
+			      if (Data.ERROR)
 						{
 							OCDLRSelf.PrintError (Data.MESSAGE);
 						}
@@ -868,7 +868,11 @@ OCDLR = {};
 							}
 
 							RESULT = true;
-						}
+            
+              $('#app-content-wrapper div[rel=OCDINFO]').remove();
+              $('#app-content-wrapper div[rel=OCDOPTIONS]').remove();
+              
+            }
 
 						// Reset add button
 						Button.children ('a').css ('display', 'block');
