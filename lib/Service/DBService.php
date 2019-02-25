@@ -51,4 +51,20 @@ class DBService {
     return $result;
     
 	}
+	
+	public function addQueue($CurrentUID, $AddURI) {
+		
+		$qb = $this->connection->getQueryBuilder();
+ 		$qb->insert('ocdownloader_queue')
+			->values([
+			 'UID' => $qb->createNamedParameter($CurrentUID),
+			 'GID' => $qb->createNamedParameter($AddURI['result']),
+			 'FILENAME' => $qb->createNamedParameter($AddURI['out']),
+			 'PROTOCOL' => $qb->createNamedParameter($AddURI['PROTOCOL']),
+			 'STATUS' => $qb->createNamedParameter(1),
+			 'TIMESTAMP' => time(),
+			 ]);
+			$ret = $qb->execute();
+	}
+		
 }

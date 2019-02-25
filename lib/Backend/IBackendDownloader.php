@@ -9,6 +9,7 @@ use OCA\ocDownloader\Lib\Tools;
 use OCA\ocDownloader\Lib\Aria2;
 use OCA\ocDownloader\Lib\Curl;
 
+use OCA\ocDownloader\Service\DBService;
 use OCP\IL10N;
 use OCP\IUserSession;
 /**
@@ -26,6 +27,7 @@ protected $settings;
 
 protected $L10N;
 
+protected $DBService;
 var $options;
 
 var $uri;
@@ -40,13 +42,14 @@ var $DbType = 0;
 CONST DOWNLOADER_ARIA = 0;
 CONST DOWNLOADER_CURL = 1;
 
-public function __construct(IUserSession $userSession, IL10N $L10N) {
+public function __construct(IUserSession $userSession, DBService $dbservice, IL10N $L10N = NULL) {
 
   $this->WhichDownloader = self::DOWNLOADER_ARIA;
   $this->DownloadsFolder = "/Downloads";
   #FIXME: Files PATH.gl.
   $this->AbsoluteDownloadsFolder = $userSession->getUser()->getHome().'/files'.$this->DownloadsFolder;
   $this->CurrentUID = $userSession->getUser()->getUID();
+  $this->DBService = $dbservice;
 
   $this->L10N = $L10N;
   $this->setIdentifier($this->name);
@@ -106,6 +109,7 @@ public function __construct(IUserSession $userSession, IL10N $L10N) {
     try {
       $DL = $this->getInfo($URI);
       $OPTIONS = $this->parseOptions($OPTIONS);
+      $OPTIONS['PROTOCOL'] = $this->getIdentifier();
 
 
       // Set global options
@@ -130,24 +134,11 @@ public function __construct(IUserSession $userSession, IL10N $L10N) {
 
       // call backend
       $AddURI = $this->addUriHandler($URI, $OPTIONS);
-
-      if (isset ($AddURI['result']) && !is_null ($AddURI['result'])) {
-        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue` (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `IS_CLEANED`, `STATUS`, `TIMESTAMP`) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        if ($this->DbType == 1) {
-          $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue ("UID", "GID", "FILENAME", "PROTOCOL", "IS_CLEANED", "STATUS", "TIMESTAMP") VALUES (?, ?, ?, ?, ?, ?, ?)';
-        }
-
-        $Query = \OC_DB::prepare ($SQL);
-        $Result = $Query->execute (Array (
-              $this->CurrentUID,
-              $AddURI['result'],
-              $DL['FILENAME'],
-              (strcmp ($DL['PROTO'], 'Video') == 0 ? 'YT ' .'Video' : $DL['PROTO']),
-              1, 1,
-              time()
-            ));
-
-        return  $DL;
+      $OPTIONS['result'] = $AddURI['result'];
+      $this->DBService->addQueue($this->CurrentUID, $OPTIONS);
+      
+      
+      return  $DL;
   }
 
 
