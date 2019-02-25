@@ -818,6 +818,7 @@ OCDLR = {};
 
 							RESULT = true;
 						}
+            Handler.show();
 
 						// Reset add button
 						Button.children ('a').css ('display', 'block');

@@ -76,6 +76,7 @@ $(document).ready (function ()
 		}
     
     InputURL.val ('');
+    $('#app-content-wrapper .content-page[rel=OCDURI] div.handler').hide();
 //    $('#app-content-wrapper .content-page[rel=OCDURI] div.handler').empty();
     
   });
