@@ -10,8 +10,6 @@ namespace OCA\ocDownloader\Backend;
 
 use OCA\ocDownloader\Lib\Youtube;
 use OCA\ocDownloader\Lib\Tools;
-use OCP\IL10N;  
-use OCP\IUserSession;
 
 class YTDLBackend extends IBackendDownloader {
 
@@ -21,25 +19,7 @@ class YTDLBackend extends IBackendDownloader {
   public $name = "YTDL";
 
   public $YTDLBinary = '/usr/local/bin/youtube-dl';
-
-
-  public function __construct(IUserSession $userSession, IL10N $L10N) {
-    $this->setIdentifier($this->name);
-
-    $this->options = Array(
-        array('yt-extractaudio', 'checkbox', 'Only Extract audio ?', 'No post-processing, just extract the best audio quality'),
-        array('yt-foceipv4', 'checkbox', 'Force IPv4 ?'),
-      );
-    //$home = $userSession->getUser()->getHome();
-    parent::__construct($userSession, $L10N);
-
-  }
-
-  function no__construct() {
-    $this->YTDLBinary = $YTDLBinary;
-
-  }
-
+  
   function getOptions() {
     return  Array(
         array('yt-extractaudio', 'checkbox', 'Only Extract audio ?', 'No post-processing, just extract the best audio quality'),
