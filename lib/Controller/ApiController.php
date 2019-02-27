@@ -114,5 +114,18 @@ class ApiController extends OCSController {
 
       }
   }
+  
+  public function getCount() {
+    $ret = $this->dbService->getCounters($this->userSession->getUser());
+
+    foreach ($ret as $status) {
+      $st[ strtoupper(Tools::getStatusFromID($status['STATUS'])) ] = $status['TOTAL'];
+      $total += $status['TOTAL'];
+    }
+    $st['ALL'] = $total;
+    
+    return new DataResponse ($st);
+      
+  }
 
 }

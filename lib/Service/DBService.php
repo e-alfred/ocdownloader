@@ -66,5 +66,21 @@ class DBService {
 			 ]);
 			$ret = $qb->execute();
 	}
+	
+	public function getCounters(IUser $user)
+	{
+		$qb = $this->connection->getQueryBuilder();
+ 		$query = $qb->select($qb->createFunction("COUNT(`id`) as TOTAL"), "STATUS")
+			->from('ocdownloader_queue')
+			->where(
+        $qb->expr()->eq('UID', $qb->createNamedParameter($user->getUID(), IQueryBuilder::PARAM_STR))
+      )
+			->groupby('STATUS');
+			
+		$result = $query->execute();
+			
+		return $result;
+			
+	}
 		
 }

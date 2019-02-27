@@ -629,12 +629,13 @@ OCDLR = {};
 					}
 					else
 					{
-						$('#ball').Badger (Data.COUNTER.ALL);
-						$('#bcompletes').Badger (Data.COUNTER.COMPLETES);
-						$('#bactives').Badger (Data.COUNTER.ACTIVES);
-						$('#bwaitings').Badger (Data.COUNTER.WAITINGS);
-						$('#bstopped').Badger (Data.COUNTER.STOPPED);
-						$('#bremoved').Badger (Data.COUNTER.REMOVED);
+            Data = Data.ocs.data;
+						$('#ball').Badger (Data.ALL);
+						$('#bcompletes').Badger (Data.COMPLETES);
+						$('#bactives').Badger (Data.ACTIVES);
+						$('#bwaitings').Badger (Data.WAITINGS);
+						$('#bstopped').Badger (Data.STOPPED);
+						$('#bremoved').Badger (Data.REMOVED);
 					}
 		        }
 		    });
