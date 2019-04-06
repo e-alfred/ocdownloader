@@ -248,12 +248,8 @@ class BackendService {
 		  'FILENAME_SHORT' => $row['FILENAME'],
 			'GID' => $row['GID'],
 			'PROGRESSVAL' => round((($Progress) * 100), 2),
-			'PROGRESS' => [
-					'Message' => null,
-					'ProgressString' => is_null($ProgressString)?'N_A':$ProgressString,
-					'NumSeeders' => isset($Status['result']['bittorrent']) && $Progress < 1?$Status['result']['numSeeders']:null,
-					'UploadLength' => isset($Status['result']['bittorrent']) && $Progress == 1?Tools::formatSizeUnits($Status['result']['uploadLength']):null,
-					'Ratio' => isset($Status['result']['bittorrent'])?round(($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2):null
+			 'PROGRESS' => [
+			 		'ProgressString' => is_null($ProgressString)?'':$ProgressString,
 			],
 			'STATUS' => [
 					'Value' => isset($Status['result']['status']) ?($row['STATUS'] == 4?'Removed':ucfirst($Status['result']['status'])):'N_A',
@@ -270,12 +266,13 @@ class BackendService {
 							:($DLStatus == 4
 									?'--'
 									:Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'))
-					:'N_A',
+					:'',
 			'FILENAME' => $row['FILENAME'],
 			'PROTO' => $row['PROTOCOL'],
 			'ISTORRENT' => isset($Status['result']['bittorrent']),
 			];
 
+		//yield $row;
 		return $row;
 	}
 	
