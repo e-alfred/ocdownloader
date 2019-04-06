@@ -643,14 +643,31 @@ OCDLR = {};
 
 		PrependToQueue: function (Data, View)
 		{
+      // FIXME: should use a row template
 			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-				'<td data-rel="FILENAME" class="padding">' + Data.FILENAME_SHORT + '</td>' +
-				'<td data-rel="PROTO" class="border padding">' + t ('ocdownloader', Data.PROTO) + '</td>' +
-				'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: ' + Data.PROGRESSVAL + ';"><div class="pb-text">' + Data.PROGRESS + '</div></div></div></td>' +
-				(['add', 'actives', 'all'].indexOf (View) > -1 ? '<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' : '') +
-				(['add', 'all'].indexOf (View) > -1 ? '<td data-rel="STATUS" data-statusid="' + Data.STATUSID + '" class="border padding">' + Data.STATUS + '</td>' : '') +
-				'<td data-rel="ACTION" class="padding"></td>' +
-				'</tr>'
+        '<td class="selection"></td>' +
+  				'<td data-rel="FILENAME" class="filename">' +
+          '<a class="name" href="#">' + 
+          '<div class="tumbnail-wrapper">' + 
+          '<div class="tumbnail tumbnail-' + t ('ocdownloader', Data.PROTO) +'"></div>' + 
+          '</div>' +
+          '<span class="nametext">' + Data.FILENAME_SHORT + '</span>' +
+          '<span class="fileactions"></span>' +
+          '</a>' + 
+        '</td>' +
+				'<td>'+
+          '<div data-rel="MESSAGE" class="bla">' +
+            '<div class="pb-text">' + Data.PROGRESS.ProgressString + '</div>' +
+            '<div class="pb-wrap">' + 
+              '<div class="pb-value" style="width: ' + Data.PROGRESSVAL + ';"></div>' +
+            '</div>' +
+          '</div>'+
+        '</td>' +
+        '<td>'+ 
+          '<div data-rel="STATUS" data-statusid="' + Data.STATUSID + '" class="border padding">' + Data.STATUS.Value + '</div>'  +
+          '<div data-rel="SPEED" class="">' + Data.SPEED + '</div>'   +
+        '</td>' +
+			'</tr>'
 			);
 
 			var ActionTD = $(OCDLRSelf.QueueElt + '[data-rel="' + Data.GID + '"] > td[data-rel="ACTION"]');

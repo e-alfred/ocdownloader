@@ -117,7 +117,6 @@
 }
 #app-content-wrapper .content-page {
   padding: 0 20px;
-  height: 450px;
   border-bottom: 1px solid #ddd;
 }
 #app-content-wrapper h3, #app-content-wrapper .h3 {
@@ -374,20 +373,19 @@
 #app-content-wrapper .content-queue > table > tbody > tr > td.padding {
   padding: 2px 0 2px 5px;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-wrap{
+#app-content-wrapper .pb-wrap{
   position: relative;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-wrap,
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-value,
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
+#app-content-wrapper .pb-wrap,
+#app-content-wrapper .pb-value {
   width: 100%;
-  height: 25px;
+  height: 5px;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-value {
+#app-content-wrapper .pb-value {
     background: rgba(8, 75, 138, 0.3) top left no-repeat;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
-  position: absolute;
+#app-content-wrapper .pb-text {
+  /* position: absolute; */
   top:0;
   left:0;
   padding: 2px 0 2px 5px;
