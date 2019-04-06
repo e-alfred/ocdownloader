@@ -39,6 +39,7 @@ class API
 
     public static function add($URL)
     {
+      trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);
         try {
             self::load();
 
@@ -134,39 +135,20 @@ class API
 
     public static function checkAddonVersion($Version)
     {
-        $AppVersion = \OC::$server->getConfig()->getAppValue('ocdownloader', 'installed_version');
+      trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);
+      $AppVersion = \OC::$server->getConfig()->getAppValue('ocdownloader', 'installed_version');
         return array('RESULT' => version_compare($Version, $AppVersion, '<='));
     }
 
     public static function getQueue()
     {
-        self::load();
-
-        try {
-            $Params = array(self::$CurrentUID);
-            $StatusReq = '(?, ?, ?, ?, ?)';
-            $Params[] = 0;
-            $Params[] = 1;
-            $Params[] = 2;
-            $Params[] = 3;
-            $Params[] = 4;
-            $IsCleanedReq = '(?, ?)';
-            $Params[] = 0;
-            $Params[] = 1;
-
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`
-                WHERE `UID` = ? AND `STATUS` IN '.$StatusReq.' AND `IS_CLEANED` IN '.$IsCleanedReq
-                .' ORDER BY `TIMESTAMP` ASC';
-            if (self::$DbType == 1) {
-                $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue
-                    WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
-                    .' ORDER BY "TIMESTAMP" ASC';
-            }
-	}
+      trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);  
+    }
       
 
 	public static function Handler ($URI)
 	{
+    trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);
             try
             {
                   self::Load ();
@@ -267,235 +249,6 @@ class API
                   return Array ('ERROR' => true, 'MESSAGE' => 'Unabletogethandler');
             }
 	}
-
-      public static function CheckAddonVersion ($Version)
-	{
-            $AppVersion = Config::getAppValue ('ocdownloader', 'installed_version');
-            return Array ('RESULT' => version_compare ($Version, $AppVersion, '<='));
-      }
-      
-      public static function GetQueue ()
-      {
-            self::Load ();
-            
-            try
-            {
-                  $Params = Array (self::$CurrentUID);
-                  $StatusReq = '(?, ?, ?, ?, ?)';
-                  $Params[] = 0; $Params[] = 1; $Params[] = 2; $Params[] = 3; $Params[] = 4;
-                  $IsCleanedReq = '(?, ?)';
-                  $Params[] = 0; $Params[] = 1;
-                        
-                  $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `STATUS` IN ' . $StatusReq . ' AND `IS_CLEANED` IN ' . $IsCleanedReq . ' ORDER BY `TIMESTAMP` ASC';
-                  if (self::$DbType == 1)
-                  {
-                        $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "STATUS" IN ' . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
-                  }
-                  $Query = \OCP\DB::prepare ($SQL);
-                  $Request = $Query->execute ($Params);
-                  
-                  $Queue = [];
-                  
-                  while ($Row = $Request->fetchRow ())
-                  {
-                        $Status = (self::$WhichDownloader == 0 ? Aria2::TellStatus ($Row['GID']) : CURL::TellStatus ($Row['GID']));
-                        $DLStatus = 5; // Error
-                        
-                        if (!is_null ($Status))
-                        {
-                              if (!isset ($Status['error']))
-                              {
-                                    $Progress = 0;
-                                    if ($Status['result']['totalLength'] > 0)
-                                    {
-                                          $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
-                                    }
-                                    
-                                    $DLStatus = Tools::GetDownloadStatusID ($Status['result']['status']);
-                                    $ProgressString = Tools::GetProgressString ($Status['result']['completedLength'], $Status['result']['totalLength'], $Progress);
-                                    
-                                    $Queue[] = Array (
-                                          'GID' => $Row['GID'],
-                                          'PROGRESSVAL' => round((($Progress) * 100), 2),
-                                          'PROGRESS' => Array (
-                                                'Message' => null,
-                                                'ProgressString' => is_null ($ProgressString) ? 'N_A' : $ProgressString,
-                                                'NumSeeders' => isset ($Status['result']['bittorrent']) && $Progress < 1 ? $Status['result']['numSeeders'] : null,
-                                                'UploadLength' => isset ($Status['result']['bittorrent']) && $Progress == 1 ? Tools::FormatSizeUnits ($Status['result']['uploadLength']) : null,
-                                                'Ratio' => isset ($Status['result']['bittorrent']) ? round (($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2) : null
-                                          ),
-                                          'STATUS' => Array (
-                                                'Value' => isset ($Status['result']['status']) ? ($Row['STATUS'] == 4 ? 'Removed' : ucfirst ($Status['result']['status'])) : 'N_A',
-                                                'Seeding' => isset ($Status['result']['bittorrent']) && $Progress == 1 && $DLStatus != 3 ? true : false
-                                          ),
-                                          'STATUSID' => $Row['STATUS'] == 4 ? 4 : $DLStatus,
-                                          'SPEED' => isset ($Status['result']['downloadSpeed']) ? ($Progress == 1 ? (isset ($Status['result']['bittorrent']) ? ($Status['result']['uploadSpeed'] == 0 ? '--' : Tools::FormatSizeUnits ($Status['result']['uploadSpeed']) . '/s') : '--') : ($DLStatus == 4 ? '--' : Tools::FormatSizeUnits ($Status['result']['downloadSpeed']) . '/s')) : 'N_A',
-                                          'FILENAME' => $Row['FILENAME'],
-                                          'PROTO' => $Row['PROTOCOL'],
-                                          'ISTORRENT' => isset ($Status['result']['bittorrent']),
-                                    );
-                                    
-                                    if ($Row['STATUS'] != $DLStatus)
-                                    {
-                                          $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                                          if (self::$DbType == 1)
-                                          {
-                                                $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
-                                          }
-                                          
-                                          $Query = \OCP\DB::prepare ($SQL);
-                                          $Result = $Query->execute (Array (
-                                                $DLStatus,
-                                                self::$CurrentUID,
-                                                $Row['GID'],
-                                                4
-                                          ));
-                                    }
-                              }
-                              else
-                              {
-                                    $Queue[] = Array (
-                                          'GID' => $Row['GID'],
-                                          'PROGRESSVAL' => 0,
-                                          'PROGRESS' => Array (
-                                                'Message' => 'ErrorGIDnotfound',
-                                                'ProgressString' => null,
-                                                'NumSeeders' => null,
-                                                'UploadLength' => null,
-                                                'Ratio' => null
-                                          ),
-                                          'STATUS' => Array(
-                                                'Value' => 'N_A',
-                                                'Seeding' => null
-                                          ),
-                                          'STATUSID' => $DLStatus,
-                                          'SPEED' => 'N_A',
-                                          'FILENAME' => $Row['FILENAME'],
-                                          'PROTO' => $Row['PROTOCOL'],
-                                          'ISTORRENT' => isset ($Status['result']['bittorrent'])
-                                    );
-                              }
-                        }
-
-                        $DLStatus = Tools::getDownloadStatusID($Status['result']['status']);
-                        $ProgressString = Tools::getProgressString(
-                            $Status['result']['completedLength'],
-                            $Status['result']['totalLength'],
-                            $Progress
-                        );
-
-                        $Queue[] = array(
-                            'GID' => $Row['GID'],
-                            'PROGRESSVAL' => round((($Progress) * 100), 2),
-                            'PROGRESS' => array(
-                                'Message' => null,
-                                'ProgressString' => is_null($ProgressString)?'N_A':$ProgressString,
-                                'NumSeeders' => isset($Status['result']['bittorrent']) && $Progress < 1?$Status['result']['numSeeders']:null,
-                                'UploadLength' => isset($Status['result']['bittorrent']) && $Progress == 1?Tools::formatSizeUnits($Status['result']['uploadLength']):null,
-                                'Ratio' => isset($Status['result']['bittorrent'])?round(($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2):null
-                            ),
-                            'STATUS' => array(
-                                'Value' => isset($Status['result']['status']) ?($Row['STATUS'] == 4?'Removed':ucfirst($Status['result']['status'])):'N_A',
-                                'Seeding' => isset($Status['result']['bittorrent']) && $Progress == 1 && $DLStatus != 3?true:false
-                            ),
-                            'STATUSID' => $Row['STATUS'] == 4?4:$DLStatus,
-                            'SPEED' => isset($Status['result']['downloadSpeed'])
-                                ?($Progress == 1
-                                    ?(isset($Status['result']['bittorrent'])
-                                        ?($Status['result']['uploadSpeed'] == 0
-                                            ?'--'
-                                            :Tools::formatSizeUnits($Status['result']['uploadSpeed']).'/s')
-                                        :'--')
-                                    :($DLStatus == 4
-                                        ?'--'
-                                        :Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'))
-                                :'N_A',
-                            'FILENAME' => $Row['FILENAME'],
-                            'PROTO' => $Row['PROTOCOL'],
-                            'ISTORRENT' => isset($Status['result']['bittorrent']),
-                        );
-
-                        if ($Row['STATUS'] != $DLStatus) {
-                            $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-                                SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                            if (self::$DbType == 1) {
-                                $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                                    SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
-                            }
-
-                            $DownloadUpdated = true;
-
-                            $Query = \OC_DB::prepare($SQL);
-                            $Result = $Query->execute(array(
-                                $DLStatus,
-                                self::$CurrentUID,
-                                $Row['GID'],
-                                4
-                            ));
-                        }
-                    } else {
-                        $Queue[] = array(
-                            'GID' => $Row['GID'],
-                            'PROGRESSVAL' => 0,
-                            'PROGRESS' => array(
-                                'Message' => 'ErrorGIDnotfound',
-                                'ProgressString' => null,
-                                'NumSeeders' => null,
-                                'UploadLength' => null,
-                                'Ratio' => null
-                            ),
-                            'STATUS' => array(
-                                'Value' => 'N_A',
-                                'Seeding' => null
-                            ),
-                            'STATUSID' => $DLStatus,
-                            'SPEED' => 'N_A',
-                            'FILENAME' => $Row['FILENAME'],
-                            'PROTO' => $Row['PROTOCOL'],
-                            'ISTORRENT' => isset($Status['result']['bittorrent'])
-                        );
-                    }
-                } else {
-                    $Queue[] = array(
-                        'GID' => $Row['GID'],
-                        'PROGRESSVAL' => 0,
-                        'PROGRESS' => array(
-                            'Message' => self::$WhichDownloader == 0
-                                ?'ReturnedstatusisnullIsAria2crunningasadaemon'
-                                :'Unabletofinddownloadstatusfile',
-                            'ProgressString' => null,
-                            'NumSeeders' => null,
-                            'UploadLength' => null,
-                            'Ratio' => null
-                        ),
-                        'STATUS' => array(
-                            'Value' => 'N_A',
-                            'Seeding' => null
-                        ),
-                        'STATUSID' => $DLStatus,
-                        'SPEED' => 'N_A',
-                        'FILENAME' => $Row['FILENAME'],
-                        'PROTO' => $Row['PROTOCOL'],
-                        'ISTORRENT' => isset($Status['result']['bittorrent'])
-                    );
-                }
-            }
-
-			// Start rescan on update
-			if ($DownloadUpdated) {
-        \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
-			}
-			
-            return array(
-                'ERROR' => false,
-                'MESSAGE' => null,
-                'QUEUE' => $Queue,
-                'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
-            );
-        } catch (Exception $E) {
-            return array('ERROR' => true, 'MESSAGE' => $E->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
-        }
-    }
 
     /********** PRIVATE STATIC METHODS **********/
     private static function load()
