@@ -31,3 +31,5 @@ before_script:
   - cd apps/$APP_NAME
   - find . -name \*.php -exec php -l "{}" \;
 
+script:
+    - echo hello test
