@@ -17,7 +17,7 @@
 	<screenshot>https://raw.githubusercontent.com/e-alfred/ocdownloader/master/appinfo/Screenshot.jpg</screenshot>
 	<repository>https://github.com/e-alfred/</repository>
 	<dependencies>
-		<nextcloud min-version="14" max-version="15" />
+		<nextcloud min-version="14" max-version="16" />
 		<lib>curl</lib>
 	</dependencies>
 	<namespace>ocDownloader</namespace>
