@@ -139,11 +139,7 @@ public function __construct(IUserSession $userSession, DBService $dbservice, IL1
       
       
       return  $DL;
-  }
-
-
-    }
-    catch (Exception $E)
+  } catch (Exception $E)
     {
       throw new BackendException('Unabletolaunchthedownload');
     }
