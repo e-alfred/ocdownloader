@@ -9,13 +9,13 @@
  * @copyright Xavier Beurois 2015
  */
 
-use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Lib\Settings;
 
 \OC_Util::checkAdminUser();
 
 // Display template
-style('ocdownloader', 'settings/admin');
-script('ocdownloader', 'settings/admin');
+\OCP\Util::addStyle('ocdownloader', 'settings/admin');
+\OCP\Util::addScript('ocdownloader', 'settings/admin');
 
 $Tmpl = new OCP\Template('ocdownloader', 'settings/admin');
 
