@@ -396,3 +396,45 @@
   float: left;
   margin: .2em .5em 0 .2em;
 }
+
+/* Fixes for Nextcloud 14+ layout */
+
+.app-ocdownloader #controls .actions > div > .button,
+.app-ocdownloader #controls .actions > .button,
+.app-ocdownloader #controls .actions > div button,
+.app-ocdownloader #controls .actions button {
+  display: block;
+  width: auto;
+  float: left;
+}
+
+.app-ocdownloader #app-content-wrapper .content-queue {
+  flex-grow: 1;
+  margin-bottom: 40px;
+}
+
+.app-ocdownloader #app-content-wrapper #controls {
+    position: relative;
+    width: auto;
+    flex: 0 0 100%;
+    top: 0;
+}
+
+.app-ocdownloader #app-content-wrapper #controls p.lead {
+  margin-top: 15px
+}
+
+.app-ocdownloader #app-content #app-content-wrapper {
+  flex-wrap: wrap;
+}
+
+.app-ocdownloader #app-content-wrapper .content-page {
+    width: 100%;
+}
+
+.app-ocdownloader #app-content-wrapper .loadingtext {
+  width: 100%;
+  float: left;
+  clear: both;
+  margin-top: -40px;
+}

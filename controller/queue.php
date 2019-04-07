@@ -131,7 +131,7 @@ class Queue extends Controller
                     $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "STATUS" IN '
                     . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
                 }
-                $Query = \OCP\DB::prepare($SQL);
+                $Query = \OC_DB::prepare($SQL);
                 $Request = $Query->execute($Params);
 
                 $Queue = [];
@@ -197,7 +197,7 @@ class Queue extends Controller
 
                                 $DownloadUpdated = true;
 
-                                $Query = \OCP\DB::prepare($SQL);
+                                $Query = \OC_DB::prepare($SQL);
                                 $Result = $Query->execute(array(
                                 $DLStatus,
                                 $this->CurrentUID,
@@ -299,7 +299,7 @@ class Queue extends Controller
                             $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
-                        $Query = \OCP\DB::prepare($SQL);
+                        $Query = \OC_DB::prepare($SQL);
                         $Result = $Query->execute(array(
                               3,
                               $this->CurrentUID,
@@ -352,7 +352,7 @@ class Queue extends Controller
                             $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
-                        $Query = \OCP\DB::prepare($SQL);
+                        $Query = \OC_DB::prepare($SQL);
                         $Result = $Query->execute(array(
                               1,
                               $this->CurrentUID,
@@ -397,7 +397,7 @@ class Queue extends Controller
                     $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                 }
 
-                $Query = \OCP\DB::prepare($SQL);
+                $Query = \OC_DB::prepare($SQL);
                 $Result = $Query->execute(array(
                       1,
                       $this->CurrentUID,
@@ -433,7 +433,7 @@ class Queue extends Controller
                         $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = \OC_DB::prepare($SQL);
                     $Result = $Query->execute(array(
                           1,
                           $this->CurrentUID,
@@ -501,7 +501,7 @@ class Queue extends Controller
                             SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = \OC_DB::prepare($SQL);
                     $Result = $Query->execute(array(
                           4, 1,
                           $this->CurrentUID,
@@ -559,7 +559,7 @@ class Queue extends Controller
                                 SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
                         }
 
-                        $Query = \OCP\DB::prepare($SQL);
+                        $Query = \OC_DB::prepare($SQL);
                         $Result = $Query->execute(array(
                               4, 1,
                               $this->CurrentUID,
@@ -619,7 +619,7 @@ class Queue extends Controller
                     $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
                 }
 
-                $Query = \OCP\DB::prepare($SQL);
+                $Query = \OC_DB::prepare($SQL);
                 $Result = $Query->execute(array(
                       $this->CurrentUID,
                       $_POST['GID']
@@ -667,7 +667,7 @@ class Queue extends Controller
                         $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = \OC_DB::prepare($SQL);
                     $Result = $Query->execute(array(
                           $this->CurrentUID,
                           $GID
