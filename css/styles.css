@@ -7,6 +7,9 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
+#app {
+	width: 100%;
+}
 #app-navigation {
   padding-bottom: 0;
 }

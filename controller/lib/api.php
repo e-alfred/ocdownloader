@@ -218,22 +218,59 @@ class API
                         );
 
                         if ($Row['STATUS'] != $DLStatus) {
-                            $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-                                SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                            if (self::$DbType == 1) {
-                                $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                                    SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
+                            if($Row['PROTOCOL'] == "MAGNET" && $DLStatus == 0 && isset($Status["result"]["followedBy"]) && count($Status["result"]["followedBy"]) > 0) {
+                                $followedBy = $Status["result"]["followedBy"];
+                                $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue`
+						WHERE `UID` = ? AND `GID` = ?';
+                                if (self::$DbType == 1) {
+                                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue
+						WHERE "UID" = ? AND "GID" = ?';
+                                }
+
+                                $Query = \OC_DB::prepare($SQL);
+                                $Result = $Query->execute(array(
+                                    self::$CurrentUID,
+                                    $Row['GID']
+                                ));
+
+                                foreach ($followedBy as $followed) {
+                                    $followedStatus =(self::$WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
+                                    if (!isset($followedStatus['error'])) {
+                                        $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
+							(`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
+                                        if (self::DbType == 1) {
+                                            $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
+							("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
+                                        }
+                                        $addQuery = \OC_DB::prepare($addSQL);
+                                        $addQuery->execute(array(
+                                            $this->CurrentUID,
+                                            $followed,
+                                            $followedStatus["result"]["bittorrent"]["info"]["name"],
+                                            "TORRENT",
+                                            1,
+                                            time()
+                                        ));
+                                    }
+                                }
                             }
+                            else {
+                                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
+		                            SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
+                                if (self::$DbType == 1) {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue
+				                                SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
+                                }
 
+                                $Query = \OC_DB::prepare($SQL);
+                                $Result = $Query->execute(array(
+                                    $DLStatus,
+                                    self::$CurrentUID,
+                                    $Row['GID'],
+                                    4
+                                ));
+                            }
                             $DownloadUpdated = true;
-
-                            $Query = \OC_DB::prepare($SQL);
-                            $Result = $Query->execute(array(
-                                $DLStatus,
-                                self::$CurrentUID,
-                                $Row['GID'],
-                                4
-                            ));
                         }
                     } else {
                         $Queue[] = array(
@@ -283,11 +320,11 @@ class API
                 }
             }
 
-			// Start rescan on update
-			if ($DownloadUpdated) {
-        \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
-			}
-			
+            // Start rescan on update
+            if ($DownloadUpdated) {
+                \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
+            }
+
             return array(
                 'ERROR' => false,
                 'MESSAGE' => null,
