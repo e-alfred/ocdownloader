@@ -14,8 +14,8 @@ use OCA\ocDownloader\Controller\Lib\Settings;
 \OCP\User::checkLoggedIn();
 
 // Display template
-//style('ocdownloader', 'settings/personal');
-//script('ocdownloader', 'settings/personal');
+\OCP\Util::addStyle('ocdownloader', 'settings/personal');
+\OCP\Util::addScript('ocdownloader', 'settings/personal');
 
 $Tmpl = new OCP\Template('ocdownloader', 'settings/personal');
 
