@@ -17,7 +17,7 @@ use OCP\IUserSession;
  */
 abstract class IBackendDownloader {
 
-use \OCA\Files_External\Lib\IdentifierTrait;
+use \OCA\ocDownloader\Lib\IdentifierTrait;
 
 public $name;
 
