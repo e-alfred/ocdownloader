@@ -20,4 +20,5 @@
 		<nextcloud min-version="14" max-version="16" />
 		<lib>curl</lib>
 	</dependencies>
+	<namespace>ocDownloader</namespace>
 </info>

@@ -1,0 +1,35 @@
+language: php
+php:
+  - 7.1
+  - 7.2
+
+env:
+  global:
+    - APP_NAME=ocdownloader
+    - PHP_COVERAGE=FALSE
+  matrix:
+    - DB=sqlite SERVER=nextcloud/travis_ci/master SERVER_BRANCH=master
+    - DB=mysql SERVER=nextcloud/travis_ci/master SERVER_BRANCH=master PHP_COVERAGE=TRUE
+    - DB=pgsql SERVER=nextcloud/travis_ci/master SERVER_BRANCH=master
+    
+matrix:
+  fast_finish: true
+
+# branches:
+#   only:
+#     - master
+    #- /^stable\d+(\.\d+)?$/
+
+before_install:
+  - wget https://raw.githubusercontent.com/$SERVER/before_install.sh
+  - . ./before_install.sh "$APP_NAME" "$SERVER_BRANCH" "$DB"
+  - cd ../core || cd ../server
+  - php occ app:enable $APP_NAME
+
+before_script:
+  # Test lint
+  - cd apps/$APP_NAME
+  - find . -name \*.php -exec php -l "{}" \;
+
+script:
+    - echo hello test

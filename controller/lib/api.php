@@ -39,6 +39,7 @@ class API
 
     public static function add($URL)
     {
+      trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);
         try {
             self::load();
 
@@ -134,207 +135,120 @@ class API
 
     public static function checkAddonVersion($Version)
     {
-        $AppVersion = \OC::$server->getConfig()->getAppValue('ocdownloader', 'installed_version');
+      trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);
+      $AppVersion = \OC::$server->getConfig()->getAppValue('ocdownloader', 'installed_version');
         return array('RESULT' => version_compare($Version, $AppVersion, '<='));
     }
 
     public static function getQueue()
     {
-        self::load();
-
-        try {
-            $Params = array(self::$CurrentUID);
-            $StatusReq = '(?, ?, ?, ?, ?)';
-            $Params[] = 0;
-            $Params[] = 1;
-            $Params[] = 2;
-            $Params[] = 3;
-            $Params[] = 4;
-            $IsCleanedReq = '(?, ?)';
-            $Params[] = 0;
-            $Params[] = 1;
-
-            $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`
-                WHERE `UID` = ? AND `STATUS` IN '.$StatusReq.' AND `IS_CLEANED` IN '.$IsCleanedReq
-                .' ORDER BY `TIMESTAMP` ASC';
-            if (self::$DbType == 1) {
-                $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue
-                    WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
-                    .' ORDER BY "TIMESTAMP" ASC';
-            }
-            $Query = \OC_DB::prepare($SQL);
-            $Request = $Query->execute($Params);
-
-            $DownloadUpdated = false;
-            $Queue = [];
-
-            while ($Row = $Request->fetchRow()) {
-                $Status =(self::$WhichDownloader == 0?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
-                $DLStatus = 5; // Error
-
-                if (!is_null($Status)) {
-                    if (!isset($Status['error'])) {
-                        $Progress = 0;
-                        if ($Status['result']['totalLength'] > 0) {
-                            $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
-                        }
-
-                        $DLStatus = Tools::getDownloadStatusID($Status['result']['status']);
-                        $ProgressString = Tools::getProgressString(
-                            $Status['result']['completedLength'],
-                            $Status['result']['totalLength'],
-                            $Progress
-                        );
-
-                        $Queue[] = array(
-                            'GID' => $Row['GID'],
-                            'PROGRESSVAL' => round((($Progress) * 100), 2),
-                            'PROGRESS' => array(
-                                'Message' => null,
-                                'ProgressString' => is_null($ProgressString)?'N_A':$ProgressString,
-                                'NumSeeders' => isset($Status['result']['bittorrent']) && $Progress < 1?$Status['result']['numSeeders']:null,
-                                'UploadLength' => isset($Status['result']['bittorrent']) && $Progress == 1?Tools::formatSizeUnits($Status['result']['uploadLength']):null,
-                                'Ratio' => isset($Status['result']['bittorrent'])?round(($Status['result']['uploadLength'] / $Status['result']['completedLength']), 2):null
-                            ),
-                            'STATUS' => array(
-                                'Value' => isset($Status['result']['status']) ?($Row['STATUS'] == 4?'Removed':ucfirst($Status['result']['status'])):'N_A',
-                                'Seeding' => isset($Status['result']['bittorrent']) && $Progress == 1 && $DLStatus != 3?true:false
-                            ),
-                            'STATUSID' => $Row['STATUS'] == 4?4:$DLStatus,
-                            'SPEED' => isset($Status['result']['downloadSpeed'])
-                                ?($Progress == 1
-                                    ?(isset($Status['result']['bittorrent'])
-                                        ?($Status['result']['uploadSpeed'] == 0
-                                            ?'--'
-                                            :Tools::formatSizeUnits($Status['result']['uploadSpeed']).'/s')
-                                        :'--')
-                                    :($DLStatus == 4
-                                        ?'--'
-                                        :Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'))
-                                :'N_A',
-                            'FILENAME' => $Row['FILENAME'],
-                            'PROTO' => $Row['PROTOCOL'],
-                            'ISTORRENT' => isset($Status['result']['bittorrent']),
-                        );
-
-                        if ($Row['STATUS'] != $DLStatus) {
-                            if($Row['PROTOCOL'] == "MAGNET" && $DLStatus == 0 && isset($Status["result"]["followedBy"]) && count($Status["result"]["followedBy"]) > 0) {
-                                $followedBy = $Status["result"]["followedBy"];
-                                $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue`
-						WHERE `UID` = ? AND `GID` = ?';
-                                if (self::$DbType == 1) {
-                                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue
-						WHERE "UID" = ? AND "GID" = ?';
-                                }
-
-                                $Query = \OC_DB::prepare($SQL);
-                                $Result = $Query->execute(array(
-                                    self::$CurrentUID,
-                                    $Row['GID']
-                                ));
-
-                                foreach ($followedBy as $followed) {
-                                    $followedStatus =(self::$WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
-                                    if (!isset($followedStatus['error'])) {
-                                        $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
-							(`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                                        if (self::DbType == 1) {
-                                            $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-							("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
-                                        }
-                                        $addQuery = \OC_DB::prepare($addSQL);
-                                        $addQuery->execute(array(
-                                            $this->CurrentUID,
-                                            $followed,
-                                            $followedStatus["result"]["bittorrent"]["info"]["name"],
-                                            "TORRENT",
-                                            1,
-                                            time()
-                                        ));
-                                    }
-                                }
-                            }
-                            else {
-                                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-		                            SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                                if (self::$DbType == 1) {
-                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-				                                SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
-                                }
-
-                                $Query = \OC_DB::prepare($SQL);
-                                $Result = $Query->execute(array(
-                                    $DLStatus,
-                                    self::$CurrentUID,
-                                    $Row['GID'],
-                                    4
-                                ));
-                            }
-                            $DownloadUpdated = true;
-                        }
-                    } else {
-                        $Queue[] = array(
-                            'GID' => $Row['GID'],
-                            'PROGRESSVAL' => 0,
-                            'PROGRESS' => array(
-                                'Message' => 'ErrorGIDnotfound',
-                                'ProgressString' => null,
-                                'NumSeeders' => null,
-                                'UploadLength' => null,
-                                'Ratio' => null
-                            ),
-                            'STATUS' => array(
-                                'Value' => 'N_A',
-                                'Seeding' => null
-                            ),
-                            'STATUSID' => $DLStatus,
-                            'SPEED' => 'N_A',
-                            'FILENAME' => $Row['FILENAME'],
-                            'PROTO' => $Row['PROTOCOL'],
-                            'ISTORRENT' => isset($Status['result']['bittorrent'])
-                        );
-                    }
-                } else {
-                    $Queue[] = array(
-                        'GID' => $Row['GID'],
-                        'PROGRESSVAL' => 0,
-                        'PROGRESS' => array(
-                            'Message' => self::$WhichDownloader == 0
-                                ?'ReturnedstatusisnullIsAria2crunningasadaemon'
-                                :'Unabletofinddownloadstatusfile',
-                            'ProgressString' => null,
-                            'NumSeeders' => null,
-                            'UploadLength' => null,
-                            'Ratio' => null
-                        ),
-                        'STATUS' => array(
-                            'Value' => 'N_A',
-                            'Seeding' => null
-                        ),
-                        'STATUSID' => $DLStatus,
-                        'SPEED' => 'N_A',
-                        'FILENAME' => $Row['FILENAME'],
-                        'PROTO' => $Row['PROTOCOL'],
-                        'ISTORRENT' => isset($Status['result']['bittorrent'])
-                    );
-                }
-            }
-
-            // Start rescan on update
-            if ($DownloadUpdated) {
-                \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
-            }
-
-            return array(
-                'ERROR' => false,
-                'MESSAGE' => null,
-                'QUEUE' => $Queue,
-                'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
-            );
-        } catch (Exception $E) {
-            return array('ERROR' => true, 'MESSAGE' => $E->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
-        }
+      trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);  
     }
+      
+
+	public static function Handler ($URI)
+	{
+    trigger_error('Deprecated: '.__CLASS__.'::'.__FUNCTION__, E_NOTICE);
+            try
+            {
+                  self::Load ();
+
+                //  $URL = urldecode ($URI);
+								$URL = $URI;
+                  if (Tools::CheckURL ($URL))
+                  {
+										// FIXME: make handlers pluggeable.
+										\OCP\JSON::setContentTypeHeader ('application/json');
+
+										if (preg_match ('/^https{0,1}:\/\/www\.youtube\.com\/watch\?v=.*$/', $URL) == 1)
+										{
+													if (!self::$AllowProtocolYT && !\OC_User::isAdminUser (self::$CurrentUID))
+													{
+																return Array ('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolyt');
+													}
+
+													$YouTube = new YouTube (self::$YTDLBinary, $URL);
+
+													if (!is_null (self::$ProxyAddress) && self::$ProxyPort > 0 && self::$ProxyPort <= 65536)
+													{
+																$YouTube->SetProxy (self::$ProxyAddress, self::$ProxyPort);
+													}
+
+													$VideoData = $YouTube->GetVideoData ();
+													if (!isset ($VideoData['VIDEO']) || !isset ($VideoData['FULLNAME']))
+													{
+																return Array ('ERROR' => true, 'MESSAGE' => 'UnabletoretrievetrueYouTubevideoURL');
+													}
+													$DL = Array (
+																'URL' => $VideoData['VIDEO'],
+																'FILENAME' => Tools::CleanString ($VideoData['FULLNAME']),
+																'PROTO' => 'Video'
+													);
+													return Array (
+																'ERROR' => false,
+																'HANDLER'  => 'youtube',
+																'OPTIONS' => Array(
+																		array('yt-extractaudio', 'checkbox', 'Only Extract audio ?', 'No post-processing, just extract the best audio quality'),
+																		array('yt-foceipv4', 'checkbox', 'Force IPv4 ?'),
+																	),
+																'INFO'=> $DL,
+															);
+										}
+
+										if (Tools::StartsWith (strtolower ($URL), 'http'))
+										{
+											if (!self::$AllowProtocolHTTP && !\OC_User::isAdminUser (self::$CurrentUID))
+													return Array ('ERROR' => true, 'HANDLER' => 'http', 'MESSAGE' => 'Notallowedtouseprotocolhttp');
+
+										return Array (
+													'ERROR' => false,
+													'HANDLER'  => 'http',
+													'OPTIONS' => Array(
+															array('http-user', 'text', 'Basic Auth User', 'Username'),
+															array('http-pwd', 'password', 'Basic Auth Password', 'Password'),
+															)
+												);
+											}
+
+											if (Tools::StartsWith (strtolower ($URL), 'ftp'))
+											{
+												if (!self::$AllowProtocolFTP && !\OC_User::isAdminUser (self::$CurrentUID))
+														return Array ('ERROR' => true, 'HANDLER' => 'ftp', 'MESSAGE' => 'Notallowedtouseprotocolftp');
+
+											return Array (
+														'ERROR' => false,
+														'HANDLER'  => 'ftp',
+														'OPTIONS' => Array(
+																array('ftp-user', 'text', 'FTP User', 'Username'),
+																array('ftp-pwd', 'password', 'FTP Password', 'Password'),
+																array('ftp_pasv', 'checkbox', 'Passive Mode' ),
+																)
+													);
+												}
+
+												if (Tools::StartsWith (strtolower ($URL), 'magnet'))
+												{
+													if (!self::$AllowProtocolBT && !\OC_User::isAdminUser (self::$CurrentUID))
+															return Array ('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolbt');
+
+												parse_str(str_replace('tr=','tr[]=',parse_url($URL,PHP_URL_QUERY)),$query);
+												return Array (
+															'ERROR' => false,
+															'HANDLER'  => 'magnet',
+															'INFO' => $query
+														);
+													}
+									return Array ('ERROR' => true, 'MESSAGE' => 'No Handler');
+
+                  }
+
+									return Array ('ERROR' => true, 'MESSAGE' => 'InvalidURL');
+            }
+            catch (Exception $E)
+            {
+                  return Array ('ERROR' => true, 'MESSAGE' => 'Unabletogethandler');
+            }
+	}
 
     /********** PRIVATE STATIC METHODS **********/
     private static function load()

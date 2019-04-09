@@ -56,6 +56,8 @@ $(document).ready (function ()
 		OCDLR.Utils.GetTorrentsList ($(this).children ('ul'));
 	});
 
+
+
 	// Launch HTTP download
 	$('#app-content-wrapper .content-page[rel=OCDHTTP] div.launch').bind ('click', function ()
 	{

@@ -7,9 +7,6 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-#app {
-	width: 100%;
-}
 #app-navigation {
   padding-bottom: 0;
 }
@@ -115,9 +112,11 @@
 #app-content-wrapper .jumbotron p a {
   color: #428bca;
 }
+#app-content-wrapper .jumbotron span {
+  display: block;
+}
 #app-content-wrapper .content-page {
   padding: 0 20px;
-  height: 450px;
   border-bottom: 1px solid #ddd;
 }
 #app-content-wrapper h3, #app-content-wrapper .h3 {
@@ -141,6 +140,31 @@
   font-size: 12px;
   margin-left: 1em;
 }
+
+#app-content-wrapper .handler {
+
+  display: inline;
+  width: 20%;
+  text-align: right;
+  margin: 3px 3px 3px 0;
+  padding: 7px 6px;
+  font-size: 13px;
+  background-color: none;
+  color: white;
+  border: 1px solid #dbdbdb;
+  outline: none;
+  border-radius: 3px;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+
 #app-content-wrapper .pull-right {
   float: right;
 }
@@ -280,8 +304,7 @@
   float: right !important;
   box-sizing: border-box;
   height: 36px;
-  padding: 10px;
-  margin-top: -5px;
+  padding:  7px;
 }
 #app-content-wrapper .content-page .uploadfile input[type="file"] {
   cursor: pointer;
@@ -317,7 +340,7 @@
     width: 1px;
 }
 #app-content-wrapper .content-page > input {
-  width: 100%;
+  width: 70%;
 }
 #app-content-wrapper .content-page > div.actions {
   display: block;
@@ -350,20 +373,19 @@
 #app-content-wrapper .content-queue > table > tbody > tr > td.padding {
   padding: 2px 0 2px 5px;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-wrap{
+#app-content-wrapper .pb-wrap{
   position: relative;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-wrap,
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-value,
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
+#app-content-wrapper .pb-wrap,
+#app-content-wrapper .pb-value {
   width: 100%;
-  height: 25px;
+  height: 5px;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-value {
+#app-content-wrapper .pb-value {
     background: rgba(8, 75, 138, 0.3) top left no-repeat;
 }
-#app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
-  position: absolute;
+#app-content-wrapper .pb-text {
+  /* position: absolute; */
   top:0;
   left:0;
   padding: 2px 0 2px 5px;

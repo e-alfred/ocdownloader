@@ -14,7 +14,7 @@ OCDLR = {};
 {
 	OCDLR.Utils =
 	{
-		BaseURL: '/apps/ocdownloader/',
+		BaseURL: '/ocs/v1.php/apps/ocdownloader/api/',
 		BaseID: '#app-content-wrapper ',
 		MenuID: '#app-navigation ',
 		Queue: '',
@@ -27,7 +27,7 @@ OCDLR = {};
 
 		ValidURL: function (URLString)
 		{
-			return /^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(URLString);
+			return /^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(URLString) || /magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i.test(URLString);
 		},
 
 		PrintError: function (Msg)
@@ -78,18 +78,18 @@ OCDLR = {};
 				{
 					$(OCDLRSelf.BaseID + '.loadingtext').show ();
 				    $.ajax ({
-				        url: OC.generateUrl (OCDLRSelf.BaseURL + 'queue/get'),
+				        url: OC.generateUrl (OCDLRSelf.BaseURL + 'queue'),
 				        method: 'POST',
-						data: {'VIEW' : View},
-						dataType: 'json',
-				        async: true,
+                data: {'VIEW' : View, 'format': 'json'},
+				        dataType: 'json',
+                async: true,
 				        cache: false,
 				        timeout: 30000,
 				        success: function (Data)
 						{
-				            if (Data.ERROR)
+				    if (Data.ocs.data.ERROR)
 							{
-								OCDLRSelf.PrintError (Data.MESSAGE);
+								OCDLRSelf.PrintError (Data.ocs.data.MESSAGE);
 							}
 							else
 							{
@@ -97,16 +97,16 @@ OCDLR = {};
 								{
 									$(OCDLRSelf.QueueElt + '[data-rel="LOADER"]').remove ();
 								}
-
-								$('#ball').Badger (Data.COUNTER.ALL);
-								$('#bcompletes').Badger (Data.COUNTER.COMPLETES);
-								$('#bactives').Badger (Data.COUNTER.ACTIVES);
-								$('#bwaitings').Badger (Data.COUNTER.WAITINGS);
-								$('#bstopped').Badger (Data.COUNTER.STOPPED);
-								$('#bremoved').Badger (Data.COUNTER.REMOVED);
+                // FIXME: split this 
+								// $('#ball').Badger (Data.COUNTER.ALL);
+								// $('#bcompletes').Badger (Data.COUNTER.COMPLETES);
+								// $('#bactives').Badger (Data.COUNTER.ACTIVES);
+								// $('#bwaitings').Badger (Data.COUNTER.WAITINGS);
+								// $('#bstopped').Badger (Data.COUNTER.STOPPED);
+								// $('#bremoved').Badger (Data.COUNTER.REMOVED);
 
 								var DBGIDS = [];
-								$.each (Data.QUEUE, function (Index, Value)
+								$.each (Data.ocs.data.QUEUE, function (Index, Value)
 								{
 									var QueueElt = OCDLRSelf.QueueElt + '[data-rel="' + Value.GID + '"]';
 									DBGIDS.push (Value.GID);
@@ -125,7 +125,7 @@ OCDLR = {};
 										OCDLRSelf.ActionUnPause ($(QueueElt + ' > td[data-rel="ACTION"]'), View);
 									}
 
-									if (Value.PROGRESSVAL == '100%')
+									if (Value.PROGRESSVAL == '100')
 									{
 										$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a title="'+Value.FILENAME+'" href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME_SHORT + '</a>');
 										
@@ -158,7 +158,7 @@ OCDLR = {};
 
 									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value > div.pb-text').html (Value.PROGRESS);
 									$(QueueElt + ' > td[data-rel="MESSAGE"] > div.pb-wrap > div.pb-value').css ('width', Value.PROGRESSVAL);
-									$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS);
+									$(QueueElt + ' > td[data-rel="STATUS"]').text (Value.STATUS.Value);
 								});
 
 								OCDLRSelf.RemoveQueueItems (DBGIDS);
@@ -168,7 +168,7 @@ OCDLR = {};
 				        }
 				    });
 				}
-				OCDLRSelf.UpdateQueue ((View == 'add' ? false : true), View);
+				//OCDLRSelf.UpdateQueue ((View == 'add' ? false : true), View);
 			}, 3000);
 		},
 
@@ -629,12 +629,13 @@ OCDLR = {};
 					}
 					else
 					{
-						$('#ball').Badger (Data.COUNTER.ALL);
-						$('#bcompletes').Badger (Data.COUNTER.COMPLETES);
-						$('#bactives').Badger (Data.COUNTER.ACTIVES);
-						$('#bwaitings').Badger (Data.COUNTER.WAITINGS);
-						$('#bstopped').Badger (Data.COUNTER.STOPPED);
-						$('#bremoved').Badger (Data.COUNTER.REMOVED);
+            Data = Data.ocs.data;
+						$('#ball').Badger (Data.ALL);
+						$('#bcompletes').Badger (Data.COMPLETES);
+						$('#bactives').Badger (Data.ACTIVES);
+						$('#bwaitings').Badger (Data.WAITINGS);
+						$('#bstopped').Badger (Data.STOPPED);
+						$('#bremoved').Badger (Data.REMOVED);
 					}
 		        }
 		    });
@@ -642,14 +643,31 @@ OCDLR = {};
 
 		PrependToQueue: function (Data, View)
 		{
+      // FIXME: should use a row template
 			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
-				'<td data-rel="FILENAME" class="padding">' + Data.FILENAME_SHORT + '</td>' +
-				'<td data-rel="PROTO" class="border padding">' + t ('ocdownloader', Data.PROTO) + '</td>' +
-				'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: ' + Data.PROGRESSVAL + ';"><div class="pb-text">' + Data.PROGRESS + '</div></div></div></td>' +
-				(['add', 'actives', 'all'].indexOf (View) > -1 ? '<td data-rel="SPEED" class="border padding">' + Data.SPEED + '</td>' : '') +
-				(['add', 'all'].indexOf (View) > -1 ? '<td data-rel="STATUS" data-statusid="' + Data.STATUSID + '" class="border padding">' + Data.STATUS + '</td>' : '') +
-				'<td data-rel="ACTION" class="padding"></td>' +
-				'</tr>'
+        '<td class="selection"></td>' +
+  				'<td data-rel="FILENAME" class="filename">' +
+          '<a class="name" href="#">' + 
+          '<div class="tumbnail-wrapper">' + 
+          '<div class="tumbnail tumbnail-' + t ('ocdownloader', Data.PROTO) +'"></div>' + 
+          '</div>' +
+          '<span class="nametext">' + Data.FILENAME_SHORT + '</span>' +
+          '<span class="fileactions"></span>' +
+          '</a>' + 
+        '</td>' +
+				'<td>'+
+          '<div data-rel="MESSAGE" class="bla">' +
+            '<div class="pb-text">' + Data.PROGRESS.ProgressString + '</div>' +
+            '<div class="pb-wrap">' + 
+              '<div class="pb-value" style="width: ' + Data.PROGRESSVAL + ';"></div>' +
+            '</div>' +
+          '</div>'+
+        '</td>' +
+        '<td>'+ 
+          '<div data-rel="STATUS" data-statusid="' + Data.STATUSID + '" class="border padding">' + Data.STATUS.Value + '</div>'  +
+          '<div data-rel="SPEED" class="">' + Data.SPEED + '</div>'   +
+        '</td>' +
+			'</tr>'
 			);
 
 			var ActionTD = $(OCDLRSelf.QueueElt + '[data-rel="' + Data.GID + '"] > td[data-rel="ACTION"]');
@@ -734,6 +752,102 @@ OCDLR = {};
 			}
 		},
 
+		GetHandler: function (Handler, Button, Options, URL)
+		{
+			var RESULT = false;
+
+
+			if (!Button.hasClass ('icon-loading-small'))
+			{
+				Button.children ('a').css ('display', 'none');
+				Button.addClass ('icon-loading-small');
+
+				var LIST = Options.children('div.group-option');
+				LIST.empty ();
+				LIST.show ();
+
+				$.ajax ({
+			        url: OC.generateUrl ("/ocs/v1.php/apps/ocdownloader/api/handler"),
+			        method: 'POST',
+					    dataType: 'json',
+					    data: {'URL' : URL, 'format': 'json'},
+			        async: true,
+			        cache: false,
+			        timeout: 30000,
+			        success: function (Data)
+					{
+						$('#app-content-wrapper div[rel=OCDINFO]').remove();
+						$('#app-content-wrapper div[rel=OCDOPTIONS]').remove();
+			      if (Data.ocs.data.ERROR)
+						{
+							if (Data.ocs.data.hasOwnProperty('HANDLER'))
+								Handler.addClass ('info red').text (Data.ocs.data.HANDLER);
+							else
+							  Handler.removeClass ('info red');
+
+							OCDLRSelf.PrintError (Data.ocs.data.MESSAGE);
+						}
+						else
+						{
+							Handler.removeClass ('info alert red');
+							Handler.addClass ('info green').text (Data.ocs.data.HANDLER);
+
+							OCDLRSelf.PrintInfo ("");
+
+
+							if (Data.ocs.data.hasOwnProperty('INFO')) {
+
+								$('#app-content-wrapper .content-page[rel=OCDURI]')
+									.append('<div class="jumbotron" rel="OCDINFO"><h5>INFO</h5></div>');
+								$.each(Data.ocs.data.INFO, function (k,v) {
+									//alert( k + ": " + v );
+										$('div[rel=OCDINFO]').append('<span>'+ k + ': '+ v +'</span>');
+								});
+
+								//$('#app-content-wrapper .content-page[rel=OCDURI]')
+								//	.append('<div class="jumbotron rel="OCDINFO"><h5>INFO</h5></div>');
+								//$('div[rel=OCDINFO]').append(nfo);
+							}
+
+							if (Data.ocs.data.hasOwnProperty('OPTIONS')) {
+								$('#app-content-wrapper .content-page[rel=OCDURI]')
+									.append('<div class="jumbotron" rel="OCDOPTIONS"><h5>Options</h5></div>');
+								$.each(Data.ocs.data.OPTIONS, function (k,v) {
+									//alert( k + ": " + v );
+										$('div[rel=OCDOPTIONS]').append('<label for="option-'+v[0]+'">'+v[2]+':</label><input type="'+v[1]+'" id="option-'+v[0]+'" placeholder="'+v[3]+'" />');
+								});
+
+							}
+
+							// show options
+							Options.css ('display', 'block');
+							//OCDLRSelf.PrintInfo (Data.MESSAGE + ' (' + Data.GID + ')');
+							//OCDLRSelf.PrependToQueue (Data, 'add');
+
+/*							$('#ball').Badger ('+1');
+							if (Data.STATUSID == 1)
+							{
+								$('#bactives').Badger ('+1');
+							}
+							if (Data.STATUSID == 3)
+							{
+								$('#bwaitings').Badger ('+1');
+							} */
+
+							RESULT = true;
+						}
+            Handler.show();
+
+						// Reset add button
+						Button.children ('a').css ('display', 'block');
+						Button.removeClass ('icon-loading-small');
+			      }
+			    });
+			}
+
+			return RESULT;
+		},
+
 		AddDownload: function (Button, TYPE, URL, OPTIONS)
 		{
 			var RESULT = false;
@@ -744,16 +858,16 @@ OCDLR = {};
 				Button.addClass ('icon-loading-small');
 
 				$.ajax ({
-			        url: OC.generateUrl (OCDLRSelf.BaseURL + TYPE + 'downloader/add'),
+			        url: OC.generateUrl (OCDLRSelf.BaseURL + 'add'),
 			        method: 'POST',
-					dataType: 'json',
-					data: {'FILE' : URL, 'OPTIONS' : OPTIONS},
+					    dataType: 'json',
+					    data: {'URL' : URL, 'OPTIONS' : OPTIONS, 'format': 'json'},
 			        async: true,
 			        cache: false,
 			        timeout: 30000,
 			        success: function (Data)
 					{
-			            if (Data.ERROR)
+			      if (Data.ERROR)
 						{
 							OCDLRSelf.PrintError (Data.MESSAGE);
 						}
@@ -773,7 +887,11 @@ OCDLR = {};
 							}
 
 							RESULT = true;
-						}
+            
+              $('#app-content-wrapper div[rel=OCDINFO]').remove();
+              $('#app-content-wrapper div[rel=OCDOPTIONS]').remove();
+              
+            }
 
 						// Reset add button
 						Button.children ('a').css ('display', 'block');

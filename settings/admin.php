@@ -9,7 +9,7 @@
  * @copyright Xavier Beurois 2015
  */
 
-use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Lib\Settings;
 
 \OC_Util::checkAdminUser();
 

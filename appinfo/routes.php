@@ -16,7 +16,7 @@ $Application->registerRoutes($this, array(
     'routes' => [
         // Index
         ['name' => 'Index#Add', 'url' => '/add', 'verb' => 'GET'],
-        ['name' => 'Index#All', 'url' => '/all', 'verb' => 'GET'],
+        ['name' => 'Index#All', 'url' => '/', 'verb' => 'GET'],
         ['name' => 'Index#Completes', 'url' => '/completes', 'verb' => 'GET'],
         ['name' => 'Index#Actives', 'url' => '/actives', 'verb' => 'GET'],
         ['name' => 'Index#Waitings', 'url' => '/waitings', 'verb' => 'GET'],
@@ -58,37 +58,14 @@ $Application->registerRoutes($this, array(
         ['name' => 'PersonalSettings#Get', 'url' => '/personalsettings/get', 'verb' => 'GET'],
 
         // Updater
-        ['name' => 'Updater#Check', 'url' => '/updater/check', 'verb' => 'GET']
+        ['name' => 'Updater#Check', 'url' => '/updater/check', 'verb' => 'GET'],
+
+    ],
+    'ocs' => [
+      //API
+      ['name' => 'Api#Handler', 'url' => '/api/handler', 'verb' => 'POST'],
+      ['name' => 'Api#Add',    'url' => '/api/add', 'verb' => 'POST'],
+      ['name' => 'Api#getQueue', 'url' => '/api/queue', 'verb' => 'POST'],
+      ['name' => 'Api#getCount', 'url' => '/api/queue/count', 'verb' => 'POST']
     ]
 ));
-
-$APIBasePath = '/apps/ocdownloader/api/';
-\OCP\API::register(
-    'POST',
-    $APIBasePath.'version',
-    function ($URLParams) {
-        return new \OC\OCS\Result(\OCA\ocDownloader\Controller\Lib\API::checkAddonVersion($_POST['AddonVersion']));
-    },
-    'ocdownloader',
-    \OCP\API::USER_AUTH
-);
-
-\OCP\API::register(
-    'GET',
-    $APIBasePath.'queue/get',
-    function ($URLParams) {
-        return new \OC\OCS\Result(\OCA\ocDownloader\Controller\Lib\API::getQueue());
-    },
-    'ocdownloader',
-    \OCP\API::USER_AUTH
-);
-
-\OCP\API::register(
-    'POST',
-    $APIBasePath.'add',
-    function ($URLParams) {
-        return new \OC\OCS\Result(\OCA\ocDownloader\Controller\Lib\API::add($_POST['URL']));
-    },
-    'ocdownloader',
-    \OCP\API::USER_AUTH
-);

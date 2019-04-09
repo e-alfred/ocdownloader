@@ -8,7 +8,7 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-namespace OCA\ocDownloader\Controller\Lib;
+namespace OCA\ocDownloader\Lib;
 
 class CURL
 {

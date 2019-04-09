@@ -9,34 +9,29 @@
  * @copyright Xavier Beurois 2015
  */
 
-namespace OCA\ocDownloader\Controller\Lib;
+namespace OCA\ocDownloader\Lib;
 
-use OCA\ocDownloader\Controller\Lib\Aria2;
+use OCA\ocDownloader\Lib\Aria2;
 
 class Tools
 {
-    public static function checkURL($URL)
-    {
-        $URLPattern = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}'
-            .']+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.'
-            .'[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
+	public static function CheckURL ($URL)
+	{
 
-        preg_match($URLPattern, $URL, $Matches);
-        if (count($Matches) === 1) {
-            return true;
-        }
-        return false;
-    }
-    
-    public static function isMagnet($URL)
-    {
-        $magnetPattern = '%magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}%i';
-        preg_match($magnetPattern, $URL, $Matches);
-        if (count($Matches) === 1) {
-            return true;
-        }
-        return false;
-    }
+		$URLPatterns = Array(
+			'%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu',
+      '%magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}%i'
+		);
+
+		foreach ($URLPatterns as $URLPattern) {
+			preg_match ($URLPattern, $URL, $Matches);
+			if (count ($Matches) === 1)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
     public static function checkFilepath($FP)
     {

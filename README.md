@@ -13,6 +13,21 @@ UWP Windows 8.1/10 app: https://github.com/e-alfred/ocDownloader_WindowsDesktop
 
 If you want to write your own app or extension, this would be highly welcome. ocDownloader has an API (look at controller/lib/api.php here: https://github.com/e-alfred/ocdownloader/blob/master/controller/lib/api.php) that allows you to add and list downloads using ocDownloader.
 
+
+## New Features
+* Provide nextcloud API  
+* Implement Backends  
+
+## TO DO
+* API Count, Cleanup, Hide, Pause, Remove  
+* Simplify API Syntax
+* UI Use API   
+* Single Page Aplication UI  
+* Use Nextcloud Theme
+* Cleanup Code
+* Integration Tests
+* Unit Tests 
+
 ## ARIA2 installation
 You have to install Aria2 on your system. To do this on Debian/Ubuntu you can use the following command:
 
