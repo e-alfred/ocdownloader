@@ -93,6 +93,12 @@ Loki3000
 (formerly) Xavier Beurois
 
 ## Releases notes
+### v1.6.3
+- Fixed settings menus
+- Added Magnet link support (thanks @JasonPoon-cn)
+- Added support for Nextcloud 16
+### v1.6.1
+- Fixed deprecated API calls to support Nextcloud 14+
 ### v1.5.6
 - Fixed deprecated API calls to support Nextcloud 13+
 ### v1.5.5
