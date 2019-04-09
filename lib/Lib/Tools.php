@@ -36,7 +36,7 @@ class Tools
     public static function checkFilepath($FP)
     {
         if (\OC\Files\Filesystem::file_exists($FP)) {
-              return true;
+            return true;
         }
         return false;
     }
@@ -160,7 +160,7 @@ class Tools
     public static function endsWith($Haystack, $Needle)
     {
         return $Needle === "" ||(($Temp = strlen($Haystack) - strlen($Needle)) >= 0
-            && strpos($Haystack, $Needle, $Temp) !== false);
+                && strpos($Haystack, $Needle, $Temp) !== false);
     }
 
     public static function getLastVersionNumber()
