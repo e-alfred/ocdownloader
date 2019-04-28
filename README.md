@@ -58,6 +58,7 @@ If you have problems with Curl, the log files are saved to the /tmp folder on yo
 - The PID of the PHP process which downloads your file (this allows to pause/restart the download while it is in progress)
 
 ## Translators
+- Czech : Chazz
 - Polish : Andrzej Kaczmarczyk
 - Spanish / Catalan : Julián Sackmann, Erik Fargas
 - German : sinus23, Moritz
