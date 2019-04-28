@@ -14,6 +14,9 @@ namespace OCA\ocDownloader\Controller\Lib;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 
+use OCP\IL10N;
+use OCP\IRequest;
+
 use \OCA\ocDownloader\Controller\Lib\YouTube;
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
@@ -37,6 +40,24 @@ class API extends Controller
     private static $AllowProtocolYT = null;
     private static $AllowProtocolBT = null;
     private static $MaxDownloadSpeed = null;
+
+    public function __construct($AppName, IRequest $Request, IL10N $L10N)
+     {
+         parent::__construct($AppName, $Request);
+
+         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
+             $this->DbType = 1;
+         }
+
+         $Settings = new Settings();
+         $Settings->setKey('YTDLBinary');
+         $YTDLBinary = $Settings->getValue();
+
+         $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
+         if (!is_null($YTDLBinary)) {
+            $this->YTDLBinary = $YTDLBinary;
+         }
+      }
 
      /**
       * @NoAdminRequired
