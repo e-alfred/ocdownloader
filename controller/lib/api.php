@@ -11,14 +11,15 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
-
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
 
 use \OCA\ocDownloader\Controller\Lib\YouTube;
 use \OCA\ocDownloader\Controller\Lib\Aria2;
 use \OCA\ocDownloader\Controller\Lib\Tools;
 use \OCA\ocDownloader\Controller\Lib\Settings;
 
-class API
+class API extends Controller
 {
     private static $AbsoluteDownloadsFolder = null;
     private static $DownloadsFolder = null;
@@ -36,6 +37,11 @@ class API
     private static $AllowProtocolYT = null;
     private static $AllowProtocolBT = null;
     private static $MaxDownloadSpeed = null;
+
+     /**
+      * @NoAdminRequired
+      * @NoCSRFRequired
+      */
 
     public static function add($URL)
     {
@@ -132,11 +138,21 @@ class API
         }
     }
 
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+
     public static function checkAddonVersion($Version)
     {
         $AppVersion = \OC::$server->getConfig()->getAppValue('ocdownloader', 'installed_version');
         return array('RESULT' => version_compare($Version, $AppVersion, '<='));
     }
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
 
     public static function getQueue()
     {
