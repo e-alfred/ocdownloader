@@ -27,7 +27,7 @@ class Tools
         }
         return false;
     }
-    
+
     public static function isMagnet($URL)
     {
         $magnetPattern = '%magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}%i';
@@ -72,16 +72,6 @@ class Tools
         }
 
         return $Bytes;
-    }
-
-    public static function checkBinary($Binary)
-    {
-        exec('which ' . $Binary, $Output, $Return);
-
-        if ($Return == 0) {
-            return true;
-        }
-        return false;
     }
 
     public static function cleanString($Text)
