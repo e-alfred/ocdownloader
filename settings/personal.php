@@ -27,7 +27,7 @@ $AllowProtocolBT = is_null($AllowProtocolBT) ? true : strcmp($AllowProtocolBT, '
 $Tmpl->assign('AllowProtocolBT', $AllowProtocolBT);
 
 $Settings->setTable('personal');
-$Settings->setUID(OC_User::getUser());
+$Settings->setUID(\OC::$server->getUserSession()->isLoggedIn());
 $Rows = $Settings->getAllValues();
 
 while ($Row = $Rows->fetchRow()) {

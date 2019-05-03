@@ -25,13 +25,13 @@ class Updater extends Controller
     private $Settings = null;
     private $Allow = false;
     private $L10N = null;
-      
+
     public function __construct($AppName, IRequest $Request, IL10N $L10N)
     {
         $this->L10N = $L10N;
         $this->Allow = Tools::canCheckForUpdate();
     }
-      
+
       /**
        * @AdminRequired
        * @NoCSRFRequired
@@ -39,12 +39,12 @@ class Updater extends Controller
     public function check()
     {
         header( 'Content-Type: application/json; charset=utf-8');
-            
+
         if ($this->Allow) {
             try {
                 $LastVersionNumber = Tools::getLastVersionNumber();
-                $AppVersion = \OCP\App::getAppVersion('ocdownloader');
-                        
+                $AppVersion = \OC::$server->getAppManager()->getAppVersion('ocdownloader');
+
                 $Response = array('ERROR' => false, 'RESULT' => version_compare($AppVersion, $LastVersionNumber, '<'));
             } catch (Exception $E) {
                 $Response = array(
@@ -58,7 +58,7 @@ class Updater extends Controller
                   'MESSAGE' =>(string)$this->L10N->t('You are not allowed to check for application updates')
             );
         }
-            
+
         return new JSONResponse($Response);
     }
 }
