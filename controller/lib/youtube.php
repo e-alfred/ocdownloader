@@ -43,7 +43,6 @@ class YouTube
             $Proxy = ' --proxy ' . rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
         }
 
-
         //youtube multibyte support
         putenv('LANG=en_US.UTF-8');
 
@@ -88,6 +87,20 @@ class YouTube
             }
         }
         return null;
+    }
+
+    public function Download ($OutFileName, $GID, $ExtractAudio = false)
+    {
+        $LogFile = '/tmp/' . $GID . '.log';
+
+        exec ('$(which nohup) nice -n 10 ' . $this->YTDLBinary . ' -i \'' . $this->URL . '\'' . ($ExtractAudio?' -f bestaudio -x':' -f best') .($this->ForceIPv4 ? ' -4' : '')
+        .(is_null($Proxy) ? '' : $Proxy) . '--newline --output "' . $OutFileName . '" >' . $LogFile . ' 2>&1 &', $Output, $Return);
+
+        if ($Return == 0)
+        {
+            return true;
+        }
+        return false;
     }
 
 }
