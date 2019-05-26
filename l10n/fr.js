@@ -1,36 +1,74 @@
-/**
- * ownCloud - ocDownloader
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the LICENSE file.
- *
- * @author Xavier Beurois <www.sgc-univ.net>
- * @Translation author : Xavier Beurois
- * @copyright Xavier Beurois 2015
- */
-
-OC.L10N.register
-(
+OC.L10N.register(
     "ocdownloader",
     {
-		"Unable to find the GID for this download ...": "Impossible retrouver le GID de ce téléchargement ...",
-		"No Torrent Files": "Pas de fichiers Torrent",
-		"Upload": "Upload",
-		"Waiting": "En attente",
-		"Invalid URL. Please check the address of the file ...": "URL invalide. Veuillez vérifier l'adresse du fichier ...",
-		"Launch YouTube Download": "Lancer le téléchargement YouTube",
-		"Select a file.torrent": "Choisissez un fichier.torrent",
-		"Please select a file.torrent": "Veuillez sélectionner un fichier.torrent",
-		"No downloads in the queue ...": "Aucun téléchargements dans la queue ...",
-		"Removed": "Supprimé",
-		"Active": "En cours",
-		"Paused": "En pause",
-		"HTTP": "HTTP",
-		"HTTPS": "HTTPS",
-		"FTP": "FTP",
-		"FTPS": "FTPS",
-		"BitTorrent": "BitTorrent",
-		"YT Audio": "YT Audio",
-		"YT Video": "YT Vidéo"
-	}
-)
+    "Saved" : "Enregistré",
+    "Download started" : "Téléchargement démarré",
+    "Video" : "Vidéo",
+    "Uploaded" : "Téléversé",
+    "Ratio" : "Ratio",
+    "Removed" : "Supprimé",
+    "Seeding" : "Envoi en cours",
+    "Error, GID not found !" : "Erreur, GID non trouvé !",
+    "The download has been paused" : "Le téléchargement a été mis en pause.",
+    "The download has been unpaused" : "Le téléchargement à repris",
+    "You are not allowed to use the YouTube protocol" : "Vous n'êtes pas autorisé à utiliser le protocole YouTube",
+    "Invalid URL. Please check the address of the file ..." : "URL invalide. Veuillez vérifier l'adresse du fichier ...",
+    "Select a file.torrent" : "Sélectionner un fichier .torrent",
+    "Paused" : "En pause",
+    "Active" : "Actif",
+    "ocDownloader" : "ocDownloader",
+    "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Gestionnaire de téléchargement facile à utiliser utilisant Curl/Aria2 et youtube-dl pour permettre le téléchargement de fichiers HTTP(S), FTP(S), vidéos YouTube et BitTorrent. Pour plus d'informations sur l'installation, rendez-vous sur https://github.com/e-alfred/ocdownloader/blob/master/README.md",
+    "Active Downloads" : "Téléchargements actifs",
+    "FILENAME" : "NOM DU FICHIER",
+    "PROTOCOL" : "PROTOCOLE",
+    "INFORMATION" : "INFORMATION",
+    "SPEED" : "VITESSE",
+    "Loading" : "Chargement",
+    "New HTTP download" : "Nouveau téléchargement HTTP",
+    "Options" : "Options",
+    "Username" : "Identifiant",
+    "Password" : "Mot de passe",
+    "Useragent" : "Useragent",
+    "Filename" : "Nom du fichier",
+    "New FTP download" : "Nouveau téléchargement FTP",
+    "New YouTube download" : "Nouveau téléchargement YouTube",
+    "Only Extract audio ?" : "Extraire l'audio seulement ?",
+    "(No post-processing, just extract the best audio quality)" : "(Pas de post-traitement, il suffit d'extraire la meilleure qualité audio)",
+    "Force IPv4 ?" : "Forcer IPv4 ?",
+    "New BitTorrent download" : "Nouveau téléchargement BitTorrent",
+    "Remove torrent file ?" : "Supprimer le fichier torrent ?",
+    "STATUS" : "STATUT",
+    "All Downloads" : "Tous les téléchargements",
+    "Complete Downloads" : "Téléchargements Terminés",
+    "Waiting Downloads" : "Téléchargements en Attentes",
+    "Stopped Downloads" : "Téléchargement Arrêtés",
+    "Removed Downloads" : "Téléchargements Supprimés",
+    "Update available !" : "Mise à jour disponible",
+    "Download" : "Télécharger",
+    "Proxy settings" : "Réglages Proxy",
+    "Proxy Address" : "Adresse Proxy",
+    "Proxy Port" : "Port Proxy",
+    "If no authentication is required by your proxy, leave the following fields blank" : "Si aucune authentification n'est requise par votre mandataire, laissez les champs suivants vides",
+    "Proxy User" : "Utilisateur Proxy",
+    "Proxy Password" : "Mot de Passe Proxy",
+    "No" : "Non",
+    "Yes" : "Oui",
+    "General settings" : "Paramètres généraux",
+    "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "ATTENTION !!! Le passage d'ARIA2 à un autre moteur de téléchargement supprimera tous les téléchargements actuels d'ARIA2.",
+    "Available protocols" : "Protocoles disponibles",
+    "KB/s (empty or 0 : unlimited, default : unlimited)" : "Ko/s (vide ou 0 : illimité, par défaut : illimité)",
+    "Allow HTTP ?" : "Autoriser HTTP ?",
+    "Allow FTP ?" : "Autoriser FTP ?",
+    "Allow YouTube ?" : "Autoriser YouTube ?",
+    "Allow BitTorrent ?" : "Autoriser BitTorrent ?",
+    "Default Downloads Folder" : "Dossier de Téléchargement Par Défaut",
+    "Save" : "Enregistrer",
+    "unlimited" : "illimité",
+    "minute(s)" : "minute(s)",
+    "hour(s)" : "heure(s)",
+    "day(s)" : "jour(s)",
+    "week(s)" : "semaine(s)",
+    "month(s)" : "mois",
+    "year(s)" : "année(s)"
+},
+"nplurals=2; plural=(n > 1);");

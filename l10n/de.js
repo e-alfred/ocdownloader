@@ -1,29 +1,54 @@
-/**
- * ownCloud - ocDownloader
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the LICENSE file.
- *
- * @author Xavier Beurois <www.sgc-univ.net>
- * @Translation author : sinus23
- * @copyright Xavier Beurois 2015
- */
-
-OC.L10N.register
-(
+OC.L10N.register(
     "ocdownloader",
-	{
-		"Unable to find the GID for this download ...": "unmöglich die GID für diesen Download zu finden ...",
-	    "No Torrent Files": "Keine Torrent Dateien",
-	    "Upload": "Hochladen",
-	    "Waiting": "Warten",
-	    "Invalid URL. Please check the address of the file ...": "Ungültige URL. Bitte prüfe die Adresse von dieser Datei ...",
-	    "Launch YouTube Download": "Starte YouTube Download",
-	    "Select a file.torrent": "Wähle eine *.torrent Datei",
-	    "Please select a file.torrent": "Bitte wähle eine *.torrent Datei",
-	    "No downloads in the queue ...": "Keine Downloads in der Warteschlange",
-	    "Removed": "entfernt",
-	    "Active": "Aktiv",
-	    "Paused": "pausiert"
-	}
-)
+    {
+    "Saved" : "Gespeichert",
+    "Download started" : "Download gestartet",
+    "N/A" : "N/V",
+    "Video" : "Video",
+    "Unknown field" : "Unbekanntes Feld",
+    "Uploaded" : "Hochgeladen",
+    "Removed" : "Entfernt",
+    "Error, GID not found !" : "Fehler, GID nicht gefunden!",
+    "An error occurred while pausing the download" : "Fehler aufgetreten beim Anhalten des Herunterladens",
+    "Paused" : "Pausiert",
+    "Active" : "Aktiv",
+    "No Torrent Files" : "Keine Torrent-Dateien",
+    "FILENAME" : "DATEINAME",
+    "PROTOCOL" : "Protokoll",
+    "INFORMATION" : "INFORMATION",
+    "SPEED" : "GESCHWINDIGKEIT",
+    "Loading" : "Lade",
+    "Options" : "Optionen",
+    "Username" : "Benutzername",
+    "Password" : "Passwort",
+    "Filename" : "Dateiname",
+    "FTP User" : "FTP-Benutzer",
+    "FTP Password" : "FTP-Passwort",
+    "Passive Mode" : "Passiver Modus",
+    "Force IPv4 ?" : "IPv4 erzwingen?",
+    "Remove torrent file ?" : "Torrent-Datei entfernen?",
+    "STATUS" : "STATUS",
+    "Update available !" : "Aktualisierung verfügbar!",
+    "Proxy settings" : "Proxy-Einstellungen",
+    "Proxy Address" : "Proxy-Adresse",
+    "Proxy Port" : "Proxy-Port",
+    "Proxy User" : "Proxy-Benutzer",
+    "Proxy Password" : "Proxy-Passwort",
+    "No" : "Nein",
+    "Yes" : "Ja",
+    "General settings" : "Allgemeine Einstellungen",
+    "Check for updates ?" : "Auf Aktualisierungen prüfen?",
+    "Available protocols" : "Verfügbare Protokolle",
+    "Allow HTTP ?" : "HTTP erlauben?",
+    "Allow FTP ?" : "FTP erlauben?",
+    "Allow YouTube ?" : "YouTube erlauben?",
+    "Allow BitTorrent ?" : "BitTorrent erlauben?",
+    "Save" : "Speichern",
+    "minute(s)" : "Minute(n)",
+    "hour(s)" : "Stunde(n)",
+    "day(s)" : "Tag(e)",
+    "week(s)" : "Woche(n)",
+    "month(s)" : "Monat(e)",
+    "year(s)" : "Jahr(e)"
+},
+"nplurals=2; plural=(n != 1);");

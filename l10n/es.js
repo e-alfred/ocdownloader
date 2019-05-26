@@ -1,36 +1,64 @@
-/**
- * ownCloud - ocDownloader
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the LICENSE file.
- *
- * @author Xavier Beurois <www.sgc-univ.net>
- * @Translation author : Julián Sackmann
- * @copyright Xavier Beurois 2015
- */
-
-OC.L10N.register
-(
+OC.L10N.register(
     "ocdownloader",
     {
-        "Unable to find the GID for this download ...": "No se pudo obtener el GID de esta descarga ...",
-        "No Torrent Files": "No se encontraron archivos Torrent",
-        "Upload": "Subir",
-        "Waiting": "En espera",
-        "Invalid URL. Please check the address of the file ...": "URL inválida. Por favor valide la dirección del archivo ...",
-        "Launch YouTube Download": "Comenzar la descarga YouTube",
-        "Select a file.torrent": "Seleccione un archivo.torrent",
-        "Please select a file.torrent": "Por favor seleccione un archivo.torrent",
-        "No downloads in the queue ...": "Sin descargas en la cola",
-        "Removed": "Eliminado",
-        "Active": "Activo",
-        "Paused": "Pausado",
-        "HTTP": "HTTP",
-        "HTTPS": "HTTPS",
-        "FTP": "FTP",
-        "FTPS": "FTPS",
-        "BitTorrent": "BitTorrent",
-        "YT Audio": "YT Audio",
-        "YT Video": "YT Vídeo"
-    }
-)
+    "Saved" : "Guardado",
+    "Download started" : "Descarga iniciada",
+    "N/A" : "N/A",
+    "Video" : "Vídeo",
+    "The folder doesn't exist. It has been created." : "La carpeta no existe. Ha sido creada",
+    "Unknown field" : "Campo desconocido",
+    "Undefined field" : "Campo no definido",
+    "Uploaded" : "Subido",
+    "Removed" : "Eliminado",
+    "The download has been paused" : "La descarga ha sido pausada",
+    "An error occurred while pausing the download" : "Ocurrió un error al pausar la descarga",
+    "The download has been unpaused" : "La descarga ha sido reanudada",
+    "An error occurred while unpausing the download" : "Ocurrió un error al reanudar la descarga",
+    "The download has been cleaned" : "La descarga ha sido limpiada",
+    "All downloads have been cleaned" : "Todas las descargas han sido limpiadas",
+    "The download has been removed" : "La descarga ha sido eliminada",
+    "An error occurred while removing the download" : "Ocurrió un error al eliminar la descarga",
+    "All downloads have been removed" : "Todas las descargas han sido eliminadas",
+    "The download has been totally removed" : "La descarga ha sido totalmente eliminada",
+    "Select a file.torrent" : "Selecciona un archivo .torrent",
+    "Paused" : "Pausado",
+    "Active" : "Activo",
+    "Upload" : "Subir",
+    "ocDownloader" : "ocDownloader",
+    "Active Downloads" : "Descargas activas",
+    " using <strong>%s</strong>" : "usando <strong>%s</strong>",
+    "PROTOCOL" : "PROTOCOLO",
+    "INFORMATION" : "INFORMACIÓN",
+    "SPEED" : "VELOCIDAD",
+    "Loading" : "Cargando",
+    "Options" : "Opciones",
+    "Username" : "Usuario",
+    "Password" : "Contraseña",
+    "FTP User" : "Usuario FTP",
+    "FTP Password" : "Contraseña FTP",
+    "STATUS" : "ESTADO",
+    "All Downloads" : "Todas las descargas",
+    "Complete Downloads" : "Descargas completadas",
+    "Removed Downloads" : "Descargas eliminadas",
+    "Update available !" : "Actualización disponible !",
+    "Download" : "Descargar",
+    "Proxy settings" : "Ajustes del Proxy",
+    "Proxy Address" : "Dirección del proxy",
+    "Proxy Port" : "Puerto del proxy",
+    "If no authentication is required by your proxy, leave the following fields blank" : "Si no se requiere autenticación por tu proxy, deja los siguientes campos en blanco",
+    "Proxy User" : "Usuario del proxy",
+    "Proxy Password" : "Contraseña del proxy",
+    "No" : "No",
+    "Yes" : "Si",
+    "General settings" : "Ajustes generales",
+    "Check for updates ?" : "Comprobar actualizaciones ?",
+    "Save" : "Guardar",
+    "unlimited" : "ilimitado",
+    "minute(s)" : "minuto(s)",
+    "hour(s)" : "hora(s)",
+    "day(s)" : "día(s) ",
+    "week(s)" : "semana(s)",
+    "month(s)" : "mes(es)",
+    "year(s)" : "año(s)"
+},
+"nplurals=2; plural=(n != 1);");
