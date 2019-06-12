@@ -23,7 +23,7 @@ OC.L10N.register(
     "Filename" : "Soubor",
     "FTP URL to download" : "FTP URL adresa pro stažení",
     "Passive Mode" : "Pasivní režim",
-    "Only Extract audio ?" : "Vytáhnout pouze zvuk?",
+    "Only Extract audio ?" : "Pouze stáhnout zvuk?",
     "Force IPv4 ?" : "Vynutit IPv4?",
     "STATUS" : "STAV",
     "Waiting Downloads" : "Čekající stahování",
