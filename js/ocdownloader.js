@@ -232,7 +232,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
@@ -338,7 +338,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
@@ -396,7 +396,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
@@ -452,7 +452,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'))
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'))
 			}
 		},
 
@@ -507,7 +507,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
