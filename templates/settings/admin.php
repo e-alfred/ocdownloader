@@ -43,7 +43,7 @@
 		<input type="password" class="OCDProxyPasswd ToUse" id="OCDProxyPasswd" data-loader="OCDSLoaderProxySettings" placeholder="<?php print ($l->t ('Password')); ?>" />
 	</p>
 	<p>
-		<label for="OCDProxyOnlyWithYTDL"><?php print ($l->t ('Only use proxy settings with YouTube-DL ?')); ?></label>
+		<label for="OCDProxyOnlyWithYTDL"><?php print ($l->t ('Only use proxy settings with YouTube-DL?')); ?></label>
 		<select id="OCDProxyOnlyWithYTDL" class="ToUse" data-loader="OCDSLoaderProxySettings">
 			<option value="N"><?php print ($l->t ('No')); ?></option>
 			<option value="Y"<?php print ((isset ($_['OCDS_ProxyOnlyWithYTDL']) && strcmp ($_['OCDS_ProxyOnlyWithYTDL'], 'Y') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('Yes')); ?></option>
@@ -66,7 +66,7 @@
 		<span class="info"><?php print ($l->t ('WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2')); ?></span>
 	</p>
 	<p>
-		<label for="OCDWhichDownloader"><?php print ($l->t ('Which downloader do you want to use ?')); ?></label>
+		<label for="OCDWhichDownloader"><?php print ($l->t ('Which downloader do you want to use?')); ?></label>
 		<select id="OCDWhichDownloader" class="ToUse" data-loader="OCDSLoaderGeneralSettings">
 			<option value="ARIA2" data-protocols="HTTP(S) / FTP(S) / YouTube / BitTorrent">ARIA2</option>
 			<option value="CURL" data-protocols="HTTP(S) / FTP(S) / YouTube"<?php print ((isset ($_['OCDS_WhichDownloader']) && strcmp ($_['OCDS_WhichDownloader'], 'CURL') == 0) ? ' selected="selected"' : ''); ?>>cURL</option>
@@ -86,7 +86,7 @@
 			<span id="OCDSLoaderBTGeneralSettings" class="OCDSLoader icon-loading-small"></span><span id="OCDSLoaderBTGeneralSettingsMsg" class="msg"></span>
 		</p>
 		<p>
-			<label for="OCDBTMaxUploadSpeed"><?php print ($l->t ('BitTorrent protocol max upload speed ?')); ?></label>
+			<label for="OCDBTMaxUploadSpeed"><?php print ($l->t ('BitTorrent protocol max upload speed?')); ?></label>
 			<input type="text" id="OCDBTMaxUploadSpeed" data-loader="OCDSLoaderBTGeneralSettings" class="ToUse" value="<?php print (isset ($_['OCDS_BTMaxUploadSpeed']) ? $_['OCDS_BTMaxUploadSpeed'] : ''); ?>" placeholder="5000" />
 			<span class="details"><?php print ($l->t ('KB/s (empty or 0 : unlimited, default : unlimited)')); ?></span>
 		</p>
