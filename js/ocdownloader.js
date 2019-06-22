@@ -280,7 +280,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'No downloads in the queue ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'No downloads in the queue…'));
 			}
 		},
 
