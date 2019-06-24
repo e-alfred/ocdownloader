@@ -42,7 +42,7 @@ if (isset ($_['OCDS_BTSeedTimeToReach_BTSeedTimeToReachUnit']))
 	<div style="clear:both;"></div>
 	<p><span class="info"><?php print ($l->t ('BitTorrent protocol settings - Ratio')); ?></span></p>
 	<p id="RatioValue">
-		<label for="OCDBTRatioToReach"><?php print ($l->t ('Default ratio to reach ?')); ?></label>
+		<label for="OCDBTRatioToReach"><?php print ($l->t ('Default ratio to reach?')); ?></label>
 		<select id="OCDBTRatioToReach">
 			<option value="0.0"<?php print (isset ($_['OCDS_BTRatioToReach']) && $_['OCDS_BTRatioToReach'] == '0.0' ? ' selected="selected"' : ''); ?>>0 (<?php print($l->t ('unlimited')); ?>)</option>
 			<option value="1.0"<?php print (isset ($_['OCDS_BTRatioToReach']) && $_['OCDS_BTRatioToReach'] == '1.0' ? ' selected="selected"' : ''); ?>>1.0</option>
@@ -60,7 +60,7 @@ if (isset ($_['OCDS_BTSeedTimeToReach_BTSeedTimeToReachUnit']))
 	</p>
 	<p><span class="info"><?php print ($l->t ('BitTorrent protocol settings - Seed time')); ?></span></p>
 	<p id="SeedTimeValue">
-		<label for="OCDBTSeedTimeToReach"><?php print ($l->t ('Seed time to reach ?')); ?></label>
+		<label for="OCDBTSeedTimeToReach"><?php print ($l->t ('Seed time to reach?')); ?></label>
 		<select id="OCDBTSeedTimeToReach">
 			<?php for ($N = 1; $N < 60; $N++): ?>
 			<option value="<?php print ($N); ?>"<?php print ($BTSeedTimeToReach == $N ? ' selected="selected"' : ''); ?>><?php print ($N); ?></option>

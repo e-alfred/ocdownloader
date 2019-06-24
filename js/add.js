@@ -74,7 +74,7 @@ $(document).ready (function ()
 		}
 		else
 		{
-			OCDLR.Utils.PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+			OCDLR.Utils.PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file…'));
 		}
 
 		InputURL.val ('');
@@ -104,7 +104,7 @@ $(document).ready (function ()
 		}
 		else
 		{
-			OCDLR.Utils.PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+			OCDLR.Utils.PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file…'));
 		}
 
 		InputURL.val ('');
@@ -130,7 +130,7 @@ $(document).ready (function ()
 		}
 		else
 		{
-			OCDLR.Utils.PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file ...'));
+			OCDLR.Utils.PrintError (t ('ocdownloader', 'Invalid URL. Please check the address of the file…'));
 		}
 
 		InputURL.val ('');
