@@ -91,7 +91,6 @@ OC.L10N.register(
     "Available protocols" : "Beschikbare protocollen",
     "Max download speed ?" : "Maximale downloadsnelheid?",
     "BitTorrent protocol settings - Max upload speed" : "BitTorrent protocol instellingen - Max upload snelheid",
-    "BitTorrent protocol max upload speed ?" : "BitTorrent protocol max upload snelheid ?",
     "Allow HTTP ?" : "Toestaan HTTP ?",
     "Allow FTP ?" : "Toestaan FTP ?",
     "Allow YouTube ?" : "Toestaan YouTube ?",
