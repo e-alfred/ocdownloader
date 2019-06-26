@@ -21,6 +21,7 @@ use OCA\ocDownloader\Controller\Lib\Aria2;
 use OCA\ocDownloader\Controller\Lib\CURL;
 use OCA\ocDownloader\Controller\Lib\Tools;
 use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\QuotaManager;
 
 class HttpDownloader extends Controller
 {
@@ -136,6 +137,15 @@ class HttpDownloader extends Controller
                     }
                     if (!is_null($this->MaxDownloadSpeed) && $this->MaxDownloadSpeed > 0) {
                         $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
+                    }
+
+                    if(!QuotaManager::allowedByQuota($_POST['FILE'])) {
+                        return new JSONResponse(
+                            array(
+                                'ERROR' => true,
+                                'MESSAGE' => (string)$this->L10N->t("Not enough free space")
+                            )
+                        );
                     }
 
                     $AddURI = (
