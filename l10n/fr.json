@@ -44,6 +44,7 @@
     "Unable to retrieve true YouTube audio URL" : "Incapable de récupérer la vraie adresse YouTube du fichier audio",
     "Unable to retrieve true YouTube video URL" : "Incapable de récupérer la vraie adresse YouTube du fichier vidéo",
     "Select a file.torrent" : "Sélectionner un fichier .torrent",
+    "No downloads in the queue…" : "Pas de téléchargement dans la queue …",
     "Paused" : "En pause",
     "Active" : "Actif",
     "No Torrent Files" : "Aucun fichier Torrent",
