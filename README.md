@@ -84,6 +84,14 @@ Loki3000
 (formerly) Xavier Beurois
 
 ## Releases notes
+### v1.7.1
+- Added support for quota limits (thanks @Irillit)
+- Moved translations to Transiflex and fixed some localization issues (thanks @MorrisJobke and @rakekniven)
+- Fix deprecated API calls
+- Cleanup unneeded functions
+### v1.7.0
+- Fixed API for extensions and apps
+- Fixed setting youtube-dl path if called from API
 ### v1.6.3
 - Fixed settings menus
 - Added Magnet link support (thanks @JasonPoon-cn)
