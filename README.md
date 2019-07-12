@@ -34,9 +34,14 @@ You have to enable the RPC interface and save the session file of Aria2, otherwi
 You can find the documentation of Aria2 [here](https://aria2.github.io/manual/en/html/index.html).
 
 ## Youtube-dl installation
-To download Youtube videos, you have to install youtube-dl. The packages shipped with distributions are very outdated most of the time. To get around this, you can use this repository containing recent youtube-dl packages for Ubuntu by following the instructions there: [Webupd8 PPA](https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8)
+To download Youtube videos, you have to install youtube-dl. The packages shipped with distributions are very outdated most of the time. To get around this, you can use the Python Package Installer (pip) to get the most recent youtube-dl binaries. On Debian/Ubuntu, you can use the following commands to install youtube-dl through the Python Package Installer:
 
-For other distributions, you can [install youtube-dl manually](https://rg3.github.io/youtube-dl/download.html) *Note : You have to install Python on your server. This a requierement for youtube-dl.*  
+```
+apt-get install python-pip
+pip install youtube-dl
+```
+
+For other distributions or if you don't want to use the Python Package Installer, you can [install youtube-dl manually](https://rg3.github.io/youtube-dl/download.html). *Note : You have to install Python on your server. This a requierement for youtube-dl.*  
 
 After installing youtube-dl, you have to set the right path to your youtube-dl executeable in the admin settings of ocDownloader.
 
