@@ -26,7 +26,7 @@ touch /var/log/aria2c/aria2c.log
 touch /var/local/aria2c/aria2c.sess
 chown www-data.www-data -R /var/log/aria2c /var/local/aria2c
 chmod 770 -R /var/log/aria2c /var/local/aria2c
-sudo -u www-data aria2c --enable-rpc --rpc-allow-origin-all -c -D --log=/var/log/aria2c/aria2c.log --check-certificate=false --save-session=/var/local/aria2c/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/local/aria2c/aria2c.sess --rpc-save-upload-metadata=true --force-save=true --log-level=warn
+sudo -u www-data aria2c --enable-rpc --rpc-allow-origin-all -c -D --log=/var/log/aria2c/aria2c.log --check-certificate=false --save-session=/var/local/aria2c/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/local/aria2c/aria2c.sess --rpc-save-upload-metadata=true --force-save=true --log-level=warn --rpc-listen-all=false
 ```
 
 You have to enable the RPC interface and save the session file of Aria2, otherwise your old downloads won't be listed after you restart Aria2. The file paths in the example can be changed if you want to store them elsewhere as long as the user running your webserver can access/write to them.
