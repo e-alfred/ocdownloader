@@ -108,6 +108,7 @@ OC.L10N.register(
     "Update available !" : "Dostępna aktualizacja!",
     "Download" : "Pobierz",
     "Leave fields blank to reset a setting value" : "Pozostaw pola puste, aby zresetować wartość ustawienia",
+    "YouTube DL Binary Path" : "Ścieżka do pliku binarnego YouTube DL",
     "Proxy settings" : "Ustawienia proxy",
     "Proxy Address" : "Adres proxy",
     "Proxy Port" : "Port proxy",
