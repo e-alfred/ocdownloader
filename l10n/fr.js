@@ -96,6 +96,7 @@ OC.L10N.register(
     "Force IPv4 ?" : "Forcer IPv4 ?",
     "New BitTorrent download" : "Nouveau téléchargement BitTorrent",
     "Launch BitTorrent Download" : "Lancer le téléchargement BitTorrent",
+    "(Default : List torrent files in the folder /Downloads/Files/Torrents, go to the Personal Settings panel)" : "(Par défaut : lister les fichiers torrent présents dans le dossier /Downloads/Files/Torrents, aller dans le panneau de paramétrage personnel)",
     "Remove torrent file ?" : "Supprimer le fichier torrent ?",
     "STATUS" : "STATUT",
     "All Downloads" : "Tous les téléchargements",
