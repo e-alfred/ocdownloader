@@ -60,7 +60,7 @@ OC.L10N.register(
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Curl/Aria2とyoutube-dlを使用して、HTTP (S)、FTP (S)、YouTubeビデオ、BitTorrentファイルをダウンロードできる、使いやすいダウンロードマネージャ。インストール方法の詳細については、https://github.com/e-alfred/ocdownloader/blob/master/README.mdを参照してください。",
     "Active Downloads" : "アクティブなダウンロード",
     " using <strong>%s</strong>" : "<strong>%s</strong>を現在使用中です",
-    "FILENAME" : "ファイルネーム",
+    "FILENAME" : "ファイル名",
     "PROTOCOL" : "プロトコル",
     "INFORMATION" : "情報",
     "SPEED" : "ダウンロード速度",
