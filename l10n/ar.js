@@ -11,6 +11,7 @@ OC.L10N.register(
     "Proxy settings" : "إعدادات البروكسي",
     "Proxy Address" : "عنوان البروكسي",
     "Proxy Port" : "منفذ البروكسي",
+    "Proxy Password" : "الكلمة السرية للبروكسي",
     "No" : "لا",
     "Yes" : "نعم",
     "General settings" : "الإعدادات العامة",
