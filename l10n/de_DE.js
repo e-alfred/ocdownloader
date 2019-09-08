@@ -89,7 +89,7 @@ OC.L10N.register(
     "FTP User Agent" : "FTP-Benutzeragent",
     "FTP Output Filename" : "FTP-Ausgabedateiname",
     "Passive Mode" : "Passiver Modus",
-    "New YouTube download" : "Torrent-Datei entfernen?",
+    "New YouTube download" : "Neuer YouTube-Download",
     "Launch YouTube Download" : "YouTube-Download starten",
     "YouTube Video URL to download" : "YouTube Video URL zum Herunterladen",
     "Only Extract audio ?" : "Nur Audio extrahieren?",
