@@ -16,7 +16,7 @@ script ('files', 'jquery.fileupload');
 script ('ocdownloader', 'add.min');
 
 $g = \OC::$server->getURLGenerator ();
-
+?>
 <div id="app">
     <div id="app-navigation">
         <?php print_unescaped ($this->inc ('part.navigation')); ?>
