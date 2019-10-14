@@ -21,7 +21,6 @@ use OCA\ocDownloader\Controller\YTDownloader;
 use OCA\ocDownloader\Controller\BTDownloader;
 use OCA\ocDownloader\Controller\Lib\Api;
 use OCA\ocDownloader\Controller\Queue;
-use OCA\ocDownloader\Controller\Updater;
 use OCA\ocDownloader\Controller\PersonalSettings;
 use OCA\ocDownloader\Controller\AdminSettings;
 
@@ -87,14 +86,6 @@ class Application extends App
                 $Container->query('AppName'),
                 $Container->query('Request'),
                 $Container->query('CurrentUID'),
-                $Container->getServer()->getL10N('ocdownloader')
-            );
-        });
-
-        $container->registerService('UpdaterController', function (IContainer $Container) {
-            return new Updater(
-                $Container->query('AppName'),
-                $Container->query('Request'),
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });

@@ -43,12 +43,4 @@
             <a href="removed"><?php print ($l->t ('Removed Downloads')); ?></a>
         </div>
     </li>
-    <li class="nav-updater">
-        <h3>
-            <?php print ($l->t ('Update available !')); ?>
-            <div class="button">
-                <a><?php print ($l->t ('Download')); ?></a>
-            </div>
-        </h3>
-    </li>
 </ul>

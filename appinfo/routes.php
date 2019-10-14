@@ -57,9 +57,6 @@ $Application->registerRoutes($this, array(
         ['name' => 'PersonalSettings#Save', 'url' => '/personalsettings/save', 'verb' => 'POST'],
         ['name' => 'PersonalSettings#Get', 'url' => '/personalsettings/get', 'verb' => 'GET'],
 
-        // Updater
-        ['name' => 'Updater#Check', 'url' => '/updater/check', 'verb' => 'GET'],
-
        //Extension API
         ['name' => 'Api#checkAddonVersion', 'url' => '/api/version', 'verb' => 'POST'],
         ['name' => 'Api#getQueue', 'url' => '/api/queue/get', 'verb' => 'GET'],

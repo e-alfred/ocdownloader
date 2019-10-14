@@ -13,8 +13,6 @@ script ('ocdownloader', 'badger.min');
 script ('ocdownloader', 'ocdownloader.min');
 script ('ocdownloader', 'waitings');
 
-if ($_['CANCHECKFORUPDATE']) script ('ocdownloader', 'updater');
-?>
 <div id="app">
     <div id="app-navigation">
         <?php print_unescaped ($this->inc ('part.navigation')); ?>

@@ -62,23 +62,6 @@
 #app-navigation .badger-number {
 	font-size: 12px;
 }
-#app-navigation .nav-updater {
-  bottom: 0;
-  position: absolute !important;
-  display: none;
-}
-#app-navigation .nav-updater h3 {
-  background-color: #66ff66;
-  line-height: 50px;
-  padding: 0 12px 10px;
-  color: #009900;
-  font-size: 20px;
-}
-#app-navigation .nav-updater h3 .button {
-  height: 40px;
-  line-height: 30px;
-  text-align: center;
-}
 
 #app-content-wrapper {
   display: block;
