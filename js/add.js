@@ -60,7 +60,9 @@ $(document).ready (function ()
 	$('#app-content-wrapper .content-page[rel=OCDHTTP] div.launch').bind ('click', function ()
 	{
 		var InputURL = $(this).parent ().parent ().children ('input.url');
-
+		// Some Magnet links have space... delete thems :
+		InputURL.val(function(i, v) {return v.replace(/\s/g,'%20');}).val();
+		
 		if (OCDLR.Utils.ValidURL (InputURL.val ()))
 		{
 			OCDLR.Utils.AddDownload ($(this), 'http', InputURL.val (),
