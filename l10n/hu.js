@@ -52,7 +52,6 @@ OC.L10N.register(
     "Complete Downloads" : "Befejezett Letöltések",
     "Waiting Downloads" : "Várakozó Letöltések",
     "Stopped Downloads" : "Megállított Letöltések",
-    "Download" : "Letöltés",
     "Proxy settings" : "Átjáró beállítások",
     "Proxy Address" : "Átjáró cím",
     "Proxy Port" : "Átjáró port",

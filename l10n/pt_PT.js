@@ -26,7 +26,6 @@ OC.L10N.register(
     "Waiting Downloads" : "Transferências em Espera",
     "Stopped Downloads" : "Transferências Paradas",
     "Removed Downloads" : "Transferências Removidas",
-    "Download" : "Transferir",
     "Max download speed ?" : "Velocidade máxima de transferência?",
     "Default Downloads Folder" : "Pasta de Transferências Predefinida"
 },

@@ -35,7 +35,6 @@ OC.L10N.register(
     "All Downloads" : "Visi atsiuntimai",
     "Stopped Downloads" : "Sustabdyti atsiuntimai",
     "Removed Downloads" : "Pašalinti atsiuntimai",
-    "Update available !" : "Yra prieinamas atnaujinimas!",
     "YouTube DL Binary Path" : "YouTube DL dvejetainės kelias",
     "Proxy settings" : "Įgaliotojo serverio nustatymai",
     "Proxy Address" : "Įgaliotojo serverio adresas",

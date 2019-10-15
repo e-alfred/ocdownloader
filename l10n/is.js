@@ -32,8 +32,6 @@ OC.L10N.register(
     "Remove torrent file ?" : "Fjarlægja torrent-skrá ?",
     "STATUS" : "STAÐA",
     "All Downloads" : "Öll niðurhöl",
-    "Update available !" : "Uppfærsla er tiltæk !",
-    "Download" : "Sækja",
     "Proxy settings" : "Stillingar milliþjóns (proxy)",
     "Proxy Port" : "Gátt milliþjóns",
     "Proxy User" : "Notandi milliþjóns",

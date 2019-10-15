@@ -37,7 +37,6 @@ OC.L10N.register(
     "New BitTorrent download" : "Uusi BitTorrent-lataus",
     "Remove torrent file ?" : "Poistetaanko torrent-tiedosto?",
     "All Downloads" : "Kaikki lataukset",
-    "Update available !" : "Päivitys saatavilla!",
     "YouTube DL Binary Path" : "YouTube DL -binäärin polku",
     "Proxy settings" : "Välityspalvelimen asetukset",
     "Proxy Address" : "Välityspalvelimen osoite",
