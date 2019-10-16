@@ -8,6 +8,7 @@
     "Saved" : "Enregistré",
     "You are not allowed to use the BitTorrent protocol" : "Vous n'êtes pas autorisé à utiliser le protocole BitTorrent",
     "Download started" : "Téléchargement démarré",
+    "Seeders" : "Fournisseurs",
     "N/A" : "ND",
     "Returned GID is null ! Is Aria2c running as a daemon ?" : "Le GID retourné est nul ! Aria2c fonctionne-t-il comme un daemon ?",
     "Please check the URL or filepath you've just provided" : "Veuillez vérifier l'URL ou le chemin d'accès que vous venez de fournir",
