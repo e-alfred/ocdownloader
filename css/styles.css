@@ -134,6 +134,7 @@
 #app-content-wrapper .actions {
   display: inline-block;
   padding: 5px;
+	flex-shrink: 0;
 }
 #app-content-wrapper .actions > div.button {
   margin: 0;
