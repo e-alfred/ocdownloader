@@ -56,13 +56,6 @@
 		<span id="OCDSLoaderGeneralSettings" class="OCDSLoader icon-loading-small"></span><span id="OCDSLoaderGeneralSettingsMsg" class="msg"></span>
 	</p>
 	<p>
-		<label for="OCDCheckForUpdates"><?php print ($l->t ('Check for updates ?')); ?></label>
-		<select id="OCDCheckForUpdates" class="ToUse" data-loader="OCDSLoaderGeneralSettings">
-			<option value="Y"><?php print ($l->t ('Yes')); ?></option>
-			<option value="N"<?php print ((isset ($_['OCDS_CheckForUpdates']) && strcmp ($_['OCDS_CheckForUpdates'], 'N') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('No')); ?></option>
-		</select>
-	</p>
-	<p>
 		<span class="info"><?php print ($l->t ('WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2')); ?></span>
 	</p>
 	<p>
