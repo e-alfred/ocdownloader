@@ -39,7 +39,6 @@ OC.L10N.register(
     "No" : "Nei",
     "Yes" : "Já",
     "General settings" : "Almennar stillingar",
-    "Check for updates ?" : "Athuga með uppfærslur ?",
     "Available protocols" : "Tiltækar samskiptareglur",
     "Max download speed ?" : "Mesti niðurhalshraði ?",
     "Allow HTTP ?" : "Leyfa HTTP ?",

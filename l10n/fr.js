@@ -115,7 +115,6 @@ OC.L10N.register(
     "No" : "Non",
     "Yes" : "Oui",
     "General settings" : "Paramètres généraux",
-    "Check for updates ?" : "Vérifier les mises à jour ?",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "ATTENTION !!! Le passage d'ARIA2 à un autre moteur de téléchargement supprimera tous les téléchargements actuels d'ARIA2.",
     "Which downloader do you want to use?" : "Quel gestionnaire de téléchargement souhaitez-vous utiliser ?",
     "Available protocols" : "Protocoles disponibles",

@@ -113,7 +113,6 @@
     "No" : "Ne",
     "Yes" : "Da",
     "General settings" : "Opće postavke",
-    "Check for updates ?" : "Provjeri za ažuriranja?",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "UPOZORENJE!! Prelaskom s ARIA2 na drugi alat za preuzimanje uklonit će se sva aktivna preuzimanja putem alata ARIA2",
     "Which downloader do you want to use?" : "Koji alat za preuzimanje želite koristiti?",
     "Available protocols" : "Dostupni protokoli",

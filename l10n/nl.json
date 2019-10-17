@@ -113,7 +113,6 @@
     "No" : "Nee",
     "Yes" : "Ja",
     "General settings" : "Algemene instellingen",
-    "Check for updates ?" : "Zoeken naar updates?",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "WAARSCHUWING !! Omschakelen van ARIA2 naar een andere downloader engine zal alle onderhanden downloads verwijderen uit ARIA2",
     "Which downloader do you want to use?" : "Welke downloader wil je gebruiken?",
     "Available protocols" : "Beschikbare protocollen",

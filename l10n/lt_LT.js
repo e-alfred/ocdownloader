@@ -44,7 +44,6 @@ OC.L10N.register(
     "No" : "Ne",
     "Yes" : "Taip",
     "General settings" : "Bendri nustatymai",
-    "Check for updates ?" : "Tikrinti ar yra atnaujinimų?",
     "Available protocols" : "Prieinami protokolai",
     "Allow HTTP ?" : "Leisti HTTP?",
     "Allow FTP ?" : "Leisti FTP?",

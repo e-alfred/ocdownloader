@@ -113,7 +113,6 @@
     "No" : "いいえ",
     "Yes" : "はい",
     "General settings" : "一般設定",
-    "Check for updates ?" : "更新を確認しますか？",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "警告 !! ARIA2から別のダウンローダエンジンに切り替えると、現在のダウンロードがすべてARIA2から削除されます。",
     "Which downloader do you want to use?" : "どちらのダウンローダを使いますか？",
     "Available protocols" : "利用可能なプロトコル",

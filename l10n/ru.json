@@ -104,7 +104,6 @@
     "No" : "Нет",
     "Yes" : "Да",
     "General settings" : "Общие параметры",
-    "Check for updates ?" : "Проверить обновления?",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "Внимание !! Переключение с ARIA2 на другой движок загрузчика удалит все текущие загрузки с ARIA2",
     "Which downloader do you want to use?" : "Какой загрузчик вы хотите использовать?",
     "Available protocols" : "Доступные протоколы",

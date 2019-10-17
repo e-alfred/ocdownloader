@@ -109,7 +109,6 @@
     "No" : "לא",
     "Yes" : "כן",
     "General settings" : "הגדרות כלליות",
-    "Check for updates ?" : "לבדוק אם יש עדכונים?",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "אזהרה!! מעבר ממנגון ההורדה ARIA2 למנגנון הורדה אחר יסיר את כל ההורדות הנוכחיות ב־ARIA2",
     "Available protocols" : "פרוטוקולים זמינים",
     "Max download speed ?" : "מהירות הורדה מרבית?",

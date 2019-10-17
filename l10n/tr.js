@@ -115,7 +115,6 @@ OC.L10N.register(
     "No" : "Hayır",
     "Yes" : "Evet",
     "General settings" : "Genel ayarlar",
-    "Check for updates ?" : "Güncellemeler denetlensin mi?",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "UYARI !! ARIA2 yerine başka bir indirme yöntemine geçildiğinde ARIA2 tarafından yapılmakta olan tüm indirmeler silinir",
     "Which downloader do you want to use?" : "Hangi indiriciyi kullanmak istersiniz?",
     "Available protocols" : "Kullanılabilecek iletişim kuralları",

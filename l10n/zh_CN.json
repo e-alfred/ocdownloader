@@ -113,7 +113,6 @@
     "No" : "否",
     "Yes" : "是",
     "General settings" : "通用设置",
-    "Check for updates ?" : "检查更新？",
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "警告！从ARIA2切换到其他下载器引擎将会移除ARIA2中的所有当前下载任务",
     "Which downloader do you want to use?" : "您想使用哪个下载器？",
     "Available protocols" : "可选协议",

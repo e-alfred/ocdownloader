@@ -46,7 +46,6 @@ OC.L10N.register(
     "No" : "Ei",
     "Yes" : "Kyllä",
     "General settings" : "Yleiset asetukset",
-    "Check for updates ?" : "Tarkista päivitykset?",
     "Allow HTTP ?" : "Salli HTTP?",
     "Allow FTP ?" : "Salli FTP?",
     "Allow YouTube ?" : "Salli YouTube?",

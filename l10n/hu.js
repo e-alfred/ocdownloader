@@ -60,7 +60,6 @@ OC.L10N.register(
     "No" : "Nem",
     "Yes" : "Igen",
     "General settings" : "Általános beállítások",
-    "Check for updates ?" : "Frissítések ellenörzése?",
     "Allow HTTP ?" : "HTTP engedélyezése?",
     "Allow FTP ?" : "FTP engedélyezése ?",
     "Allow YouTube ?" : "YouTube engedélyezése ?",
