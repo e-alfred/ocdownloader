@@ -25,7 +25,7 @@ class AdminSettings extends Controller
     private $DbType = 0;
     private $L10N;
     private $OCDSettingKeys = array(
-        'YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'CheckForUpdates', 'WhichDownloader',
+        'YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'WhichDownloader',
         'ProxyOnlyWithYTDL', 'AllowProtocolHTTP', 'AllowProtocolFTP', 'AllowProtocolYT', 'AllowProtocolBT',
         'MaxDownloadSpeed', 'BTMaxUploadSpeed'
     );

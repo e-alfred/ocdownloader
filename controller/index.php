@@ -24,7 +24,6 @@ class Index extends Controller
 {
     private $DbType = 0;
     private $CurrentUID = null;
-    private $CanCheckForUpdate = false;
     private $Settings = null;
     private $WhichDownloader = null;
     private $L10N = null;
@@ -43,8 +42,6 @@ class Index extends Controller
         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
-
-        $this->CanCheckForUpdate = Tools::canCheckForUpdate();
 
         $this->Settings = new Settings();
         $this->Settings->setKey('WhichDownloader');
@@ -87,16 +84,23 @@ class Index extends Controller
         $this->Settings->setKey('TorrentsFolder');
         $TorrentsFolder = $this->Settings->getValue();
 
-        return new TemplateResponse('ocdownloader', 'add', [
+        $response = new TemplateResponse('ocdownloader', 'add', [
             'PAGE' => 0,
             'TTSFOLD' => $TorrentsFolder,
-            'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
             'WD' => $this->WhichDownloader,
             'AllowProtocolHTTP' => $this->AllowProtocolHTTP,
             'AllowProtocolFTP' => $this->AllowProtocolFTP,
             'AllowProtocolYT' => $this->AllowProtocolYT,
             'AllowProtocolBT' => $this->AllowProtocolBT
         ]);
+
+        $csp = new StrictContentSecurityPolicy();
+        $csp->allowEvalScript();
+        $csp->allowInlineStyle();
+
+        $response->setContentSecurityPolicy($csp);
+
+        return $response;
     }
 
     /**
@@ -106,11 +110,19 @@ class Index extends Controller
     public function all()
     {
         self::syncDownloadsFolder();
-        return new TemplateResponse('ocdownloader', 'all', [
+        $response = new TemplateResponse('ocdownloader', 'all', [
             'PAGE' => 1,
-            'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
             'WD' => $this->WhichDownloader
         ]);
+
+
+        $csp = new StrictContentSecurityPolicy();
+        $csp->allowEvalScript();
+        $csp->allowInlineStyle();
+
+        $response->setContentSecurityPolicy($csp);
+
+        return $response;
     }
 
     /**
@@ -120,11 +132,18 @@ class Index extends Controller
     public function completes()
     {
         self::syncDownloadsFolder();
-        return new TemplateResponse('ocdownloader', 'completes', [
+        $response = new TemplateResponse('ocdownloader', 'completes', [
             'PAGE' => 2,
-            'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
             'WD' => $this->WhichDownloader
         ]);
+
+        $csp = new StrictContentSecurityPolicy();
+        $csp->allowEvalScript();
+        $csp->allowInlineStyle();
+
+        $response->setContentSecurityPolicy($csp);
+
+        return $response;
     }
 
     /**
@@ -134,11 +153,18 @@ class Index extends Controller
     public function actives()
     {
         self::syncDownloadsFolder();
-        return new TemplateResponse('ocdownloader', 'actives', [
+        $response = new TemplateResponse('ocdownloader', 'actives', [
             'PAGE' => 3,
-            'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
             'WD' => $this->WhichDownloader
         ]);
+
+        $csp = new StrictContentSecurityPolicy();
+        $csp->allowEvalScript();
+        $csp->allowInlineStyle();
+
+        $response->setContentSecurityPolicy($csp);
+
+        return $response;
     }
 
     /**
@@ -151,11 +177,18 @@ class Index extends Controller
         if (strcmp($this->WhichDownloader, 'ARIA2') != 0) {
             //return $this->L10N->t('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
         }
-        return new TemplateResponse('ocdownloader', 'waitings', [
+        $response = new TemplateResponse('ocdownloader', 'waitings', [
             'PAGE' => 4,
-            'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
             'WD' => $this->WhichDownloader
         ]);
+
+        $csp = new StrictContentSecurityPolicy();
+        $csp->allowEvalScript();
+        $csp->allowInlineStyle();
+
+        $response->setContentSecurityPolicy($csp);
+
+        return $response;
     }
 
     /**
@@ -168,11 +201,18 @@ class Index extends Controller
         if (strcmp($this->WhichDownloader, 'ARIA2') != 0) {
             //return $this->L10N->t('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
         }
-        return new TemplateResponse('ocdownloader', 'stopped', [
+        $response = new TemplateResponse('ocdownloader', 'stopped', [
             'PAGE' => 5,
-            'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
             'WD' => $this->WhichDownloader
         ]);
+
+        $csp = new StrictContentSecurityPolicy();
+        $csp->allowEvalScript();
+        $csp->allowInlineStyle();
+
+        $response->setContentSecurityPolicy($csp);
+
+        return $response;
     }
 
     /**
@@ -182,11 +222,18 @@ class Index extends Controller
     public function removed()
     {
         self::syncDownloadsFolder();
-        return new TemplateResponse('ocdownloader', 'removed', [
+        $response = new TemplateResponse('ocdownloader', 'removed', [
             'PAGE' => 6,
-            'CANCHECKFORUPDATE' => $this->CanCheckForUpdate,
             'WD' => $this->WhichDownloader
         ]);
+
+        $csp = new StrictContentSecurityPolicy();
+        $csp->allowEvalScript();
+        $csp->allowInlineStyle();
+
+        $response->setContentSecurityPolicy($csp);
+
+        return $response;
     }
 
      /**

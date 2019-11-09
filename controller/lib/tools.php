@@ -177,21 +177,6 @@ class Tools
         return $Data;
     }
 
-    public static function canCheckForUpdate()
-    {
-        // Is the user in the admin group ?
-        if (\OC_User::isAdminUser(\OC_User::getUser())) {
-            // Is the ocdownloader option to automatically check is enable ?
-            $Settings = new Settings();
-            $Settings->setKey('CheckForUpdates');
-            $CheckForUpdates = $Settings->getValue();
-            if (strcmp($CheckForUpdates, 'Y') == 0 || is_null($CheckForUpdates)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static function resetAria2($DbType)
     {
         $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`';
