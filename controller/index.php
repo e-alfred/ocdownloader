@@ -13,6 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
+use \OCP\AppFramework\Http\StrictContentSecurityPolicy;
 
 use OCP\IL10N;
 use OCP\IRequest;
