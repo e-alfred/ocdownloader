@@ -158,25 +158,6 @@ class Tools
                 && strpos($Haystack, $Needle, $Temp) !== false);
     }
 
-    public static function getLastVersionNumber()
-    {
-        $CH = curl_init('https://raw.githubusercontent.com/e-alfred/ocdownloader/master/appinfo/version');
-
-        curl_setopt_array($CH, array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_CONNECTTIMEOUT => 10,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_MAXREDIRS => 10
-        ));
-
-        $Data = curl_exec($CH);
-        curl_close($CH);
-
-        return $Data;
-    }
-
     public static function resetAria2($DbType)
     {
         $SQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue`';
