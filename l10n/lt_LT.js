@@ -16,6 +16,7 @@ OC.L10N.register(
     "The download has been paused" : "Atsiuntimas pristabdytas",
     "An error occurred while pausing the download" : "Klaida pristabdant atsiuntimą",
     "Bad GID" : "Blogas GID",
+    "The download has been removed" : "Atsiuntimas pašalintas",
     "Active Downloads" : "Aktyvūs atsiuntimai",
     "INFORMATION" : "INFORMACIJA",
     "Options" : "Parinktys",
