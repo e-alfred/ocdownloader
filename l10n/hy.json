@@ -1,0 +1,12 @@
+{ "translations": {
+    "Saved" : "Պահված",
+    "Video" : "Video",
+    "Upload" : "Բեռնել",
+    "Loading" : "Loading",
+    "Username" : "Օգտանուն",
+    "Password" : "Գաղտնաբառ",
+    "No" : "No",
+    "Yes" : "Yes",
+    "Save" : "Պահպանել"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

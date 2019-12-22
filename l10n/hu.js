@@ -10,6 +10,7 @@ OC.L10N.register(
     "N/A" : "N/A",
     "Upload OK" : "Feltöltés rendben",
     "Video" : "Video",
+    "Uploaded" : "Feltöltve",
     "Ratio" : "Arány",
     "Removed" : "Eltávolítva",
     "Seeding" : "Megosztva",

@@ -1,0 +1,16 @@
+{ "translations": {
+    "Saved" : "Guardáu",
+    "Video" : "Video",
+    "Uploaded" : "Xubíu",
+    "Paused" : "Pausáu",
+    "Upload" : "Xubir",
+    "Loading" : "Cargando",
+    "Username" : "Nome d'usuariu",
+    "Password" : "Password",
+    "Filename" : "Nome de ficheru",
+    "No" : "Non",
+    "Yes" : "Sí",
+    "General settings" : "Axustes xenerales",
+    "Save" : "Guardar"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

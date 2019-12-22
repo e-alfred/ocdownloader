@@ -1,8 +1,13 @@
 OC.L10N.register(
     "ocdownloader",
     {
+    "Saved" : "تم الإحتفاظ به",
     "N/A" : "غير متوفر",
     "Video" : "فيديو",
+    "Uploaded" : "تم رفعه",
+    "Paused" : "مُوقَف",
+    "Upload" : "رفع",
+    "Loading" : "Loading",
     "Options" : "الخيارات",
     "Username" : "اسم المستخدم",
     "Password" : "كلمة السر",

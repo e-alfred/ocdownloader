@@ -1,0 +1,12 @@
+{ "translations": {
+    "Saved" : "Lagra",
+    "Video" : "Video",
+    "Upload" : "Last opp",
+    "Loading" : "Loading",
+    "Username" : "Brukarnamn",
+    "Password" : "Passord",
+    "No" : "Nei",
+    "Yes" : "Ja",
+    "Save" : "Lagre"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

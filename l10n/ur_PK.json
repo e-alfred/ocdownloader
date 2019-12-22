@@ -1,0 +1,10 @@
+{ "translations": {
+    "Video" : "Video",
+    "Loading" : "Loading",
+    "Username" : "یوزر نیم",
+    "Password" : "پاسورڈ",
+    "No" : "No",
+    "Yes" : "Yes",
+    "Save" : "حفظ"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

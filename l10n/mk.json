@@ -1,0 +1,14 @@
+{ "translations": {
+    "Saved" : "Зачувано",
+    "Video" : "Video",
+    "Uploaded" : "Прикачено",
+    "Upload" : "Префрли",
+    "Loading" : "Се вчитува",
+    "Username" : "Корисничко име",
+    "Password" : "Лозинка",
+    "Filename" : "Име на датотека",
+    "No" : "No",
+    "Yes" : "Yes",
+    "Save" : "Зачувај"
+},"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
+}

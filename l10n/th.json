@@ -1,0 +1,14 @@
+{ "translations": {
+    "Saved" : "บันทึกแล้ว",
+    "Video" : "Video",
+    "Uploaded" : "ถูกอัพโหลด",
+    "Paused" : "หยุดชั่วคราวแล้ว",
+    "Upload" : "อัพโหลด",
+    "Loading" : "Loading",
+    "Username" : "ชื่อผู้ใช้",
+    "Password" : "รหัสผ่าน",
+    "No" : "ไม่ใช่",
+    "Yes" : "ใช่",
+    "Save" : "บันทึก"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

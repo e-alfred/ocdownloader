@@ -1,0 +1,14 @@
+{ "translations": {
+    "Saved" : "Gespäichert",
+    "Video" : "Video",
+    "Uploaded" : "Eropgelueden",
+    "Paused" : "Gepaust",
+    "Upload" : "Eroplueden",
+    "Loading" : "Loading",
+    "Username" : "Benotzernumm",
+    "Password" : "Passwuert",
+    "No" : "No",
+    "Yes" : "Yes",
+    "Save" : "Späicheren"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
