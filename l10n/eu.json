@@ -2,6 +2,7 @@
     "Saved" : "Gordeta",
     "Video" : "Bideoa",
     "Uploaded" : "Igota",
+    "Removed" : "Kenduta",
     "Select a file.torrent" : "Hautatu fitxategia.torrent bat",
     "Paused" : "Pausatuta",
     "Active" : "Aktiboa",
@@ -13,6 +14,7 @@
     "No" : "Ez",
     "Yes" : "Bai",
     "General settings" : "Ezarpen orokorrak",
+    "Allow YouTube ?" : "Baimendu YouTube ?",
     "Save" : "Gorde"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

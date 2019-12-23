@@ -4,6 +4,7 @@ OC.L10N.register(
     "Saved" : "Gordeta",
     "Video" : "Bideoa",
     "Uploaded" : "Igota",
+    "Removed" : "Kenduta",
     "Select a file.torrent" : "Hautatu fitxategia.torrent bat",
     "Paused" : "Pausatuta",
     "Active" : "Aktiboa",
@@ -15,6 +16,7 @@ OC.L10N.register(
     "No" : "Ez",
     "Yes" : "Bai",
     "General settings" : "Ezarpen orokorrak",
+    "Allow YouTube ?" : "Baimendu YouTube ?",
     "Save" : "Gorde"
 },
 "nplurals=2; plural=(n != 1);");
