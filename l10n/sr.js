@@ -5,6 +5,7 @@ OC.L10N.register(
     "Video" : "Видео снимак",
     "Uploaded" : "Отпремљено",
     "Paused" : "Паузирано",
+    "Active" : "Активан",
     "Upload" : "Отпреми",
     "Loading" : "Учитавање",
     "Username" : "Корисничко име",
