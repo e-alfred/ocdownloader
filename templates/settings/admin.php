@@ -91,28 +91,28 @@
 		<span id="OCDSLoaderPermissionsSettings" class="OCDSLoader icon-loading-small"></span><span id="OCDSLoaderPermissionsSettingsMsg" class="msg"></span>
 	</p>
 	<p>
-		<label for="OCDAllowProtocolHTTP"><?php print ($l->t ('Allow HTTP ?')); ?></label>
+		<label for="OCDAllowProtocolHTTP"><?php print ($l->t ('Allow HTTP?')); ?></label>
 		<select id="OCDAllowProtocolHTTP" class="ToUse" data-loader="OCDSLoaderPermissionsSettings">
 			<option value="Y"><?php print ($l->t ('Yes')); ?></option>
 			<option value="N"<?php print ((isset ($_['OCDS_AllowProtocolHTTP']) && strcmp ($_['OCDS_AllowProtocolHTTP'], 'N') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('No')); ?></option>
 		</select>
 	</p>
 	<p>
-		<label for="OCDAllowProtocolFTP"><?php print ($l->t ('Allow FTP ?')); ?></label>
+		<label for="OCDAllowProtocolFTP"><?php print ($l->t ('Allow FTP?')); ?></label>
 		<select id="OCDAllowProtocolFTP" class="ToUse" data-loader="OCDSLoaderPermissionsSettings">
 			<option value="Y"><?php print ($l->t ('Yes')); ?></option>
 			<option value="N"<?php print ((isset ($_['OCDS_AllowProtocolFTP']) && strcmp ($_['OCDS_AllowProtocolFTP'], 'N') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('No')); ?></option>
 		</select>
 	</p>
 	<p>
-		<label for="OCDAllowProtocolYT"><?php print ($l->t ('Allow YouTube ?')); ?></label>
+		<label for="OCDAllowProtocolYT"><?php print ($l->t ('Allow YouTube?')); ?></label>
 		<select id="OCDAllowProtocolYT" class="ToUse" data-loader="OCDSLoaderPermissionsSettings">
 			<option value="Y"><?php print ($l->t ('Yes')); ?></option>
 			<option value="N"<?php print ((isset ($_['OCDS_AllowProtocolYT']) && strcmp ($_['OCDS_AllowProtocolYT'], 'N') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('No')); ?></option>
 		</select>
 	</p>
 	<p>
-		<label for="OCDAllowProtocolBT"><?php print ($l->t ('Allow BitTorrent ?')); ?></label>
+		<label for="OCDAllowProtocolBT"><?php print ($l->t ('Allow BitTorrent?')); ?></label>
 		<select id="OCDAllowProtocolBT" class="ToUse" data-loader="OCDSLoaderPermissionsSettings"<?php print (isset ($_['OCDS_WhichDownloader']) && strcmp ($_['OCDS_WhichDownloader'], 'CURL') == 0 ? ' style="display:none"' : ''); ?>>
 			<option value="Y"><?php print ($l->t ('Yes')); ?></option>
 			<option value="N"<?php print ((isset ($_['OCDS_AllowProtocolBT']) && strcmp ($_['OCDS_AllowProtocolBT'], 'N') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('No')); ?></option>
