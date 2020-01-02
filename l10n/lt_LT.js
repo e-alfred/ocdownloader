@@ -52,10 +52,6 @@ OC.L10N.register(
     "Yes" : "Taip",
     "General settings" : "Bendri nustatymai",
     "Available protocols" : "Prieinami protokolai",
-    "Allow HTTP ?" : "Leisti HTTP?",
-    "Allow FTP ?" : "Leisti FTP?",
-    "Allow YouTube ?" : "Leisti YouTube?",
-    "Allow BitTorrent ?" : "Leisti BitTorrent?",
     "Save" : "Įrašyti",
     "BitTorrent protocol settings - Ratio" : "BitTorrent protokolo nustatymai - Santykis"
 },

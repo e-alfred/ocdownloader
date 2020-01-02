@@ -78,10 +78,6 @@ OC.L10N.register(
     "Yes" : "Kyllä",
     "General settings" : "Yleiset asetukset",
     "Which downloader do you want to use?" : "Mitä lataajaa haluat käyttää?",
-    "Allow HTTP ?" : "Salli HTTP?",
-    "Allow FTP ?" : "Salli FTP?",
-    "Allow YouTube ?" : "Salli YouTube?",
-    "Allow BitTorrent ?" : "Salli BitTorrent?",
     "Default Downloads Folder" : "Oletusarvoinen latauskansio",
     "Save" : "Tallenna",
     "Default Torrents Folder" : "Oletusarvoinen Torrent-kansio"
