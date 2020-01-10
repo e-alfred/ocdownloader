@@ -9,6 +9,7 @@ OC.L10N.register(
     "Loading" : "در حال بار گزاری",
     "Username" : "نام کاربری",
     "Password" : "گذرواژه",
+    "Filename" : "نام فایل",
     "No" : "نه",
     "Yes" : "بله",
     "Save" : "ذخیره"
