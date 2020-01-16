@@ -2,10 +2,12 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Video" : "Video",
+    "Uploaded" : "Otpremljeno",
     "Upload" : "Otpremi",
     "Loading" : "Loading",
     "Username" : "Username",
     "Password" : "Password",
+    "Filename" : "Ime fajla",
     "No" : "No",
     "Yes" : "Yes",
     "Save" : "Save"
