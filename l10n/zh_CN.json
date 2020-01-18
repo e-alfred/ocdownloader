@@ -60,7 +60,7 @@
     "PROTOCOL" : "协议",
     "INFORMATION" : "信息",
     "SPEED" : "速度",
-    "Loading" : "加载中",
+    "Loading" : "正在加载",
     "Add Download" : "添加下载任务",
     "New HTTP download" : "新HTTP下载任务",
     "Launch HTTP Download" : "启动HTTP下载任务",
