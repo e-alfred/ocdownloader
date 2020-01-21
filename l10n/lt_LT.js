@@ -26,6 +26,7 @@ OC.L10N.register(
     "The download has been totally removed" : "Atsiuntimas buvo visiškai pašalintas",
     "You are not allowed to use the YouTube protocol" : "Jums nėra leidžiama naudoti YouTube protokolą",
     "Paused" : "Pristabdyti",
+    "Active" : "Aktyvi",
     "Upload" : "Įkelti",
     "Active Downloads" : "Aktyvūs atsiuntimai",
     "INFORMATION" : "INFORMACIJA",
