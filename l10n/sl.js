@@ -4,6 +4,8 @@ OC.L10N.register(
     "Saved" : "Shranjeno",
     "Video" : "Video",
     "Uploaded" : "Poslano",
+    "Ratio" : "Razmerje",
+    "Removed" : "Odstranjeno",
     "Paused" : "V premoru",
     "Upload" : "Pošlji",
     "Loading" : "Nalaganje",
