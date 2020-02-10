@@ -15,6 +15,8 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Http\StrictContentSecurityPolicy;
 
+use OCP\EventDispatcher\IEventDispatcher;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -244,7 +246,7 @@ class Index extends Controller
     protected function syncDownloadsFolder()
     {
         $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
-        $scanner = new \OC\Files\Utils\Scanner($user, \OC::$server->getDatabaseConnection(), \OC::$server->getLogger());
+        $scanner = new \OC\Files\Utils\Scanner($user, \OC::$server->getDatabaseConnection(), \OC::$server->query(IEventDispatcher::class), \OC::$server->getLogger());
         $path = '/'.$user.'/files/'.ltrim($this->DownloadsFolder, '/\\');
         try {
             $scanner->scan($path);
