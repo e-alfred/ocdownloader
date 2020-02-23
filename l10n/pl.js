@@ -14,7 +14,7 @@ OC.L10N.register(
     "N/A" : "N/A",
     "Returned GID is null ! Is Aria2c running as a daemon ?" : "Zwrócony GID ma wartość NULL! Czy Aria2c działa jako daemon?",
     "Please check the URL or filepath you've just provided" : "Sprawdź podany adres URL lub ścieżkę do pliku",
-    "Error while uploading torrent file" : "Błąd podczas przesyłania pliku torrent",
+    "Error while uploading torrent file" : "Błąd podczas wysyłania pliku torrent",
     "Upload OK" : "Wysłano poprawnie",
     "You are not allowed to use the FTP protocol" : "Nie możesz używać protokołu FTP",
     "Please check the URL you've just provided" : "Sprawdź podany adres URL",
