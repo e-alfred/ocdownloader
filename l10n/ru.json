@@ -112,6 +112,7 @@
     "BitTorrent protocol settings - Max upload speed" : "Настройки протокола BitTorrent - Максимальная скорость отдачи",
     "BitTorrent protocol max upload speed?" : "Максимальная скорость отдачи протокола BitTorrent?",
     "Allow protocols for users (except for members of the admin group)" : "Разрешить протоколы для пользователей (за исключением членов группы администраторов)",
+    "Allow YouTube?" : "Разрешить YouTube?",
     "Default Downloads Folder" : "Каталог для загрузок по умолчанию",
     "Save" : "Сохранить",
     "Default Torrents Folder" : "Каталог торрентов по умолчанию",
