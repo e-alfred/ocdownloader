@@ -8,6 +8,7 @@ OC.L10N.register(
     "Active" : "Активан",
     "Upload" : "Отпреми",
     "Loading" : "Учитавање",
+    "Options" : "Опције",
     "Username" : "Корисничко име",
     "Password" : "Лозинка",
     "Filename" : "Име фајла",
