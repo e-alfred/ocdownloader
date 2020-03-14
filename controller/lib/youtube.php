@@ -14,14 +14,18 @@ namespace OCA\ocDownloader\Controller\Lib;
 class YouTube
 {
     private $YTDLBinary = null;
+    private $YTDLAudioFormat = null;
+    private $YTDLVideoFormat = null;
     private $URL = null;
     private $ForceIPv4 = true;
     private $ProxyAddress = null;
     private $ProxyPort = 0;
 
-    public function __construct($YTDLBinary, $URL)
+    public function __construct($YTDLBinary, $URL, $YTDLAudioFormat, $YTDLVideoFormat)
     {
         $this->YTDLBinary = $YTDLBinary;
+        $this->YTDLAudioFormat = $YTDLAudioFormat;
+        $this->YTDLVideoFormat = $YTDLVideoFormat;
         $this->URL = $URL;
     }
 
@@ -46,10 +50,12 @@ class YouTube
 
         //youtube multibyte support
         putenv('LANG=en_US.UTF-8');
-
+        
+        $fAudio = escapeshellarg($this->YTDLAudioFormat);
+        $fVideo = escapeshellarg($this->YTDLVideoFormat);
         $Output = shell_exec(
             $this->YTDLBinary.' -i \''.$this->URL.'\' --get-url --get-filename'
-            .($ExtractAudio?' -f bestaudio -x':' -f best').($this->ForceIPv4 ? ' -4' : '')
+            .($ExtractAudio?" -f $fAudio -x":" -f $fVideo").($this->ForceIPv4 ? ' -4' : '')
             .(is_null($Proxy) ? '' : $Proxy)
         );
 
