@@ -630,7 +630,7 @@ OCDLR = {};
 
 			if (['add'].indexOf (View) > -1)
 			{
-				OCDLRSelf.ActionHide (ActionTD);
+				OCDLRSelf.ActionDelete (ActionTD);
 				if (Data.STATUSID == 1)
 				{
 					OCDLRSelf.ActionPause (ActionTD, View);
