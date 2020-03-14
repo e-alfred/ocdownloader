@@ -26,6 +26,11 @@ $g = \OC::$server->getURLGenerator ();
             <div id="controls">
                 <div class="actions">
                     <div id="NewDL">
+                        <?php if ($_['AllowProtocolYT']){ ?>
+                        <div class="button" data-rel="OCDYT">
+                            <p data-rel="OCDYT">YOUTUBE</p>
+                        </div>
+                        <?php } ?>
                         <?php if ($_['AllowProtocolHTTP']){ ?>
                         <div class="button" data-rel="OCDHTTP">
                             <p data-rel="OCDHTTP">HTTP</p>
@@ -36,11 +41,6 @@ $g = \OC::$server->getURLGenerator ();
                             <p data-rel="OCDFTP">FTP</p>
                         </div>
                         <?php } ?>
-                        <?php if ($_['AllowProtocolYT']){ ?>
-                        <div class="button" data-rel="OCDYT">
-                            <p data-rel="OCDYT">YOUTUBE</p>
-                        </div>
-                        <?php } ?>
                         <?php if ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0){ ?>
                         <div class="button" data-rel="OCDBT">
                             <p data-rel="OCDBT">BITTORRENT</p>
@@ -49,8 +49,28 @@ $g = \OC::$server->getURLGenerator ();
                     </div>
                 </div>
             </div>
-            <?php if ($_['AllowProtocolHTTP']): ?>
-            <div class="content-page" rel="OCDHTTP">
+
+            <?php if ($_['AllowProtocolYT']): ?>
+            <div class="content-page" rel="OCDYT">
+                <h3>
+                    <?php print ($l->t ('New YouTube download')); ?><span class="muted OCDLRMsg"></span>
+                    <div class="button launch">
+                        <a><?php print ($l->t ('Launch YouTube Download')); ?></a>
+                    </div>
+                </h3>
+                <input type="text" placeholder="<?php print ($l->t ('YouTube Video URL to download')); ?>" class="form-control url" />
+                <div class="jumbotron">
+                    <h5><?php print ($l->t ('Options')); ?></h5>
+                    <div class="group-option">
+                        <label for="option-yt-extractaudio"><?php print ($l->t ('Only Extract audio ?')); ?></label><input type="checkbox" id="option-yt-extractaudio" />
+                    </div>
+                    <div class="group-option" style="display: none;">
+                        <label for="option-yt-forceipv4"><?php print ($l->t ('Force IPv4 ?')); ?></label><input type="checkbox" id="option-yt-forceipv4" />
+                    </div>
+                </div>
+            </div>
+            <?php endif; if ($_['AllowProtocolHTTP']): ?>
+            <div class="content-page" rel="OCDHTTP" style="display:none;">
                 <h3>
                     <?php print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
@@ -109,25 +129,6 @@ $g = \OC::$server->getURLGenerator ();
                     </div>
                     <div class="group-option">
                         <label for="option-ftp-pasv"><?php print ($l->t ('Passive Mode')); ?> :</label><input type="checkbox" id="option-ftp-pasv" checked />
-                    </div>
-                </div>
-            </div>
-            <?php endif; if ($_['AllowProtocolYT']): ?>
-            <div class="content-page" rel="OCDYT" style="display:none;">
-                <h3>
-                    <?php print ($l->t ('New YouTube download')); ?><span class="muted OCDLRMsg"></span>
-                    <div class="button launch">
-                        <a><?php print ($l->t ('Launch YouTube Download')); ?></a>
-                    </div>
-                </h3>
-                <input type="text" placeholder="<?php print ($l->t ('YouTube Video URL to download')); ?>" class="form-control url" />
-                <div class="jumbotron">
-                    <h5><?php print ($l->t ('Options')); ?></h5>
-                    <div class="group-option">
-                        <label for="option-yt-extractaudio"><?php print ($l->t ('Only Extract audio ?')); ?></label><input type="checkbox" id="option-yt-extractaudio" />&nbsp;<i><?php print ($l->t ('(No post-processing, just extract the best audio quality)')); ?></i>
-                    </div>
-                    <div class="group-option">
-                        <label for="option-yt-forceipv4"><?php print ($l->t ('Force IPv4 ?')); ?></label><input type="checkbox" id="option-yt-forceipv4" />
                     </div>
                 </div>
             </div>
