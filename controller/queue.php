@@ -277,11 +277,6 @@ class Queue extends Controller
                     }
                 }
 
-                // check download folder exists, if not create it
-                if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-                    \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
-                }
-
                 // Start rescan on update
                 if ($DownloadUpdated) {
                     \OC\Files\Filesystem::touch($this->DownloadsFolder . $Row['FILENAME']);

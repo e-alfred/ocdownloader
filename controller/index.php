@@ -74,6 +74,8 @@ class Index extends Controller
         $this->Settings->setKey('DownloadsFolder');
         $this->DownloadsFolder = $this->Settings->getValue();
         $this->DownloadsFolder = '/' .(is_null($this->DownloadsFolder) ? 'Downloads' : $this->DownloadsFolder);
+
+        $this->syncDownloadsFolder();
     }
 
     /**
@@ -112,7 +114,6 @@ class Index extends Controller
      */
     public function all()
     {
-        self::syncDownloadsFolder();
         $response = new TemplateResponse('ocdownloader', 'all', [
             'PAGE' => 1,
             'WD' => $this->WhichDownloader
@@ -134,7 +135,6 @@ class Index extends Controller
      */
     public function completes()
     {
-        self::syncDownloadsFolder();
         $response = new TemplateResponse('ocdownloader', 'completes', [
             'PAGE' => 2,
             'WD' => $this->WhichDownloader
@@ -155,7 +155,6 @@ class Index extends Controller
      */
     public function actives()
     {
-        self::syncDownloadsFolder();
         $response = new TemplateResponse('ocdownloader', 'actives', [
             'PAGE' => 3,
             'WD' => $this->WhichDownloader
@@ -176,7 +175,6 @@ class Index extends Controller
      */
     public function waitings()
     {
-        self::syncDownloadsFolder();
         if (strcmp($this->WhichDownloader, 'ARIA2') != 0) {
             //return $this->L10N->t('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
         }
@@ -200,7 +198,6 @@ class Index extends Controller
      */
     public function stopped()
     {
-        self::syncDownloadsFolder();
         if (strcmp($this->WhichDownloader, 'ARIA2') != 0) {
             //return $this->L10N->t('You are using %s ! This page is only available with the following engines : ', $this->WhichDownloader) . 'ARIA2';
         }
@@ -224,7 +221,6 @@ class Index extends Controller
      */
     public function removed()
     {
-        self::syncDownloadsFolder();
         $response = new TemplateResponse('ocdownloader', 'removed', [
             'PAGE' => 6,
             'WD' => $this->WhichDownloader
@@ -245,6 +241,11 @@ class Index extends Controller
      */
     protected function syncDownloadsFolder()
     {
+        // check download folder exists, if not create it
+        if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
+            \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
+        }
+
         $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
         $scanner = new \OC\Files\Utils\Scanner($user, \OC::$server->getDatabaseConnection(), \OC::$server->query(IEventDispatcher::class), \OC::$server->getLogger());
         $path = '/'.$user.'/files/'.ltrim($this->DownloadsFolder, '/\\');
