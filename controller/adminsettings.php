@@ -25,7 +25,7 @@ class AdminSettings extends Controller
     private $DbType = 0;
     private $L10N;
     private $OCDSettingKeys = array(
-        'YTDLBinary', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'WhichDownloader',
+        'YTDLBinary', 'YTDLAudioFormat', 'YTDLVideoFormat', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'WhichDownloader',
         'ProxyOnlyWithYTDL', 'AllowProtocolHTTP', 'AllowProtocolFTP', 'AllowProtocolYT', 'AllowProtocolBT',
         'MaxDownloadSpeed', 'BTMaxUploadSpeed'
     );
@@ -71,6 +71,8 @@ class AdminSettings extends Controller
                             $Error = true;
                             $Message =(string)$this->L10N->t('Unable to find YouTube-DL binary');
                         }
+                    } elseif (strcmp($PostKey, 'YTDLAudioFormat') == 0) {
+                    } elseif (strcmp($PostKey, 'YTDLVideoFormat') == 0) {
                     } elseif (strcmp($PostKey, 'ProxyAddress') == 0) {
                         if (!Tools::checkURL($PostValue) && strlen(trim($PostValue)) > 0) {
                             $PostValue = null;
@@ -173,6 +175,12 @@ class AdminSettings extends Controller
                     switch ($PostKey) {
                         case 'YTDLBinary':
                             $AdminSettings[$PostKey] = '/usr/local/bin/youtube-dl';
+                            break;
+                        case 'YTDLAudioFormat':
+                            $AdminSettings[$PostKey] = 'bestaudio';
+                            break;
+                        case 'YTDLVideoFormat':
+                            $AdminSettings[$PostKey] = 'best';
                             break;
                         case 'CheckForUpdates':
                             $AdminSettings[$PostKey] = 'Y';

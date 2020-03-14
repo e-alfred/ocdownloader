@@ -19,6 +19,14 @@
 		<label for="OCDYTDLBinary"><?php print ($l->t ('YouTube DL Binary Path')); ?></label>
 		<input type="text" class="OCDYTDLBinary ToUse" id="OCDYTDLBinary" data-loader="OCDSLoaderYTDLBinary" value="<?php print (isset ($_['OCDS_YTDLBinary']) ? $_['OCDS_YTDLBinary'] : '/usr/local/bin/youtube-dl'); ?>" />
 	</p>
+	<p>
+		<label for="OCDYTDLAudoFormat"><?php print ($l->t ('YouTube DL Audio Format')); ?></label>
+		<input type="text" class="OCDYTDLAudioFormat ToUse" id="OCDYTDLAudioFormat" data-loader="OCDSLoaderYTDLAudioFormat" value="<?php print (isset ($_['OCDS_YTDLAudioFormat']) ? $_['OCDS_YTDLAudioFormat'] : 'bestaudio'); ?>" />
+	</p>
+	<p>
+		<label for="OCDYTDLAudoFormat"><?php print ($l->t ('YouTube DL Video Format')); ?></label>
+		<input type="text" class="OCDYTDLVideoFormat ToUse" id="OCDYTDLVideoFormat" data-loader="OCDSLoaderYTDLVideoFormat" value="<?php print (isset ($_['OCDS_YTDLVideoFormat']) ? $_['OCDS_YTDLVideoFormat'] : 'best'); ?>" />
+	</p>
 	<hr />
 	<div style="clear:both;"></div>
 	<p>

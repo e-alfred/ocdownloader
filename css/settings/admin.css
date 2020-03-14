@@ -16,6 +16,12 @@ form#ocdownloader span.msg {
 form#ocdownloader input.OCDYTDLBinary {
 	width: 400px;
 }
+form#ocdownloader input.OCDYTDLAudioFormat {
+	width: 400px;
+}
+form#ocdownloader input.OCDYTDLVideoFormat {
+	width: 400px;
+}
 form#ocdownloader input.OCDProxyAddress {
 	width: 270px;
 }
