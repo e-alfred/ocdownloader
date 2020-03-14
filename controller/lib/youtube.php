@@ -69,12 +69,11 @@ class YouTube
                 $current_index=1;
                 for ($I = 0; $I < count($Output); $I++) {
                     if (mb_strlen(trim($Output[$I])) > 0) {
-                        if (mb_strpos(urldecode($Output[$I]), 'https://') === 0
-                                && mb_strpos(urldecode($Output[$I]), '&mime=video/') !== false) {
-                            $OutProcessed['VIDEO'] = $Output[$I];
-                        } elseif (mb_strpos(urldecode($Output[$I]), 'https://') === 0
-                                && mb_strpos(urldecode($Output[$I]), '&mime=audio/') !== false) {
-                            $OutProcessed['AUDIO'] = $Output[$I];
+                        if (mb_strpos(urldecode($Output[$I]), 'http://') === 0 || mb_strpos(urldecode($Output[$I]), 'https://') === 0) {
+                            if (mb_strpos(urldecode($Output[$I]), '&mime=audio/') !== false)
+                                $OutProcessed['AUDIO'] = $Output[$I];
+                            else
+                                $OutProcessed['VIDEO'] = $Output[$I];
                         } else {
                             $OutProcessed['FULLNAME'] = $Output[$I];
                         }
