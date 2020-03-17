@@ -32,7 +32,7 @@
     "An error occurred while pausing the download" : "Si è verificato un errore durante la sospensione dello scaricamento",
     "Bad GID" : "GID errato",
     "The download has been unpaused" : "Lo scaricamento è stato ripreso",
-    "An error occurred while unpausing the download" : "Si è verificato un errore durente la ripresa dello scaricamento",
+    "An error occurred while unpausing the download" : "Si è verificato un errore durante la ripresa dello scaricamento",
     "The download has been cleaned" : "Lo scaricamento è stato cancellato",
     "All downloads have been cleaned" : "Tutti gli scaricamenti sono stati cancellati",
     "No GIDS in the download queue" : "Nessun GID nella coda di scaricamento",
