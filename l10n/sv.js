@@ -16,7 +16,7 @@ OC.L10N.register(
     "Active Downloads" : "Aktiva hämtningar",
     "FILENAME" : "FILNAMN",
     "PROTOCOL" : "PROTOKOLL",
-    "Loading" : "Laddar",
+    "Loading" : "Läser in",
     "Username" : "Användarnamn",
     "Password" : "Lösenord",
     "Filename" : "Filnamn",
