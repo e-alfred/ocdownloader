@@ -114,7 +114,7 @@ class CURL
     private static function run()
     {
         shell_exec(
-            rtrim(dirname(__FILE__), '/') . '/../../SERVER/fallback.sh "' . self::$GID . '" "'
+            "sh " . rtrim(dirname(__FILE__), '/') . '/../../SERVER/fallback.sh "' . self::$GID . '" "'
             .urlencode(self::$URI) . '" "' . urlencode(json_encode(self::$OPTIONS, JSON_HEX_APOS | JSON_HEX_QUOT)).'"'
         );
     }
