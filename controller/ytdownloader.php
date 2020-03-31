@@ -29,6 +29,8 @@ class YTDownloader extends Controller
     private $DownloadsFolder = null;
     private $DbType = 0;
     private $YTDLBinary = null;
+    private $YTDLAudioFormat = null;
+    private $YTDLVideoFormat = null;
     private $ProxyAddress = null;
     private $ProxyPort = 0;
     private $ProxyUser = null;
@@ -54,9 +56,25 @@ class YTDownloader extends Controller
         $Settings->setKey('YTDLBinary');
         $YTDLBinary = $Settings->getValue();
 
-        $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
+        $this->YTDLBinary = '/usr/bin/youtube-dl'; // default path
         if (!is_null($YTDLBinary)) {
             $this->YTDLBinary = $YTDLBinary;
+        }
+
+        $Settings->setKey('YTDLAudioFormat');
+        $YTDLAudioFormat = $Settings->getValue();
+
+        $this->YTDLAudioFormat = 'bestaudio'; // default path
+        if (!is_null($YTDLAudioFormat)) {
+            $this->YTDLAudioFormat = $YTDLAudioFormat;
+        }
+
+        $Settings->setKey('YTDLVideoFormat');
+        $YTDLVideoFormat = $Settings->getValue();
+
+        $this->YTDLVideoFormat = 'best'; // default path
+        if (!is_null($YTDLVideoFormat)) {
+            $this->YTDLVideoFormat = $YTDLVideoFormat;
         }
 
         $Settings->setKey('ProxyAddress');
@@ -102,7 +120,7 @@ class YTDownloader extends Controller
                     throw new \Exception((string)$this->L10N->t('You are not allowed to use the YouTube protocol'));
                 }
 
-                $YouTube = new YouTube($this->YTDLBinary, $_POST['FILE']);
+                $YouTube = new YouTube($this->YTDLBinary, $_POST['FILE'], $this->YTDLAudioFormat, $this->YTDLVideoFormat);
 
                 if (!is_null($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536) {
                     $YouTube->SetProxy($this->ProxyAddress, $this->ProxyPort);

@@ -28,6 +28,8 @@ class API extends Controller
     private static $DownloadsFolder = null;
     private static $DbType = 0;
     private static $YTDLBinary = null;
+    private static $YTDLAudioFormat = null;
+    private static $YTDLVideoFormat = null;
     private static $ProxyAddress = null;
     private static $ProxyPort = 0;
     private static $ProxyUser = null;
@@ -53,9 +55,25 @@ class API extends Controller
          $Settings->setKey('YTDLBinary');
          $YTDLBinary = $Settings->getValue();
 
+         $Settings->setKey('YTDLAudioFormat');
+         $YTDLAudioFormat = $Settings->getValue();
+
+         $Settings->setKey('YTDLVideoFormat');
+         $YTDLVideoFormat = $Settings->getValue();
+
          $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
          if (!is_null($YTDLBinary)) {
             $this->YTDLBinary = $YTDLBinary;
+         }
+
+         $this->YTDLAudioFormat = 'bestaudio'; // default setting
+         if (!is_null($YTDLAudioFormat)) {
+            $this->YTDLAudioFormat = $YTDLAudioFormat;
+         }
+         
+         $this->YTDLVideoFormat = 'best'; // default setting
+         if (!is_null($YTDLVideoFormat)) {
+            $this->YTDLVideoFormat = $YTDLVideoFormat;
          }
       }
 
@@ -76,7 +94,7 @@ class API extends Controller
                         return array('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolyt');
                     }
 
-                    $YouTube = new YouTube(self::$YTDLBinary, $URL);
+                    $YouTube = new YouTube(self::$YTDLBinary, $URL, self::$YTDLAudioFormat, self::$YTDLVideoFormat);
 
                     if (!is_null(self::$ProxyAddress) && self::$ProxyPort > 0 && self::$ProxyPort <= 65536) {
                         $YouTube->setProxy(self::$ProxyAddress, self::$ProxyPort);
@@ -426,6 +444,22 @@ class API extends Controller
         self::$YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
         if (!is_null($YTDLBinary)) {
             self::$YTDLBinary = $YTDLBinary;
+        }
+
+        $Settings->setKey('YTDLAudioFormat');
+        $YTDLAudioFormat = $Settings->getValue();
+
+        self::$YTDLAudioFormat = 'bestaudio'; // default path
+        if (!is_null($YTDLAudioFormat)) {
+            self::$YTDLAudioFormat = $YTDLAudioFormat;
+        }
+
+        $Settings->setKey('YTDLVideoFormat');
+        $YTDLVideoFormat = $Settings->getValue();
+
+        self::$YTDLVideoFormat = 'best'; // default path
+        if (!is_null($YTDLVideoFormat)) {
+            self::$YTDLVideoFormat = $YTDLVideoFormat;
         }
     }
 }
