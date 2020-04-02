@@ -105,6 +105,8 @@ OC.L10N.register(
     "Removed Downloads" : "Téléchargements Supprimés",
     "Leave fields blank to reset a setting value" : "Laisser les champs vide pour réinitialiser la valeur",
     "YouTube DL Binary Path" : "Chemin vers le binaire de YouTube DL",
+    "YouTube DL Audio Format" : "Format audio pour Youtube DL",
+    "YouTube DL Video Format" : "Format vidéo pour Youtube DL",
     "Proxy settings" : "Réglages Proxy",
     "Proxy Address" : "Adresse Proxy",
     "Proxy Port" : "Port Proxy",

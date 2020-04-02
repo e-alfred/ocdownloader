@@ -103,6 +103,8 @@
     "Removed Downloads" : "Удаленные загрузки",
     "Leave fields blank to reset a setting value" : "Оставьте поля пустыми, чтобы сбросить значение параметра",
     "YouTube DL Binary Path" : "Путь к исполняемому файлу YouTube DL",
+    "YouTube DL Audio Format" : "Аудио формат YouTube DL",
+    "YouTube DL Video Format" : "Видео формат YouTube DL",
     "Proxy settings" : "Настройки прокси",
     "Proxy Address" : "Адрес прокси",
     "Proxy Port" : "Порт прокси",

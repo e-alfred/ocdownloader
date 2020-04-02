@@ -103,6 +103,8 @@
     "Removed Downloads" : "Retiradas as descargas",
     "Leave fields blank to reset a setting value" : "Deixe os campos en branco para restabelecer un valor de axuste",
     "YouTube DL Binary Path" : "Ruta ao binario do YouTube DL",
+    "YouTube DL Audio Format" : "Formato de son de YouTube DL",
+    "YouTube DL Video Format" : "Formato de vídeo de YouTube DL",
     "Proxy settings" : "Axustes do proxy",
     "Proxy Address" : "Enderezo do proxy",
     "Proxy Port" : "Porto do proxy",

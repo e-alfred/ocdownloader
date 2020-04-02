@@ -105,6 +105,8 @@ OC.L10N.register(
     "Removed Downloads" : "Odebrat stahování",
     "Leave fields blank to reset a setting value" : "Pro vrácení hodnoty nastavení do výchozího stavu ponechte kolonky nevyplněné",
     "YouTube DL Binary Path" : "Popis umístění spustitelného souboru s YouTube DL",
+    "YouTube DL Audio Format" : "Formát zvuku v YouTube DL",
+    "YouTube DL Video Format" : "Formát videa v YouTube DL",
     "Proxy settings" : "Nastavení pro proxy",
     "Proxy Address" : "Adresa proxy",
     "Proxy Port" : "Port proxy",
