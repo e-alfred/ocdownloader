@@ -87,6 +87,7 @@ class Index extends Controller
         $this->Settings->setKey('TorrentsFolder');
         $TorrentsFolder = $this->Settings->getValue();
 
+        self::syncDownloadsFolder();
         $response = new TemplateResponse('ocdownloader', 'add', [
             'PAGE' => 0,
             'TTSFOLD' => $TorrentsFolder,
