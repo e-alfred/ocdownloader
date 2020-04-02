@@ -66,12 +66,12 @@ class API extends Controller
             $this->YTDLBinary = $YTDLBinary;
          }
 
-         $this->YTDLAudioFormat = 'bestaudio'; // default setting
+         $this->YTDLAudioFormat = 'bestaudio[abr<=75]'; // default setting
          if (!is_null($YTDLAudioFormat)) {
             $this->YTDLAudioFormat = $YTDLAudioFormat;
          }
-         
-         $this->YTDLVideoFormat = 'best'; // default setting
+
+         $this->YTDLVideoFormat = 'best[width<=1280]'; // default setting
          if (!is_null($YTDLVideoFormat)) {
             $this->YTDLVideoFormat = $YTDLVideoFormat;
          }
