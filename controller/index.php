@@ -245,6 +245,11 @@ class Index extends Controller
      */
     protected function syncDownloadsFolder()
     {
+      // check download folder exists, if not create it
+        if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
+        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
+        }
+
         $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
         $scanner = new \OC\Files\Utils\Scanner($user, \OC::$server->getDatabaseConnection(), \OC::$server->query(IEventDispatcher::class), \OC::$server->getLogger());
         $path = '/'.$user.'/files/'.ltrim($this->DownloadsFolder, '/\\');
