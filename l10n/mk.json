@@ -103,6 +103,8 @@
     "Removed Downloads" : "Избришани превземања",
     "Leave fields blank to reset a setting value" : "Оставете го полето празно за ресетирање на вредност на параметарот",
     "YouTube DL Binary Path" : "Патека до YouTube DL",
+    "YouTube DL Audio Format" : "YouTube DL Аудио формат",
+    "YouTube DL Video Format" : "YouTube DL Видео формат",
     "Proxy settings" : "Proxy параметри",
     "Proxy Address" : "Proxy адреса",
     "Proxy Port" : "Proxy порта",
