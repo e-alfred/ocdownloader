@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error while uploading torrent file" : "Prišlo je do napake med nalaganjem datoteke torrent",
     "Upload OK" : "Pošiljanje je uspešno končano",
     "Video" : "Video",
+    "The folder doesn't exist. It has been created." : "Mapa ne obstaja zato je bila ustvarjena.",
     "Unknown field" : "Neznano polje",
     "Undefined field" : "Nedoločeno polje",
     "Uploaded" : "Poslano",

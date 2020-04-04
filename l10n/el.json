@@ -103,6 +103,8 @@
     "Removed Downloads" : "Λήψεις που αφαιρέθηκαν",
     "Leave fields blank to reset a setting value" : "Αφήστε το πεδίο κενό για επαναφορά ρυθμίσεων",
     "YouTube DL Binary Path" : "Δυαδική διαδρομή YouTube DL",
+    "YouTube DL Audio Format" : "Μορφοποίηση Ήχου YouTube DL",
+    "YouTube DL Video Format" : "Μορφοποίηση Βίντεο YouTube DL",
     "Proxy settings" : "Ρυθμίσεις διαμεσολαβητή",
     "Proxy Address" : "Διεύθυνση διαμεσολαβητή",
     "Proxy Port" : "Θύρα διαμεσολαβητή",
