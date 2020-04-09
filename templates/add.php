@@ -59,7 +59,7 @@ $g = \OC::$server->getURLGenerator ();
                         <a><?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('Launch Magnet/HTTP download')) : print ($l->t ('Launch HTTP download')); ?></a>
                     </div>
                 </h3>
-                <input type="text" placeholder="<?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('Magnet/HTTP to download')) : print ($l->t ('HTTP to download')); ?>" class="form-control url" />
+                <input type="text" placeholder="<?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('Magnet/HTTP link to download')) : print ($l->t ('HTTP link to download')); ?>" class="form-control url" />
                 <div class="jumbotron">
                     <h5><?php print ($l->t ('Options')); ?></h5>
                     <div class="group-option">
