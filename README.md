@@ -9,7 +9,7 @@ Webextension addon for both Firefox-based and Chromium-based browsers (can be fo
 
 Jetpack/PMKit addon for Firefox <=56 and Palemoon: https://github.com/e-alfred/ocDownloader_palemoon
 
-UWP Windows 8.1/10 app: https://github.com/e-alfred/ocDownloader_WindowsDesktop
+Desktop/Mobile client for Windows/Linux/MacOS/Android: https://github.com/bbernhard/nextload-client
 
 If you want to write your own app or extension, this would be highly welcome. ocDownloader has an API (look at controller/lib/api.php here: https://github.com/e-alfred/ocdownloader/blob/master/controller/lib/api.php) that allows you to add and list downloads using ocDownloader.
 
