@@ -412,6 +412,7 @@
 
 .app-ocdownloader #app-content #app-content-wrapper {
   flex-wrap: wrap;
+	min-width: 800px
 }
 
 .app-ocdownloader #app-content-wrapper .content-page {
