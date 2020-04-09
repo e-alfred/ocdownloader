@@ -28,7 +28,7 @@ $g = \OC::$server->getURLGenerator ();
                     <div id="NewDL">
                         <?php if ($_['AllowProtocolHTTP']){ ?>
                         <div class="button" data-rel="OCDHTTP">
-                            <p data-rel="OCDHTTP">HTTP</p>
+                            <p data-rel="OCDHTTP"><?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('Magnet/HTTP')) : print ($l->t ('HTTP')); ?></p>
                         </div>
                         <?php } ?>
                         <?php if ($_['AllowProtocolFTP']){ ?>
