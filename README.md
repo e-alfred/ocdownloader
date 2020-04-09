@@ -3,7 +3,7 @@ ocDownloader is an AGPL-licensed application for [Nextcloud](https://nextcloud.c
 
 ***I'm looking for maintainers and translators, every kind of support (especially pull requests) is highly welcome***.
 
-## Companion apps/extensions for Firefox/Chrome/Opera/Vivaldi and Windows
+## Companion apps/extensions for Firefox/Chrome/Opera/Vivaldi and Windows/MacOS/Linux/Android
 
 Webextension addon for both Firefox-based and Chromium-based browsers (can be found on addons.mozilla.org and the Chrome Web Store): https://github.com/e-alfred/ocDownloader_webextension
 
