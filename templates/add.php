@@ -56,10 +56,10 @@ $g = \OC::$server->getURLGenerator ();
                 <h3>
                     <?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('New Magnet/HTTP download')) : print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
-                        <a><?php print ($l->t ('Launch HTTP Download')); ?></a>
+                        <a><?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('Launch Magnet/HTTP download')) : print ($l->t ('Launch HTTP download')); ?></a>
                     </div>
                 </h3>
-                <input type="text" placeholder="<?php print ($l->t ('HTTP URL to download')); ?>" class="form-control url" />
+                <input type="text" placeholder="<?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('Magnet/HTTP to download')) : print ($l->t ('HTTP to download')); ?>" class="form-control url" />
                 <div class="jumbotron">
                     <h5><?php print ($l->t ('Options')); ?></h5>
                     <div class="group-option">
