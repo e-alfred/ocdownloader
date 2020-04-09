@@ -54,7 +54,7 @@ $g = \OC::$server->getURLGenerator ();
             <?php if ($_['AllowProtocolHTTP']): ?>
             <div class="content-page" rel="OCDHTTP">
                 <h3>
-                    <?php print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
+                    <?php ($_['AllowProtocolBT'] && strcmp ($_['WD'], 'ARIA2') == 0) ? print ($l->t ('New Magnet/HTTP download')) : print ($l->t ('New HTTP download')); ?><span class="muted OCDLRMsg"></span>
                     <div class="button launch">
                         <a><?php print ($l->t ('Launch HTTP Download')); ?></a>
                     </div>
