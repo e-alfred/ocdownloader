@@ -103,6 +103,8 @@
     "Removed Downloads" : "Kaldırılmış İndirmeler",
     "Leave fields blank to reset a setting value" : "Bir ayar değerini sıfırlamak için alanları boş bırakın",
     "YouTube DL Binary Path" : "YouTube DL Uygulamasının Yolu",
+    "YouTube DL Audio Format" : "YouTube DL Ses Biçimi",
+    "YouTube DL Video Format" : "YouTube DL Görüntü Biçimi",
     "Proxy settings" : "Vekil sunucu ayarları",
     "Proxy Address" : "Vekil Sunucu Adresi",
     "Proxy Port" : "Vekil Sunucu Kapı Numarası",
