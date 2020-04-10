@@ -63,8 +63,6 @@
     "Loading" : "در حال بار گزاری",
     "Add Download" : "افزودن دانلود",
     "New HTTP download" : "بارگیری جدید HTTP",
-    "Launch HTTP Download" : "بارگیری HTTP را راه اندازی کنید",
-    "HTTP URL to download" : "URL HTTP برای بارگیری",
     "Options" : "گزینه ها",
     "Basic Auth User" : "کاربر اصلی نویسنده",
     "Username" : "نام کاربری",
@@ -132,12 +130,6 @@
     "Default ratio to reach?" : "نسبت پیش فرض برای رسیدن به؟",
     "unlimited" : "نامحدود",
     "BitTorrent protocol settings - Seed time" : "تنظیمات پروتکل BitTorrent - زمان بذر",
-    "Seed time to reach?" : "زمان رسیدن برای رسیدن؟",
-    "minute(s)" : "دقیقه(s)",
-    "hour(s)" : "ساعت(s)",
-    "day(s)" : "روز(s)",
-    "week(s)" : "هفته(s)",
-    "month(s)" : "ماه(s)",
-    "year(s)" : "سال(s)"
+    "Seed time to reach?" : "زمان رسیدن برای رسیدن؟"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

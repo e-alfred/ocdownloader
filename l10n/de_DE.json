@@ -63,8 +63,6 @@
     "Loading" : "Lade",
     "Add Download" : "Download hinzufügen",
     "New HTTP download" : "Neuer HTTP-Download",
-    "Launch HTTP Download" : "HTTP-Download starten",
-    "HTTP URL to download" : "Herunterzuladende HTTP-URL",
     "Options" : "Optionen",
     "Basic Auth User" : "Basic Auth-Benutzer",
     "Username" : "Benutzername",
@@ -134,12 +132,6 @@
     "Default ratio to reach?" : "Welches Standard-Verhältnis soll erreicht werden?",
     "unlimited" : "Unbegrenzt",
     "BitTorrent protocol settings - Seed time" : "BitTorrent-Protokoll-Einstellungen - Seed-Zeit",
-    "Seed time to reach?" : "Welche Seed-Zeit soll erreicht werden?",
-    "minute(s)" : "Minute(n)",
-    "hour(s)" : "Stunde(n)",
-    "day(s)" : "Tag(e)",
-    "week(s)" : "Woche(n)",
-    "month(s)" : "Monat(e)",
-    "year(s)" : "Jahr(e)"
+    "Seed time to reach?" : "Welche Seed-Zeit soll erreicht werden?"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

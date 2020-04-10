@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Се вчитува",
     "Add Download" : "Додади превземање",
     "New HTTP download" : "Ново HTTP превземање",
-    "Launch HTTP Download" : "Стартувај HTTP превземање",
-    "HTTP URL to download" : "HTTP URL за превеземање",
     "Options" : "Опции",
     "Basic Auth User" : "Основен корисник за автентификација",
     "Username" : "Корисничко име",
@@ -136,12 +134,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Достигнување на стандарден сооднос?",
     "unlimited" : "неограничено",
     "BitTorrent protocol settings - Seed time" : "Параметри за Torrent протокол - Време на сеење",
-    "Seed time to reach?" : "Достигнување на време на сеење?",
-    "minute(s)" : "минута(и)",
-    "hour(s)" : "час(а-ови)",
-    "day(s)" : "ден(а-ови)",
-    "week(s)" : "недела(и)",
-    "month(s)" : "месец(и)",
-    "year(s)" : "година(и)"
+    "Seed time to reach?" : "Достигнување на време на сеење?"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

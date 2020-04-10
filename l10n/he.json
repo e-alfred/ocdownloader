@@ -60,8 +60,6 @@
     "Loading" : "בטעינה",
     "Add Download" : "הוספת הורדה",
     "New HTTP download" : "הורדת HTTP חדשה",
-    "Launch HTTP Download" : "הפעלת הורדת HTTP",
-    "HTTP URL to download" : "כתובת HTTP להורדה",
     "Options" : "אפשרויות",
     "Basic Auth User" : "משתמש באימות פשוט",
     "Username" : "שם משתמש",
@@ -120,12 +118,6 @@
     "Default Torrents Folder" : "תיקיית הטורנטים כבררת מחדל",
     "BitTorrent protocol settings - Ratio" : "הגדרות פרוטוקול ביטטורנט - יחס",
     "unlimited" : "ללא הגבלה",
-    "BitTorrent protocol settings - Seed time" : "הגדרות פרוטוקול ביטטורנט - זמן זריעה",
-    "minute(s)" : "דקות",
-    "hour(s)" : "שעות",
-    "day(s)" : "ימים",
-    "week(s)" : "שבועות",
-    "month(s)" : "חודשים",
-    "year(s)" : "שנים"
+    "BitTorrent protocol settings - Seed time" : "הגדרות פרוטוקול ביטטורנט - זמן זריעה"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }

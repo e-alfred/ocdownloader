@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Загружается",
     "Add Download" : "Добавить загрузку",
     "New HTTP download" : "Новая HTTP загрузка",
-    "Launch HTTP Download" : "Запустить HTTP загрузку",
-    "HTTP URL to download" : "HTTP URL для загрузки",
     "Options" : "Настройки",
     "Basic Auth User" : "Пользователь для Base Auth",
     "Username" : "Имя пользователя",
@@ -136,12 +134,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Коэффициент по умолчанию для достижения?",
     "unlimited" : "неограниченный",
     "BitTorrent protocol settings - Seed time" : "Настройки протокола BitTorrent - время раздачи",
-    "Seed time to reach?" : "Сколько времени раздавать?",
-    "minute(s)" : "минута(ы)",
-    "hour(s)" : "час(ов)",
-    "day(s)" : "день(дней)",
-    "week(s)" : "Неделя(и)",
-    "month(s)" : "месяц(ев)",
-    "year(s)" : "год(лет)"
+    "Seed time to reach?" : "Сколько времени раздавать?"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

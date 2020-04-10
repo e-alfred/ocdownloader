@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Cargando",
     "Add Download" : "Añadir descarga",
     "New HTTP download" : "Nueva descarga HTTP",
-    "Launch HTTP Download" : "Iniciar descarga HTTP",
-    "HTTP URL to download" : "URL HTTP para la descarga",
     "Options" : "Opciones",
     "Basic Auth User" : "Usuario de autenticación básica",
     "Username" : "Usuario",
@@ -136,12 +134,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "¿Proporción que alcanzar por defecto ?",
     "unlimited" : "ilimitado",
     "BitTorrent protocol settings - Seed time" : "Configuración del protocolo BitTorrent. Tiempo de siembra (seed)",
-    "Seed time to reach?" : "¿Tiempo de siembra (seed) que alcanzar?",
-    "minute(s)" : "minuto(s)",
-    "hour(s)" : "hora(s)",
-    "day(s)" : "día(s) ",
-    "week(s)" : "semana(s)",
-    "month(s)" : "mes(es)",
-    "year(s)" : "año(s)"
+    "Seed time to reach?" : "¿Tiempo de siembra (seed) que alcanzar?"
 },
 "nplurals=2; plural=(n != 1);");

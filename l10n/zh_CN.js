@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "正在加载",
     "Add Download" : "添加下载任务",
     "New HTTP download" : "新HTTP下载任务",
-    "Launch HTTP Download" : "启动HTTP下载任务",
-    "HTTP URL to download" : "要下载的HTTP URL",
     "Options" : "选项",
     "Basic Auth User" : "Basic Auth 用户",
     "Username" : "用户名",
@@ -134,12 +132,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "要达到的默认比例？",
     "unlimited" : "无限制",
     "BitTorrent protocol settings - Seed time" : "BitTorrent协议设置 － 做种时长",
-    "Seed time to reach?" : "要达到的做种时长？",
-    "minute(s)" : "分钟",
-    "hour(s)" : "小时",
-    "day(s)" : "天",
-    "week(s)" : "周",
-    "month(s)" : "月",
-    "year(s)" : "年"
+    "Seed time to reach?" : "要达到的做种时长？"
 },
 "nplurals=1; plural=0;");

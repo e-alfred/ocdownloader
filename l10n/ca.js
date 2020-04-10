@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "S'està carregant",
     "Add Download" : "Afegeix descàrrega",
     "New HTTP download" : "Nova descàrrega HTTP",
-    "Launch HTTP Download" : "Inicia la descàrrega HTTP",
-    "HTTP URL to download" : "Adreça URL HTTP per descarregar",
     "Options" : "Opcions",
     "Basic Auth User" : "Nom d'usuari BasicAuth",
     "Username" : "Nom d'usuari",
@@ -130,12 +128,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Ratio màxima per defecte?",
     "unlimited" : "il·limitada",
     "BitTorrent protocol settings - Seed time" : "Preferències del protocol BitTorrent - Temps per sembrar",
-    "Seed time to reach?" : "Temps màxim per sembrar?",
-    "minute(s)" : "minuts",
-    "hour(s)" : "hores",
-    "day(s)" : "dies",
-    "week(s)" : "setmanes",
-    "month(s)" : "mesos",
-    "year(s)" : "anys"
+    "Seed time to reach?" : "Temps màxim per sembrar?"
 },
 "nplurals=2; plural=(n != 1);");

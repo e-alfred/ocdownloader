@@ -32,8 +32,6 @@ OC.L10N.register(
     "Loading" : "Nalaganje",
     "Add Download" : "Dodaj prejem",
     "New HTTP download" : "Nov prejem HTTP",
-    "Launch HTTP Download" : "Zaženi prejem HTTP",
-    "HTTP URL to download" : "Naslov HTTP za prejem",
     "Options" : "Možnosti",
     "Username" : "Uporabniško ime",
     "Password" : "Geslo",

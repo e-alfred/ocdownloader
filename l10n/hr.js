@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Učitavanje",
     "Add Download" : "Dodaj preuzimanje",
     "New HTTP download" : "Novo preuzimanje putem HTTP-a",
-    "Launch HTTP Download" : "Pokreni preuzimanje putem HTTP-a",
-    "HTTP URL to download" : "HTTP URL za preuzimanje",
     "Options" : "Mogućnosti",
     "Basic Auth User" : "Korisnik osnovne autentifikacije",
     "Username" : "Korisničko ime",
@@ -134,12 +132,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Zadani omjer koji treba dostići?",
     "unlimited" : "neograničeno",
     "BitTorrent protocol settings - Seed time" : "Postavke protokola BitTorrent – trajanje dijeljenja datoteke",
-    "Seed time to reach?" : "Trajanje dijeljenja koje treba dostići?",
-    "minute(s)" : "minute/minuta",
-    "hour(s)" : "sat/sata/sati",
-    "day(s)" : "dan/dana",
-    "week(s)" : "tjedan/tjedna/tjedana",
-    "month(s)" : "mjesec/mjeseca/mjeseci",
-    "year(s)" : "godina/godine"
+    "Seed time to reach?" : "Trajanje dijeljenja koje treba dostići?"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

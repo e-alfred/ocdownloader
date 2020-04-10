@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Wczytywanie",
     "Add Download" : "Dodaj pliki do pobierania",
     "New HTTP download" : "Nowe pobieranie HTTP",
-    "Launch HTTP Download" : "Uruchom pobieranie HTTP",
-    "HTTP URL to download" : "Adres HTTP do pobrania",
     "Options" : "Opcje",
     "Basic Auth User" : "Użytkownik podstawowej autoryzacji",
     "Username" : "Nazwa użytkownika",
@@ -136,12 +134,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Domyślna ocena do otrzymania?",
     "unlimited" : "nieograniczony",
     "BitTorrent protocol settings - Seed time" : "Ustawienia protokołu BitTorrent - czas Seed-u",
-    "Seed time to reach?" : "Czas dostępu Seed-u?",
-    "minute(s)" : "minut(-a/-y)",
-    "hour(s)" : "godzin(-a/-y)",
-    "day(s)" : "dzień(-ni)",
-    "week(s)" : "tydzień(-nie/-ni)",
-    "month(s)" : "miesiąc(-e/-cy)",
-    "year(s)" : "rok(lata)"
+    "Seed time to reach?" : "Czas dostępu Seed-u?"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

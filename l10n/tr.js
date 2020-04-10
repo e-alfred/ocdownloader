@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Yükleniyor",
     "Add Download" : "İndirme Ekle",
     "New HTTP download" : "Yeni HTTP indirmesi",
-    "Launch HTTP Download" : "HTTP İndirmesini Başlat",
-    "HTTP URL to download" : "İndirilecek HTTP adresi",
     "Options" : "Seçenekler",
     "Basic Auth User" : "Temel Kimlik Doğrulaması Kullanıcı Adı",
     "Username" : "Kullanıcı adı",
@@ -136,12 +134,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Kullanılacak varsayılan oran?",
     "unlimited" : "sınırsız",
     "BitTorrent protocol settings - Seed time" : "BitTorrent iletişim kuralı ayarları - Tohumlama süresi",
-    "Seed time to reach?" : "Kullanılacak tohumlama süresi?",
-    "minute(s)" : "dakika",
-    "hour(s)" : "saat",
-    "day(s)" : "gün",
-    "week(s)" : "hafta",
-    "month(s)" : "ay",
-    "year(s)" : "yıl"
+    "Seed time to reach?" : "Kullanılacak tohumlama süresi?"
 },
 "nplurals=2; plural=(n > 1);");

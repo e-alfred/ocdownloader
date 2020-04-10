@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Laden",
     "Add Download" : "Download toevoegen",
     "New HTTP download" : "Nieuwe HTTP download",
-    "Launch HTTP Download" : "Start HTTP Download",
-    "HTTP URL to download" : "HTTP URL voor download",
     "Options" : "Opties",
     "Basic Auth User" : "Basic Auth gebruiker",
     "Username" : "Gebruikersnaam",
@@ -136,12 +134,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Te bereiken standaardverhouding?",
     "unlimited" : "ongelimiteerd",
     "BitTorrent protocol settings - Seed time" : "BitTorrent protocol instellingen - Seed tijd",
-    "Seed time to reach?" : "Te bereiken seed tijd?",
-    "minute(s)" : "minu(u)t(en)",
-    "hour(s)" : "uur",
-    "day(s)" : "dag(en)",
-    "week(s)" : "Week/weken",
-    "month(s)" : "maand(en)",
-    "year(s)" : "jaar"
+    "Seed time to reach?" : "Te bereiken seed tijd?"
 },
 "nplurals=2; plural=(n != 1);");

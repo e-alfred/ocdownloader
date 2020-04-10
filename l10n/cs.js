@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "Načítání",
     "Add Download" : "Přidat stahování",
     "New HTTP download" : "Nové HTTP stahování",
-    "Launch HTTP Download" : "Spustit HTTP stahování",
-    "HTTP URL to download" : "HTTP URL pro stahování",
     "Options" : "Volby",
     "Basic Auth User" : "Basic Auth uživatel",
     "Username" : "Uživatelské jméno",
@@ -136,12 +134,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "Výchozí poměr, které dosáhnout",
     "unlimited" : "neomezené",
     "BitTorrent protocol settings - Seed time" : "Nastavení pro BitTorrent protokol – seed čas",
-    "Seed time to reach?" : "Seed čas, kterého dosáhnout?",
-    "minute(s)" : "minut",
-    "hour(s)" : "hodin",
-    "day(s)" : "dnů",
-    "week(s)" : "týdnů",
-    "month(s)" : "měsíců",
-    "year(s)" : "let"
+    "Seed time to reach?" : "Seed čas, kterého dosáhnout?"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

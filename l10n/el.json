@@ -63,8 +63,6 @@
     "Loading" : "Γίνεται φόρτωση",
     "Add Download" : "Προσθήκη λήψης",
     "New HTTP download" : "Νέα λήψη HTTP",
-    "Launch HTTP Download" : "Έναρξη Λήψης HTTP",
-    "HTTP URL to download" : "HTTP URL για λήψη",
     "Options" : "Επιλογές",
     "Basic Auth User" : "Βασικός Πιστοπ Χρήστης",
     "Username" : "Όνομα χρήστη",
@@ -134,12 +132,6 @@
     "Default ratio to reach?" : "Προεπιλεγμένο όριο αναλογίας;",
     "unlimited" : "απεριόριστο",
     "BitTorrent protocol settings - Seed time" : "Ρυθμίσεις πρωτοκόλλου BitTorrent - Διάρκεια διαμοιρασμού",
-    "Seed time to reach?" : "Όριο χρόνου Διαμοιρασμού;",
-    "minute(s)" : "λεπτό(ά)",
-    "hour(s)" : "ώρα(ες)",
-    "day(s)" : "ημέρα(ες)",
-    "week(s)" : "εβδομάδα(ες)",
-    "month(s)" : "μήνας(ες)",
-    "year(s)" : "έτος(η)"
+    "Seed time to reach?" : "Όριο χρόνου Διαμοιρασμού;"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

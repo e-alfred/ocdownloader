@@ -17,8 +17,6 @@ OC.L10N.register(
     "Loading" : "A carregar",
     "Add Download" : "Adicionar Transferência",
     "New HTTP download" : "Nova transferência de HTTP",
-    "Launch HTTP Download" : "Iniciar transferência de HTTP",
-    "HTTP URL to download" : "URL de HTTP para transferir",
     "Username" : "Nome de utilizador",
     "Password" : "Palavra-passe",
     "Filename" : "Nome do ficheiro",

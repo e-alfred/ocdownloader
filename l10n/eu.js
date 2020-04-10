@@ -52,12 +52,6 @@ OC.L10N.register(
     "Default Downloads Folder" : "Lehenetsitako deskargen karpeta",
     "Save" : "Gorde",
     "Default Torrents Folder" : "Lehenetsitako Torrent karpeta",
-    "unlimited" : "mugagabea",
-    "minute(s)" : "minutu",
-    "hour(s)" : "ordu",
-    "day(s)" : "egun",
-    "week(s)" : "aste",
-    "month(s)" : "hilabete",
-    "year(s)" : "urte"
+    "unlimited" : "mugagabea"
 },
 "nplurals=2; plural=(n != 1);");

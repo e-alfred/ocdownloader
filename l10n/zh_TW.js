@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "載入中",
     "Add Download" : "加入下載",
     "New HTTP download" : "新的HTTP下載任務",
-    "Launch HTTP Download" : "啟動HTTP下載任務",
-    "HTTP URL to download" : "欲下載的HTTP網址",
     "Options" : "設定",
     "Basic Auth User" : "基礎認證的使用者",
     "Username" : "使用者名稱",
@@ -130,12 +128,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "預設達成比例？",
     "unlimited" : "無限制",
     "BitTorrent protocol settings - Seed time" : "BitTorrent協定設定 - 做種時效",
-    "Seed time to reach?" : "達到做種時間？",
-    "minute(s)" : "分鐘",
-    "hour(s)" : "小時",
-    "day(s)" : "天",
-    "week(s)" : "週",
-    "month(s)" : "月",
-    "year(s)" : "年"
+    "Seed time to reach?" : "達到做種時間？"
 },
 "nplurals=1; plural=0;");

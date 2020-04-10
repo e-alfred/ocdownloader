@@ -65,8 +65,6 @@ OC.L10N.register(
     "Loading" : "読み込み中",
     "Add Download" : "ダウンロードを追加",
     "New HTTP download" : "新しいHTTPダウンロード",
-    "Launch HTTP Download" : "HTTPダウンロードの起動",
-    "HTTP URL to download" : "ダウンロードするHTTP URL",
     "Options" : "オプション",
     "Basic Auth User" : "基本認証ユーザー",
     "Username" : "ユーザー名",
@@ -134,12 +132,6 @@ OC.L10N.register(
     "Default ratio to reach?" : "規定の達成率?",
     "unlimited" : "無制限",
     "BitTorrent protocol settings - Seed time" : "BitTorrentプロトコル設定 - シード時間",
-    "Seed time to reach?" : "達成までのシード時間",
-    "minute(s)" : "分",
-    "hour(s)" : "時間",
-    "day(s)" : "日",
-    "week(s)" : "週",
-    "month(s)" : "月",
-    "year(s)" : "年"
+    "Seed time to reach?" : "達成までのシード時間"
 },
 "nplurals=1; plural=0;");

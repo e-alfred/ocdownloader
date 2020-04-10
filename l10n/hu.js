@@ -62,12 +62,6 @@ OC.L10N.register(
     "Yes" : "Igen",
     "General settings" : "Általános beállítások",
     "Save" : "Mentés",
-    "unlimited" : "korlátlan",
-    "minute(s)" : "perc",
-    "hour(s)" : "óra",
-    "day(s)" : "nap",
-    "week(s)" : "hét",
-    "month(s)" : "hónap",
-    "year(s)" : "év"
+    "unlimited" : "korlátlan"
 },
 "nplurals=2; plural=(n != 1);");
