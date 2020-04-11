@@ -69,7 +69,7 @@
 	<p>
 		<label for="OCDWhichDownloader"><?php print ($l->t ('Which downloader do you want to use?')); ?></label>
 		<select id="OCDWhichDownloader" class="ToUse" data-loader="OCDSLoaderGeneralSettings">
-			<option value="ARIA2" data-protocols="HTTP(S) / FTP(S) / YouTube / BitTorrent">ARIA2</option>
+			<option value="ARIA2" data-protocols="HTTP(S) / Magnet / FTP(S) / YouTube / BitTorrent">ARIA2</option>
 			<option value="CURL" data-protocols="HTTP(S) / FTP(S) / YouTube"<?php print ((isset ($_['OCDS_WhichDownloader']) && strcmp ($_['OCDS_WhichDownloader'], 'CURL') == 0) ? ' selected="selected"' : ''); ?>>cURL</option>
 		</select>
 		<span id="OCDWhichDownloaderDetails" class="details"><?php print ($l->t ('Available protocols') . ': '); ?><strong></strong></span>
@@ -99,7 +99,7 @@
 		<span id="OCDSLoaderPermissionsSettings" class="OCDSLoader icon-loading-small"></span><span id="OCDSLoaderPermissionsSettingsMsg" class="msg"></span>
 	</p>
 	<p>
-		<label for="OCDAllowProtocolHTTP"><?php print ($l->t ('Allow HTTP?')); ?></label>
+		<label for="OCDAllowProtocolHTTP"><?php print ($l->t ('Allow HTTP/Magnet?')); ?></label>
 		<select id="OCDAllowProtocolHTTP" class="ToUse" data-loader="OCDSLoaderPermissionsSettings">
 			<option value="Y"><?php print ($l->t ('Yes')); ?></option>
 			<option value="N"<?php print ((isset ($_['OCDS_AllowProtocolHTTP']) && strcmp ($_['OCDS_AllowProtocolHTTP'], 'N') == 0) ? ' selected="selected"' : ''); ?>><?php print ($l->t ('No')); ?></option>
