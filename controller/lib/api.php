@@ -88,7 +88,9 @@ class API extends Controller
             self::load();
 
             $URL = urldecode($URL);
-            if (Tools::checkURL($URL)) {
+            $isMagnet = Tools::isMagnet($URL);
+
+            if ($isMagnet || Tools::checkURL($URL)) {
                 if (preg_match('/^https{0,1}:\/\/www\.youtube\.com\/watch\?v=.*$/', $URL) == 1) {
                     if (!self::$AllowProtocolYT && !\OC_User::isAdminUser(self::$CurrentUID)) {
                         return array('ERROR' => true, 'MESSAGE' => 'Notallowedtouseprotocolyt');
@@ -129,7 +131,7 @@ class API extends Controller
                 $OPTIONS = array(
                     'dir' => self::$AbsoluteDownloadsFolder,
                     'out' => $DL['FILENAME'],
-                    'follow-torrent' => false
+                    'follow-torrent' => $isMagnet
                 );
                 if (!is_null(self::$ProxyAddress) && self::$ProxyPort > 0 && self::$ProxyPort <= 65536) {
                     $OPTIONS['all-proxy'] = rtrim(self::$ProxyAddress, '/') . ':' . self::$ProxyPort;
