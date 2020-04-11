@@ -134,6 +134,12 @@ OC.L10N.register(
     "Default ratio to reach?" : "Ratio par défaut à atteindre ?",
     "unlimited" : "illimité",
     "BitTorrent protocol settings - Seed time" : "Paramètres du protocole BitTorrent - Durée de partage",
-    "Seed time to reach?" : "Temps de partage à atteindre ?"
+    "Seed time to reach?" : "Temps de partage à atteindre ?",
+    "minutes" : "minutes",
+    "hours" : "heures",
+    "days" : "jours",
+    "weeks" : "semaines",
+    "months" : "mois",
+    "years" : "années"
 },
 "nplurals=2; plural=(n > 1);");

@@ -43,6 +43,12 @@ OC.L10N.register(
     "Max download speed ?" : "Mesti niðurhalshraði ?",
     "Default Downloads Folder" : "Sjálfgefin niðurhalsmappa",
     "Save" : "Vista",
-    "unlimited" : "ótakmarkað"
+    "unlimited" : "ótakmarkað",
+    "minutes" : "mínútur",
+    "hours" : "klukkustundir",
+    "days" : "dagar",
+    "weeks" : "vikur",
+    "months" : "mánuðir",
+    "years" : "ár"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

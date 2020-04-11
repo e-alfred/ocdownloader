@@ -11,6 +11,10 @@ OC.L10N.register(
     "Password" : "รหัสผ่าน",
     "No" : "ไม่ใช่",
     "Yes" : "ใช่",
-    "Save" : "บันทึก"
+    "Save" : "บันทึก",
+    "minutes" : "นาที",
+    "hours" : "ชั่วโมง",
+    "days" : "วัน",
+    "weeks" : "สัปดาห์"
 },
 "nplurals=1; plural=0;");

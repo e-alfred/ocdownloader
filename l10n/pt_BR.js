@@ -134,6 +134,12 @@ OC.L10N.register(
     "Default ratio to reach?" : "Taxa padrão a alcançar?",
     "unlimited" : "sem limite",
     "BitTorrent protocol settings - Seed time" : "Configurações do protocolo BitTorrent - Tempo de propagação",
-    "Seed time to reach?" : "Tempo de semeio a alcançar"
+    "Seed time to reach?" : "Tempo de semeio a alcançar",
+    "minutes" : "minutos",
+    "hours" : "horas",
+    "days" : "dias",
+    "weeks" : "semanas",
+    "months" : "meses",
+    "years" : "anos"
 },
 "nplurals=2; plural=(n > 1);");

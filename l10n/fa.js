@@ -132,6 +132,12 @@ OC.L10N.register(
     "Default ratio to reach?" : "نسبت پیش فرض برای رسیدن به؟",
     "unlimited" : "نامحدود",
     "BitTorrent protocol settings - Seed time" : "تنظیمات پروتکل BitTorrent - زمان بذر",
-    "Seed time to reach?" : "زمان رسیدن برای رسیدن؟"
+    "Seed time to reach?" : "زمان رسیدن برای رسیدن؟",
+    "minutes" : "دقیقه ها",
+    "hours" : "ساعت ها",
+    "days" : "روز ها",
+    "weeks" : "هفته ها",
+    "months" : "ماه ها",
+    "years" : "سال ها"
 },
 "nplurals=2; plural=(n > 1);");

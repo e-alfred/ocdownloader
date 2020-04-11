@@ -9,6 +9,7 @@ OC.L10N.register(
     "Password" : "ಗುಪ್ತ ಪದ",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "﻿ಉಳಿಸಿ"
+    "Save" : "﻿ಉಳಿಸಿ",
+    "days" : "﻿ದಿನಗಳು"
 },
 "nplurals=2; plural=(n > 1);");

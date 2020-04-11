@@ -13,6 +13,12 @@ OC.L10N.register(
     "No" : "Nie",
     "Yes" : "Áno",
     "General settings" : "Všeobecné nastavenia",
-    "Save" : "Uložiť"
+    "Save" : "Uložiť",
+    "minutes" : "minút",
+    "hours" : "hodín",
+    "days" : "dní",
+    "weeks" : "týždňov",
+    "months" : "mesiacov",
+    "years" : "rokov"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

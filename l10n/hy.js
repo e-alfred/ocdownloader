@@ -9,6 +9,9 @@ OC.L10N.register(
     "Password" : "Գաղտնաբառ",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Պահպանել"
+    "Save" : "Պահպանել",
+    "minutes" : "րոպե",
+    "hours" : "ժամ",
+    "days" : "օր"
 },
 "nplurals=2; plural=(n != 1);");

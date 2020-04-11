@@ -13,6 +13,10 @@ OC.L10N.register(
     "No" : "არა",
     "Yes" : "კი",
     "General settings" : "მთავარი პარამეტრები",
-    "Save" : "შენახვა"
+    "Save" : "შენახვა",
+    "minutes" : "წუთი",
+    "hours" : "საათი",
+    "days" : "დღე",
+    "weeks" : "კვირა"
 },
 "nplurals=2; plural=(n!=1);");

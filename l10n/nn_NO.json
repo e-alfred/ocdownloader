@@ -7,6 +7,8 @@
     "Password" : "Passord",
     "No" : "Nei",
     "Yes" : "Ja",
-    "Save" : "Lagre"
+    "Save" : "Lagre",
+    "minutes" : "minutt",
+    "hours" : "timar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -13,6 +13,10 @@ OC.L10N.register(
     "No" : "Non",
     "Yes" : "Sí",
     "General settings" : "Axustes xenerales",
-    "Save" : "Guardar"
+    "Save" : "Guardar",
+    "minutes" : "minutos",
+    "hours" : "hores",
+    "days" : "díes",
+    "weeks" : "selmanes"
 },
 "nplurals=2; plural=(n != 1);");

@@ -11,6 +11,10 @@
     "No" : "No",
     "Yes" : "Si",
     "General settings" : "Configuraciones generales",
-    "Save" : "Guardar"
+    "Save" : "Guardar",
+    "minutes" : "minutos",
+    "hours" : "horas",
+    "days" : "días",
+    "weeks" : "semanas"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

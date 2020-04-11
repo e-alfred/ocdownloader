@@ -9,6 +9,10 @@ OC.L10N.register(
     "Password" : "密碼",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "儲存"
+    "Save" : "儲存",
+    "minutes" : "分鐘",
+    "hours" : "小時",
+    "days" : "日",
+    "weeks" : "星期"
 },
 "nplurals=1; plural=0;");

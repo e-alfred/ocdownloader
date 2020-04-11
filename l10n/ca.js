@@ -128,6 +128,10 @@ OC.L10N.register(
     "Default ratio to reach?" : "Ratio màxima per defecte?",
     "unlimited" : "il·limitada",
     "BitTorrent protocol settings - Seed time" : "Preferències del protocol BitTorrent - Temps per sembrar",
-    "Seed time to reach?" : "Temps màxim per sembrar?"
+    "Seed time to reach?" : "Temps màxim per sembrar?",
+    "minutes" : "minuts",
+    "hours" : "hores",
+    "days" : "dies",
+    "weeks" : "setmanes"
 },
 "nplurals=2; plural=(n != 1);");

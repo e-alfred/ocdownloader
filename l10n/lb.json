@@ -9,6 +9,10 @@
     "Password" : "Passwuert",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Späicheren"
+    "Save" : "Späicheren",
+    "minutes" : "Minutten",
+    "hours" : "Stonnen",
+    "days" : "Deeg",
+    "weeks" : "Wochen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

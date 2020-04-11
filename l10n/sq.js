@@ -13,6 +13,10 @@ OC.L10N.register(
     "No" : "Jo",
     "Yes" : "Yes",
     "General settings" : "Opsjonet e Pergjithshme",
-    "Save" : "Ruaj"
+    "Save" : "Ruaj",
+    "minutes" : "minuta",
+    "hours" : "orë",
+    "days" : "ditë",
+    "weeks" : "javë"
 },
 "nplurals=2; plural=(n != 1);");

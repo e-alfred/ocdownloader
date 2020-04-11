@@ -10,6 +10,10 @@ OC.L10N.register(
     "Password" : "Senhal",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Salvar"
+    "Save" : "Salvar",
+    "minutes" : "minutas",
+    "hours" : "oras",
+    "days" : "jorns",
+    "weeks" : "setmanas"
 },
 "nplurals=2; plural=(n > 1);");

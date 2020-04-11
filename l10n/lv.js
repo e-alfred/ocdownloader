@@ -13,6 +13,10 @@ OC.L10N.register(
     "No" : "Nē",
     "Yes" : "Jā",
     "General settings" : "Vispārīgie iestatījumi",
-    "Save" : "Saglabāt"
+    "Save" : "Saglabāt",
+    "minutes" : "minūtes",
+    "hours" : "stundas",
+    "days" : "dienas",
+    "weeks" : "nedēļas"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

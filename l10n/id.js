@@ -12,6 +12,10 @@ OC.L10N.register(
     "Filename" : "Nama berkas",
     "No" : "Tidak",
     "Yes" : "Ya",
-    "Save" : "Simpan"
+    "Save" : "Simpan",
+    "minutes" : "menit",
+    "hours" : "jam",
+    "days" : "hari",
+    "weeks" : "minggu"
 },
 "nplurals=1; plural=0;");

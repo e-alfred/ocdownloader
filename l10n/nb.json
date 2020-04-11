@@ -11,6 +11,12 @@
     "No" : "Nei",
     "Yes" : "Ja",
     "General settings" : "Generelle innstillinger",
-    "Save" : "Lagre"
+    "Save" : "Lagre",
+    "minutes" : "minutter",
+    "hours" : "timer",
+    "days" : "dager",
+    "weeks" : "uker",
+    "months" : "måneder",
+    "years" : "år"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

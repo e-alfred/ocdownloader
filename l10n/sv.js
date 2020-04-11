@@ -31,6 +31,12 @@ OC.L10N.register(
     "General settings" : "Allmänna inställningar",
     "Available protocols" : "Tillgängliga protokoll",
     "Default Downloads Folder" : "Standardmapp för hämtningar",
-    "Save" : "Spara"
+    "Save" : "Spara",
+    "minutes" : "minuter",
+    "hours" : "timmar",
+    "days" : "dagar",
+    "weeks" : "veckor",
+    "months" : "månader",
+    "years" : "år"
 },
 "nplurals=2; plural=(n != 1);");

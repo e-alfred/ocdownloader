@@ -37,6 +37,10 @@ OC.L10N.register(
     "Yes" : "Sim",
     "Max download speed ?" : "Velocidade máxima de transferência?",
     "Default Downloads Folder" : "Pasta de Transferências Predefinida",
-    "Save" : "Guardar"
+    "Save" : "Guardar",
+    "minutes" : "minutos",
+    "hours" : "horas",
+    "days" : "dias",
+    "weeks" : "semanas"
 },
 "nplurals=2; plural=(n != 1);");

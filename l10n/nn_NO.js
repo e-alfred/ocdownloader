@@ -9,6 +9,8 @@ OC.L10N.register(
     "Password" : "Passord",
     "No" : "Nei",
     "Yes" : "Ja",
-    "Save" : "Lagre"
+    "Save" : "Lagre",
+    "minutes" : "minutt",
+    "hours" : "timar"
 },
 "nplurals=2; plural=(n != 1);");

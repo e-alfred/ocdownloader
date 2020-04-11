@@ -132,6 +132,12 @@ OC.L10N.register(
     "Default ratio to reach?" : "要达到的默认比例？",
     "unlimited" : "无限制",
     "BitTorrent protocol settings - Seed time" : "BitTorrent协议设置 － 做种时长",
-    "Seed time to reach?" : "要达到的做种时长？"
+    "Seed time to reach?" : "要达到的做种时长？",
+    "minutes" : "分钟",
+    "hours" : "小时",
+    "days" : "天",
+    "weeks" : "周",
+    "months" : "月",
+    "years" : "年"
 },
 "nplurals=1; plural=0;");

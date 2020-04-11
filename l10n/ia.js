@@ -9,6 +9,10 @@ OC.L10N.register(
     "Password" : "Contrasigno",
     "No" : "No",
     "Yes" : "Si",
-    "Save" : "Salveguardar"
+    "Save" : "Salveguardar",
+    "minutes" : "minutas",
+    "hours" : "horas",
+    "days" : "dies",
+    "weeks" : "septimanas"
 },
 "nplurals=2; plural=(n != 1);");

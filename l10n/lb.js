@@ -11,6 +11,10 @@ OC.L10N.register(
     "Password" : "Passwuert",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Späicheren"
+    "Save" : "Späicheren",
+    "minutes" : "Minutten",
+    "hours" : "Stonnen",
+    "days" : "Deeg",
+    "weeks" : "Wochen"
 },
 "nplurals=2; plural=(n != 1);");

@@ -120,6 +120,10 @@ OC.L10N.register(
     "Default Torrents Folder" : "תיקיית הטורנטים כבררת מחדל",
     "BitTorrent protocol settings - Ratio" : "הגדרות פרוטוקול ביטטורנט - יחס",
     "unlimited" : "ללא הגבלה",
-    "BitTorrent protocol settings - Seed time" : "הגדרות פרוטוקול ביטטורנט - זמן זריעה"
+    "BitTorrent protocol settings - Seed time" : "הגדרות פרוטוקול ביטטורנט - זמן זריעה",
+    "minutes" : "דקות",
+    "hours" : "שעות",
+    "days" : "ימים",
+    "weeks" : "שבועות"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

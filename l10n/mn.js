@@ -12,6 +12,8 @@ OC.L10N.register(
     "Filename" : "Файлын нэр",
     "No" : "Үгүй",
     "Yes" : "Тийм",
-    "Save" : "Хадгалах"
+    "Save" : "Хадгалах",
+    "hours" : "хугацаа",
+    "days" : "өдрүүд"
 },
 "nplurals=2; plural=(n != 1);");

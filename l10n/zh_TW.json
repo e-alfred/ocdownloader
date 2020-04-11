@@ -126,6 +126,12 @@
     "Default ratio to reach?" : "預設達成比例？",
     "unlimited" : "無限制",
     "BitTorrent protocol settings - Seed time" : "BitTorrent協定設定 - 做種時效",
-    "Seed time to reach?" : "達到做種時間？"
+    "Seed time to reach?" : "達到做種時間？",
+    "minutes" : "分鐘",
+    "hours" : "時",
+    "days" : "天",
+    "weeks" : "週",
+    "months" : "月",
+    "years" : "年"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

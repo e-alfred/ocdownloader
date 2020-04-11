@@ -132,6 +132,10 @@ OC.L10N.register(
     "Default ratio to reach?" : "規定の達成率?",
     "unlimited" : "無制限",
     "BitTorrent protocol settings - Seed time" : "BitTorrentプロトコル設定 - シード時間",
-    "Seed time to reach?" : "達成までのシード時間"
+    "Seed time to reach?" : "達成までのシード時間",
+    "minutes" : "分",
+    "hours" : "時間",
+    "days" : "日",
+    "weeks" : "週"
 },
 "nplurals=1; plural=0;");

@@ -61,8 +61,15 @@
     "INFORMATION" : "INFORMATIE",
     "SPEED" : "SNELHEID",
     "Loading" : "Laden",
+    "Magnet/HTTP" : "Magnet/HTTP",
+    "HTTP" : "HTTP",
     "Add Download" : "Download toevoegen",
+    "New Magnet/HTTP download" : "Nieuwe Magnet/HTTP download",
     "New HTTP download" : "Nieuwe HTTP download",
+    "Launch Magnet/HTTP download" : "Start Magnet/HTTP download",
+    "Launch HTTP download" : "Start HTTP download",
+    "Magnet/HTTP link to download" : "Magnet/HTTP link naar download",
+    "HTTP link to download" : "HTTP link naar download",
     "Options" : "Opties",
     "Basic Auth User" : "Basic Auth gebruiker",
     "Username" : "Gebruikersnaam",
@@ -132,6 +139,12 @@
     "Default ratio to reach?" : "Te bereiken standaardverhouding?",
     "unlimited" : "ongelimiteerd",
     "BitTorrent protocol settings - Seed time" : "BitTorrent protocol instellingen - Seed tijd",
-    "Seed time to reach?" : "Te bereiken seed tijd?"
+    "Seed time to reach?" : "Te bereiken seed tijd?",
+    "minutes" : "minuten",
+    "hours" : "uren",
+    "days" : "dagen",
+    "weeks" : "weken",
+    "months" : "maanden",
+    "years" : "jaren"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

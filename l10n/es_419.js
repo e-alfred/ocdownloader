@@ -13,6 +13,10 @@ OC.L10N.register(
     "No" : "No",
     "Yes" : "Sí",
     "General settings" : "Configuraciones generales",
-    "Save" : "Guardar"
+    "Save" : "Guardar",
+    "minutes" : "minutos",
+    "hours" : "horas",
+    "days" : "días",
+    "weeks" : "semanas"
 },
 "nplurals=2; plural=(n != 1);");

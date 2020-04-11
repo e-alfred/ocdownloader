@@ -13,6 +13,12 @@ OC.L10N.register(
     "No" : "Nei",
     "Yes" : "Ja",
     "General settings" : "Generelle innstillinger",
-    "Save" : "Lagre"
+    "Save" : "Lagre",
+    "minutes" : "minutter",
+    "hours" : "timer",
+    "days" : "dager",
+    "weeks" : "uker",
+    "months" : "måneder",
+    "years" : "år"
 },
 "nplurals=2; plural=(n != 1);");

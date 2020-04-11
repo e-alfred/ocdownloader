@@ -9,6 +9,10 @@ OC.L10N.register(
     "Password" : "Şifrə",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Saxla"
+    "Save" : "Saxla",
+    "minutes" : "dəqiqələr",
+    "hours" : "saatlar",
+    "days" : "günlər",
+    "weeks" : "həftələr"
 },
 "nplurals=2; plural=(n != 1);");

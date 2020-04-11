@@ -12,6 +12,10 @@ OC.L10N.register(
     "Filename" : "Faili nimi",
     "No" : "Ei",
     "Yes" : "Jah",
-    "Save" : "Salvesta"
+    "Save" : "Salvesta",
+    "minutes" : "minutit",
+    "hours" : "tundi",
+    "days" : "päeva",
+    "weeks" : "nädalat"
 },
 "nplurals=2; plural=(n != 1);");

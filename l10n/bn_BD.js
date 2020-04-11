@@ -10,6 +10,10 @@ OC.L10N.register(
     "Password" : "কূটশব্দ",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "সংরক্ষণ"
+    "Save" : "সংরক্ষণ",
+    "minutes" : "মিনিটসমূহ",
+    "hours" : "ঘন্টাসমূহ",
+    "days" : "দিনগুলি",
+    "weeks" : "সপ্তাহসমূহ"
 },
 "nplurals=2; plural=(n != 1);");

@@ -61,8 +61,15 @@
     "INFORMATION" : "INFORMACJA",
     "SPEED" : "PRĘDKOŚĆ",
     "Loading" : "Wczytywanie",
+    "Magnet/HTTP" : "Magnet/HTTP",
+    "HTTP" : "HTTP",
     "Add Download" : "Dodaj pliki do pobierania",
+    "New Magnet/HTTP download" : "Nowe pobieranie Magnet/HTTP",
     "New HTTP download" : "Nowe pobieranie HTTP",
+    "Launch Magnet/HTTP download" : "Uruchom pobieranie Magnet/HTTP",
+    "Launch HTTP download" : "Uruchom pobieranie HTTP",
+    "Magnet/HTTP link to download" : "Link Magnet/HTTP do pobrania",
+    "HTTP link to download" : "Link HTTP do pobrania",
     "Options" : "Opcje",
     "Basic Auth User" : "Użytkownik podstawowej autoryzacji",
     "Username" : "Nazwa użytkownika",
@@ -132,6 +139,12 @@
     "Default ratio to reach?" : "Domyślna ocena do otrzymania?",
     "unlimited" : "nieograniczony",
     "BitTorrent protocol settings - Seed time" : "Ustawienia protokołu BitTorrent - czas Seed-u",
-    "Seed time to reach?" : "Czas dostępu Seed-u?"
+    "Seed time to reach?" : "Czas dostępu Seed-u?",
+    "minutes" : "minuty",
+    "hours" : "godziny",
+    "days" : "dni",
+    "weeks" : "tygodnie",
+    "months" : "miesiące",
+    "years" : "lata"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

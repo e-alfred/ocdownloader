@@ -10,6 +10,10 @@
     "Filename" : "Faili nimi",
     "No" : "Ei",
     "Yes" : "Jah",
-    "Save" : "Salvesta"
+    "Save" : "Salvesta",
+    "minutes" : "minutit",
+    "hours" : "tundi",
+    "days" : "päeva",
+    "weeks" : "nädalat"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

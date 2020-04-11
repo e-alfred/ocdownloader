@@ -61,8 +61,15 @@
     "INFORMATION" : "ΠΛΗΡΟΦΟΡΙΕΣ",
     "SPEED" : "ΤΑΧΥΤΗΤΑ",
     "Loading" : "Γίνεται φόρτωση",
+    "Magnet/HTTP" : "Magnet/HTTP",
+    "HTTP" : "HTTP",
     "Add Download" : "Προσθήκη λήψης",
+    "New Magnet/HTTP download" : "Νέα λήψη με Magnet/HTTP",
     "New HTTP download" : "Νέα λήψη HTTP",
+    "Launch Magnet/HTTP download" : "Έναρξη λήψης με Magnet/HTTP",
+    "Launch HTTP download" : "Έναρξη λήψης HTTP",
+    "Magnet/HTTP link to download" : "Σύνδεσμος Magnet/HTTP για λήψη",
+    "HTTP link to download" : "Σύνδεσμος HTTP για λήψη",
     "Options" : "Επιλογές",
     "Basic Auth User" : "Βασικός Πιστοπ Χρήστης",
     "Username" : "Όνομα χρήστη",
@@ -132,6 +139,12 @@
     "Default ratio to reach?" : "Προεπιλεγμένο όριο αναλογίας;",
     "unlimited" : "απεριόριστο",
     "BitTorrent protocol settings - Seed time" : "Ρυθμίσεις πρωτοκόλλου BitTorrent - Διάρκεια διαμοιρασμού",
-    "Seed time to reach?" : "Όριο χρόνου Διαμοιρασμού;"
+    "Seed time to reach?" : "Όριο χρόνου Διαμοιρασμού;",
+    "minutes" : "λεπτά",
+    "hours" : "ώρες",
+    "days" : "ημέρες",
+    "weeks" : "εβδομάδες",
+    "months" : "μήνες",
+    "years" : "έτη"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

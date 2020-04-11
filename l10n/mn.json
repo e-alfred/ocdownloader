@@ -10,6 +10,8 @@
     "Filename" : "Файлын нэр",
     "No" : "Үгүй",
     "Yes" : "Тийм",
-    "Save" : "Хадгалах"
+    "Save" : "Хадгалах",
+    "hours" : "хугацаа",
+    "days" : "өдрүүд"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

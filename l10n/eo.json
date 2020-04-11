@@ -9,6 +9,10 @@
     "Filename" : "Dosiernomo",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Konservi"
+    "Save" : "Konservi",
+    "minutes" : "minutoj",
+    "hours" : "horojn",
+    "days" : "tagojn",
+    "weeks" : "semajnoj"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

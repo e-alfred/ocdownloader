@@ -10,6 +10,10 @@ OC.L10N.register(
     "Filename" : "Lêernaam",
     "No" : "Nee",
     "Yes" : "Ja",
-    "Save" : "Stoor"
+    "Save" : "Stoor",
+    "minutes" : "minute",
+    "hours" : "uur",
+    "days" : "dae",
+    "weeks" : "weke"
 },
 "nplurals=2; plural=(n != 1);");

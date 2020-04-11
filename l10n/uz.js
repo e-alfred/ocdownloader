@@ -8,6 +8,7 @@ OC.L10N.register(
     "Password" : "Parol",
     "No" : "Yo'q",
     "Yes" : "Ha",
-    "Save" : "Saqlash"
+    "Save" : "Saqlash",
+    "minutes" : "daqiqalar"
 },
 "nplurals=1; plural=0;");

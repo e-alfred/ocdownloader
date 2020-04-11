@@ -70,6 +70,10 @@ OC.L10N.register(
     "Default Downloads Folder" : "Privzeta mapa za prejem",
     "Save" : "Shrani",
     "Default Torrents Folder" : "Privzeta mapa za prenose torrent",
-    "unlimited" : "neomejeno"
+    "unlimited" : "neomejeno",
+    "minutes" : "minut",
+    "hours" : "ur",
+    "days" : "dni",
+    "weeks" : "tednov"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

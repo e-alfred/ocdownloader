@@ -61,8 +61,15 @@
     "INFORMATION" : "INFORMACIÓN",
     "SPEED" : "VELOCIDADE",
     "Loading" : "Cargando",
+    "Magnet/HTTP" : "Magnet/HTTP",
+    "HTTP" : "HTTP",
     "Add Download" : "Engadir descarga",
+    "New Magnet/HTTP download" : "Novo Magnet/descarga HTTP",
     "New HTTP download" : "Nova descarga HTTP",
+    "Launch Magnet/HTTP download" : "Iniciar Magnet//descarga HTTP",
+    "Launch HTTP download" : "Inicia a descarga HTTP",
+    "Magnet/HTTP link to download" : "Magnet/ligazón á descarga HTTP",
+    "HTTP link to download" : "Ligazón á descarga HTTP",
     "Options" : "Opcións",
     "Basic Auth User" : "Usuario básico de autenticación",
     "Username" : "Nome de usuario",
@@ -132,6 +139,12 @@
     "Default ratio to reach?" : "Proporción predeterminada para chegar?",
     "unlimited" : "sen límites",
     "BitTorrent protocol settings - Seed time" : "Axustes do protocolo BitTorrent - Tempo de semente",
-    "Seed time to reach?" : "Tempo de semente para chegar?"
+    "Seed time to reach?" : "Tempo de semente para chegar?",
+    "minutes" : "minutos",
+    "hours" : "horas",
+    "days" : "días",
+    "weeks" : "semanas",
+    "months" : "meses",
+    "years" : "anos"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

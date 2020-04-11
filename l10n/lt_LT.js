@@ -66,6 +66,10 @@ OC.L10N.register(
     "Allow FTP?" : "Leisti FTP?",
     "Allow YouTube?" : "Leisti YouTube?",
     "Save" : "Įrašyti",
-    "BitTorrent protocol settings - Ratio" : "BitTorrent protokolo nustatymai - Santykis"
+    "BitTorrent protocol settings - Ratio" : "BitTorrent protokolo nustatymai - Santykis",
+    "minutes" : "minutės",
+    "hours" : "valandų",
+    "days" : "dienų",
+    "weeks" : "savaitės"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

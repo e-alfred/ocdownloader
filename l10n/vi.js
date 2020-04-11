@@ -11,6 +11,8 @@ OC.L10N.register(
     "Filename" : "Tên tập tin",
     "No" : "Không",
     "Yes" : "Đồng ý",
-    "Save" : "Lưu"
+    "Save" : "Lưu",
+    "hours" : "giờ",
+    "days" : "ngày"
 },
 "nplurals=1; plural=0;");

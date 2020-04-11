@@ -10,6 +10,10 @@
     "Filename" : "Nama berkas",
     "No" : "Tidak",
     "Yes" : "Ya",
-    "Save" : "Simpan"
+    "Save" : "Simpan",
+    "minutes" : "menit",
+    "hours" : "jam",
+    "days" : "hari",
+    "weeks" : "minggu"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

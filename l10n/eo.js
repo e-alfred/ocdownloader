@@ -11,6 +11,10 @@ OC.L10N.register(
     "Filename" : "Dosiernomo",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Konservi"
+    "Save" : "Konservi",
+    "minutes" : "minutoj",
+    "hours" : "horojn",
+    "days" : "tagojn",
+    "weeks" : "semajnoj"
 },
 "nplurals=2; plural=(n != 1);");

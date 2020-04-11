@@ -61,8 +61,15 @@
     "INFORMATION" : "INFORMACE",
     "SPEED" : "RYCHLOST",
     "Loading" : "Načítání",
+    "Magnet/HTTP" : "Magnet/HTTP",
+    "HTTP" : "HTTP",
     "Add Download" : "Přidat stahování",
+    "New Magnet/HTTP download" : "Nové Magnet/HTTP stahování",
     "New HTTP download" : "Nové HTTP stahování",
+    "Launch Magnet/HTTP download" : "Spustit Magnet/HTTP stahování",
+    "Launch HTTP download" : "Spustit HTTP stahování",
+    "Magnet/HTTP link to download" : "Magnet/HTTP odkaz pro stažení",
+    "HTTP link to download" : "HTTP odkaz pro stažení",
     "Options" : "Volby",
     "Basic Auth User" : "Basic Auth uživatel",
     "Username" : "Uživatelské jméno",
@@ -132,6 +139,12 @@
     "Default ratio to reach?" : "Výchozí poměr, které dosáhnout",
     "unlimited" : "neomezené",
     "BitTorrent protocol settings - Seed time" : "Nastavení pro BitTorrent protokol – seed čas",
-    "Seed time to reach?" : "Seed čas, kterého dosáhnout?"
+    "Seed time to reach?" : "Seed čas, kterého dosáhnout?",
+    "minutes" : "minuty",
+    "hours" : "hodiny",
+    "days" : "dny",
+    "weeks" : "týdny",
+    "months" : "měsíce",
+    "years" : "roky"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

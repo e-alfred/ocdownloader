@@ -132,6 +132,12 @@ OC.L10N.register(
     "Default ratio to reach?" : "Zadani omjer koji treba dostići?",
     "unlimited" : "neograničeno",
     "BitTorrent protocol settings - Seed time" : "Postavke protokola BitTorrent – trajanje dijeljenja datoteke",
-    "Seed time to reach?" : "Trajanje dijeljenja koje treba dostići?"
+    "Seed time to reach?" : "Trajanje dijeljenja koje treba dostići?",
+    "minutes" : "minuta",
+    "hours" : "sati",
+    "days" : "dana",
+    "weeks" : "tjedana",
+    "months" : "mjeseci",
+    "years" : "godina"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

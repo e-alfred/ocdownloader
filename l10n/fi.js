@@ -78,6 +78,10 @@ OC.L10N.register(
     "Which downloader do you want to use?" : "Mitä lataajaa haluat käyttää?",
     "Default Downloads Folder" : "Oletusarvoinen latauskansio",
     "Save" : "Tallenna",
-    "Default Torrents Folder" : "Oletusarvoinen Torrent-kansio"
+    "Default Torrents Folder" : "Oletusarvoinen Torrent-kansio",
+    "minutes" : "minuuttia",
+    "hours" : "tuntia",
+    "days" : "päivää",
+    "weeks" : "viikkoa"
 },
 "nplurals=2; plural=(n != 1);");

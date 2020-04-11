@@ -13,6 +13,12 @@ OC.L10N.register(
     "No" : "Не",
     "Yes" : "Да",
     "General settings" : "Общи настройки",
-    "Save" : "Запазване"
+    "Save" : "Запазване",
+    "minutes" : "минути",
+    "hours" : "часове",
+    "days" : "дни",
+    "weeks" : "седмици",
+    "months" : "месеци",
+    "years" : "години"
 },
 "nplurals=2; plural=(n != 1);");

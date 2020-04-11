@@ -13,6 +13,10 @@ OC.L10N.register(
     "No" : "아니요",
     "Yes" : "예",
     "General settings" : "일반 설정",
-    "Save" : "저장"
+    "Save" : "저장",
+    "minutes" : "분",
+    "hours" : "시간",
+    "days" : "일",
+    "weeks" : "주"
 },
 "nplurals=1; plural=0;");

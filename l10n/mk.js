@@ -134,6 +134,12 @@ OC.L10N.register(
     "Default ratio to reach?" : "Достигнување на стандарден сооднос?",
     "unlimited" : "неограничено",
     "BitTorrent protocol settings - Seed time" : "Параметри за Torrent протокол - Време на сеење",
-    "Seed time to reach?" : "Достигнување на време на сеење?"
+    "Seed time to reach?" : "Достигнување на време на сеење?",
+    "minutes" : "минути",
+    "hours" : "часа",
+    "days" : "дена",
+    "weeks" : "недели",
+    "months" : "месеци",
+    "years" : "години"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

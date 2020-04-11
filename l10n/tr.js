@@ -134,6 +134,12 @@ OC.L10N.register(
     "Default ratio to reach?" : "Kullanılacak varsayılan oran?",
     "unlimited" : "sınırsız",
     "BitTorrent protocol settings - Seed time" : "BitTorrent iletişim kuralı ayarları - Tohumlama süresi",
-    "Seed time to reach?" : "Kullanılacak tohumlama süresi?"
+    "Seed time to reach?" : "Kullanılacak tohumlama süresi?",
+    "minutes" : "dakika",
+    "hours" : "saat",
+    "days" : "gün",
+    "weeks" : "hafta",
+    "months" : "ay",
+    "years" : "yıl"
 },
 "nplurals=2; plural=(n > 1);");
