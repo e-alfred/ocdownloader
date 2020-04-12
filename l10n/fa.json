@@ -119,7 +119,6 @@
     "BitTorrent protocol settings - Max upload speed" : "تنظیمات پروتکل BitTorrent - حداکثر سرعت بارگذاری",
     "BitTorrent protocol max upload speed?" : "پروتکل BitTorrent حداکثر سرعت بارگذاری دارد؟",
     "Allow protocols for users (except for members of the admin group)" : "اجازه پروتکل برای کاربران (به جز اعضای گروه مدیر)",
-    "Allow HTTP?" : "HTTP مجاز است؟",
     "Allow FTP?" : "FTP مجاز است؟",
     "Allow YouTube?" : "YouTube مجاز است؟",
     "Allow BitTorrent?" : "مجاز به BitTorrent است؟",

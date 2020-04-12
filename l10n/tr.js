@@ -123,7 +123,6 @@ OC.L10N.register(
     "BitTorrent protocol settings - Max upload speed" : "BitTorrent iletişim kuralı ayarları - En yüksek indirme hızı",
     "BitTorrent protocol max upload speed?" : "BitTorrent iletişim kuralı için en yüksek indirme hızı nedir?",
     "Allow protocols for users (except for members of the admin group)" : "Kullanıcıların kullanabileceği iletişim kuralları (yöneticiler grubu üyeleri dışında)",
-    "Allow HTTP?" : "HTTP kullanılsın mı?",
     "Allow FTP?" : "FTP kullanılsın mı?",
     "Allow YouTube?" : "YouTube kullanılsın mı?",
     "Allow BitTorrent?" : "BitTorrent kullanılsın mı?",

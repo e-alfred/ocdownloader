@@ -123,7 +123,6 @@ OC.L10N.register(
     "BitTorrent protocol settings - Max upload speed" : "Параметри за Torrent протокол - Максимална брзина за прикачување",
     "BitTorrent protocol max upload speed?" : "Torrent протокол максимална брзина за прикачување?",
     "Allow protocols for users (except for members of the admin group)" : "Дозволени протоколи за корисници (освен за членови на администраторските групи)",
-    "Allow HTTP?" : "Дозволи HTTP?",
     "Allow FTP?" : "Дозволи FTP?",
     "Allow YouTube?" : "Дозволи YouTube?",
     "Allow BitTorrent?" : "Дозволи Torrent?",

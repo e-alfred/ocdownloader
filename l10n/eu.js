@@ -45,7 +45,6 @@ OC.L10N.register(
     "Yes" : "Bai",
     "General settings" : "Ezarpen orokorrak",
     "Available protocols" : "Protokolo erabilgarria",
-    "Allow HTTP?" : "Baimendu HTTP?",
     "Allow FTP?" : "Baimendu FTP?",
     "Allow YouTube?" : "Baimendu YouTube?",
     "Allow BitTorrent?" : "Baimendu BitTorrent?",

@@ -62,7 +62,6 @@ OC.L10N.register(
     "Yes" : "Taip",
     "General settings" : "Bendri nustatymai",
     "Available protocols" : "Prieinami protokolai",
-    "Allow HTTP?" : "Leisti HTTP?",
     "Allow FTP?" : "Leisti FTP?",
     "Allow YouTube?" : "Leisti YouTube?",
     "Save" : "Įrašyti",

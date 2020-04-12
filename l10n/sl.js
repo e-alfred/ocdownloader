@@ -63,7 +63,6 @@ OC.L10N.register(
     "Yes" : "Da",
     "General settings" : "Splošne nastavitve",
     "Available protocols" : "Razpoložljivi protokoli",
-    "Allow HTTP?" : "Ali dovolite uporabo prenosa HTTP?",
     "Allow FTP?" : "Ali dovolite uporabo prenosa FTP?",
     "Allow YouTube?" : "Ali dovolite uporabo prenosa YouTube?",
     "Allow BitTorrent?" : "Ali dovolite uporabo prenosa Bittorrent?",

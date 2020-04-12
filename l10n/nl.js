@@ -130,7 +130,6 @@ OC.L10N.register(
     "BitTorrent protocol settings - Max upload speed" : "BitTorrent protocol instellingen - Max upload snelheid",
     "BitTorrent protocol max upload speed?" : "BitTorrent protocol max upload snelheid?",
     "Allow protocols for users (except for members of the admin group)" : "Toestaan protocollen voor gebruikers (behalve voor leden van de groep beheerders)",
-    "Allow HTTP?" : "Toestaan HTTP?",
     "Allow FTP?" : "Toestaan FTP?",
     "Allow YouTube?" : "Toestaan YouTube?",
     "Allow BitTorrent?" : "Toestaan BitTorrent?",

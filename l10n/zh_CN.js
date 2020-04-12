@@ -121,7 +121,6 @@ OC.L10N.register(
     "BitTorrent protocol settings - Max upload speed" : "BitTorrent协议设置 － 最大上传速度",
     "BitTorrent protocol max upload speed?" : "BitTorrent协议最大上传速度？",
     "Allow protocols for users (except for members of the admin group)" : "用户允许使用的协议（管理员组成员除外）",
-    "Allow HTTP?" : "允许 HTTP 吗？",
     "Allow FTP?" : "允许 FTP 吗？",
     "Allow YouTube?" : "允许 YouTube 吗？",
     "Allow BitTorrent?" : "允许 BitTorrent 吗？",
