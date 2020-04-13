@@ -130,6 +130,7 @@ OC.L10N.register(
     "BitTorrent protocol settings - Max upload speed" : "Ρυθμίσεις πρωτοκόλλου BitTorrent - Μέγιστη ταχύτητα μεταφόρτωσης",
     "BitTorrent protocol max upload speed?" : "Μέγιστη ταχύτητα μεταφόρτωσης πρωτοκόλλου BitTorrent;",
     "Allow protocols for users (except for members of the admin group)" : "Να επιτρέπονται τα πρωτόκολλα για χρήστες (εκτός από τα μέλη της ομάδας διαχειριστών)",
+    "Allow HTTP/Magnet?" : "Να επιτρέπονται τα HTTP/Magnet;",
     "Allow FTP?" : "Να επιτρέπεται FTP;",
     "Allow YouTube?" : "Να επιτρέπεται YouTube;",
     "Allow BitTorrent?" : "Να επιτρέπεται BitTorrent;",

@@ -128,6 +128,7 @@
     "BitTorrent protocol settings - Max upload speed" : "Nastavení pro protokol BitTorrent – nejvyšší nastavená rychlost odesílání",
     "BitTorrent protocol max upload speed?" : "Nejvyšší nastavená rychlost pro protokol BitTorrent?",
     "Allow protocols for users (except for members of the admin group)" : "Umožnit protokoly pro uživatele (s výjimkou členů skupiny admin)",
+    "Allow HTTP/Magnet?" : "Umožnit HTTP/Magnet?",
     "Allow FTP?" : "Umožnit FTP?",
     "Allow YouTube?" : "Umožnit stahování z YouTube?",
     "Allow BitTorrent?" : "Umožnit stahování typu BitTorrent?",
