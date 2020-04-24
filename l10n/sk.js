@@ -7,6 +7,7 @@ OC.L10N.register(
     "Paused" : "Pozastavené",
     "Upload" : "Nahrať",
     "Loading" : "Načítava sa...",
+    "Options" : "Možnosti",
     "Username" : "Používateľské meno",
     "Password" : "Heslo",
     "Filename" : "Názov súboru",
