@@ -74,6 +74,18 @@
 		</select>
 		<span id="OCDWhichDownloaderDetails" class="details"><?php print ($l->t ('Available protocols') . ': '); ?><strong></strong></span>
 	</p>
+	<div id="OCDBTSettings"<?php print ((isset ($_['OCDS_WhichDownloader']) && strcmp ($_['OCDS_WhichDownloader'], 'ARIA2') == 0) ? '' : ' style="display:none"'); ?>>
+	<p>
+		<label for="OCDAriaAddress"><?php print ($l->t ('ARIA2 Address')); ?></label>
+		<input type="text" class="OCDAriaAddress ToUse" id="OCDAriaAddress" data-loader="OCDSLoaderGeneralSettings" value="<?php print (isset ($_['OCDS_AriaAddress']) ? $_['OCDS_AriaAddress'] : ''); ?>" placeholder="http://127.0.0.1" />
+		<label for="OCDAriaPort"><?php print ($l->t ('ARIA2 Port')); ?></label>
+		<input type="text" class="OCDAriaPort ToUse" id="OCDAriaPort" data-loader="OCDSLoaderGeneralSettings" value="<?php print (isset ($_['OCDS_AriaPort']) ? $_['OCDS_AriaPort'] : ''); ?>" placeholder="6800" />
+	</p>
+	<p>
+		<label for="OCDAriaToken"><?php print ($l->t ('ARIA2 Secret Token')); ?></label>
+		<input type="password" class="OCDAriaToken ToUse" id="OCDAriaToken" data-loader="OCDSLoaderGeneralSettings" placeholder="<?php print ($l->t ('Secret Token')); ?>" />
+	</p>
+	</div>
 	<p>
 		<label for="OCDMaxDownloadSpeed"><?php print ($l->t ('Max download speed ?')); ?></label>
 		<input type="text" id="OCDMaxDownloadSpeed" data-loader="OCDSLoaderGeneralSettings" class="ToUse" value="<?php print (isset ($_['OCDS_MaxDownloadSpeed']) ? $_['OCDS_MaxDownloadSpeed'] : ''); ?>" placeholder="10000" />

@@ -10,15 +10,33 @@
  */
 namespace OCA\ocDownloader\Controller\Lib;
 
+use \OCA\ocDownloader\Controller\Lib\Settings;
+
 class Aria2
 {
     private static $Server = null;
+    private static $Token = null;
     private static $CurlHandler;
     
     public static function __callStatic($Name, $Args)
     {
-        self::$Server = 'http://127.0.0.1:6800/jsonrpc';
+        $Settings = new Settings();
+        $Settings->setKey('AriaAddress');
+        self::$Server = $Settings->getValue() ? $Settings->getValue() : '127.0.0.1';
+        self::$Server .= ':';
+        $Settings->setKey('AriaPort');
+        self::$Server .= $Settings->getValue() ? $Settings->getValue() : '6800';
+        self::$Server .= '/jsonrpc';
+
         $Args =(strcmp($Name, 'addTorrent') == 0 ? self::rebuildTorrentArgs($Args) : self::rebuildArgs($Args));
+
+        $Settings->setKey('AriaToken');
+        self::$Token = $Settings->getValue();
+
+        if (!empty(self::$Token)) {
+            self::$Token = 'token:' . self::$Token;
+            array_unshift($Args, self::$Token);
+        }
       
         self::load();
       

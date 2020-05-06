@@ -31,6 +31,15 @@ form#ocdownloader input.OCDProxyPort {
 form#ocdownloader input.OCDProxyUserFake, form#ocdownloader > p > input.OCDProxyPasswdFake {
 	display: none;
 }
+
+form#ocdownloader input.OCDAriaAddress {
+	width: 270px;
+}
+
+form#ocdownloader input.OCDAriaPort {
+	width: 102px;
+}
+
 form#ocdownloader span.info {
 	font-style: italic;
 	color: #003366;

@@ -27,7 +27,7 @@ class AdminSettings extends Controller
     private $OCDSettingKeys = array(
         'YTDLBinary', 'YTDLAudioFormat', 'YTDLVideoFormat', 'ProxyAddress', 'ProxyPort', 'ProxyUser', 'ProxyPasswd', 'WhichDownloader',
         'ProxyOnlyWithYTDL', 'AllowProtocolHTTP', 'AllowProtocolFTP', 'AllowProtocolYT', 'AllowProtocolBT',
-        'MaxDownloadSpeed', 'BTMaxUploadSpeed'
+        'MaxDownloadSpeed', 'BTMaxUploadSpeed', 'AriaAddress', 'AriaPort', 'AriaToken'
     );
     private $Settings = null;
 
@@ -97,6 +97,24 @@ class AdminSettings extends Controller
                         if (!in_array($PostValue, array('Y', 'N'))) {
                             $PostValue = 'Y';
                         }
+                    } elseif (strcmp($PostKey, 'AriaAddress') == 0) {
+                        if (!Tools::checkURL($PostValue) && strlen(trim($PostValue)) > 0) {
+                            $PostValue = null;
+                            $Error = true;
+                            $Message =(string)$this->L10N->t('Invalid Aria address URL');
+                        }
+                    } elseif (strcmp($PostKey, 'AriaPort') == 0) {
+                        if (!is_numeric($PostValue)) {
+                            $PostValue = null;
+                            $Error = true;
+                            $Message =(string)$this->L10N->t('Aria port should be a numeric value');
+                        } elseif ($PostValue <= 0 || $PostValue > 65536) {
+                            $PostValue = null;
+                            $Error = true;
+                            $Message =(string)$this->L10N->t('Aria port should be a value from 1 to 65536');
+                        }
+                    } elseif (strcmp($PostKey, 'AriaToken') == 0) {
+                        $Error = false;
                     } elseif (strcmp($PostKey, 'WhichDownloader') == 0) {
                         if (!in_array($PostValue, array('ARIA2', 'CURL'))) {
                             $PostValue = 'ARIA2';
