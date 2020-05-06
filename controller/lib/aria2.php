@@ -15,6 +15,7 @@ use \OCA\ocDownloader\Controller\Lib\Settings;
 class Aria2
 {
     private static $Server = null;
+    private static $Token = null;
     private static $CurlHandler;
     
     public static function __callStatic($Name, $Args)
@@ -28,6 +29,14 @@ class Aria2
         self::$Server .= '/jsonrpc';
 
         $Args =(strcmp($Name, 'addTorrent') == 0 ? self::rebuildTorrentArgs($Args) : self::rebuildArgs($Args));
+
+        $Settings->setKey('AriaToken');
+        self::$Token = $Settings->getValue();
+
+        if (!empty(self::$Token)) {
+            self::$Token = 'token:' . self::$Token;
+            array_unshift($Args, self::$Token);
+        }
       
         self::load();
       
