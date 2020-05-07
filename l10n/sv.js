@@ -17,6 +17,7 @@ OC.L10N.register(
     "FILENAME" : "FILNAMN",
     "PROTOCOL" : "PROTOKOLL",
     "Loading" : "Läser in",
+    "Options" : "Alternativ",
     "Username" : "Användarnamn",
     "Password" : "Lösenord",
     "Filename" : "Filnamn",
