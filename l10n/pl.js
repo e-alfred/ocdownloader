@@ -109,7 +109,7 @@ OC.L10N.register(
     "All Downloads" : "Wszystkie pliki do pobrania",
     "Complete Downloads" : "Kompletne pliki do pobrania",
     "Waiting Downloads" : "Oczekujące pliki do pobrania",
-    "Stopped Downloads" : "Zatrzymane pliki do pobierania",
+    "Stopped Downloads" : "Zatrzymane pliki do pobrania",
     "Removed Downloads" : "Usunięte pliki do pobrania",
     "Leave fields blank to reset a setting value" : "Pozostaw pola puste, aby zresetować wartość ustawienia",
     "YouTube DL Binary Path" : "Ścieżka do pliku binarnego YouTube DL",
