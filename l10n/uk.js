@@ -12,6 +12,7 @@ OC.L10N.register(
     "Filename" : "Ім'я файлу",
     "No" : "Ні",
     "Yes" : "Так",
+    "General settings" : "Загальні налаштування",
     "Save" : "Зберегти",
     "minutes" : "хвилини",
     "hours" : "години",
