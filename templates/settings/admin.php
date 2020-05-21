@@ -21,7 +21,7 @@
 	</p>
 	<p>
 		<label for="OCDYTDLAudoFormat"><?php print ($l->t ('YouTube DL Audio Format')); ?></label>
-		<input type="text" class="OCDYTDLAudioFormat ToUse" id="OCDYTDLAudioFormat" data-loader="OCDSLoaderYTDLAudioFormat" value="<?php print (isset ($_['OCDS_YTDLAudioFormat']) ? $_['OCDS_YTDLAudioFormat'] : 'bestaudio'); ?>" />
+		<input type="text" class="OCDYTDLAudioFormat ToUse" id="OCDYTDLAudioFormat" data-loader="OCDSLoaderYTDLAudioFormat" value="<?php print (isset ($_['OCDS_YTDLAudioFormat']) ? $_['OCDS_YTDLAudioFormat'] : 'bestaudio[abr<=75]'); ?>" />
 	</p>
 	<p>
 		<label for="OCDYTDLAudoFormat"><?php print ($l->t ('YouTube DL Video Format')); ?></label>

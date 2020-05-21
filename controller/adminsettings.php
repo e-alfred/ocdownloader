@@ -198,7 +198,7 @@ class AdminSettings extends Controller
                             $AdminSettings[$PostKey] = 'bestaudio';
                             break;
                         case 'YTDLVideoFormat':
-                            $AdminSettings[$PostKey] = 'best';
+                            $AdminSettings[$PostKey] = 'best[width<=1280]';
                             break;
                         case 'CheckForUpdates':
                             $AdminSettings[$PostKey] = 'Y';

@@ -64,7 +64,7 @@ class YTDownloader extends Controller
         $Settings->setKey('YTDLAudioFormat');
         $YTDLAudioFormat = $Settings->getValue();
 
-        $this->YTDLAudioFormat = 'bestaudio'; // default path
+        $this->YTDLAudioFormat = 'bestaudio[abr<=75]'; // default path
         if (!is_null($YTDLAudioFormat)) {
             $this->YTDLAudioFormat = $YTDLAudioFormat;
         }
@@ -72,7 +72,7 @@ class YTDownloader extends Controller
         $Settings->setKey('YTDLVideoFormat');
         $YTDLVideoFormat = $Settings->getValue();
 
-        $this->YTDLVideoFormat = 'best'; // default path
+        $this->YTDLVideoFormat = 'best[width<=1280]'; // default path
         if (!is_null($YTDLVideoFormat)) {
             $this->YTDLVideoFormat = $YTDLVideoFormat;
         }

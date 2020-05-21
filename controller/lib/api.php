@@ -451,7 +451,7 @@ class API extends Controller
         $Settings->setKey('YTDLAudioFormat');
         $YTDLAudioFormat = $Settings->getValue();
 
-        self::$YTDLAudioFormat = 'bestaudio'; // default path
+        self::$YTDLAudioFormat = 'bestaudio[abr<=75]'; // default path
         if (!is_null($YTDLAudioFormat)) {
             self::$YTDLAudioFormat = $YTDLAudioFormat;
         }
@@ -459,7 +459,7 @@ class API extends Controller
         $Settings->setKey('YTDLVideoFormat');
         $YTDLVideoFormat = $Settings->getValue();
 
-        self::$YTDLVideoFormat = 'best'; // default path
+        self::$YTDLVideoFormat = 'best[width<=1280]'; // default path
         if (!is_null($YTDLVideoFormat)) {
             self::$YTDLVideoFormat = $YTDLVideoFormat;
         }
