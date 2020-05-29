@@ -7,6 +7,7 @@ OC.L10N.register(
     "Paused" : "Dihentikan",
     "Upload" : "Unggah",
     "Loading" : "Memuat",
+    "Options" : "Pilihan",
     "Username" : "Nama pengguna",
     "Password" : "Kata kunci",
     "Filename" : "Nama berkas",
