@@ -10,4 +10,4 @@ OC.L10N.register(
     "Yes" : "Yes",
     "Save" : "ساقلا"
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=(n != 1);");
