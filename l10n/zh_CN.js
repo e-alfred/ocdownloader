@@ -103,6 +103,8 @@ OC.L10N.register(
     "Removed Downloads" : "已移除的下载任务",
     "Leave fields blank to reset a setting value" : "将字段留空以重置设置值",
     "YouTube DL Binary Path" : "YouTube DL 程序路径",
+    "YouTube DL Audio Format" : "YouTube DL 音频格式",
+    "YouTube DL Video Format" : "YouTube DL 视频格式",
     "Proxy settings" : "代理设置",
     "Proxy Address" : "代理地址",
     "Proxy Port" : "代理端口",
