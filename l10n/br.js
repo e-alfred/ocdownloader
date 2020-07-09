@@ -2,6 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Saved" : "Enrolet",
+    "Uploaded" : "Pellkaset",
     "Loading" : "Kargañ",
     "Username" : "anv implijer",
     "Password" : "Ger-tremen",
