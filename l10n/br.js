@@ -6,6 +6,7 @@ OC.L10N.register(
     "Loading" : "Kargañ",
     "Username" : "anv implijer",
     "Password" : "Ger-tremen",
+    "Filename" : "Anv restr",
     "No" : "Nan",
     "Yes" : "Ya",
     "Save" : "Entilañ",
