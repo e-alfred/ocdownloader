@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Saved" : "Enrolet",
     "Uploaded" : "Pellkaset",
+    "Upload" : "Pellkas",
     "Loading" : "Kargañ",
     "Username" : "anv implijer",
     "Password" : "Ger-tremen",
