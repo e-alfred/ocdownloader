@@ -10,6 +10,7 @@ OC.L10N.register(
     "Filename" : "Anv restr",
     "No" : "Nan",
     "Yes" : "Ya",
+    "General settings" : "Stummoù hollek",
     "Save" : "Entilañ",
     "hours" : "eur",
     "days" : "devezh"

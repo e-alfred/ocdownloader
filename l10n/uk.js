@@ -7,6 +7,7 @@ OC.L10N.register(
     "Paused" : "Призупинено",
     "Upload" : "Вивантажити",
     "Loading" : "Завантаження",
+    "Options" : "Параметри",
     "Username" : "Логін",
     "Password" : "Пароль",
     "Filename" : "Ім'я файлу",
