@@ -55,6 +55,10 @@ If you don't have Aria2 available on your server, you can use Curl which is dire
  Afterwards, you have to make sure that fallback.sh and fallback.php in the /SERVER directory of the ocDownloader app are executeable by your webserver user:
 
  `chmod +x SERVER/fallback.*`
+ 
+ Enable Curl through the ocdownloader config page
+ 
+ https://**nextcloud.url**/index.php/settings/admin/additional
 
 If you have problems with Curl, the log files are saved to the /tmp folder on your server with these semicolon-seperated values:
 
