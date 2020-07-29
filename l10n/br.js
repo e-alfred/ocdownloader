@@ -1,7 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "Saved" : "Enrolet",
+    "Saved" : "Enrollet",
     "Uploaded" : "Pellkaset",
     "Upload" : "Pellkas",
     "Loading" : "Kargañ",
@@ -11,7 +11,7 @@ OC.L10N.register(
     "No" : "Nan",
     "Yes" : "Ya",
     "General settings" : "Stummoù hollek",
-    "Save" : "Entilañ",
+    "Save" : "Enrollañ",
     "hours" : "eur",
     "days" : "devezh"
 },
