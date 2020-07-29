@@ -189,74 +189,87 @@ class Queue extends Controller
 
                             if ($Row['STATUS'] != $DLStatus) {
                                 if($Row['PROTOCOL'] == "MAGNET" && $DLStatus == 0 && isset($Status["result"]["followedBy"]) && count( $Status["result"]["followedBy"]) > 0) {
+                                    /* Follow magnet download requests when the initial meta request is finished.
+                                     * Do not delete this meta request at this stage.
+                                     * We will need the GID of this meta request to trace the newly generated
+                                     * download requests after aria2 is restarted.
+                                     */
+
                                     $followedBy = $Status["result"]["followedBy"];
-
-                                    $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue`
-						WHERE `UID` = ? AND `GID` = ?';
-                                    if ($this->$DbType == 1) {
-                                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue
-						WHERE "UID" = ? AND "GID" = ?';
-                                    }
-
-                                    $Query = \OC_DB::prepare($SQL);
-                                    $Result = $Query->execute(array(
-                                        $this->CurrentUID,
-                                        $Row['GID']
-                                    ));
 
                                     foreach ($followedBy as $followed) {
                                         $followedStatus =($this->$WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
                                         if (!isset($followedStatus['error'])) {
-                                            $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
-								 (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                                            if ($this->$DbType == 1) {
-                                                $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-								("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
+                                            // Check if GID already exists
+
+                                            $exists = false;
+
+                                            $existQuerySQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
+                                            if ($this->DbType == 1) {
+                                                $existQuerySQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
                                             }
-                                            $addQuery = \OC_DB::prepare($addSQL);
-                                            $addQuery->execute(array(
+                                            $existQuery = \OC_DB::prepare($existQuerySQL);
+                                            $existRequest = $existQuery->execute(array(
                                                 $this->CurrentUID,
                                                 $followed,
-                                                $followedStatus["result"]["bittorrent"]["info"]["name"],
-                                                "TORRENT",
-                                                1,
-                                                time()
                                             ));
+                                            while ($existRequest->fetchRow()) {
+                                                $exists = true;
+                                            }
+
+                                            if (!$exists) {
+                                                // Insert to download queue if GID is new
+
+                                                $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
+                                                    (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
+                                                if ($this->$DbType == 1) {
+                                                    $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
+                                                        ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
+                                                }
+                                                $addQuery = \OC_DB::prepare($addSQL);
+                                                $addQuery->execute(array(
+                                                    $this->CurrentUID,
+                                                    $followed,
+                                                    $followedStatus["result"]["bittorrent"]["info"]["name"],
+                                                    "TORRENT",
+                                                    1,
+                                                    time()
+                                                ));
+                                            }
                                         }
                                     }
                                 }
-                                else {
-                                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-		                                    SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                                    if ($this->DbType == 1) {
-                                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-		                                        SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
-                                    }
 
-                                    $Query = \OC_DB::prepare($SQL);
-                                    $Result = $Query->execute(array(
-                                        $DLStatus,
-                                        $this->CurrentUID,
-                                        $Row['GID'],
-                                        4
-                                    ));
+                                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
+	                                    SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
+                                if ($this->DbType == 1) {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue
+	                                        SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
                                 }
+
+                                $Query = \OC_DB::prepare($SQL);
+                                $Result = $Query->execute(array(
+                                    $DLStatus,
+                                    $this->CurrentUID,
+                                    $Row['GID'],
+                                    4
+                                ));
 
                                 $DownloadUpdated = true;
                             }
                         } else {
-                            $Queue[] = array(
-                                'GID' => $Row['GID'],
-                                'PROGRESSVAL' => 0,
-                                'PROGRESS' =>(string)$this->L10N->t('Error, GID not found !'),
-                                'STATUS' =>(string)$this->L10N->t('N/A'),
-                                'STATUSID' => $DLStatus,
-                                'SPEED' =>(string)$this->L10N->t('N/A'),
-                                'FILENAME' => $Row['FILENAME'],
-                                'FILENAME_SHORT' => Tools::getShortFilename($Row['FILENAME']),
-                                'PROTO' => $Row['PROTOCOL'],
-                                'ISTORRENT' => isset($Status['result']['bittorrent'])
-                            );
+                            /* Delete invalid request if GID is not found */
+
+                            $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
+                            if ($this->$DbType == 1) {
+                                $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
+                            }
+
+                            $Query = \OC_DB::prepare($SQL);
+                            $Result = $Query->execute(array(
+                                $this->CurrentUID,
+                                $Row['GID']
+                            ));
                         }
                     } else {
                         $Queue[] = array(
