@@ -538,7 +538,7 @@ class Queue extends Controller
                     && strcmp($Status['result']['status'], 'complete') != 0) {
                     $Remove =(
                     $this->WhichDownloader == 0
-                        ? Aria2::remove($_POST['GID'])
+                        ? Aria2::forceRemove($_POST['GID'])
                         :CURL::remove($Status['result'])
                     );
                 } elseif ($this->WhichDownloader != 0 && strcmp($Status['result']['status'], 'complete') == 0) {
@@ -660,7 +660,7 @@ class Queue extends Controller
 
                 $Remove = $this->WhichDownloader == 0 ? Aria2::removeDownloadResult($_POST['GID']) : CURL::removeDownloadResult($_POST['GID']);
                 if ($Remove['result'] != 'OK') {
-                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => 'Downloader returns error: ' . $Remove['message']));
+                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => 'Downloader returns error: ' . json_encode($Remove)));
                 }
 
                 $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
