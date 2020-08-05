@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Saved" : "Enrollet",
     "Uploaded" : "Pellkaset",
+    "Active" : "O labourat",
     "Upload" : "Pellkas",
     "Loading" : "Kargañ",
     "Username" : "anv implijer",
