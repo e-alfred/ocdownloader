@@ -99,7 +99,7 @@ OC.L10N.register(
     "Launch YouTube Download" : "Стартувај YouTube превземање",
     "YouTube Video URL to download" : "YouTube Видео URL за превземање",
     "Only Extract audio ?" : "Само аудио ?",
-    "(No post-processing, just extract the best audio quality)" : "(Нема пост-обработка, само го оздвојува најдобриот аудио квалитет)",
+    "(No post-processing, just extract the best audio quality)" : "(Нема пост-обработка, само го издвојува најдобриот аудио квалитет)",
     "Force IPv4 ?" : "Форсирај IPv4?",
     "New BitTorrent download" : "Ново Torrent превземање",
     "Launch BitTorrent Download" : "Стартувај Torrent превземање ",
