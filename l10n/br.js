@@ -2,6 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Saved" : "Enrollet",
+    "Video" : "Video",
     "Uploaded" : "Pellkaset",
     "Active" : "O labourat",
     "Upload" : "Pellkas",
