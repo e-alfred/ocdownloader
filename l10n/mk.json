@@ -26,7 +26,7 @@
     "Undefined field" : "Недефинирано поле",
     "Uploaded" : "Прикачено",
     "Ratio" : "Сооднос",
-    "Removed" : "Одстрането",
+    "Removed" : "Отстрането",
     "Seeding" : "Сеење",
     "Error, GID not found !" : "Грешка, GID не е пронајден!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Повратниот статус е null! Дали Aria2c сервисот е стартуван?",
