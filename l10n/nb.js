@@ -5,6 +5,7 @@ OC.L10N.register(
     "Video" : "Video",
     "Uploaded" : "Opplastet",
     "Paused" : "Pauset",
+    "Active" : "Aktiv",
     "Upload" : "Last opp",
     "Loading" : "Laster",
     "Username" : "Brukernavn",
