@@ -28,10 +28,20 @@ class Tools
         return false;
     }
 
+    public static function isMagnet($URL)
+    {
+        $magnetPattern = '%magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}%i';
+        preg_match($magnetPattern, $URL, $Matches);
+        if (count($Matches) === 1) {
+            return true;
+        }
+        return false;
+    }
+
     public static function checkFilepath($FP)
     {
         if (\OC\Files\Filesystem::file_exists($FP)) {
-              return true;
+            return true;
         }
         return false;
     }
@@ -62,16 +72,6 @@ class Tools
         }
 
         return $Bytes;
-    }
-
-    public static function checkBinary($Binary)
-    {
-        exec('which ' . $Binary, $Output, $Return);
-
-        if ($Return == 0) {
-            return true;
-        }
-        return false;
     }
 
     public static function cleanString($Text)
@@ -141,7 +141,7 @@ class Tools
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "STOPPED",'
                 .'(SELECT COUNT(*) FROM *PREFIX*ocdownloader_queue WHERE "STATUS" = ? AND "UID" = ?) as "REMOVED"';
         }
-        $Query = \OCP\DB::prepare($SQL);
+        $Query = \OC_DB::prepare($SQL);
         $Request = $Query->execute(array(5, $UID, 0, $UID, 1, $UID, 2, $UID, 3, $UID, 4, $UID));
 
         return $Request->fetchRow();
@@ -155,41 +155,7 @@ class Tools
     public static function endsWith($Haystack, $Needle)
     {
         return $Needle === "" ||(($Temp = strlen($Haystack) - strlen($Needle)) >= 0
-            && strpos($Haystack, $Needle, $Temp) !== false);
-    }
-
-    public static function getLastVersionNumber()
-    {
-        $CH = curl_init('https://raw.githubusercontent.com/e-alfred/ocdownloader/master/appinfo/version');
-
-        curl_setopt_array($CH, array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_CONNECTTIMEOUT => 10,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_MAXREDIRS => 10
-        ));
-
-        $Data = curl_exec($CH);
-        curl_close($CH);
-
-        return $Data;
-    }
-
-    public static function canCheckForUpdate()
-    {
-        // Is the user in the admin group ?
-        if (\OC_User::isAdminUser(\OC_User::getUser())) {
-            // Is the ocdownloader option to automatically check is enable ?
-            $Settings = new Settings();
-            $Settings->setKey('CheckForUpdates');
-            $CheckForUpdates = $Settings->getValue();
-            if (strcmp($CheckForUpdates, 'Y') == 0 || is_null($CheckForUpdates)) {
-                return true;
-            }
-        }
-        return false;
+                && strpos($Haystack, $Needle, $Temp) !== false);
     }
 
     public static function resetAria2($DbType)
@@ -198,7 +164,7 @@ class Tools
         if ($DbType == 1) {
             $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue';
         }
-        $Query = \OCP\DB::prepare($SQL);
+        $Query = \OC_DB::prepare($SQL);
         $Request = $Query->execute();
 
         while ($Row = $Request->fetchRow()) {
@@ -216,7 +182,7 @@ class Tools
             if ($DbType == 1) {
                 $SQL = 'TRUNCATE TABLE *PREFIX*ocdownloader_queue';
             }
-            $Query = \OCP\DB::prepare($SQL);
+            $Query = \OC_DB::prepare($SQL);
             $Request = $Query->execute();
         }
     }
@@ -233,9 +199,10 @@ class Tools
         $From = strtotime('now');
         return round(abs($To - $From) / 60, 2);
     }
-    
+
     public static function getShortFilename($filename)
     {
         return mb_strlen($filename, "UTF-8") > 40 ? mb_substr($filename, 0, 40, "UTF-8") . '...' : $filename;
     }
+
 }

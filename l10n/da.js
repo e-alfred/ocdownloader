@@ -1,36 +1,31 @@
-/**
- * ownCloud - ocDownloader
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the LICENSE file.
- *
- * @author Xavier Beurois <www.sgc-univ.net>
- * @Translation author : Janus Ljósheim, Johannes Hessellund
- * @copyright Xavier Beurois 2015
- */
-
-OC.L10N.register
-(
+OC.L10N.register(
     "ocdownloader",
-	{
-        "Unable to find the GID for this download ...": "Kunne ikke finde GID for denne download ...",
-        "No Torrent Files": "Ingen torrents",
-        "Upload": "Opload",
-        "Waiting": "Venter",
-        "Invalid URL. Please check the address of the file ...": "Ugyldig URL. Tjek venligst adressen ...",
-        "Launch YouTube Download": "Begynd YouTube download",
-        "Select a file.torrent": "Vælg en fil.torrent",
-        "Please select a file.torrent": "Vælg venligst en fil.torrent",
-        "No downloads in the queue ...": "Ingen downloads i køen ...",
-        "Removed": "Slettet",
-        "Active": "Aktiv",
-        "Paused": "På pause",
-        "HTTP": "HTTP",
-        "HTTPS": "HTTPS",
-        "FTP": "FTP",
-        "FTPS": "FTPS",
-        "BitTorrent": "BitTorrent",
-        "YT Audio": "YT Audio",
-        "YT Video": "YT Video"
-    }
-)
+    {
+    "Saved" : "Gemt",
+    "Video" : "Video",
+    "Unknown field" : "Ukendt felt",
+    "Undefined field" : "Udefineret felt",
+    "Uploaded" : "Uploadet ",
+    "Ratio" : "Størrelsesforhold",
+    "Removed" : "Fjernet",
+    "The download has been paused" : "Download er blevet sat på pause",
+    "An error occurred while pausing the download" : "Der opstod en fejl, da download blev sat på pause",
+    "The download has been unpaused" : "Download er ikke længere på pause",
+    "Paused" : "Sat på pause",
+    "Upload" : "Upload",
+    "Loading" : "Indlæser",
+    "Username" : "Brugernavn",
+    "Password" : "Adgangskode",
+    "Filename" : "Filnavn",
+    "No" : "Nej",
+    "Yes" : "Ja",
+    "General settings" : "Generelle indstillinger",
+    "Save" : "Gem",
+    "minutes" : "minutter",
+    "hours" : "timer",
+    "days" : "dage",
+    "weeks" : "uger",
+    "months" : "måneder",
+    "years" : "år"
+},
+"nplurals=2; plural=(n != 1);");

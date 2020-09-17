@@ -7,8 +7,14 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
+#app {
+	width: 100%;
+}
 #app-navigation {
   padding-bottom: 0;
+}
+#app-navigation ul > li {
+  display: block;
 }
 #app-navigation li[data-id="all"] {
   border-bottom: 1px solid #ddd;
@@ -30,7 +36,6 @@
     background-color: #ddd;
 }
 #app-navigation li div.badge {
-  position: relative;
 }
 #app-navigation .badger-outter {
 	float: left;
@@ -57,22 +62,9 @@
 #app-navigation .badger-number {
 	font-size: 12px;
 }
-#app-navigation .nav-updater {
-  bottom: 0;
-  position: absolute !important;
-  display: none;
-}
-#app-navigation .nav-updater h3 {
-  background-color: #66ff66;
-  line-height: 50px;
-  padding: 0 12px 10px;
-  color: #009900;
-  font-size: 20px;
-}
-#app-navigation .nav-updater h3 .button {
-  height: 40px;
-  line-height: 30px;
-  text-align: center;
+
+#app-content-wrapper {
+  display: block;
 }
 #app-content-wrapper .table {
   width: 100%;
@@ -107,7 +99,7 @@
 }
 #app-content-wrapper .content-page {
   padding: 0 20px;
-  height: 300px;
+  height: 450px;
   border-bottom: 1px solid #ddd;
 }
 #app-content-wrapper h3, #app-content-wrapper .h3 {
@@ -142,6 +134,7 @@
 #app-content-wrapper .actions {
   display: inline-block;
   padding: 5px;
+	flex-shrink: 0;
 }
 #app-content-wrapper .actions > div.button {
   margin: 0;
@@ -183,7 +176,7 @@
   margin-left: 0;
   width: 800px;
   z-index: 10;
-  padding-bottom: 0px;  
+  padding-bottom: 0px;
 }
 #app-content-wrapper #TorrentsList > ul > li {
   background: transparent url('../img/torrent.png') no-repeat scroll 10px 8px;
@@ -354,7 +347,7 @@
 }
 #app-content-wrapper .content-queue > table > tbody > tr > td .pb-text {
   position: absolute;
-  top:0; 
+  top:0;
   left:0;
   padding: 2px 0 2px 5px;
   width: 100%;
@@ -388,4 +381,47 @@
 #app-content-wrapper .content-queue > table > tbody > tr[data-rel="LOADER"] > td > div.icon-loading-small {
   float: left;
   margin: .2em .5em 0 .2em;
+}
+
+/* Fixes for Nextcloud 14+ layout */
+
+.app-ocdownloader #controls .actions > div > .button,
+.app-ocdownloader #controls .actions > .button,
+.app-ocdownloader #controls .actions > div button,
+.app-ocdownloader #controls .actions button {
+  display: block;
+  width: auto;
+  float: left;
+}
+
+.app-ocdownloader #app-content-wrapper .content-queue {
+  flex-grow: 1;
+  margin-bottom: 40px;
+}
+
+.app-ocdownloader #app-content-wrapper #controls {
+    position: relative;
+    width: auto;
+    flex: 0 0 100%;
+    top: 0;
+}
+
+.app-ocdownloader #app-content-wrapper #controls p.lead {
+  margin-top: 15px
+}
+
+.app-ocdownloader #app-content #app-content-wrapper {
+  flex-wrap: wrap;
+	min-width: 800px
+}
+
+.app-ocdownloader #app-content-wrapper .content-page {
+    width: 100%;
+}
+
+.app-ocdownloader #app-content-wrapper .loadingtext {
+  width: 100%;
+  float: left;
+  clear: both;
+  margin-top: -40px;
 }

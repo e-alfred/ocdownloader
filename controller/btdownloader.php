@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -46,7 +46,7 @@ class BTDownloader extends Controller
     {
         parent::__construct($AppName, $Request);
 
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 
@@ -111,7 +111,7 @@ class BTDownloader extends Controller
      */
     public function add()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         if (isset($_POST['FILE']) && strlen(trim($_POST['FILE'])) > 0
             && (Tools::checkURL($_POST['FILE']) || Tools::checkFilepath($this->TorrentsFolder . '/' . $_POST['FILE']))
@@ -166,7 +166,7 @@ class BTDownloader extends Controller
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = \OC_DB::prepare($SQL);
                     $Result = $Query->execute(array(
                         $this->CurrentUID,
                         $AddTorrent['result'],
@@ -233,7 +233,7 @@ class BTDownloader extends Controller
      */
     public function listTorrentFiles()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         try {
             if (!$this->AllowProtocolBT && !\OC_User::isAdminUser($this->CurrentUID)) {
@@ -261,7 +261,7 @@ class BTDownloader extends Controller
      */
     public function uploadFiles()
     {
-        \OCP\JSON::setContentTypeHeader('text/plain');
+        header( 'Content-Type: text/plain; charset=utf-8');
 
         if (!$this->AllowProtocolBT && !\OC_User::isAdminUser($this->CurrentUID)) {
             return new JSONResponse(

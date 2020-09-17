@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -42,7 +42,7 @@ class FtpDownloader extends Controller
     {
         parent::__construct($AppName, $Request);
 
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 
@@ -88,7 +88,7 @@ class FtpDownloader extends Controller
      */
     public function add()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         if (isset($_POST['FILE']) && strlen($_POST['FILE']) > 0
             && Tools::checkURL($_POST['FILE']) && isset($_POST['OPTIONS'])) {
@@ -103,15 +103,6 @@ class FtpDownloader extends Controller
                 // If target file exists, create a new one
                 if (\OC\Files\Filesystem::file_exists($this->DownloadsFolder . '/' . $Target)) {
                     $Target = time() . '_' . $Target;
-                }
-
-                // Create the target file if the downloader is Aria2
-                if ($this->WhichDownloader == 0) {
-                    \OC\Files\Filesystem::touch($this->DownloadsFolder . '/' . $Target);
-                } else {
-                    if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-                        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
-                    }
                 }
 
                 // Build OPTIONS array
@@ -159,7 +150,7 @@ class FtpDownloader extends Controller
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = \OC_DB::prepare($SQL);
                     $Result = $Query->execute(array(
                         $this->CurrentUID,
                         $AddURI['result'],

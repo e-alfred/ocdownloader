@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -29,6 +29,8 @@ class YTDownloader extends Controller
     private $DownloadsFolder = null;
     private $DbType = 0;
     private $YTDLBinary = null;
+    private $YTDLAudioFormat = null;
+    private $YTDLVideoFormat = null;
     private $ProxyAddress = null;
     private $ProxyPort = 0;
     private $ProxyUser = null;
@@ -44,7 +46,7 @@ class YTDownloader extends Controller
     {
         parent::__construct($AppName, $Request);
 
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 
@@ -54,9 +56,25 @@ class YTDownloader extends Controller
         $Settings->setKey('YTDLBinary');
         $YTDLBinary = $Settings->getValue();
 
-        $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
+        $this->YTDLBinary = '/usr/bin/youtube-dl'; // default path
         if (!is_null($YTDLBinary)) {
             $this->YTDLBinary = $YTDLBinary;
+        }
+
+        $Settings->setKey('YTDLAudioFormat');
+        $YTDLAudioFormat = $Settings->getValue();
+
+        $this->YTDLAudioFormat = 'bestaudio[abr<=75]'; // default path
+        if (!is_null($YTDLAudioFormat)) {
+            $this->YTDLAudioFormat = $YTDLAudioFormat;
+        }
+
+        $Settings->setKey('YTDLVideoFormat');
+        $YTDLVideoFormat = $Settings->getValue();
+
+        $this->YTDLVideoFormat = 'best[width<=1280]'; // default path
+        if (!is_null($YTDLVideoFormat)) {
+            $this->YTDLVideoFormat = $YTDLVideoFormat;
         }
 
         $Settings->setKey('ProxyAddress');
@@ -93,7 +111,7 @@ class YTDownloader extends Controller
        */
     public function add()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header( 'Content-Type: application/json; charset=utf-8');
 
         if (isset($_POST['FILE']) && strlen($_POST['FILE']) > 0
               && Tools::checkURL($_POST['FILE']) && isset($_POST['OPTIONS'])) {
@@ -102,7 +120,7 @@ class YTDownloader extends Controller
                     throw new \Exception((string)$this->L10N->t('You are not allowed to use the YouTube protocol'));
                 }
 
-                $YouTube = new YouTube($this->YTDLBinary, $_POST['FILE']);
+                $YouTube = new YouTube($this->YTDLBinary, $_POST['FILE'], $this->YTDLAudioFormat, $this->YTDLVideoFormat);
 
                 if (!is_null($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536) {
                     $YouTube->SetProxy($this->ProxyAddress, $this->ProxyPort);
@@ -148,15 +166,6 @@ class YTDownloader extends Controller
                     $DL['FILENAME'] = time() . '_' . $DL['FILENAME'];
                 }
 
-                // Create the target file if the downloader is ARIA2
-                if ($this->WhichDownloader == 0) {
-                    \OC\Files\Filesystem::touch($this->DownloadsFolder . '/' . $DL['FILENAME']);
-                } else {
-                    if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-                        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
-                    }
-                }
-
                 $OPTIONS = array('dir' => $this->AbsoluteDownloadsFolder, 'out' => $DL['FILENAME']);
                 if (!is_null($this->ProxyAddress) && $this->ProxyPort > 0 && $this->ProxyPort <= 65536) {
                     $OPTIONS['all-proxy'] = rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
@@ -184,7 +193,7 @@ class YTDownloader extends Controller
                         VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
-                    $Query = \OCP\DB::prepare($SQL);
+                    $Query = \OC_DB::prepare($SQL);
                     $Result = $Query->execute(array(
                           $this->CurrentUID,
                           $AddURI['result'],

@@ -14,8 +14,8 @@ use OCA\ocDownloader\Controller\Lib\Settings;
 \OCP\User::checkLoggedIn();
 
 // Display template
-style('ocdownloader', 'settings/personal');
-script('ocdownloader', 'settings/personal');
+\OCP\Util::addStyle('ocdownloader', 'settings/personal');
+\OCP\Util::addScript('ocdownloader', 'settings/personal');
 
 $Tmpl = new OCP\Template('ocdownloader', 'settings/personal');
 
@@ -27,7 +27,7 @@ $AllowProtocolBT = is_null($AllowProtocolBT) ? true : strcmp($AllowProtocolBT, '
 $Tmpl->assign('AllowProtocolBT', $AllowProtocolBT);
 
 $Settings->setTable('personal');
-$Settings->setUID(OC_User::getUser());
+$Settings->setUID(\OC::$server->getUserSession()->isLoggedIn());
 $Rows = $Settings->getAllValues();
 
 while ($Row = $Rows->fetchRow()) {

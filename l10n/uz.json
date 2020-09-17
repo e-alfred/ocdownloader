@@ -1,0 +1,12 @@
+{ "translations": {
+    "Saved" : "Saqlangan",
+    "Upload" : "Yuklash",
+    "Loading" : "Yuklanmoqda",
+    "Username" : "Foydalanuvchi nomi",
+    "Password" : "Parol",
+    "No" : "Yo'q",
+    "Yes" : "Ha",
+    "Save" : "Saqlash",
+    "minutes" : "daqiqalar"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

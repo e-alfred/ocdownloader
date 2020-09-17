@@ -13,7 +13,7 @@ namespace OCA\ocDownloader\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Config;
+
 use OCP\IL10N;
 use OCP\IRequest;
 
@@ -42,7 +42,7 @@ class HttpDownloader extends Controller
     {
         parent::__construct($AppName, $Request);
 
-        if (strcmp(Config::getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 
@@ -87,139 +87,137 @@ class HttpDownloader extends Controller
      */
     public function add()
     {
-        \OCP\JSON::setContentTypeHeader('application/json');
+        header('Content-Type: application/json; charset=utf-8');
 
-        if (isset($_POST['FILE']) && strlen($_POST['FILE']) > 0 && Tools::checkURL($_POST['FILE'])
-            && isset($_POST['OPTIONS'])) {
-            try {
-                if (!$this->AllowProtocolHTTP && !\OC_User::isAdminUser($this->CurrentUID)) {
-                    throw new \Exception((string)$this->L10N->t('You are not allowed to use the HTTP protocol'));
-                }
-
-                $Target=parse_url($_POST['FILE'], PHP_URL_PATH);
-                $Target = Tools::cleanString(substr($Target, strrpos($Target, '/') + 1));
-
-                // If target file exists, create a new one
-                if (\OC\Files\Filesystem::file_exists($this->DownloadsFolder . '/' . $Target)) {
-                    $Target = time() . '_' . $Target;
-                }
-
-                // Create the target file if the downloader is ARIA2
-                if ($this->WhichDownloader == 0) {
-                    \OC\Files\Filesystem::touch($this->DownloadsFolder . '/' . $Target);
-                } else {
-                    if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-                        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
+        if (isset($_POST['FILE']) && strlen($_POST['FILE']) > 0 && isset($_POST['OPTIONS'])) {
+            $isMagnet = Tools::isMagnet($_POST['FILE']);
+            if ($isMagnet || Tools::checkURL($_POST['FILE'])) {
+                try {
+                    if (!$this->AllowProtocolHTTP && !\OC_User::isAdminUser($this->CurrentUID)) {
+                        throw new \Exception((string)$this->L10N->t('You are not allowed to use the HTTP protocol'));
                     }
-                }
+                    if($isMagnet)
+                    {
+                        parse_str(str_replace('tr=','tr[]=',parse_url($_POST['FILE'],PHP_URL_QUERY)),$query);
+                        $Target = Tools::cleanString($query['dn']);
+                    }
+                    else {
+                        $Target = parse_url($_POST['FILE'], PHP_URL_PATH);
+                        $Target = Tools::cleanString(substr($Target, strrpos($Target, '/') + 1));
+                    }
+                    // If target file exists, create a new one
+                    if (\OC\Files\Filesystem::file_exists($this->DownloadsFolder . '/' . $Target)) {
+                        $Target = time() . '_' . $Target;
+                    }
 
-                // Download in the user root folder
-                $OPTIONS = array('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target, 'follow-torrent' => false);
-                if (isset($_POST['OPTIONS']['HTTPUser']) && strlen(trim($_POST['OPTIONS']['HTTPUser'])) > 0
-                    && isset($_POST['OPTIONS']['HTTPPasswd']) && strlen(trim($_POST['OPTIONS']['HTTPPasswd'])) > 0) {
-                    $OPTIONS['http-user'] = $_POST['OPTIONS']['HTTPUser'];
-                    $OPTIONS['http-passwd'] = $_POST['OPTIONS']['HTTPPasswd'];
-                }
-                if (isset ($_POST['OPTIONS']['HTTPReferer']) && strlen (trim ($_POST['OPTIONS']['HTTPReferer'])) > 0) {
-                              $OPTIONS['referer'] = $_POST['OPTIONS']['HTTPReferer'];
-                     }
-                if (isset ($_POST['OPTIONS']['HTTPUseragent']) && strlen (trim ($_POST['OPTIONS']['HTTPUseragent'])) > 0) {
-                              $OPTIONS['user-agent'] = $_POST['OPTIONS']['HTTPUseragent'];
+                    // Download in the user root folder
+                    $OPTIONS = array('dir' => $this->AbsoluteDownloadsFolder, 'out' => $Target, 'follow-torrent' => $isMagnet);
+                    if (isset($_POST['OPTIONS']['HTTPUser']) && strlen(trim($_POST['OPTIONS']['HTTPUser'])) > 0
+                        && isset($_POST['OPTIONS']['HTTPPasswd']) && strlen(trim($_POST['OPTIONS']['HTTPPasswd'])) > 0) {
+                        $OPTIONS['http-user'] = $_POST['OPTIONS']['HTTPUser'];
+                        $OPTIONS['http-passwd'] = $_POST['OPTIONS']['HTTPPasswd'];
                     }
-                if (isset ($_POST['OPTIONS']['HTTPOutfilename']) && strlen (trim ($_POST['OPTIONS']['HTTPOutfilename'])) > 0) {
-                                 $OPTIONS['out'] = $_POST['OPTIONS']['HTTPOutfilename'];
+                    if (isset ($_POST['OPTIONS']['HTTPReferer']) && strlen(trim($_POST['OPTIONS']['HTTPReferer'])) > 0) {
+                        $OPTIONS['referer'] = $_POST['OPTIONS']['HTTPReferer'];
                     }
-                if (!$this->ProxyOnlyWithYTDL && !is_null($this->ProxyAddress)
-                    && $this->ProxyPort > 0 && $this->ProxyPort <= 65536) {
-                    $OPTIONS['all-proxy'] = rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
-                    if (!is_null($this->ProxyUser) && !is_null($this->ProxyPasswd)) {
-                        $OPTIONS['all-proxy-user'] = $this->ProxyUser;
-                        $OPTIONS['all-proxy-passwd'] = $this->ProxyPasswd;
+                    if (isset ($_POST['OPTIONS']['HTTPUseragent']) && strlen(trim($_POST['OPTIONS']['HTTPUseragent'])) > 0) {
+                        $OPTIONS['user-agent'] = $_POST['OPTIONS']['HTTPUseragent'];
                     }
-                }
-                if (!is_null($this->MaxDownloadSpeed) && $this->MaxDownloadSpeed > 0) {
-                    $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
-                }
+                    if (isset ($_POST['OPTIONS']['HTTPOutfilename']) && strlen(trim($_POST['OPTIONS']['HTTPOutfilename'])) > 0) {
+                        $OPTIONS['out'] = $_POST['OPTIONS']['HTTPOutfilename'];
+                    }
+                    if (!$this->ProxyOnlyWithYTDL && !is_null($this->ProxyAddress)
+                        && $this->ProxyPort > 0 && $this->ProxyPort <= 65536) {
+                        $OPTIONS['all-proxy'] = rtrim($this->ProxyAddress, '/') . ':' . $this->ProxyPort;
+                        if (!is_null($this->ProxyUser) && !is_null($this->ProxyPasswd)) {
+                            $OPTIONS['all-proxy-user'] = $this->ProxyUser;
+                            $OPTIONS['all-proxy-passwd'] = $this->ProxyPasswd;
+                        }
+                    }
+                    if (!is_null($this->MaxDownloadSpeed) && $this->MaxDownloadSpeed > 0) {
+                        $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
+                    }
 
-                $AddURI =(
+                    $AddURI = (
                     $this->WhichDownloader == 0
-                    ?Aria2::addUri(array($_POST['FILE']), array('Params' => $OPTIONS))
-                    : CURL::addUri($_POST['FILE'], $OPTIONS)
-                );
+                        ? Aria2::addUri(array($_POST['FILE']), array('Params' => $OPTIONS))
+                        : CURL::addUri($_POST['FILE'], $OPTIONS)
+                    );
 
-                if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
-                    $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
+                    if (isset($AddURI['result']) && !is_null($AddURI['result'])) {
+                        $SQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
                         (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                    if ($this->DbType == 1) {
-                        $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
+                        if ($this->DbType == 1) {
+                            $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
                             ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
-                    }
+                        }
 
-                    $Query = \OCP\DB::prepare($SQL);
-                    $Result = $Query->execute(array(
-                        $this->CurrentUID,
-                        $AddURI['result'],
-                        $Target,
-                        strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
-                        1,
-                        time()
-                    ));
+                        $Query = \OC_DB::prepare($SQL);
+                        $Result = $Query->execute(array(
+                            $this->CurrentUID,
+                            $AddURI['result'],
+                            $Target,
+                            strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
+                            1,
+                            time()
+                        ));
 
-                    sleep(1);
-                    $Status =(
+                        sleep(1);
+                        $Status = (
                         $this->WhichDownloader == 0
-                        ?Aria2::tellStatus($AddURI['result'])
-                        :CURL::tellStatus($AddURI['result'])
-                    );
+                            ? Aria2::tellStatus($AddURI['result'])
+                            : CURL::tellStatus($AddURI['result'])
+                        );
 
-                    $Progress = 0;
-                    if ($Status['result']['totalLength'] > 0) {
-                        $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
-                    }
+                        $Progress = 0;
+                        if ($Status['result']['totalLength'] > 0) {
+                            $Progress = $Status['result']['completedLength'] / $Status['result']['totalLength'];
+                        }
 
-                    $ProgressString = Tools::getProgressString(
-                        $Status['result']['completedLength'],
-                        $Status['result']['totalLength'],
-                        $Progress
-                    );
+                        $ProgressString = Tools::getProgressString(
+                            $Status['result']['completedLength'],
+                            $Status['result']['totalLength'],
+                            $Progress
+                        );
 
-                    return new JSONResponse(array(
-                        'ERROR' => false,
-                        'MESSAGE' =>(string)$this->L10N->t('Download started'),
-                        'GID' => $AddURI['result'],
-                        'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
-                        'PROGRESS' => is_null($ProgressString) ?(string)$this->L10N->t('N/A') : $ProgressString,
-                        'STATUS' => isset($Status['result']['status'])
-                            ?(string)$this->L10N->t(ucfirst($Status['result']['status']))
-                            :(string)$this->L10N->t('N/A'),
-                        'STATUSID' => Tools::getDownloadStatusID($Status['result']['status']),
-                        'SPEED' => isset($Status['result']['downloadSpeed'])
-                            ?Tools::formatSizeUnits($Status['result']['downloadSpeed']).'/s'
-                            :(string)$this->L10N->t('N/A'),
-                        'FILENAME' => $Target,
-                        'FILENAME_SHORT' => Tools::getShortFilename($Target),
-                        'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
-                        'ISTORRENT' => false
-                    ));
-                } else {
-                    return new JSONResponse(
-                        array(
-                            'ERROR' => true,
-                            'MESSAGE' =>(string)$this->L10N->t(
-                                $this->WhichDownloader == 0
-                                ?'Returned GID is null ! Is Aria2c running as a daemon ?'
-                                : 'An error occurred while running the CURL download'
+                        return new JSONResponse(array(
+                            'ERROR' => false,
+                            'MESSAGE' => (string)$this->L10N->t('Download started'),
+                            'GID' => $AddURI['result'],
+                            'PROGRESSVAL' => round((($Progress) * 100), 2) . '%',
+                            'PROGRESS' => is_null($ProgressString) ? (string)$this->L10N->t('N/A') : $ProgressString,
+                            'STATUS' => isset($Status['result']['status'])
+                                ? (string)$this->L10N->t(ucfirst($Status['result']['status']))
+                                : (string)$this->L10N->t('N/A'),
+                            'STATUSID' => Tools::getDownloadStatusID($Status['result']['status']),
+                            'SPEED' => isset($Status['result']['downloadSpeed'])
+                                ? Tools::formatSizeUnits($Status['result']['downloadSpeed']) . '/s'
+                                : (string)$this->L10N->t('N/A'),
+                            'FILENAME' => $Target,
+                            'FILENAME_SHORT' => Tools::getShortFilename($Target),
+                            'PROTO' => strtoupper(substr($_POST['FILE'], 0, strpos($_POST['FILE'], ':'))),
+                            'ISTORRENT' => $isMagnet
+                        ));
+                    } else {
+                        return new JSONResponse(
+                            array(
+                                'ERROR' => true,
+                                'MESSAGE' => (string)$this->L10N->t(
+                                    $this->WhichDownloader == 0
+                                        ? 'Returned GID is null ! Is Aria2c running as a daemon ?'
+                                        : 'An error occurred while running the CURL download'
+                                )
                             )
-                        )
-                    );
+                        );
+                    }
+                } catch (Exception $E) {
+                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
                 }
-            } catch (Exception $E) {
-                return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
             }
-        } else {
-            return new JSONResponse(
-                array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Please check the URL you\'ve just provided'))
-            );
         }
+
+        return new JSONResponse(
+            array('ERROR' => true, 'MESSAGE' => (string)$this->L10N->t('Please check the URL you\'ve just provided'))
+        );
     }
 }

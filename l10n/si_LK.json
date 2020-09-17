@@ -1,0 +1,11 @@
+{ "translations": {
+    "Video" : "Video",
+    "Upload" : "උඩුගත කරන්න",
+    "Loading" : "Loading",
+    "Username" : "පරිශීලක නම",
+    "Password" : "මුර පදය",
+    "No" : "No",
+    "Yes" : "Yes",
+    "Save" : "සුරකින්න"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -42,32 +42,6 @@ OCDLR = {};
 			$(OCDLRSelf.BaseID + 'span.muted').addClass ('info').text (Msg);
 		},
 
-		CheckVersion: function ()
-		{
-			$.ajax ({
-		        url: OC.generateUrl (OCDLRSelf.BaseURL + 'updater/check'),
-		        method: 'GET',
-				dataType: 'json',
-		        async: true,
-		        cache: false,
-		        timeout: 30000,
-		        success: function (Data)
-				{
-					if (!Data.ERROR && Data.RESULT)
-					{
-						$(OCDLRSelf.MenuID + '.nav-updater').show ();
-						$(OCDLRSelf.MenuID + '.nav-updater .button').bind ('click', function ()
-						{
-							OCDLRSelf.AddDownload ($(this), 'http', 'https://github.com/e-alfred/ocdownloader/archive/master.zip',
-							{
-								HTTPUser: '', HTTPPasswd: ''
-							});
-						});
-					}
-				}
-			});
-		},
-
 		UpdateQueue: function (DynMode, View)
 		{
 			var IntervalHandle = setInterval (function ()
@@ -128,7 +102,7 @@ OCDLR = {};
 									if (Value.PROGRESSVAL == '100%')
 									{
 										$(QueueElt + ' > td[data-rel="FILENAME"]').html ('<a title="'+Value.FILENAME+'" href="' + OC.linkTo ('files', 'index.php') + '?dir=' + encodeURIComponent (OCDLRSelf.DownloadsFolder).replace(/%2F/g, '/') + '">' + Value.FILENAME_SHORT + '</a>');
-										
+
 										if (Value.ISTORRENT && Value.SPEED != '--')
 										{
 											$(QueueElt + ' > td[data-rel="SPEED"]').html ('<div class="icon-upload svg"></div>' + Value.SPEED);
@@ -232,7 +206,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
@@ -280,7 +254,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'No downloads in the queue ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'No downloads in the queue…'));
 			}
 		},
 
@@ -338,7 +312,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
@@ -396,7 +370,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
@@ -452,7 +426,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'))
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'))
 			}
 		},
 
@@ -507,7 +481,7 @@ OCDLR = {};
 			}
 			else
 			{
-				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download ...'));
+				OCDLRSelf.PrintError (t ('ocdownloader', 'Unable to find the GID for this download…'));
 			}
 		},
 
@@ -642,7 +616,7 @@ OCDLR = {};
 
 		PrependToQueue: function (Data, View)
 		{
-			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' + 
+			$(OCDLRSelf.Queue + '> tbody').prepend ('<tr data-rel="' + Data.GID + '">' +
 				'<td data-rel="FILENAME" class="padding">' + Data.FILENAME_SHORT + '</td>' +
 				'<td data-rel="PROTO" class="border padding">' + t ('ocdownloader', Data.PROTO) + '</td>' +
 				'<td data-rel="MESSAGE" class="border"><div class="pb-wrap"><div class="pb-value" style="width: ' + Data.PROGRESSVAL + ';"><div class="pb-text">' + Data.PROGRESS + '</div></div></div></td>' +

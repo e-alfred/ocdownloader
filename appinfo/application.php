@@ -19,8 +19,8 @@ use OCA\ocDownloader\Controller\HttpDownloader;
 use OCA\ocDownloader\Controller\FtpDownloader;
 use OCA\ocDownloader\Controller\YTDownloader;
 use OCA\ocDownloader\Controller\BTDownloader;
+use OCA\ocDownloader\Controller\Lib\Api;
 use OCA\ocDownloader\Controller\Queue;
-use OCA\ocDownloader\Controller\Updater;
 use OCA\ocDownloader\Controller\PersonalSettings;
 use OCA\ocDownloader\Controller\AdminSettings;
 
@@ -30,12 +30,12 @@ class Application extends App
     {
         parent::__construct('ocdownloader', $URLParams);
         $container = $this->getContainer();
-        
+
         $container->registerService('CurrentUID', function (IContainer $Container) {
             $User = $Container->query('ServerContainer')->getUserSession()->getUser();
             return($User) ? $User->getUID() : '';
         });
-        
+
         $container->registerService('IndexController', function (IContainer $Container) {
             return new Index(
                 $Container->query('AppName'),
@@ -44,7 +44,7 @@ class Application extends App
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
-        
+
         $container->registerService('HttpDownloaderController', function (IContainer $Container) {
             return new HttpDownloader(
                 $Container->query('AppName'),
@@ -53,7 +53,7 @@ class Application extends App
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
-        
+
         $container->registerService('FtpDownloaderController', function (IContainer $Container) {
             return new FtpDownloader(
                 $Container->query('AppName'),
@@ -62,7 +62,7 @@ class Application extends App
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
-        
+
         $container->registerService('YTDownloaderController', function (IContainer $Container) {
             return new YTDownloader(
                 $Container->query('AppName'),
@@ -71,7 +71,7 @@ class Application extends App
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
-        
+
         $container->registerService('BTDownloaderController', function (IContainer $Container) {
             return new BTDownloader(
                 $Container->query('AppName'),
@@ -80,7 +80,7 @@ class Application extends App
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
-        
+
         $container->registerService('QueueController', function (IContainer $Container) {
             return new Queue(
                 $Container->query('AppName'),
@@ -89,15 +89,7 @@ class Application extends App
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
-        
-        $container->registerService('UpdaterController', function (IContainer $Container) {
-            return new Updater(
-                $Container->query('AppName'),
-                $Container->query('Request'),
-                $Container->getServer()->getL10N('ocdownloader')
-            );
-        });
-        
+
         $container->registerService('AdminSettingsController', function (IContainer $Container) {
             return new AdminSettings(
                 $Container->query('AppName'),
@@ -105,12 +97,20 @@ class Application extends App
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
-        
+
         $container->registerService('PersonalSettingsController', function (IContainer $Container) {
             return new PersonalSettings(
                 $Container->query('AppName'),
                 $Container->query('Request'),
                 $Container->query('CurrentUID'),
+                $Container->getServer()->getL10N('ocdownloader')
+            );
+        });
+
+        $container->registerService('ApiController', function (IContainer $Container) {
+            return new Api(
+                $Container->query('AppName'),
+                $Container->query('Request'),
                 $Container->getServer()->getL10N('ocdownloader')
             );
         });
