@@ -49,7 +49,11 @@ class YouTube
 
 
         //youtube multibyte support
-        putenv('LANG=en_US.UTF-8');
+        //get avalible locales
+        $locale_array  = explode("\n", trim(shell_exec("locale -a|grep .utf8")));
+        $locale=array_pop($locale_array);
+        //set locale
+        putenv('LANG='.$locale);
 
         $fAudio = escapeshellarg($this->YTDLAudioFormat);
         $fVideo = escapeshellarg($this->YTDLVideoFormat);
