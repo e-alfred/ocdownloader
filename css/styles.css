@@ -36,6 +36,7 @@
     background-color: #ddd;
 }
 #app-navigation li div.badge {
+	width: 100%;
 }
 #app-navigation .badger-outter {
 	float: left;
