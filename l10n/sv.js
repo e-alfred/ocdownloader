@@ -8,6 +8,7 @@ OC.L10N.register(
     "Upload OK" : "Uppladdning ok",
     "You are not allowed to use the FTP protocol" : "Du får inte använda FTP-protokollet",
     "Video" : "Video",
+    "The folder doesn't exist. It has been created." : "Mappen finns inte. Den har skapats.",
     "Uploaded" : "Uppladdad",
     "Removed" : "Borttagen",
     "Unable to find download status file %s" : "Det gick inte att hitta nedladdningsstatusfilen %s",
