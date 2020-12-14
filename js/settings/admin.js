@@ -8,8 +8,7 @@
  * @copyright Xavier Beurois 2015
  */
 
-$(document).ready (function ()
-{
+window.addEventListener('DOMContentLoaded', function () {
 	$('#OCDWhichDownloader').bind ('change', function ()
 	{
 		if ($('#OCDWhichDownloader').val () == 'ARIA2')
@@ -41,16 +40,16 @@ $(document).ready (function ()
 			$('#OCDBTSettings').hide ();
 		}
 	});
-	
+
 	$('form#ocdownloader input.ToUse, form#ocdownloader select.ToUse').bind ('change', function ()
 	{
 		var Field = $(this);
-		
+
 		$('#' + Field.attr ('data-loader')).show ();
 		$('#' + Field.attr ('data-loader') + 'Msg').hide ();
 		$('#' + Field.attr ('data-loader') + 'Msg').removeClass ('error');
 		$('#' + Field.attr ('data-loader') + 'Msg').removeClass ('success');
-		
+
 		$.ajax({
 	        url: OC.generateUrl ('/apps/ocdownloader/adminsettings/save'),
 	        method: 'POST',
@@ -65,7 +64,7 @@ $(document).ready (function ()
 	        success: function (Data)
 			{
 				$('#' + Field.attr ('data-loader')).hide ();
-				
+
 				$('#' + Field.attr ('data-loader') + 'Msg').text (Data.MESSAGE);
 				if (Data.ERROR)
 				{
@@ -75,13 +74,13 @@ $(document).ready (function ()
 				{
 					$('#' + Field.attr ('data-loader') + 'Msg').addClass ('success');
 				}
-			
+
 				$('#' + Field.attr ('data-loader') + 'Msg').show ();
-				
+
 				$('#OCDWhichDownloaderDetails > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
 			}
 	    });
 	});
-	
+
 	$('#OCDWhichDownloaderDetails > strong').text ($('#OCDWhichDownloader > option:selected').attr ('data-protocols'));
 });

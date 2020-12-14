@@ -8,8 +8,7 @@
  * @copyright Xavier Beurois 2015
  */
 
-$(document).ready (function ()
-{
+window.addEventListener('DOMContentLoaded', function () {
 	$('#ball').Badger ('...');
 	$('#bcompletes').Badger ('...');
 	$('#bactives').Badger ('...');
@@ -62,7 +61,7 @@ $(document).ready (function ()
 		var InputURL = $(this).parent ().parent ().children ('input.url');
 		// Some Magnet links have space... delete thems :
 		InputURL.val(function(i, v) {return v.replace(/\s/g,'%20');}).val();
-		
+
 		if (OCDLR.Utils.ValidURL (InputURL.val ()))
 		{
 			OCDLR.Utils.AddDownload ($(this), 'http', InputURL.val (),

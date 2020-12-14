@@ -7,17 +7,16 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
- 
-$(document).ready (function ()
-{
+
+window.addEventListener('DOMContentLoaded', function () {
 	$('#ball').Badger ('...');
 	$('#bcompletes').Badger ('...');
 	$('#bactives').Badger ('...');
 	$('#bwaitings').Badger ('...');
 	$('#bstopped').Badger ('...');
 	$('#bremoved').Badger ('...');
-	
+
 	OCDLR.Utils.UpdateQueue (true, 'all');
-	
+
 	OCDLR.Utils.GetCounters ();
 });

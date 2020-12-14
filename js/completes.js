@@ -7,9 +7,8 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
- 
-$(document).ready (function ()
-{
+
+window.addEventListener('DOMContentLoaded', function () {
 	$('#ball').Badger ('...');
 	$('#bcompletes').Badger ('...');
 	$('#bactives').Badger ('...');
@@ -18,6 +17,6 @@ $(document).ready (function ()
 	$('#bremoved').Badger ('...');
 	
 	OCDLR.Utils.UpdateQueue (true, 'completes');
-	
+
 	OCDLR.Utils.GetCounters ();
 });
