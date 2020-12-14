@@ -50,10 +50,10 @@ class Settings
             return false;
         }
 
-        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'conf` WHERE `KEY` = ?'
+        $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'` WHERE `KEY` = ?'
             .(!is_null($this->UID) ? ' AND `UID` = ?' : '') . ' LIMIT 1';
         if ($this->DbType == 1) {
-            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.'conf WHERE "KEY" = ?'
+            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.' WHERE "KEY" = ?'
                 .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
         }
         $Query = \OC_DB::prepare($SQL);
