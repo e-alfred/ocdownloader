@@ -73,8 +73,8 @@ class Version010708Date20201121095324 extends SimpleMigrationStep {
 			$table->setPrimaryKey(['ID']);
 		}
 
-		if (!$schema->hasTable('ocdownloader_adminsettings')) {
-			$table = $schema->createTable('ocdownloader_adminsettings');
+		if (!$schema->hasTable('ocdownloader_adminconf')) {
+			$table = $schema->createTable('ocdownloader_adminconf');
 			$table->addColumn('ID', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -91,8 +91,8 @@ class Version010708Date20201121095324 extends SimpleMigrationStep {
 			$table->setPrimaryKey(['ID']);
 		}
 
-		if (!$schema->hasTable('ocdownloader_personalsettings')) {
-			$table = $schema->createTable('ocdownloader_personalsettings');
+		if (!$schema->hasTable('ocdownloader_personalconf')) {
+			$table = $schema->createTable('ocdownloader_personalconf');
 			$table->addColumn('ID', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -123,4 +123,3 @@ class Version010708Date20201121095324 extends SimpleMigrationStep {
 	public function postSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {
 	}
 }
-
