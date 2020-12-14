@@ -25,7 +25,7 @@
 	</p>
 	<p>
 		<label for="OCDYTDLAudoFormat"><?php print ($l->t ('YouTube DL Video Format')); ?></label>
-		<input type="text" class="OCDYTDLVideoFormat ToUse" id="OCDYTDLVideoFormat" data-loader="OCDSLoaderYTDLVideoFormat" value="<?php print (isset ($_['OCDS_YTDLVideoFormat']) ? $_['OCDS_YTDLVideoFormat'] : 'best'); ?>" />
+		<input type="text" class="OCDYTDLVideoFormat ToUse" id="OCDYTDLVideoFormat" data-loader="OCDSLoaderYTDLVideoFormat" value="<?php print (isset ($_['OCDS_YTDLVideoFormat']) ? $_['OCDS_YTDLVideoFormat'] : 'best[width<=1280]'); ?>" />
 	</p>
 	<hr />
 	<div style="clear:both;"></div>
