@@ -53,8 +53,8 @@ class Settings
         $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'` WHERE `KEY` = ?'
             .(!is_null($this->UID) ? ' AND `UID` = ?' : '') . ' LIMIT 1';
         if ($this->DbType == 1) {
-            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.' WHERE "KEY" = ?'
-                .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
+            $SQL = 'SELECT "val" FROM *PREFIX*ocdownloader_'.$this->Table.' WHERE "key" = ?'
+                .(!is_null($this->UID) ? ' AND "uid" = ?' : '').' LIMIT 1';
         }
         $Query = \OC_DB::prepare($SQL);
         if (!is_null($this->UID)) {
@@ -74,8 +74,8 @@ class Settings
         $SQL = 'SELECT `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'` WHERE `KEY` = ?'
             .(!is_null($this->UID) ? ' AND `UID` = ?' : '').' LIMIT 1';
         if ($this->DbType == 1) {
-            $SQL = 'SELECT "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.' WHERE "KEY" = ?'
-                .(!is_null($this->UID) ? ' AND "UID" = ?' : '').' LIMIT 1';
+            $SQL = 'SELECT "val" FROM *PREFIX*ocdownloader_'.$this->Table.' WHERE "key" = ?'
+                .(!is_null($this->UID) ? ' AND "uid" = ?' : '').' LIMIT 1';
         }
         $Query = \OC_DB::prepare($SQL);
 
@@ -96,8 +96,8 @@ class Settings
         $SQL = 'SELECT `KEY`, `VAL` FROM `*PREFIX*ocdownloader_'.$this->Table.'`'
             .(!is_null($this->UID) ? ' WHERE `UID` = ?' : '');
         if ($this->DbType == 1) {
-            $SQL = 'SELECT "KEY", "VAL" FROM *PREFIX*ocdownloader_'.$this->Table.''
-                .(!is_null($this->UID) ? ' WHERE "UID" = ?' : '');
+            $SQL = 'SELECT "key", "val" FROM *PREFIX*ocdownloader_'.$this->Table.''
+                .(!is_null($this->UID) ? ' WHERE "uid" = ?' : '');
         }
         $Query = \OC_DB::prepare($SQL);
 
@@ -113,8 +113,8 @@ class Settings
         $SQL = 'UPDATE `*PREFIX*ocdownloader_' . $this->Table . '`SET `VAL` = ? WHERE `KEY` = ?'
             .(!is_null($this->UID) ? ' AND `UID` = ?' : '');
         if ($this->DbType == 1) {
-            $SQL = 'UPDATE *PREFIX*ocdownloader_' . $this->Table . 'SET "VAL" = ? WHERE "KEY" = ?'
-                .(!is_null($this->UID) ? ' AND "UID" = ?' : '');
+            $SQL = 'UPDATE *PREFIX*ocdownloader_' . $this->Table . 'SET "val" = ? WHERE "key" = ?'
+                .(!is_null($this->UID) ? ' AND "uid" = ?' : '');
         }
         $Query = \OC_DB::prepare($SQL);
 
@@ -130,8 +130,8 @@ class Settings
         $SQL = 'INSERT INTO `*PREFIX*ocdownloader_'.$this->Table.'`(`KEY`, `VAL`'
             .(!is_null($this->UID) ? ', `UID`' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
         if ($this->DbType == 1) {
-            $SQL = 'INSERT INTO *PREFIX*ocdownloader_'.$this->Table.'("KEY", "VAL"'
-                .(!is_null($this->UID) ? ', "UID"' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
+            $SQL = 'INSERT INTO *PREFIX*ocdownloader_'.$this->Table.'("key", "val"'
+                .(!is_null($this->UID) ? ', "uid"' : '') . ') VALUES(?, ?' .(!is_null($this->UID) ? ', ?' : '').')';
         }
         $Query = \OC_DB::prepare($SQL);
 
