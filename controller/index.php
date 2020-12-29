@@ -49,7 +49,7 @@ class Index extends Controller
         $this->Settings = new Settings();
         $this->Settings->setKey('WhichDownloader');
         $this->WhichDownloader = $this->Settings->getValue();
-        $this->WhichDownloader = is_null($this->WhichDownloader) ? 'ARIA2' : $this->WhichDownloader;
+        $this->WhichDownloader = !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? 'ARIA2' : $this->WhichDownloader;
 
         $this->Settings->setKey('AllowProtocolHTTP');
         $this->AllowProtocolHTTP = $this->Settings->getValue();

@@ -178,7 +178,7 @@ class YTDownloader extends Controller
                     $OPTIONS['max-download-limit'] = $this->MaxDownloadSpeed . 'K';
                 }
 
-                $AddURI =($this->WhichDownloader == 0
+                $AddURI =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                 ?Aria2::addUri(array($DL['URL']), array('Params' => $OPTIONS))
                 :CURL::addUri($DL['URL'], $OPTIONS));
 
@@ -204,7 +204,11 @@ class YTDownloader extends Controller
                     ));
 
                     sleep(1);
-                    $Status = Aria2::tellStatus($AddURI['result']);
+                    if ($this->WhichDownloader == 'CURL') {
+                        $Status = CURL::tellStatus($AddURI['result']);
+                    } elseif(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2') {
+                        $Status = Aria2::tellStatus($AddURI['result']);
+                    }
 
                     $Progress = 0;
                     if ($Status['result']['totalLength'] > 0) {

@@ -322,7 +322,7 @@ class Queue extends Controller
         header( 'Content-Type: application/json; charset=utf-8');
 
         try {
-            if ($this->WhichDownloader == 0) {
+            if (!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2') {
                 if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                     $Status = Aria2::tellStatus($_POST['GID']);
 
@@ -375,7 +375,7 @@ class Queue extends Controller
         header( 'Content-Type: application/json; charset=utf-8');
 
         try {
-            if ($this->WhichDownloader == 0) {
+            if (!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2') {
                 if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                     $Status = Aria2::tellStatus($_POST['GID']);
 
@@ -516,16 +516,16 @@ class Queue extends Controller
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                 $Status =(
-                $this->WhichDownloader == 0
+                !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                     ?Aria2::tellStatus($_POST['GID'])
                     :CURL::tellStatus($_POST['GID'])
                 );
 
                 $Remove['result'] = $_POST['GID'];
-                if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
+                if (!isset($Status['error']) && isset($Status['result']['status']) && strcmp($Status['result']['status'], 'error') != 0
                     && strcmp($Status['result']['status'], 'complete') != 0) {
                     $Remove =(
-                    $this->WhichDownloader == 0
+                    !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                         ? Aria2::remove($_POST['GID'])
                         :CURL::remove($Status['result'])
                     );
@@ -583,12 +583,12 @@ class Queue extends Controller
                 $GIDS = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $Status =($this->WhichDownloader == 0 ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
+                    $Status =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
                     $Remove = array('result' => $GID);
 
                     if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
                         && strcmp($Status['result']['status'], 'complete') != 0) {
-                        $Remove =($this->WhichDownloader == 0 ? Aria2::remove($GID) : CURL::remove($Status['result']));
+                        $Remove =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? Aria2::remove($GID) : CURL::remove($Status['result']));
                     }
 
                     if (!is_null($Remove) && strcmp($Remove['result'], $GID) == 0) {
@@ -641,14 +641,14 @@ class Queue extends Controller
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                 $Status =(
-                $this->WhichDownloader == 0
+                !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                     ?Aria2::tellStatus($_POST['GID'])
                     :CURL::tellStatus($_POST['GID'])
                 );
 
                 if (!isset($Status['error']) && strcmp($Status['result']['status'], 'removed') == 0) {
                     $Remove =(
-                    $this->WhichDownloader == 0
+                    !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                         ? Aria2::removeDownloadResult($_POST['GID'])
                         :CURL::removeDownloadResult($_POST['GID'])
                     );
@@ -692,11 +692,11 @@ class Queue extends Controller
                 $GIDS = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $Status =($this->WhichDownloader == 0 ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
+                    $Status =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
 
                     if (!isset($Status['error']) && strcmp($Status['result']['status'], 'removed') == 0) {
                         $Remove =(
-                        $this->WhichDownloader == 0
+                        !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                             ?Aria2::removeDownloadResult($GID)
                             :CURL::removeDownloadResult($GID)
                         );
