@@ -189,7 +189,7 @@ class YTDownloader extends Controller
 
                     if ($this->DbType == 1) {
                         $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                        ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP")
+                        (uid, gid, filename, protocol, status, timestamp)
                         VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
