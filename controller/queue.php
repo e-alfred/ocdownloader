@@ -128,8 +128,8 @@ class Queue extends Controller
                     . $StatusReq . ' AND `IS_CLEANED` IN ' . $IsCleanedReq . ' ORDER BY `TIMESTAMP` ASC';
 
                 if ($this->DbType == 1) {
-                    $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE uid = ? AND status IN '
-                        . $StatusReq . ' AND is_cleaned IN ' . $IsCleanedReq . ' ORDER BY timestamp ASC';
+                    $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE UID = ? AND STATUS IN '
+                        . $StatusReq . ' AND IS_CLEANED IN ' . $IsCleanedReq . ' ORDER BY TIMESTAMP ASC';
                 }
                 $Query = \OC_DB::prepare($SQL);
                 $Request = $Query->execute($Params);
@@ -195,7 +195,7 @@ class Queue extends Controller
 						WHERE `UID` = ? AND `GID` = ?';
                                     if ($this->$DbType == 1) {
                                         $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue
-						WHERE uid = ? AND gid = ?';
+						WHERE UID = ? AND GID = ?';
                                     }
 
                                     $Query = \OC_DB::prepare($SQL);
@@ -211,7 +211,7 @@ class Queue extends Controller
 								 (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
                                             if ($this->$DbType == 1) {
                                                 $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-								(uid, gid, filename, protocol, status, timestamp) VALUES(?, ?, ?, ?, ?, ?)';
+								(UID, GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES(?, ?, ?, ?, ?, ?)';
                                             }
                                             $addQuery = \OC_DB::prepare($addSQL);
                                             $addQuery->execute(array(
@@ -230,7 +230,7 @@ class Queue extends Controller
 		                                    SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
                                     if ($this->DbType == 1) {
                                         $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-		                                        SET status = ? WHERE uid = ? AND gid = ? AND status != ?';
+		                                        SET STATUS = ? WHERE UID = ? AND GID = ? AND STATUS != ?';
                                     }
 
                                     $Query = \OC_DB::prepare($SQL);
@@ -331,7 +331,7 @@ class Queue extends Controller
                     if (strcmp($Pause['result'], $_POST['GID']) == 0) {
                         $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET status = ? WHERE uid = ? AND gid = ?';
+                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET STATUS = ? WHERE UID = ? AND GID = ?';
                         }
 
                         $Query = \OC_DB::prepare($SQL);
@@ -384,7 +384,7 @@ class Queue extends Controller
                     if (strcmp($UnPause['result'], $_POST['GID']) == 0) {
                         $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET status = ? WHERE uid = ? AND gid = ?';
+                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET STATUS = ? WHERE UID = ? AND GID = ?';
                         }
 
                         $Query = \OC_DB::prepare($SQL);
@@ -429,7 +429,7 @@ class Queue extends Controller
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                 $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                 if ($this->DbType == 1) {
-                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET is_cleaned = ? WHERE uid = ? AND gid = ?';
+                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                 }
 
                 $Query = \OC_DB::prepare($SQL);
@@ -465,7 +465,7 @@ class Queue extends Controller
                 foreach ($_POST['GIDS'] as $GID) {
                     $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
-                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET is_cleaned = ? WHERE uid = ? AND gid = ?';
+                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                     }
 
                     $Query = \OC_DB::prepare($SQL);
@@ -533,7 +533,7 @@ class Queue extends Controller
                         SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
                         $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                            SET status = ?, is_cleaned = ? WHERE uid = ? AND gid = ?';
+                            SET STATUS = ?, IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                     }
 
                     $Query = \OC_DB::prepare($SQL);
@@ -591,7 +591,7 @@ class Queue extends Controller
                             SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
                             $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                                SET status = ?, is_cleaned = ? WHERE uid = ? AND gid = ?';
+                                SET STATUS = ?, IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                         }
 
                         $Query = \OC_DB::prepare($SQL);
@@ -651,7 +651,7 @@ class Queue extends Controller
 
                 $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
                 if ($this->DbType == 1) {
-                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE uid = ? AND gid = ?';
+                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE UID = ? AND GID = ?';
                 }
 
                 $Query = \OC_DB::prepare($SQL);
@@ -699,7 +699,7 @@ class Queue extends Controller
 
                     $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
-                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE uid = ? AND gid = ?';
+                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE UID = ? AND GID = ?';
                     }
 
                     $Query = \OC_DB::prepare($SQL);

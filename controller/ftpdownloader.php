@@ -147,7 +147,7 @@ class FtpDownloader extends Controller
                         (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
                     if ($this->DbType == 1) {
                         $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                            (uid, gid, filename, protocol, status, timestamp) VALUES(?, ?, ?, ?, ?, ?)';
+                            (UID, GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES(?, ?, ?, ?, ?, ?)';
                     }
 
                     $Query = \OC_DB::prepare($SQL);

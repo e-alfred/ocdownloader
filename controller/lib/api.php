@@ -153,7 +153,7 @@ class API extends Controller
                         VALUES(?, ?, ?, ?, ?, ?, ?)';
                     if (self::$DbType == 1) {
                         $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                            (uid, gid, filename, protocol, is_cleaned, status, timestamp)
+                            (UID, GID, FILENAME, PROTOCOL, IS_CLEANED, STATUS, TIMESTAMP)
                             VALUES(?, ?, ?, ?, ?, ?, ?)';
                     }
 
