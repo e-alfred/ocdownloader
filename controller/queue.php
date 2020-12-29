@@ -135,7 +135,6 @@ class Queue extends Controller
                 $Request = $Query->execute($Params);
 
                 $Queue = [];
-                $DownloadUpdated = false;
                 while ($Row = $Request->fetchRow()) {
                     $Row = array_change_key_case($Row, CASE_UPPER);
                     $Status =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
@@ -243,7 +242,8 @@ class Queue extends Controller
                                     ));
                                 }
 
-                                $DownloadUpdated = true;
+                                // Start rescan on update
+                                \OC\Files\Filesystem::touch($this->DownloadsFolder . $Row['FILENAME']);
                             }
                         } else {
                             $Queue[] = array(
@@ -276,11 +276,6 @@ class Queue extends Controller
                             'ISTORRENT' => isset($Status['result']['bittorrent'])
                         );
                     }
-                }
-
-                // Start rescan on update
-                if ($DownloadUpdated) {
-                    \OC\Files\Filesystem::touch($this->DownloadsFolder . $Row['FILENAME']);
                 }
 
                 return new JSONResponse(
@@ -646,7 +641,7 @@ class Queue extends Controller
                     :CURL::tellStatus($_POST['GID'])
                 );
 
-                if (!isset($Status['error']) && strcmp($Status['result']['status'], 'removed') == 0) {
+                if (!isset($Status['error']) && isset($Status['result']['status']) && strcmp($Status['result']['status'], 'removed') == 0) {
                     $Remove =(
                     !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                         ? Aria2::removeDownloadResult($_POST['GID'])
