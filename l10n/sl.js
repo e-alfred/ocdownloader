@@ -141,10 +141,16 @@ OC.L10N.register(
     "Default Downloads Folder" : "Privzeta mapa za prejem",
     "Save" : "Shrani",
     "Default Torrents Folder" : "Privzeta mapa za prenose torrent",
+    "BitTorrent protocol settings - Ratio" : "Nastavitve protokola BitTorrent – ciljno razmerje prenosa",
+    "Default ratio to reach?" : "Ali je doseženo privzeto ciljno razmerje prenosa?",
     "unlimited" : "neomejeno",
+    "BitTorrent protocol settings - Seed time" : "Nastavitve protokola BitTorrent – čas sejanja",
+    "Seed time to reach?" : "Ali je dosežen čas sejanja?",
     "minutes" : "minut",
     "hours" : "ur",
     "days" : "dni",
-    "weeks" : "tednov"
+    "weeks" : "tednov",
+    "months" : "mesecev",
+    "years" : "let"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");
