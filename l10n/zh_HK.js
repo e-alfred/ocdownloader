@@ -21,7 +21,7 @@ OC.L10N.register(
     "You are not allowed to use the HTTP protocol" : "您不可使用HTTP協定",
     "Video" : "影片",
     "The folder doesn't exist. It has been created." : "查此資料夾不存在，已自動建立。",
-    "Unknown field" : "未知的錯誤",
+    "Unknown field" : "未知的輸入字段",
     "Undefined field" : "未定義的錯誤",
     "Uploaded" : "已上傳",
     "Ratio" : "比例",
