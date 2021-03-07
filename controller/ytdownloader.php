@@ -11,6 +11,7 @@
 
 namespace OCA\ocDownloader\Controller;
 
+use OC_Util;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 
@@ -49,6 +50,8 @@ class YTDownloader extends Controller
         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
+
+		OC_Util::setupFS();
 
         $this->CurrentUID = $CurrentUID;
 

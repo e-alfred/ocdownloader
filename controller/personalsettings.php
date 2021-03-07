@@ -8,9 +8,10 @@
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
-      
+
 namespace OCA\ocDownloader\Controller;
 
+use OC_Util;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IL10N;
@@ -27,18 +28,20 @@ class PersonalSettings extends Controller
     );
     private $Settings = null;
     private $L10N = null;
-      
+
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
         parent::__construct($AppName, $Request);
+		OC_Util::setupFS();
+
         $this->CurrentUID = $CurrentUID;
-            
+
         $this->Settings = new Settings('personal');
         $this->Settings->setUID($this->CurrentUID);
-            
+
         $this->L10N = $L10N;
     }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -46,33 +49,33 @@ class PersonalSettings extends Controller
     public function save()
     {
         header( 'Content-Type: application/json; charset=utf-8');
-            
+
         $Error = false;
         $Message = '';
-            
+
         if (isset($_POST['KEY']) && strlen(trim($_POST['KEY'])) > 0
         && isset($_POST['VAL']) && strlen(trim($_POST['VAL'])) > 0) {
             $PostKey = str_replace('OCD', '', $_POST['KEY']);
             $PostValue = ltrim(trim(str_replace(' ', '\ ', $_POST['VAL'])), '/');
-                  
+
             if (in_array($PostKey, $this->OCDSettingKeys)) {
                 $this->Settings->setKey($PostKey);
-                        
+
                 // Pre-Save process
                 if (strcmp($PostKey, 'DownloadsFolder') == 0 || strcmp($PostKey, 'TorrentsFolder') == 0) {
                     // check folder exists, if not create it
                     if (!\OC\Files\Filesystem::is_dir($PostValue)) {
                         // Create the target file
                         \OC\Files\Filesystem::mkdir($PostValue);
-                                    
+
                         $Message .= $this->L10N->t('The folder doesn\'t exist. It has been created.');
                     }
                 }
-                        
+
                 if (strlen(trim($PostValue)) <= 0) {
                     $PostValue = null;
                 }
-                        
+
                 if ($this->Settings->checkIfKeyExists()) {
                     $this->Settings->updateValue($PostValue);
                 } else {
@@ -86,7 +89,7 @@ class PersonalSettings extends Controller
             $Error = true;
             $Message = $this->L10N->t('Undefined field');
         }
-            
+
         return new JSONResponse(
             array(
                 'ERROR' => $Error,
@@ -94,7 +97,7 @@ class PersonalSettings extends Controller
             )
         );
     }
-      
+
       /**
        * @NoAdminRequired
        * @NoCSRFRequired
@@ -102,12 +105,12 @@ class PersonalSettings extends Controller
     public function get()
     {
         header( 'Content-Type: application/json; charset=utf-8');
-            
+
         $PersonalSettings = array();
         foreach ($this->OCDSettingKeys as $SettingKey) {
             $this->Settings->setKey($SettingKey);
             $PersonalSettings[$SettingKey] = $this->Settings->getValue();
-                  
+
             // Set default if not set in the database
             if (is_null($PersonalSettings[$SettingKey])) {
                 switch ($SettingKey) {
@@ -120,7 +123,7 @@ class PersonalSettings extends Controller
                 }
             }
         }
-            
+
         return new JSONResponse(array('ERROR' => false, 'VALS' => $PersonalSettings));
     }
 }

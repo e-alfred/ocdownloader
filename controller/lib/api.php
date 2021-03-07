@@ -11,6 +11,7 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
+use OC_Util;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 
@@ -50,6 +51,8 @@ class API extends Controller
          if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
              $this->DbType = 1;
          }
+
+		 OC_Util::setupFS();
 
          $Settings = new Settings();
          $Settings->setKey('YTDLBinary');
