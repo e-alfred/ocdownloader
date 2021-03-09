@@ -32,7 +32,7 @@ class PersonalSettings extends Controller
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
         parent::__construct($AppName, $Request);
-		OC_Util::setupFS();
+        OC_Util::setupFS();
 
         $this->CurrentUID = $CurrentUID;
 

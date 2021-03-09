@@ -51,7 +51,7 @@ class BTDownloader extends Controller
             $this->DbType = 1;
         }
 
-		OC_Util::setupFS();
+        OC_Util::setupFS();
 
         $this->CurrentUID = $CurrentUID;
 

@@ -44,11 +44,11 @@ class Index extends Controller
         $this->CurrentUID = $CurrentUID;
         $this->L10N = $L10N;
 
-		if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
+        if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
 
-		OC_Util::setupFS();
+        OC_Util::setupFS();
 
         $this->Settings = new Settings();
         $this->Settings->setKey('WhichDownloader');
@@ -250,9 +250,9 @@ class Index extends Controller
      */
     protected function syncDownloadsFolder()
     {
-      	// check whether the download folder exists, if not create it
+        // check whether the download folder exists, if not create it
         if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-        	\OC\Files\Filesystem::mkdir($this->DownloadsFolder);
+            \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
         }
 
         $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
