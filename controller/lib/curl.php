@@ -108,6 +108,9 @@ class CURL
         if (file_exists('/tmp/' . $GID . '.curl')) {
             unlink('/tmp/' . $GID . '.curl');
         }
+        return array(
+            'result' => 'OK'
+        );
     }
     
     /********** PRIVATE STATIC METHODS **********/
