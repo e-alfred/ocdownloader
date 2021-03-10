@@ -11,6 +11,8 @@
 
 namespace OCA\ocDownloader\Controller;
 
+use OC\Files\Filesystem;
+use OC_Util;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use \OCP\AppFramework\Http\StrictContentSecurityPolicy;
@@ -45,6 +47,8 @@ class Index extends Controller
         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
+
+        OC_Util::setupFS();
 
         $this->Settings = new Settings();
         $this->Settings->setKey('WhichDownloader');
@@ -246,9 +250,9 @@ class Index extends Controller
      */
     protected function syncDownloadsFolder()
     {
-      // check download folder exists, if not create it
+        // check whether the download folder exists, if not create it
         if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
+            \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
         }
 
         $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
