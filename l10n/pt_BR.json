@@ -28,7 +28,6 @@
     "Ratio" : "Taxa",
     "Removed" : "Excluído",
     "Seeding" : "Semeando",
-    "Error, GID not found !" : "Erro, GID não encontrado!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "O status retornado é nulo! O Aria2c está sendo executado como daemon?",
     "Unable to find download status file %s" : "Não é possível encontrar o status do download %s",
     "The download has been paused" : "O download foi pausado",

@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ratio" : "比例",
     "Removed" : "已移除",
     "Seeding" : "正在做種",
-    "Error, GID not found !" : "錯誤，找不到GID！",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "回傳的狀態為空值，確認Aria2c已經使用daemon系統服務模式啟動？",
     "Unable to find download status file %s" : "無法取得%s檔案的下載狀態",
     "The download has been paused" : "已暫停此下載任務",

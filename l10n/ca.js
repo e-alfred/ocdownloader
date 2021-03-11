@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ratio" : "Ratio",
     "Removed" : "S'ha suprimit",
     "Seeding" : "Sembrant",
-    "Error, GID not found !" : "Error, no s'ha trobat GID!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "L'estat retornat és nul!, Aria2c està funcionant com a dimoni?",
     "Unable to find download status file %s" : "No es pot trobar l'estat de la descàrrega del fitxer %s",
     "The download has been paused" : "S'ha pausat la descàrrega",

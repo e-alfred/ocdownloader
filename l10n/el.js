@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ratio" : "Αναλογία",
     "Removed" : "Αφαιρέθηκε",
     "Seeding" : "Τροφοδοσία",
-    "Error, GID not found !" : "Σφάλμα, το GID δεν βρέθηκε!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Το επιστρεφόμενο GID είναι άκυρο! Η υπηρεσία Aria2c λειτουργεί;",
     "Unable to find download status file %s" : "Δεν δύναται να βρεθεί η κατάσταση του ληφθέν αρχείου %s",
     "The download has been paused" : "Η λήψη σταμάτησε",

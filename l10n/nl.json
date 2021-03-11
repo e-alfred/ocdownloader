@@ -28,7 +28,6 @@
     "Ratio" : "Verhouding",
     "Removed" : "Verwijderd",
     "Seeding" : "Seeding",
-    "Error, GID not found !" : "Fout, GID niet gevonden!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Resultaatmelding is null ! Draait Aria2c als een daemon ?",
     "Unable to find download status file %s" : "Kon download status bestand %sniet vinden",
     "The download has been paused" : "De download is gepauzeerd",

@@ -27,7 +27,6 @@ OC.L10N.register(
     "Ratio" : "比率",
     "Removed" : "削除済み",
     "Seeding" : "シード処理",
-    "Error, GID not found !" : "エラー、GIDが見つかりません！",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "返されたステータスがnullです！Aria2cはデーモンとして実行されていますか？",
     "Unable to find download status file %s" : "ダウンロード状況ファイル%sが見つかりません",
     "The download has been paused" : "ダウンロードが一時停止されました",

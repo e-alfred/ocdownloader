@@ -19,7 +19,6 @@ OC.L10N.register(
     "Uploaded" : "Įkelta",
     "Ratio" : "Santykis",
     "Seeding" : "Skleidžiama",
-    "Error, GID not found !" : "Klaida, GID nerastas!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Grąžinta būsena yra nulinė! Ar Aria2c veikia kaip tarnyba?",
     "The download has been paused" : "Atsiuntimas pristabdytas",
     "An error occurred while pausing the download" : "Klaida pristabdant atsiuntimą",

@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ratio" : "Oran",
     "Removed" : "Kaldırıldı",
     "Seeding" : "Tohumlanıyor",
-    "Error, GID not found !" : "Hata, GID bulunamadı !",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Bildirilen durum boş ! Aria2c arka plan işlemi olarak çalışıyor mu ?",
     "Unable to find download status file %s" : "%s indirme durumu dosyası bulunamadı",
     "The download has been paused" : "İndirme duraklatıldı",

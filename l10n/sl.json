@@ -28,7 +28,6 @@
     "Ratio" : "Razmerje",
     "Removed" : "Odstranjeno",
     "Seeding" : "Poteka sejanje ...",
-    "Error, GID not found !" : "Napaka, vrednosti GID ni mogoče najti!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Vrnjeno stanje je prazna vrednost! Ali teče program Aria2c kot ozadnji program?",
     "Unable to find download status file %s" : "Ni mogoče najti datoteke stanja prejemov %s",
     "The download has been paused" : "Prejemanje je v premoru",

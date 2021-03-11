@@ -27,7 +27,6 @@ OC.L10N.register(
     "Ratio" : "Arány",
     "Removed" : "Eltávolítva",
     "Seeding" : "Megosztva",
-    "Error, GID not found !" : "Hiba, GID nem található!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Státusz válasz értéke null ! Lehet, hogy az Aria2c szolgáltatásként fut ?",
     "The download has been paused" : "A letöltés fel lett függesztve",
     "Bad GID" : "Hibás GID",
