@@ -1,7 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "Unable to find YouTube-DL binary" : "Nedaří se nalézt spustitelný soubor od YouTube-DL",
+    "Unable to find YouTube-DL binary" : "Nedaří se nalézt spustitelný soubor nástroje YouTube-DL",
     "Invalid proxy address URL" : "Neplatná URL adresa proxy",
     "Proxy port should be a numeric value" : "Port proxy by měla být číselná hodnota",
     "Proxy port should be a value from 1 to 65536" : "Port proxy by měla být hodnota z rozsahu 1 až 65536",
@@ -109,7 +109,7 @@ OC.L10N.register(
     "Complete Downloads" : "Dokončená stahování",
     "Waiting Downloads" : "Čekající stahování",
     "Stopped Downloads" : "Zastavená stahování",
-    "Removed Downloads" : "Odebrat stahování",
+    "Removed Downloads" : "Odebraná stahování",
     "Leave fields blank to reset a setting value" : "Pro vrácení hodnoty nastavení do výchozího stavu ponechte kolonky nevyplněné",
     "YouTube DL Binary Path" : "Popis umístění spustitelného souboru s YouTube DL",
     "YouTube DL Audio Format" : "Formát zvuku v YouTube DL",
