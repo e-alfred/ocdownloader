@@ -119,6 +119,7 @@ OC.L10N.register(
     "If no authentication is required by your proxy, leave the following fields blank" : "Če naj overitvev ne bo zahtevana morajo biti polja prazna.",
     "Proxy User" : "Uporabnik posredniškega strežnika",
     "Proxy Password" : "Geslo posredniškega strežnika",
+    "Only use proxy settings with YouTube-DL?" : "Ali naj bodo nastavitve posredništva uporabljene le z YouTube-DL?",
     "No" : "Ne",
     "Yes" : "Da",
     "General settings" : "Splošne nastavitve",
