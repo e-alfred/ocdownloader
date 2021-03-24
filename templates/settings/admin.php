@@ -7,7 +7,13 @@
  *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
+ *
+ * @var array $_
+ * @var IL10N $l
  */
+
+use OCP\IL10N;
+
 ?>
 <form id="ocdownloader" class="section">
 	<h2>ocDownloader</h2>

@@ -11,6 +11,7 @@
 
 namespace OCA\ocDownloader\Controller;
 
+use Exception;
 use OC_Util;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
@@ -30,6 +31,11 @@ class Queue extends Controller
     private $CurrentUID;
     private $WhichDownloader = 0;
     private $DownloadsFolder;
+
+    /**
+     * @var IL10N
+     */
+    private $L10N;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
@@ -200,7 +206,7 @@ class Queue extends Controller
                                 $followedBy = $Status["result"]["followedBy"];
 
                                 foreach ($followedBy as $followed) {
-                                    $followedStatus =($this->$WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
+                                    $followedStatus =($this->WhichDownloader == 0 ? Aria2::tellStatus($followed) : CURL::tellStatus($followed));
                                     if (!isset($followedStatus['error'])) {
                                         // Check if GID already exists
 
@@ -224,7 +230,7 @@ class Queue extends Controller
 
                                             $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
                                                 (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                                            if ($this->$DbType == 1) {
+                                            if ($this->DbType == 1) {
                                                 $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
                                                     ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                                             }
@@ -264,7 +270,7 @@ class Queue extends Controller
                             /* Delete invalid request if GID is not found */
 
                             $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
-                            if ($this->$DbType == 1) {
+                            if ($this->DbType == 1) {
                                 $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
                             }
 

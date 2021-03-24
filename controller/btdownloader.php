@@ -11,6 +11,7 @@
 
 namespace OCA\ocDownloader\Controller;
 
+use Exception;
 use OC_Util;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
