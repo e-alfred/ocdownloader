@@ -14,6 +14,9 @@
 
 use OCP\IL10N;
 
+script('ocdownloader', 'settings/admin');
+style('ocdownloader', 'settings/admin');
+
 ?>
 <form id="ocdownloader" class="section">
 	<h2>ocDownloader</h2>

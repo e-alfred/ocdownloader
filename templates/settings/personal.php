@@ -14,6 +14,9 @@
 
 use OCP\IL10N;
 
+script('ocdownloader', 'settings/personal');
+style('ocdownloader', 'settings/personal');
+
 $BTSeedTimeToReach = 1;
 $BTSeedTimeToReachUnit = 'w';
 if (isset ($_['OCDS_BTSeedTimeToReach_BTSeedTimeToReachUnit']))
