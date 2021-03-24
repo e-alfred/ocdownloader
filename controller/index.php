@@ -16,7 +16,7 @@ use OC\ForbiddenException;
 use OC_Util;
 use OCA\ocDownloader\Controller\Lib\Settings;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\StrictContentSecurityPolicy;
+use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IL10N;
@@ -99,8 +99,7 @@ class Index extends Controller
             'AllowProtocolBT' => $this->AllowProtocolBT
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -121,8 +120,7 @@ class Index extends Controller
         ]);
 
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -142,8 +140,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -163,8 +160,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -187,8 +183,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -211,8 +206,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -232,8 +226,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
