@@ -14,15 +14,8 @@ namespace OCA\ocDownloader\Controller\Lib;
 use Exception;
 use OC_Util;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
-
 use OCP\IL10N;
 use OCP\IRequest;
-
-use \OCA\ocDownloader\Controller\Lib\YouTube;
-use \OCA\ocDownloader\Controller\Lib\Aria2;
-use \OCA\ocDownloader\Controller\Lib\Tools;
-use \OCA\ocDownloader\Controller\Lib\Settings;
 
 class API extends Controller
 {

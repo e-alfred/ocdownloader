@@ -11,21 +11,16 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use OC\Files\Filesystem;
 use Exception;
 use OC\ForbiddenException;
 use OC_Util;
+use OCA\ocDownloader\Controller\Lib\Settings;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\StrictContentSecurityPolicy;
 use OCP\AppFramework\Http\TemplateResponse;
-use \OCP\AppFramework\Http\StrictContentSecurityPolicy;
-
 use OCP\EventDispatcher\IEventDispatcher;
-
 use OCP\IL10N;
 use OCP\IRequest;
-
-use OCA\ocDownloader\Controller\Lib\Tools;
-use OCA\ocDownloader\Controller\Lib\Settings;
 
 class Index extends Controller
 {

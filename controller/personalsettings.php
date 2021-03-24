@@ -12,13 +12,11 @@
 namespace OCA\ocDownloader\Controller;
 
 use OC_Util;
+use OCA\ocDownloader\Controller\Lib\Settings;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IL10N;
 use OCP\IRequest;
-
-use OCA\ocDownloader\Controller\Lib\Settings;
-use OCA\ocDownloader\Controller\Lib\Tools;
 
 class PersonalSettings extends Controller
 {
