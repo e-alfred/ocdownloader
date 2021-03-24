@@ -11,7 +11,6 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use Exception;
 use OC\ForbiddenException;
 use OC_Util;
 use OCA\ocDownloader\Controller\Lib\Settings;
@@ -21,6 +20,7 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IL10N;
 use OCP\IRequest;
+use Throwable;
 
 class Index extends Controller
 {
@@ -253,7 +253,7 @@ class Index extends Controller
         } catch (ForbiddenException $e) {
             //$arr['forbidden'] = 1;
             //"<error>Home storage for user $user not writable</error>" "Make sure you're running the scan command only as the user the web server runs as"
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             //$arr['exception'] = 1;
             //'<error>Exception during scan: ' . $e->getMessage() . "\n" . $e->getTraceAsString() . '</error>');
         }

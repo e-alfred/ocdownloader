@@ -11,11 +11,11 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
-use Exception;
 use OC_Util;
 use OCP\AppFramework\Controller;
 use OCP\IL10N;
 use OCP\IRequest;
+use Throwable;
 
 class API extends Controller
 {
@@ -172,7 +172,7 @@ class API extends Controller
             } else {
                 return array('ERROR' => true, 'MESSAGE' => 'InvalidURL');
             }
-        } catch (Exception $E) {
+        } catch (Throwable $e) {
             return array('ERROR' => true, 'MESSAGE' => 'Unabletolaunchthedownload');
         }
     }
@@ -192,7 +192,6 @@ class API extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-
     public static function getQueue()
     {
         self::load();
@@ -387,8 +386,8 @@ class API extends Controller
                 'QUEUE' => $Queue,
                 'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
             );
-        } catch (Exception $E) {
-            return array('ERROR' => true, 'MESSAGE' => $E->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
+        } catch (Throwable $e) {
+            return array('ERROR' => true, 'MESSAGE' => $e->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
         }
     }
 

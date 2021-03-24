@@ -11,18 +11,16 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use Exception;
 use OC_Util;
-use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
-
-use OCP\IL10N;
-use OCP\IRequest;
-
 use OCA\ocDownloader\Controller\Lib\Aria2;
 use OCA\ocDownloader\Controller\Lib\CURL;
-use OCA\ocDownloader\Controller\Lib\Tools;
 use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Tools;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
+use OCP\IRequest;
+use Throwable;
 
 class HttpDownloader extends Controller
 {
@@ -214,8 +212,8 @@ class HttpDownloader extends Controller
                             )
                         );
                     }
-                } catch (Exception $E) {
-                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+                } catch (Throwable $e) {
+                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
                 }
             }
         }
