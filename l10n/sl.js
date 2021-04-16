@@ -133,6 +133,7 @@ OC.L10N.register(
     "Max download speed ?" : "Ali želite uporabiti največjo hitrost prenosa?",
     "KB/s (empty or 0 : unlimited, default : unlimited)" : "KB/s (prazno oz. 0 : neomejeno, privzeto : neomejeno)",
     "BitTorrent protocol settings - Max upload speed" : "Nastavitve protokola BitTorrent – največja hitrost pošiljanja",
+    "BitTorrent protocol max upload speed?" : "Največja hitrost pošiljanja po protokolu BitTorrent",
     "Allow protocols for users (except for members of the admin group)" : "Dovoljeni protokoli za uporabnike (izjema so člani skupine skrbnikov)",
     "Allow HTTP/Magnet?" : "Ali dovolite uporabo prenosa HTTP?/Magnet?",
     "Allow FTP?" : "Ali dovolite uporabo prenosa FTP?",
