@@ -57,6 +57,7 @@ OC.L10N.register(
     "Upload" : "Pošlji",
     "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Enotsavno orodje za upravljanje prejemov Nextcloud",
+    "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Pa uporabo enostaven upravljalnik prejemov deluje s podporo knjižnic Curl/Aria2 in youtube-dl, ki omogočajo prejem prek protokolov HTTP(S), FTP(S), YouTube in BitTorrent. Več podrobnosti o nameščanju in delovanje je zbranih v datoteki https://github.com/e-alfred/ocdownloader/blob/master/README.md ",
     "Active Downloads" : "Dejavni prejemi",
     " using <strong>%s</strong>" : " z uporabo <strong>%s</strong>",
     "FILENAME" : "Ime datoteke",
