@@ -200,7 +200,7 @@ class Queue extends Controller
                                 $followedBy = $Status["result"]["followedBy"];
 
                                 foreach ($followedBy as $followed) {
-                                    $followedStatus =($this->$WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
+                                    $followedStatus =($this->WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
                                     if (!isset($followedStatus['error'])) {
                                         // Check if GID already exists
 
