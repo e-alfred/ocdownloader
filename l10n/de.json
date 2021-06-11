@@ -29,7 +29,7 @@
     "Removed" : "Entfernt",
     "Seeding" : "Seeding",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Null-Status zurückerhalten! Läuft Aria2c als Daemon?",
-    "Unable to find download status file %s" : "Download Status-Datei %s kann nicht gefunden werden",
+    "Unable to find download status file %s" : "Download Status-Datei %s konnte nicht gefunden werden",
     "The download has been paused" : "Der Download wurde pausiert",
     "An error occurred while pausing the download" : "Ein Fehler ist während des Pausierens des Downloads aufgetreten",
     "Bad GID" : "Fehlerhafte GID",
