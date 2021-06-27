@@ -54,7 +54,7 @@ OC.L10N.register(
     "Paused" : "Suspèndidos",
     "Active" : "Ativos",
     "No Torrent Files" : "Perunu archìviu torrent",
-    "Upload" : "Carriga",
+    "Upload" : "Càrriga",
     "ocDownloader" : "ocIscarrigadore",
     "Easy to use download manager for Nextcloud" : "Gestore de is iscarrigamentos fàtzile de impreare pro Nextcloud",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Gestore de is iscarrigamentos chi impreat Curl/Aria2 e youtube-dl pro permìtere de nch'iscarrigare HTTP(S), FTP(S), vìdeo YouTube e archìviu BitTorrent. Pro àteras informatziones in contu de comente s'installat, bae a https://github.com/e-alfred/ocdownloader/blob/master/README.md",

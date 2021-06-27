@@ -113,7 +113,7 @@ OC.L10N.register(
     "Leave fields blank to reset a setting value" : "將此區留空以重設此設定值",
     "YouTube DL Binary Path" : "Youtube DL的執行檔路徑",
     "YouTube DL Audio Format" : "YouTube DL 音頻格式",
-    "YouTube DL Video Format" : "YouTube DL 視頻格式",
+    "YouTube DL Video Format" : "YouTube DL 視像格式",
     "Proxy settings" : "proxy代理伺服器設定",
     "Proxy Address" : "proxy代理伺服器位址",
     "Proxy Port" : "proxy代理伺服器連接埠",
