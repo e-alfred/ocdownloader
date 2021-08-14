@@ -13,15 +13,9 @@ namespace OCA\ocDownloader\Controller\Lib;
 
 use OC_Util;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
-
 use OCP\IL10N;
 use OCP\IRequest;
-
-use \OCA\ocDownloader\Controller\Lib\YouTube;
-use \OCA\ocDownloader\Controller\Lib\Aria2;
-use \OCA\ocDownloader\Controller\Lib\Tools;
-use \OCA\ocDownloader\Controller\Lib\Settings;
+use Throwable;
 
 class API extends Controller
 {
@@ -48,8 +42,10 @@ class API extends Controller
      {
          parent::__construct($AppName, $Request);
 
+         self::$L10N = $L10N;
+
          if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
-             $this->DbType = 1;
+             self::$DbType = 1;
          }
 
         OC_Util::setupFS();
@@ -64,27 +60,26 @@ class API extends Controller
          $Settings->setKey('YTDLVideoFormat');
          $YTDLVideoFormat = $Settings->getValue();
 
-         $this->YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
+         self::$YTDLBinary = '/usr/local/bin/youtube-dl'; // default path
          if (!is_null($YTDLBinary)) {
-            $this->YTDLBinary = $YTDLBinary;
+             self::$YTDLBinary = $YTDLBinary;
          }
 
-         $this->YTDLAudioFormat = 'bestaudio[abr<=75]'; // default setting
+         self::$YTDLAudioFormat = 'bestaudio[abr<=75]'; // default setting
          if (!is_null($YTDLAudioFormat)) {
-            $this->YTDLAudioFormat = $YTDLAudioFormat;
+             self::$YTDLAudioFormat = $YTDLAudioFormat;
          }
 
-         $this->YTDLVideoFormat = 'best[width<=1280]'; // default setting
+         self::$YTDLVideoFormat = 'best[width<=1280]'; // default setting
          if (!is_null($YTDLVideoFormat)) {
-            $this->YTDLVideoFormat = $YTDLVideoFormat;
+             self::$YTDLVideoFormat = $YTDLVideoFormat;
          }
       }
 
-     /**
-      * @NoAdminRequired
-      * @NoCSRFRequired
-      */
-
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public static function add($URL)
     {
         try {
@@ -177,7 +172,7 @@ class API extends Controller
             } else {
                 return array('ERROR' => true, 'MESSAGE' => 'InvalidURL');
             }
-        } catch (Exception $E) {
+        } catch (Throwable $e) {
             return array('ERROR' => true, 'MESSAGE' => 'Unabletolaunchthedownload');
         }
     }
@@ -197,7 +192,6 @@ class API extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-
     public static function getQueue()
     {
         self::load();
@@ -298,13 +292,13 @@ class API extends Controller
                                     if (!isset($followedStatus['error'])) {
                                         $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
 							(`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                                        if (self::DbType == 1) {
+                                        if (self::$DbType == 1) {
                                             $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
 							("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                                         }
                                         $addQuery = \OC_DB::prepare($addSQL);
                                         $addQuery->execute(array(
-                                            $this->CurrentUID,
+                                            self::$CurrentUID,
                                             $followed,
                                             $followedStatus["result"]["bittorrent"]["info"]["name"],
                                             "TORRENT",
@@ -382,6 +376,7 @@ class API extends Controller
 
             // Start rescan on update
             if ($DownloadUpdated) {
+                /** @var array $DL */
                 \OC\Files\Filesystem::touch(self::$AbsoluteDownloadsFolder . $DL['FILENAME']);
             }
 
@@ -391,8 +386,8 @@ class API extends Controller
                 'QUEUE' => $Queue,
                 'COUNTER' => Tools::getCounters(self::$DbType, self::$CurrentUID)
             );
-        } catch (Exception $E) {
-            return array('ERROR' => true, 'MESSAGE' => $E->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
+        } catch (Throwable $e) {
+            return array('ERROR' => true, 'MESSAGE' => $e->getMessage(), 'QUEUE' => null, 'COUNTER' => null);
         }
     }
 

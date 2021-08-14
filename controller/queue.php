@@ -12,16 +12,15 @@
 namespace OCA\ocDownloader\Controller;
 
 use OC_Util;
-use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
-
-use OCP\IL10N;
-use OCP\IRequest;
-
 use OCA\ocDownloader\Controller\Lib\Aria2;
 use OCA\ocDownloader\Controller\Lib\CURL;
-use OCA\ocDownloader\Controller\Lib\Tools;
 use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Tools;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
+use OCP\IRequest;
+use Throwable;
 
 class Queue extends Controller
 {
@@ -30,6 +29,11 @@ class Queue extends Controller
     private $CurrentUID;
     private $WhichDownloader = 0;
     private $DownloadsFolder;
+
+    /**
+     * @var IL10N
+     */
+    private $L10N;
 
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
@@ -200,7 +204,7 @@ class Queue extends Controller
                                 $followedBy = $Status["result"]["followedBy"];
 
                                 foreach ($followedBy as $followed) {
-                                    $followedStatus =($this->$WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
+                                    $followedStatus =($this->WhichDownloader == 0 ? Aria2::tellStatus($followed) : CURL::tellStatus($followed));
                                     if (!isset($followedStatus['error'])) {
                                         // Check if GID already exists
 
@@ -224,7 +228,7 @@ class Queue extends Controller
 
                                             $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
                                                 (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                                            if ($this->$DbType == 1) {
+                                            if ($this->DbType == 1) {
                                                 $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
                                                     ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
                                             }
@@ -264,7 +268,7 @@ class Queue extends Controller
                             /* Delete invalid request if GID is not found */
 
                             $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
-                            if ($this->$DbType == 1) {
+                            if ($this->DbType == 1) {
                                 $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
                             }
 
@@ -306,8 +310,8 @@ class Queue extends Controller
                     )
                 );
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -323,8 +327,8 @@ class Queue extends Controller
             return new JSONResponse(
                 array('ERROR' => false, 'COUNTER' => Tools::getCounters($this->DbType, $this->CurrentUID))
             );
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -376,8 +380,8 @@ class Queue extends Controller
                     return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
                 }
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -432,8 +436,8 @@ class Queue extends Controller
                     return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
                 }
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -465,8 +469,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -515,8 +519,8 @@ class Queue extends Controller
                     )
                 );
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -580,8 +584,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -640,8 +644,8 @@ class Queue extends Controller
                     )
                 );
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -686,8 +690,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -739,8 +743,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 }

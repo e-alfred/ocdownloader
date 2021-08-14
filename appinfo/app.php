@@ -18,6 +18,3 @@ namespace OCA\ocDownloader\AppInfo;
     'icon' => \OC::$server->getURLGenerator()->imagePath('ocdownloader', 'ocdownloader.svg'),
     'name' => 'ocDownloader'
 ]);
-
-\OCP\App::registerAdmin('ocdownloader', 'settings/admin');
-\OCP\App::registerPersonal('ocdownloader', 'settings/personal');

@@ -12,15 +12,14 @@
 namespace OCA\ocDownloader\Controller;
 
 use OC_Util;
+use OCA\ocDownloader\Controller\Lib\Aria2;
+use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Tools;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-
 use OCP\IL10N;
 use OCP\IRequest;
-
-use OCA\ocDownloader\Controller\Lib\Aria2;
-use OCA\ocDownloader\Controller\Lib\Tools;
-use OCA\ocDownloader\Controller\Lib\Settings;
+use Throwable;
 
 class BTDownloader extends Controller
 {
@@ -217,8 +216,8 @@ class BTDownloader extends Controller
                         )
                     );
                 }
-            } catch (Exception $E) {
-                return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+            } catch (Throwable $e) {
+                return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
             }
         } else {
             return new JSONResponse(
@@ -253,8 +252,8 @@ class BTDownloader extends Controller
             $Files = \OCA\Files\Helper::formatFileInfos($Files);
 
             return new JSONResponse(array('ERROR' => false, 'FILES' => $Files));
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -300,8 +299,8 @@ class BTDownloader extends Controller
                         array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Error while uploading torrent file'))
                     );
                 }
-            } catch (Exception $E) {
-                return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+            } catch (Throwable $e) {
+                return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
             }
         }
     }

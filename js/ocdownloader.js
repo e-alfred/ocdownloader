@@ -500,7 +500,7 @@ OCDLR = {};
 					{
 						$.each (Data.VALS, function (Key, Value)
 						{
-							eval ('OCDLRSelf.' + Key + '="' + Value + '"');
+                            OCDLRSelf[Key] = Value;
 						});
 					}
 		        }
@@ -523,7 +523,7 @@ OCDLR = {};
 					{
 						$.each (Data.VALS, function (Key, Value)
 						{
-							eval ('OCDLRSelf.' + Key + '="' + Value + '"');
+                            OCDLRSelf[Key] = Value;
 						});
 					}
 		        }

@@ -20,4 +20,9 @@
 		<nextcloud min-version="19" max-version="21" />
 		<lib>curl</lib>
 	</dependencies>
+
+    <settings>
+        <admin>OCA\Ocdownloader\Settings\Admin</admin>
+        <personal>OCA\Ocdownloader\Settings\Personal</personal>
+    </settings>
 </info>
