@@ -135,7 +135,7 @@ OC.L10N.register(
     "KB/s (empty or 0 : unlimited, default : unlimited)" : "KB/s (Leer oder 0 : unbegrenzt, Standard : unbegrenzt)",
     "BitTorrent protocol settings - Max upload speed" : "BitTorrent-Protokoll-Einstellungen - Maximale Upload-Geschwindigkeit",
     "BitTorrent protocol max upload speed?" : "BitTorrent-Protokoll maximale Upload-Geschwindigkeit?",
-    "Allow protocols for users (except for members of the admin group)" : "Protokolle für Benutzer erlauben (außer für Mitglieder der Admin-Gruppe)",
+    "Allow protocols for users (except for members of the admin group)" : "Protokolle für Benutzer erlauben (außer für Mitglieder der Administratoren-Gruppe)",
     "Allow HTTP/Magnet?" : "HTTP/Magnet erlauben?",
     "Allow FTP?" : "FTP erlauben?",
     "Allow YouTube?" : "YouTube erlauben?",
