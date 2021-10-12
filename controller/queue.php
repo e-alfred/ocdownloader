@@ -11,16 +11,16 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
-
-use OCP\IL10N;
-use OCP\IRequest;
-
+use OC_Util;
 use OCA\ocDownloader\Controller\Lib\Aria2;
 use OCA\ocDownloader\Controller\Lib\CURL;
-use OCA\ocDownloader\Controller\Lib\Tools;
 use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Tools;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
+use OCP\IRequest;
+use Throwable;
 
 class Queue extends Controller
 {
@@ -30,6 +30,11 @@ class Queue extends Controller
     private $WhichDownloader = 0;
     private $DownloadsFolder;
 
+    /**
+     * @var IL10N
+     */
+    private $L10N;
+
     public function __construct($AppName, IRequest $Request, $CurrentUID, IL10N $L10N)
     {
         parent::__construct($AppName, $Request);
@@ -38,6 +43,8 @@ class Queue extends Controller
         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
+
+        OC_Util::setupFS();
 
         $this->CurrentUID = $CurrentUID;
 
@@ -187,31 +194,43 @@ class Queue extends Controller
                                 'ISTORRENT' => isset($Status['result']['bittorrent'])
                             );
 
-                            if ($Row['STATUS'] != $DLStatus) {
-                                if($Row['PROTOCOL'] == "MAGNET" && $DLStatus == 0 && isset($Status["result"]["followedBy"]) && count( $Status["result"]["followedBy"]) > 0) {
-                                    $followedBy = $Status["result"]["followedBy"];
+                            if($Row['PROTOCOL'] == "MAGNET" && $DLStatus == 0 && isset($Status["result"]["followedBy"]) && count( $Status["result"]["followedBy"]) > 0) {
+                                /* Follow magnet download requests when the initial meta request is finished.
+                                 * Do not delete this meta request at this stage.
+                                 * We will need the GID of this meta request to trace the newly generated
+                                 * download requests after aria2 is restarted.
+                                 */
 
-                                    $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue`
-						WHERE `UID` = ? AND `GID` = ?';
-                                    if ($this->$DbType == 1) {
-                                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue
-						WHERE UID = ? AND GID = ?';
-                                    }
+                                $followedBy = $Status["result"]["followedBy"];
 
-                                    $Query = \OC_DB::prepare($SQL);
-                                    $Result = $Query->execute(array(
-                                        $this->CurrentUID,
-                                        $Row['GID']
-                                    ));
+                                foreach ($followedBy as $followed) {
+                                    $followedStatus =($this->WhichDownloader == 0 ? Aria2::tellStatus($followed) : CURL::tellStatus($followed));
+                                    if (!isset($followedStatus['error'])) {
+                                        // Check if GID already exists
 
-                                    foreach ($followedBy as $followed) {
-                                        $followedStatus =($this->$WhichDownloader == 0?Aria2::tellStatus($followed):CURL::tellStatus($followed));
-                                        if (!isset($followedStatus['error'])) {
+                                        $exists = false;
+
+                                        $existQuerySQL = 'SELECT * FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
+                                        if ($this->DbType == 1) {
+                                            $existQuerySQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
+                                        }
+                                        $existQuery = \OC_DB::prepare($existQuerySQL);
+                                        $existRequest = $existQuery->execute(array(
+                                            $this->CurrentUID,
+                                            $followed,
+                                        ));
+                                        while ($existRequest->fetchRow()) {
+                                            $exists = true;
+                                        }
+
+                                        if (!$exists) {
+                                            // Insert to download queue if GID is new
+
                                             $addSQL = 'INSERT INTO `*PREFIX*ocdownloader_queue`
-								 (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
-                                            if ($this->$DbType == 1) {
+                                                (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
+                                            if ($this->DbType == 1) {
                                                 $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-								(UID, GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES(?, ?, ?, ?, ?, ?)';
+                                                    (UID, GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES(?, ?, ?, ?, ?, ?)';
                                             }
                                             $addQuery = \OC_DB::prepare($addSQL);
                                             $addQuery->execute(array(
@@ -225,39 +244,39 @@ class Queue extends Controller
                                         }
                                     }
                                 }
-                                else {
-                                    $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
-		                                    SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
-                                    if ($this->DbType == 1) {
-                                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-		                                        SET STATUS = ? WHERE UID = ? AND GID = ? AND STATUS != ?';
-                                    }
+                            }
 
-                                    $Query = \OC_DB::prepare($SQL);
-                                    $Result = $Query->execute(array(
-                                        $DLStatus,
-                                        $this->CurrentUID,
-                                        $Row['GID'],
-                                        4
-                                    ));
+                            if ($Row['STATUS'] != $DLStatus) {
+                                $SQL = 'UPDATE `*PREFIX*ocdownloader_queue`
+	                                    SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
+                                if ($this->DbType == 1) {
+                                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue
+	                                        SET STATUS = ? WHERE UID = ? AND GID = ? AND STATUS != ?';
                                 }
 
-                                // Start rescan on update
-                                \OC\Files\Filesystem::touch($this->DownloadsFolder . $Row['FILENAME']);
+                                $Query = \OC_DB::prepare($SQL);
+                                $Result = $Query->execute(array(
+                                    $DLStatus,
+                                    $this->CurrentUID,
+                                    $Row['GID'],
+                                    4
+                                ));
+
+                                $DownloadUpdated = true;
                             }
                         } else {
-                            $Queue[] = array(
-                                'GID' => $Row['GID'],
-                                'PROGRESSVAL' => 0,
-                                'PROGRESS' =>(string)$this->L10N->t('Error, GID not found !'),
-                                'STATUS' =>(string)$this->L10N->t('N/A'),
-                                'STATUSID' => $DLStatus,
-                                'SPEED' =>(string)$this->L10N->t('N/A'),
-                                'FILENAME' => $Row['FILENAME'],
-                                'FILENAME_SHORT' => Tools::getShortFilename($Row['FILENAME']),
-                                'PROTO' => $Row['PROTOCOL'],
-                                'ISTORRENT' => isset($Status['result']['bittorrent'])
-                            );
+                            /* Delete invalid request if GID is not found */
+
+                            $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
+                            if ($this->DbType == 1) {
+                                $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
+                            }
+
+                            $Query = \OC_DB::prepare($SQL);
+                            $Result = $Query->execute(array(
+                                $this->CurrentUID,
+                                $Row['GID']
+                            ));
                         }
                     } else {
                         $Queue[] = array(
@@ -286,8 +305,8 @@ class Queue extends Controller
                     )
                 );
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -303,8 +322,8 @@ class Queue extends Controller
             return new JSONResponse(
                 array('ERROR' => false, 'COUNTER' => Tools::getCounters($this->DbType, $this->CurrentUID))
             );
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -356,8 +375,8 @@ class Queue extends Controller
                     return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
                 }
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -412,8 +431,8 @@ class Queue extends Controller
                     return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
                 }
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -445,8 +464,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -495,8 +514,8 @@ class Queue extends Controller
                     )
                 );
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -560,8 +579,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -620,8 +639,8 @@ class Queue extends Controller
                     )
                 );
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -641,12 +660,13 @@ class Queue extends Controller
                     :CURL::tellStatus($_POST['GID'])
                 );
 
-                if (!isset($Status['error']) && isset($Status['result']['status']) && strcmp($Status['result']['status'], 'removed') == 0) {
-                    $Remove =(
+                $Remove = (
                     !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                         ? Aria2::removeDownloadResult($_POST['GID'])
                         :CURL::removeDownloadResult($_POST['GID'])
                     );
+                if ($Remove['result'] != 'OK') {
+                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => 'Downloader returns error: ' . json_encode($Remove)));
                 }
 
                 $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
@@ -669,8 +689,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 
@@ -689,12 +709,13 @@ class Queue extends Controller
                 foreach ($_POST['GIDS'] as $GID) {
                     $Status =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
 
-                    if (!isset($Status['error']) && strcmp($Status['result']['status'], 'removed') == 0) {
-                        $Remove =(
+                    $Remove =(
                         !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                             ?Aria2::removeDownloadResult($GID)
                             :CURL::removeDownloadResult($GID)
                         );
+                    if ($Remove['result'] != 'OK') {
+                        return new JSONResponse(array('ERROR' => true, 'MESSAGE' => 'Downloader returns error: ' . json_encode($Remove)));
                     }
 
                     $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
@@ -721,8 +742,8 @@ class Queue extends Controller
             } else {
                 return new JSONResponse(array('ERROR' => true, 'MESSAGE' =>(string)$this->L10N->t('Bad GID')));
             }
-        } catch (Exception $E) {
-            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+        } catch (Throwable $e) {
+            return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
         }
     }
 }

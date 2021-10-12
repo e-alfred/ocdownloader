@@ -8,6 +8,8 @@ OC.L10N.register(
     "Loading" : "Loading",
     "Username" : "Nom d'utilizaire",
     "Password" : "Senhal",
+    "FTP Password" : "Senhal FTP",
+    "Proxy Password" : "Senhal proxy",
     "No" : "No",
     "Yes" : "Yes",
     "Save" : "Salvar",

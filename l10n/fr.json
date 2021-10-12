@@ -28,7 +28,6 @@
     "Ratio" : "Ratio",
     "Removed" : "Supprimé",
     "Seeding" : "Envoi en cours",
-    "Error, GID not found !" : "Erreur, GID non trouvé !",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Le statut retourné est nul ! Est-ce que Aria2c est bien lancé en tant que démon ?",
     "Unable to find download status file %s" : "Impossible de trouver le fichier %s indiquant l'état du téléchargement",
     "The download has been paused" : "Le téléchargement a été mis en pause.",

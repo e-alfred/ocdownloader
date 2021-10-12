@@ -40,6 +40,10 @@ form#ocdownloader input.OCDAriaPort {
 	width: 102px;
 }
 
+form#ocdownloader input.OCDAriaToken {
+	width: 102px;
+}
+
 form#ocdownloader span.info {
 	font-style: italic;
 	color: #003366;

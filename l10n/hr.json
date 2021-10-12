@@ -28,7 +28,6 @@
     "Ratio" : "Omjer",
     "Removed" : "Uklonjeno",
     "Seeding" : "Dijeljenje",
-    "Error, GID not found !" : "Pogreška, GID nije pronađen!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Vraćeni status je nula! Je li Aria2c pokrenuta kao deamon?",
     "Unable to find download status file %s" : "Nije moguće pronaći datoteku statusa preuzimanja %s",
     "The download has been paused" : "Preuzimanje je pauzirano",

@@ -11,8 +11,6 @@
 
 namespace OCA\ocDownloader\Controller\Lib;
 
-use OCA\ocDownloader\Controller\Lib\Aria2;
-
 class Tools
 {
     public static function checkURL($URL)

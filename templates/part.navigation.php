@@ -5,9 +5,15 @@
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the LICENSE file.
  *
+ * @var array $_
+ * @var IL10N $l
+ *
  * @author Xavier Beurois <www.sgc-univ.net>
  * @copyright Xavier Beurois 2015
  */
+
+use OCP\IL10N;
+
 ?>
 <ul>
     <li data-id="add"<?php print ($_['PAGE'] === 0 ? ' class="active"' : ''); ?>>

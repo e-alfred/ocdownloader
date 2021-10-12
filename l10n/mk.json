@@ -28,7 +28,6 @@
     "Ratio" : "Сооднос",
     "Removed" : "Отстрането",
     "Seeding" : "Сеење",
-    "Error, GID not found !" : "Грешка, GID не е пронајден!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Повратниот статус е null! Дали Aria2c сервисот е стартуван?",
     "Unable to find download status file %s" : "Неможе да се пронајде статусот на преземањето на датотека %s",
     "The download has been paused" : "Преземањето е паузирано",

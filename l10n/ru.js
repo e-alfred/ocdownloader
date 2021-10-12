@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ratio" : "Соотношение",
     "Removed" : "Удаленный",
     "Seeding" : "Раздается",
-    "Error, GID not found !" : "Ошибка, GID не найден!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Возвращен статус null ! Aria2c работает как демон ?",
     "Unable to find download status file %s" : "Не удается найти файл состояния скачивания %s",
     "The download has been paused" : "Скачивание была приостановлено",

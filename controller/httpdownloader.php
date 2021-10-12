@@ -11,16 +11,16 @@
 
 namespace OCA\ocDownloader\Controller;
 
-use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
-
-use OCP\IL10N;
-use OCP\IRequest;
-
+use OC_Util;
 use OCA\ocDownloader\Controller\Lib\Aria2;
 use OCA\ocDownloader\Controller\Lib\CURL;
-use OCA\ocDownloader\Controller\Lib\Tools;
 use OCA\ocDownloader\Controller\Lib\Settings;
+use OCA\ocDownloader\Controller\Lib\Tools;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
+use OCP\IRequest;
+use Throwable;
 
 class HttpDownloader extends Controller
 {
@@ -45,6 +45,8 @@ class HttpDownloader extends Controller
         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
+
+        OC_Util::setupFS();
 
         $this->CurrentUID = $CurrentUID;
 
@@ -210,8 +212,8 @@ class HttpDownloader extends Controller
                             )
                         );
                     }
-                } catch (Exception $E) {
-                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $E->getMessage()));
+                } catch (Throwable $e) {
+                    return new JSONResponse(array('ERROR' => true, 'MESSAGE' => $e->getMessage()));
                 }
             }
         }

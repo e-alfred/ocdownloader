@@ -11,17 +11,16 @@
 
 namespace OCA\ocDownloader\Controller;
 
+use OC\ForbiddenException;
+use OC_Util;
+use OCA\ocDownloader\Controller\Lib\Settings;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Http\TemplateResponse;
-use \OCP\AppFramework\Http\StrictContentSecurityPolicy;
-
 use OCP\EventDispatcher\IEventDispatcher;
-
 use OCP\IL10N;
 use OCP\IRequest;
-
-use OCA\ocDownloader\Controller\Lib\Tools;
-use OCA\ocDownloader\Controller\Lib\Settings;
+use Throwable;
 
 class Index extends Controller
 {
@@ -45,6 +44,8 @@ class Index extends Controller
         if (strcmp(\OC::$server->getConfig()->getSystemValue('dbtype'), 'pgsql') == 0) {
             $this->DbType = 1;
         }
+
+        OC_Util::setupFS();
 
         $this->Settings = new Settings();
         $this->Settings->setKey('WhichDownloader');
@@ -98,8 +99,7 @@ class Index extends Controller
             'AllowProtocolBT' => $this->AllowProtocolBT
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -120,8 +120,7 @@ class Index extends Controller
         ]);
 
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -141,8 +140,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -162,8 +160,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -186,8 +183,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -210,8 +206,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -231,8 +226,7 @@ class Index extends Controller
             'WD' => $this->WhichDownloader
         ]);
 
-        $csp = new StrictContentSecurityPolicy();
-        $csp->allowEvalScript();
+        $csp = new ContentSecurityPolicy();
         $csp->allowInlineStyle();
 
         $response->setContentSecurityPolicy($csp);
@@ -246,9 +240,9 @@ class Index extends Controller
      */
     protected function syncDownloadsFolder()
     {
-      // check download folder exists, if not create it
+        // check whether the download folder exists, if not create it
         if (!\OC\Files\Filesystem::is_dir($this->DownloadsFolder)) {
-        \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
+            \OC\Files\Filesystem::mkdir($this->DownloadsFolder);
         }
 
         $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
@@ -259,7 +253,7 @@ class Index extends Controller
         } catch (ForbiddenException $e) {
             //$arr['forbidden'] = 1;
             //"<error>Home storage for user $user not writable</error>" "Make sure you're running the scan command only as the user the web server runs as"
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             //$arr['exception'] = 1;
             //'<error>Exception during scan: ' . $e->getMessage() . "\n" . $e->getTraceAsString() . '</error>');
         }

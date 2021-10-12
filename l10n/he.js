@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ratio" : "יחס",
     "Removed" : "הוסר",
     "Seeding" : "בזריעה",
-    "Error, GID not found !" : "שגיאה, מזהה הקבוצה לא נמצא!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "המצב שהוחזר ריק! האם Aria2c רץ ברקע?",
     "Unable to find download status file %s" : "לא ניתן למצוא את קובץ מצב ההורדה %s",
     "The download has been paused" : "ההורדה הושהתה",

@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ratio" : "Ocena",
     "Removed" : "Usunięty",
     "Seeding" : "Seed-owanie",
-    "Error, GID not found !" : "Błąd, nie znaleziono GID!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Zwrócony GID ma wartość NULL! Czy Aria2c działa jako daemon?",
     "Unable to find download status file %s" : "Nie można znaleźć pliku statusu pobierania %s",
     "The download has been paused" : "Pobieranie zostało wstrzymane",

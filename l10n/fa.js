@@ -27,7 +27,6 @@ OC.L10N.register(
     "Ratio" : "نسبت",
     "Removed" : "حذف شده",
     "Seeding" : "بذر",
-    "Error, GID not found !" : "خطا ، GID یافت نشد!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "وضعیت برگشتی تهی است! آیا Aria2c به عنوان یک شبح عمل می کند؟",
     "Unable to find download status file %s" : "یافتن پرونده وضعیت بارگیری امکان پذیر نیست%s",
     "The download has been paused" : "بارگیری موقتاً متوقف شده است",

@@ -19,7 +19,6 @@ OC.L10N.register(
     "Ratio" : "Однос",
     "Removed" : "Уклоњено",
     "Seeding" : "Сидујем",
-    "Error, GID not found !" : "Грешка, GID није нађен!",
     "Returned status is null ! Is Aria2c running as a daemon ?" : "Враћени статус је null! Да ли Aria2c демон ради?",
     "The download has been paused" : "Преузимање је паузирано",
     "An error occurred while pausing the download" : "Десила се грешка приликом паузирања преузимања",
