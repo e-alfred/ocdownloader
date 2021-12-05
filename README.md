@@ -90,6 +90,11 @@ Loki3000
 (formerly) Xavier Beurois
 
 ## Releases notes
+### v1.8.0 [unreleased]
+- Removed Nextcloud 20 support (min version is now 21)
+- Added Nextcloud 23 support
+- Fixed curl download stuck in "waiting" status
+
 ### v1.7.1
 - Added support for quota limits (thanks @Irillit)
 - Moved translations to Transiflex and fixed some localization issues (thanks @MorrisJobke and @rakekniven)
