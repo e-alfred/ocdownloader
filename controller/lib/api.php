@@ -151,7 +151,7 @@ class API extends Controller
                         VALUES(?, ?, ?, ?, ?, ?, ?)';
                     if (self::$DbType == 1) {
                         $SQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                            ("UID", "GID", "FILENAME", "PROTOCOL", "IS_CLEANED", "STATUS", "TIMESTAMP")
+                            (UID, GID, FILENAME, PROTOCOL, IS_CLEANED, STATUS, TIMESTAMP)
                             VALUES(?, ?, ?, ?, ?, ?, ?)';
                     }
 
@@ -213,8 +213,8 @@ class API extends Controller
                 .' ORDER BY `TIMESTAMP` ASC';
             if (self::$DbType == 1) {
                 $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue
-                    WHERE "UID" = ? AND "STATUS" IN '.$StatusReq.' AND "IS_CLEANED" IN '.$IsCleanedReq
-                    .' ORDER BY "TIMESTAMP" ASC';
+                    WHERE uid = ? AND status IN '.$StatusReq.' AND is_cleaned IN '.$IsCleanedReq
+                    .' ORDER BY timestamp ASC';
             }
             $Query = \OC_DB::prepare($SQL);
             $Request = $Query->execute($Params);
@@ -278,7 +278,7 @@ class API extends Controller
 						WHERE `UID` = ? AND `GID` = ?';
                                 if (self::$DbType == 1) {
                                     $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue
-						WHERE "UID" = ? AND "GID" = ?';
+						WHERE uid = ? AND gid = ?';
                                 }
 
                                 $Query = \OC_DB::prepare($SQL);
@@ -294,7 +294,7 @@ class API extends Controller
 							(`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
                                         if (self::$DbType == 1) {
                                             $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-							("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
+							(uid, gid, filename, protocol, status, timestamp) VALUES(?, ?, ?, ?, ?, ?)';
                                         }
                                         $addQuery = \OC_DB::prepare($addSQL);
                                         $addQuery->execute(array(
@@ -313,7 +313,7 @@ class API extends Controller
 		                            SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
                                 if (self::$DbType == 1) {
                                     $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-				                                SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
+				                                SET status = ? WHERE uid = ? AND gid = ? AND status != ?';
                                 }
 
                                 $Query = \OC_DB::prepare($SQL);

@@ -135,16 +135,16 @@ class Queue extends Controller
                     . $StatusReq . ' AND `IS_CLEANED` IN ' . $IsCleanedReq . ' ORDER BY `TIMESTAMP` ASC';
 
                 if ($this->DbType == 1) {
-                    $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "STATUS" IN '
-                        . $StatusReq . ' AND "IS_CLEANED" IN ' . $IsCleanedReq . ' ORDER BY "TIMESTAMP" ASC';
+                    $SQL = 'SELECT * FROM *PREFIX*ocdownloader_queue WHERE UID = ? AND STATUS IN '
+                        . $StatusReq . ' AND IS_CLEANED IN ' . $IsCleanedReq . ' ORDER BY TIMESTAMP ASC';
                 }
                 $Query = \OC_DB::prepare($SQL);
                 $Request = $Query->execute($Params);
 
                 $Queue = [];
-                $DownloadUpdated = false;
                 while ($Row = $Request->fetchRow()) {
-                    $Status =($this->WhichDownloader == 0
+                    $Row = array_change_key_case($Row, CASE_UPPER);
+                    $Status =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                         ?Aria2::tellStatus($Row['GID']):CURL::tellStatus($Row['GID']));
                     $DLStatus = 5; // Error
 
@@ -230,7 +230,7 @@ class Queue extends Controller
                                                 (`UID`, `GID`, `FILENAME`, `PROTOCOL`, `STATUS`, `TIMESTAMP`) VALUES(?, ?, ?, ?, ?, ?)';
                                             if ($this->DbType == 1) {
                                                 $addSQL = 'INSERT INTO *PREFIX*ocdownloader_queue
-                                                    ("UID", "GID", "FILENAME", "PROTOCOL", "STATUS", "TIMESTAMP") VALUES(?, ?, ?, ?, ?, ?)';
+                                                    (UID, GID, FILENAME, PROTOCOL, STATUS, TIMESTAMP) VALUES(?, ?, ?, ?, ?, ?)';
                                             }
                                             $addQuery = \OC_DB::prepare($addSQL);
                                             $addQuery->execute(array(
@@ -251,7 +251,7 @@ class Queue extends Controller
 	                                    SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ? AND `STATUS` != ?';
                                 if ($this->DbType == 1) {
                                     $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-	                                        SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ? AND "STATUS" != ?';
+	                                        SET STATUS = ? WHERE UID = ? AND GID = ? AND STATUS != ?';
                                 }
 
                                 $Query = \OC_DB::prepare($SQL);
@@ -297,11 +297,6 @@ class Queue extends Controller
                     }
                 }
 
-                // Start rescan on update
-                if ($DownloadUpdated) {
-                    \OC\Files\Filesystem::touch($this->DownloadsFolder . $Row['FILENAME']);
-                }
-
                 return new JSONResponse(
                     array(
                         'ERROR' => false,
@@ -341,7 +336,7 @@ class Queue extends Controller
         header( 'Content-Type: application/json; charset=utf-8');
 
         try {
-            if ($this->WhichDownloader == 0) {
+            if (!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2') {
                 if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                     $Status = Aria2::tellStatus($_POST['GID']);
 
@@ -355,7 +350,7 @@ class Queue extends Controller
                     if (strcmp($Pause['result'], $_POST['GID']) == 0) {
                         $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
+                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET STATUS = ? WHERE UID = ? AND GID = ?';
                         }
 
                         $Query = \OC_DB::prepare($SQL);
@@ -394,7 +389,7 @@ class Queue extends Controller
         header( 'Content-Type: application/json; charset=utf-8');
 
         try {
-            if ($this->WhichDownloader == 0) {
+            if (!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2') {
                 if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                     $Status = Aria2::tellStatus($_POST['GID']);
 
@@ -408,7 +403,7 @@ class Queue extends Controller
                     if (strcmp($UnPause['result'], $_POST['GID']) == 0) {
                         $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `STATUS` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
-                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "STATUS" = ? WHERE "UID" = ? AND "GID" = ?';
+                            $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET STATUS = ? WHERE UID = ? AND GID = ?';
                         }
 
                         $Query = \OC_DB::prepare($SQL);
@@ -453,7 +448,7 @@ class Queue extends Controller
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                 $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                 if ($this->DbType == 1) {
-                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
+                    $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                 }
 
                 $Query = \OC_DB::prepare($SQL);
@@ -489,7 +484,7 @@ class Queue extends Controller
                 foreach ($_POST['GIDS'] as $GID) {
                     $SQL = 'UPDATE `*PREFIX*ocdownloader_queue` SET `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
-                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
+                        $SQL = 'UPDATE *PREFIX*ocdownloader_queue SET IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                     }
 
                     $Query = \OC_DB::prepare($SQL);
@@ -535,17 +530,17 @@ class Queue extends Controller
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                 $Status =(
-                $this->WhichDownloader == 0
+                !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                     ?Aria2::tellStatus($_POST['GID'])
                     :CURL::tellStatus($_POST['GID'])
                 );
 
                 $Remove['result'] = $_POST['GID'];
-                if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
+                if (!isset($Status['error']) && isset($Status['result']['status']) && strcmp($Status['result']['status'], 'error') != 0
                     && strcmp($Status['result']['status'], 'complete') != 0) {
                     $Remove =(
-                    $this->WhichDownloader == 0
-                        ? Aria2::forceRemove($_POST['GID'])
+                    !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
+                        ? Aria2::remove($_POST['GID'])
                         :CURL::remove($Status['result'])
                     );
                 } elseif ($this->WhichDownloader != 0 && strcmp($Status['result']['status'], 'complete') == 0) {
@@ -557,7 +552,7 @@ class Queue extends Controller
                         SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
                         $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                            SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
+                            SET STATUS = ?, IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                     }
 
                     $Query = \OC_DB::prepare($SQL);
@@ -602,12 +597,12 @@ class Queue extends Controller
                 $GIDS = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $Status =($this->WhichDownloader == 0 ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
+                    $Status =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
                     $Remove = array('result' => $GID);
 
                     if (!isset($Status['error']) && strcmp($Status['result']['status'], 'error') != 0
                         && strcmp($Status['result']['status'], 'complete') != 0) {
-                        $Remove =($this->WhichDownloader == 0 ? Aria2::forceRemove($GID) : CURL::remove($Status['result']));
+                        $Remove =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? Aria2::remove($GID) : CURL::remove($Status['result']));
                     }
 
                     if (!is_null($Remove) && strcmp($Remove['result'], $GID) == 0) {
@@ -615,7 +610,7 @@ class Queue extends Controller
                             SET `STATUS` = ?, `IS_CLEANED` = ? WHERE `UID` = ? AND `GID` = ?';
                         if ($this->DbType == 1) {
                             $SQL = 'UPDATE *PREFIX*ocdownloader_queue
-                                SET "STATUS" = ?, "IS_CLEANED" = ? WHERE "UID" = ? AND "GID" = ?';
+                                SET STATUS = ?, IS_CLEANED = ? WHERE UID = ? AND GID = ?';
                         }
 
                         $Query = \OC_DB::prepare($SQL);
@@ -660,19 +655,23 @@ class Queue extends Controller
         try {
             if (isset($_POST['GID']) && strlen(trim($_POST['GID'])) > 0) {
                 $Status =(
-                $this->WhichDownloader == 0
+                !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
                     ?Aria2::tellStatus($_POST['GID'])
                     :CURL::tellStatus($_POST['GID'])
                 );
 
-                $Remove = $this->WhichDownloader == 0 ? Aria2::removeDownloadResult($_POST['GID']) : CURL::removeDownloadResult($_POST['GID']);
+                $Remove = (
+                    !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
+                        ? Aria2::removeDownloadResult($_POST['GID'])
+                        :CURL::removeDownloadResult($_POST['GID'])
+                    );
                 if ($Remove['result'] != 'OK') {
                     return new JSONResponse(array('ERROR' => true, 'MESSAGE' => 'Downloader returns error: ' . json_encode($Remove)));
                 }
 
                 $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
                 if ($this->DbType == 1) {
-                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
+                    $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE UID = ? AND GID = ?';
                 }
 
                 $Query = \OC_DB::prepare($SQL);
@@ -708,20 +707,20 @@ class Queue extends Controller
                 $GIDS = array();
 
                 foreach ($_POST['GIDS'] as $GID) {
-                    $Status =($this->WhichDownloader == 0 ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
+                    $Status =(!$this->WhichDownloader || $this->WhichDownloader == 'AIRA2' ? Aria2::tellStatus($GID) : CURL::tellStatus($GID));
 
                     $Remove =(
-                        $this->WhichDownloader == 0
-                        ?Aria2::removeDownloadResult($GID)
-                        :CURL::removeDownloadResult($GID)
-                    );
+                        !$this->WhichDownloader || $this->WhichDownloader == 'AIRA2'
+                            ?Aria2::removeDownloadResult($GID)
+                            :CURL::removeDownloadResult($GID)
+                        );
                     if ($Remove['result'] != 'OK') {
                         return new JSONResponse(array('ERROR' => true, 'MESSAGE' => 'Downloader returns error: ' . json_encode($Remove)));
                     }
 
                     $SQL = 'DELETE FROM `*PREFIX*ocdownloader_queue` WHERE `UID` = ? AND `GID` = ?';
                     if ($this->DbType == 1) {
-                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE "UID" = ? AND "GID" = ?';
+                        $SQL = 'DELETE FROM *PREFIX*ocdownloader_queue WHERE UID = ? AND GID = ?';
                     }
 
                     $Query = \OC_DB::prepare($SQL);
