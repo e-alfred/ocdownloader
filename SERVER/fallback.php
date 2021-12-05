@@ -95,9 +95,6 @@ class OCD
         if (isset($OPTIONS['user-agent'])) {
             curl_setopt(self::$CurlHandler, CURLOPT_USERAGENT, $OPTIONS['user-agent']);
         }
-        if (isset($OPTIONS['out'])) {
-            curl_setopt(self::$CurlHandler, CURLOPT_FILE, $OPTIONS['out']);
-        }
         if (isset($OPTIONS['all-proxy'])) {
             curl_setopt(self::$CurlHandler, CURLOPT_PROXY, $OPTIONS['all-proxy']);
             if (isset($OPTIONS['all-proxy-user']) && isset($OPTIONS['all-proxy-passwd'])) {
