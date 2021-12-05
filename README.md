@@ -94,6 +94,7 @@ Loki3000
 - Removed Nextcloud 20 support (min version is now 21)
 - Added Nextcloud 23 support
 - Fixed curl download stuck in "waiting" status
+- Fixed some "Trying to access array offset" errors in `queue.php`
 
 ### v1.7.1
 - Added support for quota limits (thanks @Irillit)
