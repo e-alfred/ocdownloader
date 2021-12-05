@@ -13,6 +13,11 @@ namespace OCA\ocDownloader\Controller\Lib;
 
 class Tools
 {
+    public static function sanitiseFileName($filename)
+    {
+        return str_replace(['..', '/', '\\', DIRECTORY_SEPARATOR], '_', $filename);
+    }
+
     public static function checkURL($URL)
     {
         $URLPattern = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}'

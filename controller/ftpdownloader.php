@@ -121,8 +121,8 @@ class FtpDownloader extends Controller
                               $OPTIONS['user-agent'] = $_POST['OPTIONS']['FTPUseragent'];
                         }
                 if (isset ($_POST['OPTIONS']['FTPOutfilename']) && strlen (trim ($_POST['OPTIONS']['FTPOutfilename'])) > 0) {
-                              $OPTIONS['out'] = $_POST['OPTIONS']['FTPOutfilename'];
-                        }
+                    $OPTIONS['out'] = Tools::sanitiseFileName($_POST['OPTIONS']['FTPOutfilename']);
+                }
                 if (isset($_POST['OPTIONS']['FTPPasv']) && strlen(trim($_POST['OPTIONS']['FTPPasv'])) > 0) {
                     $OPTIONS['ftp-pasv'] = strcmp($_POST['OPTIONS']['FTPPasv'], "true") == 0 ? true : false;
                 }
