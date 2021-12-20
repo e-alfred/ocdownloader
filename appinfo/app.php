@@ -16,5 +16,5 @@ namespace OCA\ocDownloader\AppInfo;
     'order' => 10,
     'href' => \OC::$server->getURLGenerator()->linkToRoute('ocdownloader.Index.Add'),
     'icon' => \OC::$server->getURLGenerator()->imagePath('ocdownloader', 'ocdownloader.svg'),
-    'name' => 'ocDownloader'
+    'name' => \OC::$server->getL10N('ocdownloader')->t('ocDownloader')
 ]);
