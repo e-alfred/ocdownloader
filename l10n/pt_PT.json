@@ -1,4 +1,5 @@
 { "translations": {
+    "ocDownloader" : "ocDownloader",
     "Saved" : "Guardado",
     "Download started" : "Transferência iniciada",
     "Video" : "Vídeo",
@@ -10,7 +11,6 @@
     "All downloads have been removed" : "Foram removidas todas as transferências",
     "Paused" : "Em pausa",
     "Upload" : "Carregar",
-    "ocDownloader" : "ocDownloader",
     "Active Downloads" : "Transferências Ativas",
     "Loading" : "A carregar",
     "Add Download" : "Adicionar Transferência",

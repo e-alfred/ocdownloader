@@ -1,6 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
+    "ocDownloader" : "ocDownloader",
     "Unable to find YouTube-DL binary" : "Youtube-DL futtatható állomány nem található",
     "Invalid proxy address URL" : "Érvénytelen átjáró cím URL",
     "Proxy port should be a numeric value" : "Átjáró port szám alapú kéne legyen",
@@ -55,7 +56,6 @@ OC.L10N.register(
     "Active" : "Aktív",
     "No Torrent Files" : "Nincsenek torrent Fájlok",
     "Upload" : "Feltölt",
-    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Könnyen használható letöltéskezelő a Nextcloud számára",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Könnyen használható letöltéskezelő a Curl / Aria2 és a youtube-dl segítségével HTTP(S), FTP(S), YouTube videók és BitTorrent fájlok letöltéséhez. További információ a telepítésről a https://github.com/e-alfred/ocdownloader/blob/master/README.md webhelyen található.",
     "Active Downloads" : "Aktív letöltések",
