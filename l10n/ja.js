@@ -134,6 +134,7 @@ OC.L10N.register(
     "minutes" : "分",
     "hours" : "時間",
     "days" : "日",
-    "weeks" : "週"
+    "weeks" : "週",
+    "years" : "年"
 },
 "nplurals=1; plural=0;");
