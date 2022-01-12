@@ -62,6 +62,7 @@ OC.L10N.register(
     "INFORMATION" : "情報",
     "SPEED" : "ダウンロード速度",
     "Loading" : "読み込み中",
+    "HTTP" : "HTTP",
     "Add Download" : "ダウンロードを追加",
     "New HTTP download" : "新しいHTTPダウンロード",
     "Options" : "オプション",
@@ -115,6 +116,7 @@ OC.L10N.register(
     "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "警告 !! ARIA2から別のダウンローダエンジンに切り替えると、現在のダウンロードがすべてARIA2から削除されます。",
     "Which downloader do you want to use?" : "どちらのダウンローダを使いますか？",
     "Available protocols" : "利用可能なプロトコル",
+    "ARIA2 Port" : "ARIA2ポート",
     "Max download speed ?" : "最大ダウンロード速度 ?",
     "KB/s (empty or 0 : unlimited, default : unlimited)" : "KB/s(emptyまたは0:無制限、デフォルト:無制限)",
     "BitTorrent protocol settings - Max upload speed" : "BitTorrentプロトコル設定-最大アップロード速度",
@@ -135,6 +137,7 @@ OC.L10N.register(
     "hours" : "時間",
     "days" : "日",
     "weeks" : "週",
+    "months" : "月",
     "years" : "年"
 },
 "nplurals=1; plural=0;");
