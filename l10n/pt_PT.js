@@ -17,6 +17,7 @@ OC.L10N.register(
     "Loading" : "A carregar",
     "Add Download" : "Adicionar Transferência",
     "New HTTP download" : "Nova transferência de HTTP",
+    "Options" : "Opções",
     "Username" : "Nome de utilizador",
     "Password" : "Palavra-passe",
     "Filename" : "Nome do ficheiro",
@@ -35,12 +36,15 @@ OC.L10N.register(
     "Removed Downloads" : "Transferências Removidas",
     "No" : "Não",
     "Yes" : "Sim",
+    "General settings" : "Definições Gerais",
     "Max download speed ?" : "Velocidade máxima de transferência?",
     "Default Downloads Folder" : "Pasta de Transferências Predefinida",
     "Save" : "Guardar",
     "minutes" : "minutos",
     "hours" : "horas",
     "days" : "dias",
-    "weeks" : "semanas"
+    "weeks" : "semanas",
+    "months" : "meses",
+    "years" : "anos"
 },
 "nplurals=2; plural=(n != 1);");

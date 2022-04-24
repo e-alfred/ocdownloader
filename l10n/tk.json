@@ -1,0 +1,11 @@
+{ "translations": {
+    "Uploaded" : "Ýüklendi",
+    "Upload" : "Ýükle",
+    "Username" : "Ulanyjy ady",
+    "Password" : "Açarsöz",
+    "Filename" : "Faýlyň ady",
+    "No" : "Ýok",
+    "Yes" : "Hawa",
+    "Save" : "Saklamak"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

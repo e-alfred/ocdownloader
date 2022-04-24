@@ -4,10 +4,13 @@ OC.L10N.register(
     "Saved" : "Enregistrat",
     "Video" : "Video",
     "Uploaded" : "Mandat",
+    "Active" : "Activa",
     "Upload" : "Cargament",
     "Loading" : "Loading",
+    "Options" : "Opcions",
     "Username" : "Nom d'utilizaire",
     "Password" : "Senhal",
+    "Filename" : "Nom de fichièr",
     "FTP Password" : "Senhal FTP",
     "Proxy settings" : "Paramètres Proxy",
     "Proxy Password" : "Senhal proxy",
@@ -18,6 +21,8 @@ OC.L10N.register(
     "minutes" : "minutas",
     "hours" : "oras",
     "days" : "jorns",
-    "weeks" : "setmanas"
+    "weeks" : "setmanas",
+    "months" : "mese",
+    "years" : "annadas"
 },
 "nplurals=2; plural=(n > 1);");

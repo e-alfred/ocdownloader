@@ -14,6 +14,7 @@ OC.L10N.register(
     "Paused" : "Sat på pause",
     "Upload" : "Upload",
     "Loading" : "Indlæser",
+    "Options" : "Valgmuligheder",
     "Username" : "Brugernavn",
     "Password" : "Adgangskode",
     "Filename" : "Filnavn",

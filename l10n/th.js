@@ -9,6 +9,7 @@ OC.L10N.register(
     "Loading" : "Loading",
     "Username" : "ชื่อผู้ใช้",
     "Password" : "รหัสผ่าน",
+    "Filename" : "ชื่อไฟล์",
     "No" : "ไม่ใช่",
     "Yes" : "ใช่",
     "Save" : "บันทึก",

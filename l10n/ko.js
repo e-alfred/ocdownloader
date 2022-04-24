@@ -48,6 +48,7 @@ OC.L10N.register(
     "Unable to find the GID for this download…" : "이 다운로드를 위한 GID를 찾을 수 없습니다",
     "No downloads in the queue…" : "큐에 다운로드가 존재하지 않습니다",
     "Paused" : "일시 정지",
+    "Active" : "활성화",
     "Upload" : "업로드",
     "Easy to use download manager for Nextcloud" : "Nextcloud용 다운로드 관리자는 사용하기 쉽습니다",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "HTTP(S), FTP(S), YouTube 영상과 BitTorrent 파일의 다운로드를 허가하기 위해 Curl/Aria2와 youtube-dl을 사용하는 다운로드 관리자는 사용하기 쉽습니다. 설치 방법을 위한 더 많은 정보를 위해, https://github.com/e-alfred/ocdownloader/blob/master/README.md로 방문해주시기 바랍니다",
@@ -97,6 +98,8 @@ OC.L10N.register(
     "minutes" : "분",
     "hours" : "시간",
     "days" : "일",
-    "weeks" : "주"
+    "weeks" : "주",
+    "months" : "개월",
+    "years" : "년"
 },
 "nplurals=1; plural=0;");

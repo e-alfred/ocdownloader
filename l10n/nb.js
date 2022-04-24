@@ -8,6 +8,7 @@ OC.L10N.register(
     "Active" : "Aktiv",
     "Upload" : "Last opp",
     "Loading" : "Laster",
+    "Options" : "Valg",
     "Username" : "Brukernavn",
     "Password" : "Passord",
     "Filename" : "Filnavn",

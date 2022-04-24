@@ -17,6 +17,8 @@ OC.L10N.register(
     "minutes" : "menit",
     "hours" : "jam",
     "days" : "hari",
-    "weeks" : "minggu"
+    "weeks" : "minggu",
+    "months" : "bulang",
+    "years" : "tahun"
 },
 "nplurals=1; plural=0;");

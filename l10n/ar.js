@@ -6,6 +6,7 @@ OC.L10N.register(
     "Video" : "فيديو",
     "Uploaded" : "تم رفعه",
     "Paused" : "مُوقَف",
+    "Active" : "فعال",
     "Upload" : "رفع",
     "Loading" : "Loading",
     "Options" : "الخيارات",
@@ -23,6 +24,7 @@ OC.L10N.register(
     "Save" : "حفظ",
     "hours" : "ساعات",
     "days" : "أيام",
-    "weeks" : "أسابيع"
+    "weeks" : "أسابيع",
+    "years" : "سنوات"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");
