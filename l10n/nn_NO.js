@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yes" : "Ja",
     "Save" : "Lagre",
     "minutes" : "minutt",
-    "hours" : "timar"
+    "hours" : "timar",
+    "days" : "dagar"
 },
 "nplurals=2; plural=(n != 1);");

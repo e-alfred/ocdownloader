@@ -9,6 +9,7 @@
     "Yes" : "Ja",
     "Save" : "Lagre",
     "minutes" : "minutt",
-    "hours" : "timar"
+    "hours" : "timar",
+    "days" : "dagar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
