@@ -10,7 +10,7 @@
  */
 
 namespace OCA\ocDownloader\Controller;
-
+use Psr\Log\LoggerInterface;
 use OC\ForbiddenException;
 use OC_Util;
 use OCA\ocDownloader\Controller\Lib\Settings;
@@ -246,7 +246,7 @@ class Index extends Controller
         }
 
         $user = $this->CurrentUID; //or normally \OC::$server->getUserSession()->getUser()->getUID();
-        $scanner = new \OC\Files\Utils\Scanner($user, \OC::$server->getDatabaseConnection(), \OC::$server->query(IEventDispatcher::class), \OC::$server->getLogger());
+        $scanner = new \OC\Files\Utils\Scanner($user, \OC::$server->getDatabaseConnection(), \OC::$server->query(IEventDispatcher::class), \OC::$server->query(LoggerInterface::class));
         $path = '/'.$user.'/files/'.ltrim($this->DownloadsFolder, '/\\');
         try {
             $scanner->scan($path);
