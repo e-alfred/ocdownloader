@@ -5,6 +5,7 @@ OC.L10N.register(
     "Video" : "Video",
     "Upload" : "ផ្ទុក​ឡើង",
     "Loading" : "Loading",
+    "Options" : "ជម្រើស",
     "Username" : "ឈ្មោះ​អ្នកប្រើ",
     "Password" : "ពាក្យសម្ងាត់",
     "No" : "No",
