@@ -8,6 +8,7 @@ OC.L10N.register(
     "Active" : "Activ",
     "Upload" : "Încarcă",
     "Loading" : "Loading",
+    "Options" : "Opțiuni",
     "Username" : "Nume utilizator",
     "Password" : "Parolă",
     "Filename" : "Nume fișier",
