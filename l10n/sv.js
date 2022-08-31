@@ -20,6 +20,7 @@ OC.L10N.register(
     "The download has been totally removed" : "Hämtningen har tagits bort helt",
     "You are not allowed to use the YouTube protocol" : "Du får inte använda YouTube-protokollet",
     "Invalid URL. Please check the address of the file…" : "Ogiltig webbadress. Vänligen kontrollera filens adress...",
+    "No downloads in the queue…" : "Inga nedladdningar i kön...",
     "Paused" : "Pausad",
     "Active" : "Aktiv",
     "No Torrent Files" : "Inga Torrent Filer",
