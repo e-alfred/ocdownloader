@@ -1,14 +1,15 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "Saved" : "Saqlangan",
-    "Upload" : "Yuklash",
-    "Loading" : "Yuklanmoqda",
-    "Username" : "Foydalanuvchi nomi",
-    "Password" : "Parol",
-    "No" : "Yo'q",
-    "Yes" : "Ha",
-    "Save" : "Saqlash",
-    "minutes" : "daqiqalar"
+    "Saved" : "Saved",
+    "Upload" : "Upload",
+    "Loading" : "Loading",
+    "Username" : "Username",
+    "Password" : "Password",
+    "No" : "No",
+    "Yes" : "Yes",
+    "Save" : "Save",
+    "minutes" : "minutes",
+    "days" : "days"
 },
 "nplurals=1; plural=0;");
