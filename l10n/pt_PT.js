@@ -6,6 +6,7 @@ OC.L10N.register(
     "Download started" : "Transferência iniciada",
     "Video" : "Vídeo",
     "Uploaded" : "Enviado",
+    "The download has been paused" : "A transferência foi pausada",
     "The download has been unpaused" : "A transferência foi retomada",
     "The download has been cleaned" : "A transferência foi limpa",
     "All downloads have been cleaned" : "Foram limpas todas as transferências",
@@ -24,11 +25,11 @@ OC.L10N.register(
     "New FTP download" : "Nova transferência de FTP",
     "Launch FTP Download" : "Iniciar transferência de FTP",
     "FTP URL to download" : "URL de FTP para transferir",
-    "New YouTube download" : "Nova transferência de YouTube",
-    "Launch YouTube Download" : "Iniciar transferência de YouTube",
+    "New YouTube download" : "Nova transferência do YouTube",
+    "Launch YouTube Download" : "Iniciar transferência do YouTube",
     "YouTube Video URL to download" : "URL do Vídeo do YouTube para transferir",
-    "New BitTorrent download" : "Nova transferência de BitTorrent",
-    "Launch BitTorrent Download" : "Iniciar transferência de BitTorrent",
+    "New BitTorrent download" : "Nova transferência do BitTorrent",
+    "Launch BitTorrent Download" : "Iniciar transferência do BitTorrent",
     "All Downloads" : "Todas as Transferências",
     "Complete Downloads" : "Transferências Completas",
     "Waiting Downloads" : "Transferências em Espera",
@@ -47,4 +48,4 @@ OC.L10N.register(
     "months" : "meses",
     "years" : "anos"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

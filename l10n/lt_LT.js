@@ -35,6 +35,7 @@ OC.L10N.register(
     "Active Downloads" : "Aktyvūs atsiuntimai",
     "PROTOCOL" : "PROTOKOLAS",
     "INFORMATION" : "INFORMACIJA",
+    "SPEED" : "GREITIS",
     "Loading" : "Įkeliama",
     "Magnet/HTTP" : "Magnet/HTTP",
     "HTTP" : "HTTP",
