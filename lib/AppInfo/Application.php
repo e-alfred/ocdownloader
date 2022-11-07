@@ -24,13 +24,23 @@ use OCA\ocDownloader\Controller\Queue;
 use OCA\ocDownloader\Controller\PersonalSettings;
 use OCA\ocDownloader\Controller\AdminSettings;
 
-class Application extends App
-{
-    public function __construct(array $URLParams = array())
-    {
-        parent::__construct('ocdownloader', $URLParams);
-        $container = $this->getContainer();
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\AppFramework\IAppContainer;
 
+class Application extends App implements IBootstrap  {
+    public function __construct(array $URLParams = array()) {
+        parent::__construct('ocdownloader', $URLParams);
+    }
+
+    public function register(IRegistrationContext $context): void {
+    }
+
+    public function boot(IBootContext $context): void {
+
+        //$container = $this->getContainer();
+	$container = $context->getAppContainer();
         $container->registerService('CurrentUID', function (IContainer $Container) {
             $User = $Container->query('ServerContainer')->getUserSession()->getUser();
             return($User) ? $User->getUID() : '';

@@ -6,7 +6,7 @@
 	<description>Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md
 
 	</description>
-	<version>1.8.1</version>
+	<version>1.9.0</version>
 	<licence>agpl</licence>
 	<author>e-alfred</author>
 	<author>Nibbels</author>
@@ -17,9 +17,17 @@
 	<screenshot>https://raw.githubusercontent.com/e-alfred/ocdownloader/master/appinfo/Screenshot.jpg</screenshot>
 	<repository>https://github.com/e-alfred/</repository>
 	<dependencies>
-		<nextcloud min-version="22" max-version="24" />
+		<nextcloud min-version="24" max-version="24" />
 		<lib>curl</lib>
 	</dependencies>
+
+    <navigations>
+        <navigation>
+            <name>ocDownloader</name>
+            <route>ocdownloader.Index.Add</route>
+            <order>99</order>
+        </navigation>
+    </navigations>
 
     <settings>
         <admin>OCA\Ocdownloader\Settings\Admin</admin>
