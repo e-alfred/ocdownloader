@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocDownloader",
     "Unable to find YouTube-DL binary" : "Не може да се намери двоичен файл YouTube-DL",
     "Invalid proxy address URL" : "Невалиден URL адрес на прокси",
     "Proxy port should be a numeric value" : "Прокси портът трябва да е числова стойност",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Active" : "Активен",
     "No Torrent Files" : "Няма торент файлове",
     "Upload" : "Качване",
+    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Лесен за използване мениджър за изтегляне за Nextcloud",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Лесен за използване мениджър за изтегляне, използващ Curl/Aria2 и youtube-dl, за да позволи изтегляне на HTTP(S), FTP(S), YouTube видеоклипове и BitTorrent файлове. За повече информация как да инсталирате, моля, отидете на https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "Активни изтегляния",

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocDownloader",
     "Unable to find YouTube-DL binary" : "Ezin izan da YouTube-DL bitarra aurkitu",
     "Invalid proxy address URL" : "Proxy URL helbide baliogabea",
     "Proxy port should be a numeric value" : "Proxy atakak zenbakizko balio bat izan behar du",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Active" : "Aktiboa",
     "No Torrent Files" : "Ez dago Torrent fitxategirik",
     "Upload" : "Kargatu",
+    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Nextclouderako deskarga-kudeatzaile erabilerraza",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Deskarga-kudeatzaile erabilerraza. Curl/Aria2 eta youtube-dl erabiltzen ditu HTTP(S), FTP(S), YouTubeko bideoak eta BitTorrent fitxategiak deskargatzeko aukera eskaintzeko. Nola instalatu jakiteko, joan orri honetara: https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "Deskarga aktiboak",

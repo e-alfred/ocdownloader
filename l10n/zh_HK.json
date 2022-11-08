@@ -1,5 +1,4 @@
 { "translations": {
-    "ocDownloader" : "oc下載器",
     "Unable to find YouTube-DL binary" : "無法找到Youtube-DL的執行檔案",
     "Invalid proxy address URL" : "無效的proxy代理伺服器位址",
     "Proxy port should be a numeric value" : "proxy代理服務連接埠必須為數值格式",
@@ -54,6 +53,7 @@
     "Active" : "啟動",
     "No Torrent Files" : "無Torrent檔案",
     "Upload" : "上傳",
+    "ocDownloader" : "oc下載器",
     "Easy to use download manager for Nextcloud" : "Nextcloud上易於使用的下載管理器",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "易於使用的下載管理器，透過 Curl / Aria2 和 youtube-dl 使您可以下載HTTP(S)，FTP(S)，YouTube影片和BitTorrent檔案。有關安裝方式的詳情，請至 https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "啟動下載",

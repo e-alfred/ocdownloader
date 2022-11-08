@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocDownloader",
     "Unable to find YouTube-DL binary" : "Kon de YouTube-DL applicatie niet vinden",
     "Invalid proxy address URL" : "Ongeldig proxy adres URL",
     "Proxy port should be a numeric value" : "Proxy poort dient een numerieke waarde te zijn",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Active" : "Actief",
     "No Torrent Files" : "Geen Torrentbestanden",
     "Upload" : "Uploaden",
+    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Simpel te gebruiken downloadmanager voor Nextcloud",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Simpel te gebruiken downloadmanager op basis van Curl/Aria2 en youtube-dl om HTTP(S), FTP(S), YouTube video's en BitTorrent bestanden mogelijk te maken. Voor meer informatie over installatie, ga naar  https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "Actieve Downloads",

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocIscarrigadore",
     "Unable to find YouTube-DL binary" : "No at fatu a agatare su binàriu YouTube-DL",
     "Invalid proxy address URL" : "Indiritzu serbidore intermèdiu URL non bàlidu",
     "Proxy port should be a numeric value" : "Sa porta de su serbidore intermèdiu diat dèpere èssere unu balore numèricu",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Active" : "Ativos",
     "No Torrent Files" : "Perunu archìviu torrent",
     "Upload" : "Càrriga",
+    "ocDownloader" : "ocIscarrigadore",
     "Easy to use download manager for Nextcloud" : "Gestore de is iscarrigamentos fàtzile de impreare pro Nextcloud",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Gestore de is iscarrigamentos chi impreat Curl/Aria2 e youtube-dl pro permìtere de nch'iscarrigare HTTP(S), FTP(S), vìdeo YouTube e archìviu BitTorrent. Pro àteras informatziones in contu de comente s'installat, bae a https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "Iscarrigamentos ativos",

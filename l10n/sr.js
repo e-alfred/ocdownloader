@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocDownloader",
     "Saved" : "Сачувано",
     "You are not allowed to use the BitTorrent protocol" : "Није Вам дозвољена употреба BitTorrent протокола",
     "Download started" : "Преузимање започело",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "Active" : "Активан",
     "No Torrent Files" : "Нема торент фајлова",
     "Upload" : "Отпреми",
+    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Менаџер преузимања за Некстклауд који је лак за коришћење",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Менаџер преузимања за Некстклауд који је лак за коришћење и који користи Curl/Aria2 и youtube-dl да омогућу преузимање HTTP(S), FTP(S), YouTube видео записа и BitTorrent фајлова. За више информација како га инсталирати, посетите https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "Активна преузимања",

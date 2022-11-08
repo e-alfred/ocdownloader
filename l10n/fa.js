@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocDownloader",
     "Unable to find YouTube-DL binary" : "یافتن باینری YouTube-DL ممکن نیست",
     "Invalid proxy address URL" : "URL آدرس پروکسی نامعتبر است",
     "Proxy port should be a numeric value" : "پورت پروکسی باید یک عددی باشد",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "Active" : "فعال کردن",
     "No Torrent Files" : "بدون فایل های تورنت",
     "Upload" : "آپلود",
+    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "آسان برای استفاده مدیر دانلود برای نکست کلود",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "مدیر بارگیری آسان با استفاده از Curl / Aria2 و youtube-dl برای بارگیری HTTP (S) ، FTP (S) ، فیلم های YouTube و BitTorrent. برای کسب اطلاعات بیشتر در مورد نحوه نصب ، لطفاً به https://github.com/e-alfred/ocdownloader/blob/master/README.md بروید",
     "Active Downloads" : "بارگیریهای فعال",

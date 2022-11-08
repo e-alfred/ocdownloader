@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocDownloader",
     "Saved" : "Guardado",
     "Download started" : "Transferência iniciada",
     "Video" : "Vídeo",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "All downloads have been removed" : "Foram removidas todas as transferências",
     "Paused" : "Em pausa",
     "Upload" : "Carregar",
+    "ocDownloader" : "ocDownloader",
     "Active Downloads" : "Transferências Ativas",
     "Loading" : "A carregar",
     "Add Download" : "Adicionar Transferência",

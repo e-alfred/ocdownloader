@@ -1,7 +1,6 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "ocDownloader" : "ocDownloader",
     "Unable to find YouTube-DL binary" : "YouTube-DLバイナリが見つかりません",
     "Invalid proxy address URL" : "無効なプロキシアドレスURL",
     "Proxy port should be a numeric value" : "プロキシポートは数値である必要があります",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Active" : "アクティブ化",
     "No Torrent Files" : "Torrentファイルがありません",
     "Upload" : "アップロード",
+    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Nextcloud用の使いやすいダウンロードマネージャー",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Curl/Aria2とyoutube-dlを利用して、HTTP (S)、FTP (S)、YouTubeビデオ、BitTorrentファイルをダウンロードできる、使いやすいダウンロードマネージャーです。インストール方法の詳細については、 https://github.com/e-alfred/ocdownloader/blob/master/README.md を参照してください。",
     "Active Downloads" : "アクティブなダウンロード",

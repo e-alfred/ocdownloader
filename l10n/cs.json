@@ -1,5 +1,4 @@
 { "translations": {
-    "ocDownloader" : "ocDownloader",
     "Unable to find YouTube-DL binary" : "Nedaří se nalézt spustitelný soubor nástroje YouTube-DL",
     "Invalid proxy address URL" : "Neplatná URL adresa proxy",
     "Proxy port should be a numeric value" : "Port proxy by měla být číselná hodnota",
@@ -54,6 +53,7 @@
     "Active" : "Aktivní",
     "No Torrent Files" : "Žádné soubory s torrenty",
     "Upload" : "Nahrát",
+    "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Snadno použitelný správce stahování pro Nextcloud",
     "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Snadno použitelný správce stahování používající Curl/Aria2 a youtube-dl pro stahování z HTTP(S), FTP(S), YouTube videí a BitTorrent souborů. Další informace o instalaci naleznete na https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "Spuštěná stahování",
