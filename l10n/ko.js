@@ -62,6 +62,7 @@ OC.L10N.register(
     "Launch HTTP download" : "HTTP 다운로드 실행",
     "Magnet/HTTP link to download" : "다운로드를 위한 Magnet/HTTP 링크",
     "HTTP link to download" : "다운로드를 위한 HTTP 링크",
+    "Options" : "옵션들",
     "Basic Auth User" : "기본 Auth 사용자",
     "Username" : "사용자 이름",
     "Basic Auth Password" : "기본 Auth 비밀 번호",
