@@ -44,7 +44,7 @@ OC.L10N.register(
     "An error occurred while removing the download" : "Παρουσιάστηκε σφάλμα κατά την αφαίρεση της λήψης",
     "All downloads have been removed" : "Όλες οι λήψεις έχουν αφαιρεθεί",
     "The download has been totally removed" : "Η λήψη έχει αφαιρεθεί πλήρως",
-    "You are not allowed to use the YouTube protocol" : "Δεν επιτρέπετε να χρησιμοποιήσετε το πρωτόκολλο του YouTube",
+    "You are not allowed to use the YouTube protocol" : "Δεν επιτρέπεται να χρησιμοποιήσετε το πρωτόκολλο του YouTube",
     "Unable to retrieve true YouTube audio URL" : "Δεν είναι δυνατή η ανάκτηση της πραγματικής διεύθυνσης URL του ήχου YouTube",
     "Unable to retrieve true YouTube video URL" : "Δεν είναι δυνατή η ανάκτηση της πραγματικής διεύθυνσης URL του βίντεο YouTube",
     "Invalid URL. Please check the address of the file…" : "Μη έγκυρη URL. Ελέγξτε τη διεύθυνση του αρχείου ...",
