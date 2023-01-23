@@ -3,9 +3,9 @@ OC.L10N.register(
     {
     "Saved" : "บันทึกแล้ว",
     "Video" : "Video",
-    "Uploaded" : "ถูกอัพโหลด",
+    "Uploaded" : "ถูกอัปโหลด",
     "Paused" : "หยุดชั่วคราวแล้ว",
-    "Upload" : "อัพโหลด",
+    "Upload" : "อัปโหลด",
     "Loading" : "Loading",
     "Username" : "ชื่อผู้ใช้",
     "Password" : "รหัสผ่าน",
