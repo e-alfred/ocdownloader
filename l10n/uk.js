@@ -2,6 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Saved" : "Збережено",
+    "Download started" : "Звантаження розпочато",
     "Video" : "Video",
     "Uploaded" : "Завантажені",
     "Paused" : "Призупинено",
