@@ -6,6 +6,7 @@ OC.L10N.register(
     "Video" : "Video",
     "Uploaded" : "Завантажені",
     "Paused" : "Призупинено",
+    "Active" : "Активно",
     "Upload" : "Вивантажити",
     "Loading" : "Завантаження",
     "Options" : "Параметри",
