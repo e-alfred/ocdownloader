@@ -17,6 +17,7 @@ OC.L10N.register(
     "Yes" : "Так",
     "General settings" : "Загальні налаштування",
     "Save" : "Зберегти",
+    "unlimited" : "необмежені",
     "minutes" : "хвилини",
     "hours" : "години",
     "days" : "дні",
