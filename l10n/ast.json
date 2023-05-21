@@ -1,0 +1,11 @@
+{ "translations": {
+    "HTTP" : "HTTP",
+    "Options" : "Opciones",
+    "Password" : "Contraseña",
+    "No" : "Non",
+    "Yes" : "Sí",
+    "General settings" : "Configuración xeneral",
+    "minutes" : "minutos",
+    "hours" : "Hores"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
