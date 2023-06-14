@@ -122,7 +122,7 @@
     "No" : "Non",
     "Yes" : "Si",
     "General settings" : "Axustes xerais",
-    "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "AVISO!! Cambiar de ARIA2 a outro motor de descarga eliminará todas as descargas actuais de ARIA2",
+    "WARNING !! Switching from ARIA2 to another downloader engine will remove all current downloads from ARIA2" : "AVISO!! Cambiar de ARIA2 a outro motor de descarga retirará todas as descargas actuais de ARIA2",
     "Which downloader do you want to use?" : "Que servizo de descarga quere empegar?",
     "Available protocols" : "Protocolos dispoñíbeis",
     "ARIA2 Address" : "Enderezo ARIA2",
