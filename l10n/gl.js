@@ -1,7 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "Unable to find YouTube-DL binary" : "Non é posíbel pode atopar o binario do YouTube-DL",
+    "Unable to find YouTube-DL binary" : "Non é posíbel atopar o binario do YouTube-DL",
     "Invalid proxy address URL" : "URL do enderezo do proxy incorrecto",
     "Proxy port should be a numeric value" : "O porto do proxy debe ser un valor numérico",
     "Proxy port should be a value from 1 to 65536" : "O porto do proxy debe ser un valor de 1 a 65536",
