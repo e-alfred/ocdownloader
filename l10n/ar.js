@@ -8,6 +8,7 @@ OC.L10N.register(
     "Paused" : "مُوقَف",
     "Active" : "فعال",
     "Upload" : "رفع",
+    "FILENAME" : "اسم الملف FILENAME",
     "Loading" : "Loading",
     "Options" : "الخيارات",
     "Username" : "اسم المستخدم",
