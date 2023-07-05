@@ -23,6 +23,7 @@ OC.L10N.register(
     "Yes" : "نعم",
     "General settings" : "الإعدادات العامة",
     "Save" : "حفظ",
+    "minutes" : "دقائق",
     "hours" : "ساعات",
     "days" : "أيام",
     "weeks" : "أسابيع",
