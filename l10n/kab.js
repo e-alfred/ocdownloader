@@ -8,6 +8,7 @@ OC.L10N.register(
     "Filename" : "Isem n ufaylu",
     "No" : "Uhu",
     "Yes" : "Oui",
-    "Save" : "Sekles"
+    "Save" : "Sekles",
+    "days" : "ussan"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,7 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
-    "Unable to find YouTube-DL binary" : "تعذر العثور على ملف YouTube-DL binary",
+    "Unable to find YouTube-DL binary" : "تعذر العثور على الملف الثنائي YouTube-DL",
     "Invalid proxy address URL" : "عنوان URL غير صالح لعنوان الوكيل",
     "Proxy port should be a numeric value" : "يجب أن يكون منفذ الوكيل ذو قيمة رقمية",
     "Proxy port should be a value from 1 to 65536" : "يجب أن تكون قيمة منفذ الوكيل من 1 إلى 65536",
@@ -111,7 +111,7 @@ OC.L10N.register(
     "Stopped Downloads" : "التنزيلات المتوقفة",
     "Removed Downloads" : "التنزيلات المزالة",
     "Leave fields blank to reset a setting value" : "اترك الحقول فارغة لإعادة تعيين قيمة الضبط",
-    "YouTube DL Binary Path" : "مسار YouTube DL Binary",
+    "YouTube DL Binary Path" : "مسار الملف الثنائي YouTube DL ",
     "YouTube DL Audio Format" : "تنسيق صوت YouTube DL",
     "YouTube DL Video Format" : "تنسيق فيديو YouTube DL",
     "Proxy settings" : "إعدادات البروكسي",
