@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Saved" : "Bewaar",
     "Video" : "Video",
+    "Active" : "Aktief",
     "Upload" : "Laai op",
     "Loading" : "Laai tans..",
     "Username" : "Gebruikersnaam",
