@@ -117,7 +117,7 @@ OC.L10N.register(
     "Proxy settings" : "Axustes do proxy",
     "Proxy Address" : "Enderezo do proxy",
     "Proxy Port" : "Porto do proxy",
-    "If no authentication is required by your proxy, leave the following fields blank" : "Se o seu proxy non require autenticación, deixe os campos seguintes en branco",
+    "If no authentication is required by your proxy, leave the following fields blank" : "Se o seu proxy non precisa autenticación, deixe os campos seguintes en branco",
     "Proxy User" : "Usuario do proxy",
     "Proxy Password" : "Contrasinal do proxy",
     "Only use proxy settings with YouTube-DL?" : "Usar os axustes do proxy só con YouTube-DL?",
