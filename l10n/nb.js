@@ -7,6 +7,7 @@ OC.L10N.register(
     "Paused" : "Pauset",
     "Active" : "Aktiv",
     "Upload" : "Last opp",
+    "FILENAME" : "FILNAVN",
     "Loading" : "Laster",
     "Options" : "Valg",
     "Username" : "Brukernavn",
