@@ -15,6 +15,8 @@ OC.L10N.register(
     "minutes" : "minutoj",
     "hours" : "horojn",
     "days" : "tagojn",
-    "weeks" : "semajnoj"
+    "weeks" : "semajnoj",
+    "months" : "Monatoj",
+    "years" : "Jaroj"
 },
 "nplurals=2; plural=(n != 1);");
