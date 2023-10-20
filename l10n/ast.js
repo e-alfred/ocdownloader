@@ -8,6 +8,10 @@ OC.L10N.register(
     "Yes" : "Sí",
     "General settings" : "Configuración xeneral",
     "minutes" : "minutos",
-    "hours" : "Hores"
+    "hours" : "Hores",
+    "days" : "díes",
+    "weeks" : "selmanes",
+    "months" : "meses",
+    "years" : "años"
 },
 "nplurals=2; plural=(n != 1);");

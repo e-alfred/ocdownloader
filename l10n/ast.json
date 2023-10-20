@@ -6,6 +6,10 @@
     "Yes" : "Sí",
     "General settings" : "Configuración xeneral",
     "minutes" : "minutos",
-    "hours" : "Hores"
+    "hours" : "Hores",
+    "days" : "díes",
+    "weeks" : "selmanes",
+    "months" : "meses",
+    "years" : "años"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
