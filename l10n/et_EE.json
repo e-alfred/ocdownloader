@@ -14,6 +14,7 @@
     "minutes" : "minutit",
     "hours" : "tundi",
     "days" : "päeva",
-    "weeks" : "nädalat"
+    "weeks" : "nädalat",
+    "months" : "kuud"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

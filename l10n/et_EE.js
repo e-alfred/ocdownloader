@@ -16,6 +16,7 @@ OC.L10N.register(
     "minutes" : "minutit",
     "hours" : "tundi",
     "days" : "päeva",
-    "weeks" : "nädalat"
+    "weeks" : "nädalat",
+    "months" : "kuud"
 },
 "nplurals=2; plural=(n != 1);");
