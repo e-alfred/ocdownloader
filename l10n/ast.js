@@ -7,6 +7,7 @@ OC.L10N.register(
     "No" : "Non",
     "Yes" : "Sí",
     "General settings" : "Configuración xeneral",
+    "Save" : "Guardar",
     "minutes" : "minutos",
     "hours" : "Hores",
     "days" : "díes",
