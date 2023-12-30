@@ -1,6 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
+    "Upload" : "Xunir",
     "HTTP" : "HTTP",
     "Options" : "Opciones",
     "Password" : "Contraseña",
