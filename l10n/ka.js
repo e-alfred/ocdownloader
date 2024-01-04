@@ -1,0 +1,23 @@
+OC.L10N.register(
+    "ocdownloader",
+    {
+    "Saved" : "Saved",
+    "Uploaded" : "Uploaded",
+    "Active" : "Active",
+    "Upload" : "Upload",
+    "Loading" : "Loading",
+    "Username" : "Username",
+    "Password" : "პაროლი",
+    "Filename" : "Filename",
+    "No" : "No",
+    "Yes" : "Yes",
+    "General settings" : "General settings",
+    "Save" : "Save",
+    "minutes" : "minutes",
+    "hours" : "hours",
+    "days" : "days",
+    "weeks" : "weeks",
+    "months" : "months",
+    "years" : "years"
+},
+"nplurals=2; plural=(n!=1);");
