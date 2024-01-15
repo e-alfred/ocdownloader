@@ -55,7 +55,7 @@
     "Upload" : "Upload",
     "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Einfach zu benutzender Download-Manager für Nextcloud",
-    "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Einfach zu benutzender Download-Manager, welcher Curl/Aria2 und youtube-dl benutzt, um den Download von HTTP(S), FTP(S), YouTube-Videos und BitTorrent-Dateien zu ermöglichen. Für weitere Informationen zur Installation lese bitte: https://github.com/e-alfred/ocdownloader/blob/master/README.md",
+    "Easy to use download manager using Curl/Aria2 and youtube-dl to allow downloading HTTP(S), FTP(S), YouTube videos and BitTorrent files. For more information on how to install, please go to https://github.com/e-alfred/ocdownloader/blob/master/README.md" : "Einfach zu benutzender Download-Manager, welcher Curl/Aria2 und youtube-dl benutzt, um den Download von HTTP(S), FTP(S), YouTube-Videos und BitTorrent-Dateien zu ermöglichen. Für weitere Informationen zur Installation lies bitte: https://github.com/e-alfred/ocdownloader/blob/master/README.md",
     "Active Downloads" : "Aktive Downloads",
     " using <strong>%s</strong>" : " verwendet <strong>%s</strong>",
     "FILENAME" : "DATEINAME",
