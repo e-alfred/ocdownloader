@@ -3,11 +3,12 @@ OC.L10N.register(
     {
     "Saved" : "Збережено",
     "Download started" : "Звантаження розпочато",
+    "Upload OK" : "Завантажено успішно",
     "Video" : "Video",
     "Uploaded" : "Завантажені",
     "Paused" : "Призупинено",
     "Active" : "Активно",
-    "Upload" : "Вивантажити",
+    "Upload" : "Завантажити",
     "Loading" : "Завантаження",
     "Options" : "Параметри",
     "Username" : "Логін",
