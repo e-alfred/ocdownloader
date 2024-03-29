@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Saved" : "Guardóse",
     "Upload" : "Xunir",
+    "Loading" : "Cargando",
     "HTTP" : "HTTP",
     "Options" : "Opciones",
     "Password" : "Contraseña",
