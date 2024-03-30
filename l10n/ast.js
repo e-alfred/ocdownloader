@@ -2,6 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Saved" : "Guardóse",
+    "Active" : "Activa",
     "Upload" : "Xunir",
     "Loading" : "Cargando",
     "HTTP" : "HTTP",
