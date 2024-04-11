@@ -31,6 +31,7 @@ OC.L10N.register(
     "Magnet/HTTP" : "Magnet/HTTP",
     "HTTP" : "HTTP",
     "Options" : "Opciones",
+    "Username" : "Nome d'usuariu",
     "Password" : "Contraseña",
     "New FTP download" : "Descarga FTP nueva",
     "FTP Password" : "Contraseña de FTP",
