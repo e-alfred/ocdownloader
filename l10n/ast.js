@@ -33,6 +33,7 @@ OC.L10N.register(
     "Options" : "Opciones",
     "Username" : "Nome d'usuariu",
     "Password" : "Contraseña",
+    "Filename" : "Nome del ficheru",
     "New FTP download" : "Descarga FTP nueva",
     "FTP Password" : "Contraseña de FTP",
     "FTP User Agent" : "Axente d'usuariu FTP",
