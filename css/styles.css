@@ -352,6 +352,8 @@
   left:0;
   padding: 2px 0 2px 5px;
   width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #app-content-wrapper .content-queue > table > thead > tr > th > div.svg,
 #app-content-wrapper .content-queue > table > tbody > tr > td > div.svg {
