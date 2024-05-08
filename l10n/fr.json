@@ -7,7 +7,7 @@
     "Aria port should be a numeric value" : "Le port du service Aria doit être une valeur numérique",
     "Aria port should be a value from 1 to 65536" : "Le port du service Aria doit être une valeur comprise entre 1 et 65536",
     "Max download speed setting should be a numeric value" : "La vitesse maximale de téléchargement doit être une valeur numérique",
-    "BitTorrent protocol max upload speed setting should be a numeric value" : "La vitesse de téléchargement maximale du protocole BitTorrent doit être une valeur numérique",
+    "BitTorrent protocol max upload speed setting should be a numeric value" : "La vitesse maximale de téléversement du protocole BitTorrent doit être une valeur numérique",
     "Saved" : "Enregistré",
     "You are not allowed to use the BitTorrent protocol" : "Vous n'êtes pas autorisé à utiliser le protocole BitTorrent",
     "Download started" : "Téléchargement démarré",
