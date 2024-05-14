@@ -24,6 +24,7 @@ OC.L10N.register(
     "Password" : "Пароль",
     "Filename" : "Ім'я файлу",
     "All Downloads" : "Всі звантаження",
+    "Proxy Port" : "Порт проксі-сервера",
     "No" : "Ні",
     "Yes" : "Так",
     "General settings" : "Загальні",
