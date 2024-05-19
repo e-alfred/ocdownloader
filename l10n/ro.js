@@ -12,6 +12,7 @@ OC.L10N.register(
     "Username" : "Nume utilizator",
     "Password" : "Parolă",
     "Filename" : "Nume fișier",
+    "Proxy Port" : "Port proxy ",
     "No" : "Nu",
     "Yes" : "a",
     "Save" : "Salvează",
