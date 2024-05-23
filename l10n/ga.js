@@ -4,6 +4,7 @@ OC.L10N.register(
     "Saved" : "Shábháil",
     "Active" : "Gníomhach",
     "Upload" : "Uaslódáil",
+    "Loading" : "Ag lódáil",
     "Username" : "Ainm úsáideora",
     "Password" : "Pasfhocal",
     "No" : "Níl",
