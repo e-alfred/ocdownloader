@@ -7,6 +7,8 @@ OC.L10N.register(
     "Loading" : "Ag lódáil",
     "Username" : "Ainm úsáideora",
     "Password" : "Pasfhocal",
+    "Filename" : "Ainm comhaid",
+    "Proxy Port" : "Port Seachfhreastalaí",
     "No" : "Níl",
     "Yes" : "Tá",
     "Save" : "Sábháil"
