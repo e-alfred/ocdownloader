@@ -2,6 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Saved" : "Shábháil",
+    "Uploaded" : "uaslódáilte",
     "Active" : "Gníomhach",
     "Upload" : "Uaslódáil",
     "Loading" : "Ag lódáil",
