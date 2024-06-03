@@ -12,6 +12,12 @@ OC.L10N.register(
     "Proxy Port" : "Port Seachfhreastalaí",
     "No" : "Níl",
     "Yes" : "Tá",
-    "Save" : "Sábháil"
+    "Save" : "Sábháil",
+    "minutes" : "nóiméad",
+    "hours" : "uair an chloig",
+    "days" : "laethanta",
+    "weeks" : "seachtaine",
+    "months" : "míonna",
+    "years" : "blianta"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
