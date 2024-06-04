@@ -110,7 +110,7 @@ OC.L10N.register(
     "Waiting Downloads" : "Wartende Downloads",
     "Stopped Downloads" : "Angehaltene Downloads",
     "Removed Downloads" : "Gelöschte Downloads",
-    "Leave fields blank to reset a setting value" : "Dieses Feld zum Rücksetzen leer lassen",
+    "Leave fields blank to reset a setting value" : "Dieses Feld zum Zurücksetzen leer lassen",
     "YouTube DL Binary Path" : "YouTube-DL-Binary-Pfad",
     "YouTube DL Audio Format" : "YouTube DL Audio-Format",
     "YouTube DL Video Format" : "YouTube DL Video-Format",
