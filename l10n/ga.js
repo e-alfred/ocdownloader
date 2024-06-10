@@ -12,6 +12,7 @@ OC.L10N.register(
     "Proxy Port" : "Port Seachfhreastalaí",
     "No" : "Níl",
     "Yes" : "Tá",
+    "General settings" : "Socruithe Ginearálta",
     "Save" : "Sábháil",
     "minutes" : "nóiméad",
     "hours" : "uair an chloig",
