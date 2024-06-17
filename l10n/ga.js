@@ -5,6 +5,7 @@ OC.L10N.register(
     "Uploaded" : "uaslódáilte",
     "Active" : "Gníomhach",
     "Upload" : "Uaslódáil",
+    "FILENAME" : "FILENAME",
     "Loading" : "Ag lódáil",
     "Options" : "Roghanna",
     "Username" : "Ainm úsáideora",
