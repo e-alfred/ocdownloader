@@ -6,6 +6,7 @@ OC.L10N.register(
     "Active" : "Gníomhach",
     "Upload" : "Uaslódáil",
     "FILENAME" : "FILENAME",
+    "INFORMATION" : "EOLAS",
     "Loading" : "Ag lódáil",
     "Options" : "Roghanna",
     "Username" : "Ainm úsáideora",
