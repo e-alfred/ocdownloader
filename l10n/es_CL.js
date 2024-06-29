@@ -10,6 +10,7 @@ OC.L10N.register(
     "Username" : "Usuario",
     "Password" : "Contraseña",
     "Filename" : "Nombre del archivo",
+    "Proxy Port" : "Puerto del Proxy",
     "No" : "No",
     "Yes" : "Sí",
     "General settings" : "Configuraciones generales",
