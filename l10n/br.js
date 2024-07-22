@@ -10,6 +10,7 @@ OC.L10N.register(
     "Username" : "anv implijer",
     "Password" : "Ger-tremen",
     "Filename" : "Anv restr",
+    "Proxy Port" : "Porzh Proksi",
     "No" : "Nan",
     "Yes" : "Ya",
     "General settings" : "Stummoù hollek",
