@@ -19,6 +19,8 @@ OC.L10N.register(
     "minutes" : "minutos",
     "hours" : "horas",
     "days" : "días",
-    "weeks" : "semanas"
+    "weeks" : "semanas",
+    "months" : "meses",
+    "years" : "años"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
