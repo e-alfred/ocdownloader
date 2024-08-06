@@ -7,6 +7,7 @@ OC.L10N.register(
     "Paused" : "หยุดชั่วคราว",
     "Upload" : "อัปโหลด",
     "Loading" : "กำลังโหลด",
+    "Options" : "ตัวเลือก",
     "Username" : "ชื่อผู้ใช้",
     "Password" : "รหัสผ่าน",
     "Filename" : "ชื่อไฟล์",
