@@ -5,6 +5,7 @@ OC.L10N.register(
     "Video" : "Video",
     "Uploaded" : "Cargado",
     "Paused" : "Pausado",
+    "Active" : "Activo",
     "Upload" : "Cargar",
     "Loading" : "Cargando",
     "Options" : "Opciones",
