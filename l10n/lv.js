@@ -10,6 +10,7 @@ OC.L10N.register(
     "Username" : "Lietotājvārds",
     "Password" : "Parole",
     "Filename" : "Datnes nosaukums",
+    "Proxy Port" : "Starpniekservera ports",
     "No" : "Nē",
     "Yes" : "Jā",
     "General settings" : "Vispārīgie iestatījumi",
