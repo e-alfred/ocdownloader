@@ -135,7 +135,7 @@ OC.L10N.register(
     "KB/s (empty or 0 : unlimited, default : unlimited)" : "كيلو بايت/ثانية (فارغ أو 0: غير محدود، افتراضي: غير محدود)",
     "BitTorrent protocol settings - Max upload speed" : "إعدادات بروتوكول بت تورنت - أقصى سرعة تحميل",
     "BitTorrent protocol max upload speed?" : "أقصى سرعة تحميل لبروتوكول بت تورنت؟",
-    "Allow protocols for users (except for members of the admin group)" : "السماح بالبروتوكولات للمستخدمين (باستثناء أعضاء مجموعة المسئول)",
+    "Allow protocols for users (except for members of the admin group)" : "السماح بالبروتوكولات للمستخدمين (باستثناء أعضاء مجموعة المسؤول)",
     "Allow HTTP/Magnet?" : "السماح لـ Magnet/HTTP؟",
     "Allow FTP?" : "السماح ببروتوكول نقل الملفات FTP؟",
     "Allow YouTube?" : "السماح ليوتيوب؟",
