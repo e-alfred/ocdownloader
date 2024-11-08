@@ -4,6 +4,7 @@
     "Download started" : "Звантаження розпочато",
     "Upload OK" : "Завантажено успішно",
     "Video" : "Video",
+    "Undefined field" : "Невизначене поле",
     "Uploaded" : "Завантажені",
     "Unable to find download status file %s" : "Не вдалося знайти стан звантаження файлу %s",
     "The download has been paused" : "Звантаження призупинено",
