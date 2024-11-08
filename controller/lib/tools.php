@@ -15,7 +15,7 @@ class Tools
 {
     public static function sanitiseFileName($filename)
     {
-        return str_replace(['..', '/', '\\', DIRECTORY_SEPARATOR], '_', $filename);
+        return str_replace(['../', '..\\', "..$DIRECTORY_SEPARATOR"], '', $filename);
     }
 
     public static function checkURL($URL)
