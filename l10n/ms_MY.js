@@ -1,6 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
+    "Saved" : "Disimpan",
     "Video" : "Video",
     "Upload" : "Muat naik",
     "Loading" : "Loading",
