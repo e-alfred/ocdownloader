@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Unable to find YouTube-DL binary" : "找不到YouTube-DL可执行程序",
     "Invalid proxy address URL" : "无效的代理服务器地址",
-    "Proxy port should be a numeric value" : "代理服务器端口应为数字形式",
+    "Proxy port should be a numeric value" : "代理服务器端口应为数值",
     "Proxy port should be a value from 1 to 65536" : "代理服务器端口应在1至65536之间",
     "Invalid Aria address URL" : "无效的 Aria 地址URL",
     "Aria port should be a numeric value" : "Aria 端口应该是一个数值",

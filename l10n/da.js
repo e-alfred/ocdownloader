@@ -20,6 +20,7 @@ OC.L10N.register(
     "Username" : "Brugernavn",
     "Password" : "Adgangskode",
     "Filename" : "Filnavn",
+    "Proxy Port" : "Proxy port",
     "No" : "Nej",
     "Yes" : "Ja",
     "General settings" : "Generelle indstillinger",
