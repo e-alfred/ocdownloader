@@ -7,6 +7,7 @@ OC.L10N.register(
     "Paused" : "Peatatud",
     "Upload" : "Lae üles",
     "Loading" : "Laadimine",
+    "Options" : "Sätted",
     "Username" : "Kasutajanimi",
     "Password" : "Parool",
     "Filename" : "Faili nimi",
