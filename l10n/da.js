@@ -2,6 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Saved" : "Gemt",
+    "Upload OK" : "Upload OK",
     "Video" : "Video",
     "Unknown field" : "Ukendt felt",
     "Undefined field" : "Udefineret felt",
@@ -24,6 +25,7 @@ OC.L10N.register(
     "No" : "Nej",
     "Yes" : "Ja",
     "General settings" : "Generelle indstillinger",
+    "Secret Token" : "Hemmelig Token",
     "Allow HTTP/Magnet?" : "Tillad HTTP/Magnet?",
     "Save" : "Gem",
     "minutes" : "minutter",
