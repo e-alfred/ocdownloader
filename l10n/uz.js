@@ -6,10 +6,15 @@ OC.L10N.register(
     "Loading" : "Loading",
     "Username" : "Username",
     "Password" : "Password",
+    "Filename" : "Fayl nomi",
     "No" : "No",
     "Yes" : "Yes",
     "Save" : "Save",
     "minutes" : "minutes",
-    "days" : "days"
+    "hours" : "soat",
+    "days" : "days",
+    "weeks" : "hafta",
+    "months" : "oy",
+    "years" : "yil"
 },
 "nplurals=1; plural=0;");
