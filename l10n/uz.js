@@ -4,6 +4,7 @@ OC.L10N.register(
     "Saved" : "Saved",
     "Upload" : "Upload",
     "Loading" : "Loading",
+    "Options" : "Variantlar",
     "Username" : "Username",
     "Password" : "Password",
     "Filename" : "Fayl nomi",
