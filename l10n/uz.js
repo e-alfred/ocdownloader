@@ -8,6 +8,7 @@ OC.L10N.register(
     "Username" : "Username",
     "Password" : "Password",
     "Filename" : "Fayl nomi",
+    "Proxy Port" : "Proksi port",
     "No" : "No",
     "Yes" : "Yes",
     "Save" : "Save",
