@@ -35,6 +35,7 @@ OC.L10N.register(
     "Waiting Downloads" : "Transferências em Espera",
     "Stopped Downloads" : "Transferências Paradas",
     "Removed Downloads" : "Transferências Removidas",
+    "Proxy Port" : "Porta do Proxy",
     "No" : "Não",
     "Yes" : "Sim",
     "General settings" : "Definições Gerais",
