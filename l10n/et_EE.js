@@ -11,6 +11,7 @@ OC.L10N.register(
     "Username" : "Kasutajanimi",
     "Password" : "Parool",
     "Filename" : "Faili nimi",
+    "Proxy Port" : "Proksiserveri port",
     "No" : "Ei",
     "Yes" : "Jah",
     "Save" : "Salvesta",
