@@ -7,6 +7,7 @@ OC.L10N.register(
     "Active" : "O labourat",
     "Upload" : "Pellkas",
     "Loading" : "Kargañ",
+    "HTTP" : "HTTP",
     "Username" : "anv implijer",
     "Password" : "Ger-tremen",
     "Filename" : "Anv restr",
