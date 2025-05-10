@@ -29,6 +29,7 @@ OC.L10N.register(
     "Proxy Port" : "Proksiserveri port",
     "No" : "Ei",
     "Yes" : "Jah",
+    "General settings" : "Üldised seadistusted",
     "Save" : "Salvesta",
     "minutes" : "minutit",
     "hours" : "tundi",
