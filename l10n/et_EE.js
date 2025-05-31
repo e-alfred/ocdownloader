@@ -19,6 +19,7 @@ OC.L10N.register(
     "ocDownloader" : "ocDownloader",
     "Easy to use download manager for Nextcloud" : "Lihtsaltkasutatav allalaadimishaldur Nextcloudi jaoks",
     "Active Downloads" : "Aktiivsed allalaadimised",
+    "INFORMATION" : "Teave",
     "Loading" : "Laadimine",
     "Options" : "Sätted",
     "Username" : "Kasutajanimi",
