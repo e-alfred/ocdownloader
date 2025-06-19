@@ -9,6 +9,8 @@ OC.L10N.register(
     "minutes" : "dakika",
     "hours" : "masaa",
     "days" : "siku",
-    "weeks" : "wiki"
+    "weeks" : "wiki",
+    "months" : "months",
+    "years" : "years"
 },
 "nplurals=2; plural=(n != 1);");

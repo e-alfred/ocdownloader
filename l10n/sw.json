@@ -7,6 +7,8 @@
     "minutes" : "dakika",
     "hours" : "masaa",
     "days" : "siku",
-    "weeks" : "wiki"
+    "weeks" : "wiki",
+    "months" : "months",
+    "years" : "years"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
