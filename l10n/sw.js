@@ -2,6 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Options" : "Chaguzi",
+    "Password" : "Nenosiri",
     "Filename" : "Jina la faili",
     "No" : "Hapana",
     "Yes" : "Ndiyo",
