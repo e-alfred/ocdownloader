@@ -15,6 +15,7 @@ OC.L10N.register(
     "Upload" : "Carregar",
     "ocDownloader" : "ocDownloader",
     "Active Downloads" : "Transferências Ativas",
+    "FILENAME" : "FILENAME",
     "Loading" : "A carregar",
     "Add Download" : "Adicionar Transferência",
     "New HTTP download" : "Nova transferência de HTTP",
