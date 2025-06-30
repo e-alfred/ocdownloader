@@ -38,6 +38,7 @@ OC.L10N.register(
     "General settings" : "Üldised seadistusted",
     "Available protocols" : "Saadaolevad protokollid",
     "Save" : "Salvesta",
+    "unlimited" : "piiramatu",
     "minutes" : "minutit",
     "hours" : "tundi",
     "days" : "päeva",
