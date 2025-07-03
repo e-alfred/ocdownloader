@@ -1,6 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
+    "Saved" : "Imehifadhiwa",
     "Options" : "Chaguzi",
     "Password" : "Nenosiri",
     "Filename" : "Jina la faili",
