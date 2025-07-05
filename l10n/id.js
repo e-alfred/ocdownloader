@@ -11,6 +11,7 @@ OC.L10N.register(
     "Username" : "Nama pengguna",
     "Password" : "Kata kunci",
     "Filename" : "Nama berkas",
+    "Proxy Port" : "Proxy Port",
     "No" : "Tidak",
     "Yes" : "Ya",
     "Save" : "Simpan",
