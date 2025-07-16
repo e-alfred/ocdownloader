@@ -59,7 +59,10 @@ class YouTube
         $fVideo = escapeshellarg($this->YTDLVideoFormat);
         $Output = shell_exec(
             $this->YTDLBinary.' -i \''.$this->URL.'\' --get-url --get-filename'
-            .($ExtractAudio?" -f $fAudio -x":" -f $fVideo").($this->ForceIPv4 ? ' -4' : '')
+            .(!is_null($fAudio) ? " -f $fAudio" : '')
+            .(!is_null($fVideo) ? " -f $fVideo" : '')
+            .($ExtractAudio? " -x" : '')
+            .($this->ForceIPv4 ? ' -4' : '')
             .(is_null($Proxy) ? '' : $Proxy)
         );
 
