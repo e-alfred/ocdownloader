@@ -8,6 +8,7 @@
     "Username" : "Usuario",
     "Password" : "Contraseña",
     "Filename" : "Nombre del archivo",
+    "Proxy Port" : "Puerto proxy",
     "No" : "No",
     "Yes" : "Sí",
     "General settings" : "Configuraciones generales",
