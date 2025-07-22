@@ -7,6 +7,7 @@ OC.L10N.register(
     "Loading" : "Загрузка",
     "Username" : "Імя карыстальніка",
     "Password" : "Пароль",
+    "Filename" : "Назва файла",
     "No" : "Не",
     "Yes" : "Так",
     "Save" : "Захаваць"
