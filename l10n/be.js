@@ -1,6 +1,7 @@
 OC.L10N.register(
     "ocdownloader",
     {
+    "Saved" : "Захавана",
     "Video" : "Відэа",
     "Paused" : "Прыпынена",
     "Upload" : "Запампаваць",
