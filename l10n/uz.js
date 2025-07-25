@@ -2,7 +2,7 @@ OC.L10N.register(
     "ocdownloader",
     {
     "Saved" : "Saved",
-    "Upload" : "Upload",
+    "Upload" : "Yuklash",
     "Loading" : "Loading",
     "Options" : "Variantlar",
     "Username" : "Username",
@@ -11,7 +11,7 @@ OC.L10N.register(
     "Proxy Port" : "Proksi port",
     "No" : "No",
     "Yes" : "Yes",
-    "Save" : "Save",
+    "Save" : "Saqlash",
     "minutes" : "minutes",
     "hours" : "soat",
     "days" : "days",
