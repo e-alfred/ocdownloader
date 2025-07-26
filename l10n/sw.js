@@ -3,7 +3,9 @@ OC.L10N.register(
     {
     "Saved" : "Imehifadhiwa",
     "Active" : "Active",
+    "Loading" : "Loading",
     "Options" : "Chaguzi",
+    "Username" : "Username",
     "Password" : "Nenosiri",
     "Filename" : "Jina la faili",
     "No" : "Hapana",
