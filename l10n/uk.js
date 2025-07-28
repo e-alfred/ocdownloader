@@ -19,6 +19,8 @@ OC.L10N.register(
     "Paused" : "Призупинено",
     "Active" : "Активно",
     "Upload" : "Завантажити",
+    "FILENAME" : "ІМ'Я ФАЙЛУ",
+    "INFORMATION" : "ІНФОРМАЦІЯ",
     "Loading" : "Завантаження",
     "Options" : "Параметри",
     "Username" : "Логін",
