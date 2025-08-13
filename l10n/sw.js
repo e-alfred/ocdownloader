@@ -15,6 +15,7 @@ OC.L10N.register(
     "No" : "Hapana",
     "Yes" : "Ndiyo",
     "Save" : "Hifadhi",
+    "unlimited" : "unlimited",
     "minutes" : "dakika",
     "hours" : "masaa",
     "days" : "siku",
