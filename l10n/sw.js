@@ -14,6 +14,7 @@ OC.L10N.register(
     "Proxy Port" : "Proxy Port",
     "No" : "Hapana",
     "Yes" : "Ndiyo",
+    "General settings" : "General settings",
     "Save" : "Hifadhi",
     "unlimited" : "unlimited",
     "minutes" : "dakika",
