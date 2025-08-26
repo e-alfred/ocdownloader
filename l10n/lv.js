@@ -13,7 +13,7 @@ OC.L10N.register(
     "Proxy Port" : "Starpniekservera ports",
     "No" : "Nē",
     "Yes" : "Jā",
-    "General settings" : "Vispārīgie iestatījumi",
+    "General settings" : "Vispārīgi iestatījumi",
     "Save" : "Saglabāt",
     "minutes" : "minūtes",
     "hours" : "stundas",
