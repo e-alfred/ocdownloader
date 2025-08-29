@@ -5,6 +5,7 @@ OC.L10N.register(
     "Video" : "Відэа",
     "Paused" : "Прыпынена",
     "Upload" : "Запампаваць",
+    "FILENAME" : "НАЗВА_ФАЙЛА",
     "Loading" : "Загрузка",
     "Username" : "Імя карыстальніка",
     "Password" : "Пароль",
