@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Saved" : "Захавана",
     "Video" : "Відэа",
+    "Uploaded" : "Зпампавана",
     "Paused" : "Прыпынена",
     "Upload" : "Запампаваць",
     "FILENAME" : "НАЗВА_ФАЙЛА",
