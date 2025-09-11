@@ -8,6 +8,7 @@ OC.L10N.register(
     "Upload" : "Запампаваць",
     "FILENAME" : "НАЗВА_ФАЙЛА",
     "Loading" : "Загрузка",
+    "Options" : "Параметры",
     "Username" : "Імя карыстальніка",
     "Password" : "Пароль",
     "Filename" : "Назва файла",
